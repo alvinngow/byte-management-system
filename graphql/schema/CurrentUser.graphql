@@ -1,0 +1,3 @@
+type CurrentUser {
+  username: String!
+}

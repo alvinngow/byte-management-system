@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gql:generate": "graphql-codegen"
   },
   "dependencies": {
     "@apollo/server": "^4.2.1",
