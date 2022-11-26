@@ -7,7 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "gql:generate": "graphql-codegen"
+    "gql:generate": "graphql-codegen",
+    "prisma": "dotenv -e .env.local prisma",
+    "db:migrate": "yarn prisma migrate dev",
+    "db:reset": "yarn prisma migrate reset",
+    "db:status": "yarn prisma migrate status",
+    "prod:db:migrate": "yarn prisma migrate deploy"
   },
   "dependencies": {
     "@apollo/server": "^4.2.1",
