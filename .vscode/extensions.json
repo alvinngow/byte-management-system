@@ -2,6 +2,7 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "42crunch.vscode-openapi",
-    "Prisma.prisma"
+    "prisma.prisma",
+    "graphql.vscode-graphql-syntax"
   ]
 }
