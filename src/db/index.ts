@@ -5,15 +5,15 @@ import { PrismaClient } from '@prisma/client';
  */
 
 declare global {
-  var prisma: PrismaClient | undefined;
+  var _prisma: PrismaClient | undefined;
 }
 
 export const prisma =
-  global.prisma ||
+  global._prisma ||
   new PrismaClient({
     log: ['query'],
   });
 
 if (process.env.NODE_ENV !== 'production') {
-  global.prisma = prisma;
+  global._prisma = prisma;
 }
