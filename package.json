@@ -37,6 +37,7 @@
     "@graphql-codegen/schema-ast": "^2.5.1",
     "@graphql-codegen/typescript": "^2.8.2",
     "@graphql-codegen/typescript-resolvers": "^2.7.7",
+    "@types/bcrypt": "^5.0.0",
     "dotenv-cli": "^6.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
