@@ -1,0 +1,13 @@
+input SignupInput {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
+  school: String!
+  mobileNo: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}

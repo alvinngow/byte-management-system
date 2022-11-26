@@ -1,0 +1,4 @@
+type Mutation {
+  login(input: LoginInput!): CurrentUser
+  signup(input: SignupInput!): CurrentUser
+}

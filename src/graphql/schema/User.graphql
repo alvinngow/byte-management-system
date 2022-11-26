@@ -1,0 +1,19 @@
+type User {
+  id: String!
+  username: String!
+  firstName: String!
+  lastName: String!
+  school: String!
+  mobileNo: String!
+  avatar: String!
+}
+
+type CurrentUser {
+  id: String!
+  username: String!
+  firstName: String!
+  lastName: String!
+  school: String!
+  mobileNo: String!
+  avatar: String!
+}

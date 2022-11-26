@@ -1,4 +1,5 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
+import type { TypeScriptResolversPluginConfig } from '@graphql-codegen/typescript-resolvers';
 
 const config: CodegenConfig = {
   schema: './src/graphql/schema/**/*.graphql',
@@ -6,8 +7,21 @@ const config: CodegenConfig = {
     './gen/graphql/resolvers.ts': {
       config: {
         useIndexSignature: true,
-      },
-      plugins: ['typescript', 'typescript-resolvers'],
+        contextType: 'Context',
+        mappers: {
+          CurrentUser: '@prisma/client#User',
+          User: '@prisma/client#User',
+        },
+      } as TypeScriptResolversPluginConfig,
+      plugins: [
+        {
+          add: {
+            content: ["import type Context from '../../src/graphql/Context'"],
+          },
+        },
+        'typescript',
+        'typescript-resolvers',
+      ],
     },
     './gen/graphql/schema.graphql': {
       plugins: ['schema-ast'],

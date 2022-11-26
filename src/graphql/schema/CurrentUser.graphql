@@ -1,3 +1,0 @@
-type CurrentUser {
-  username: String!
-}
