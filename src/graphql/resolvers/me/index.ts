@@ -1,4 +1,4 @@
-import { QueryResolvers } from '../../generated/resolvers-types';
+import { QueryResolvers } from '../../../../gen/graphql/resolvers';
 
 export const meResolver: QueryResolvers['me'] = (root, args, context) => {
   return {
