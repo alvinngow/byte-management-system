@@ -7,6 +7,7 @@ export const ironSessionOptions: IronSessionOptions = {
     secure:
       process.env.NODE_ENV === 'production' &&
       process.env.CYPRESS_TEST !== 'true',
+    maxAge: 2592000, // 30 days
   },
 };
 
@@ -15,5 +16,6 @@ declare module 'iron-session' {
     user?: {
       id: string;
     };
+    creationTime: number;
   }
 }

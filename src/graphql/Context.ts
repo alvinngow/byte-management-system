@@ -32,6 +32,7 @@ export default class Context {
     this.req.session.user = {
       id: user.id,
     };
+    this.req.session.creationTime = Date.now();
     await this.req.session.save();
   }
 
