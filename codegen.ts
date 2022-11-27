@@ -9,7 +9,7 @@ const config: CodegenConfig = {
     './gen/graphql/resolvers.ts': {
       config: {
         useIndexSignature: true,
-        contextType: 'Context',
+        contextType: '../../src/graphql/Context#Context',
         mappers: {
           CurrentUser: '@prisma/client#User',
           User: '@prisma/client#User',
@@ -19,15 +19,7 @@ const config: CodegenConfig = {
           EmailAddress: 'string',
         },
       } as TypeScriptResolversPluginConfig,
-      plugins: [
-        {
-          add: {
-            content: ["import type Context from '../../src/graphql/Context'"],
-          },
-        },
-        'typescript',
-        'typescript-resolvers',
-      ],
+      plugins: ['typescript', 'typescript-resolvers'],
     },
     './gen/graphql/schema.graphql': {
       plugins: ['schema-ast'],

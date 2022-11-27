@@ -3,7 +3,10 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { prisma } from '../db';
 
-export default class Context {
+/**
+ * Context class for GraphQL resolvers
+ */
+export class Context {
   req: NextApiRequest;
   res: NextApiResponse;
 
