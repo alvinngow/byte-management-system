@@ -1,4 +1,4 @@
-import { Resolvers } from '../../../gen/graphql/resolvers';
+import { Resolvers } from '../../../../gen/graphql/resolvers';
 import { loginResolver } from './mutations/login';
 import { logoutResolver } from './mutations/logout';
 import { signupResolver } from './mutations/signup';

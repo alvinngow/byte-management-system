@@ -2,8 +2,8 @@ import { Prisma } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { GraphQLError } from 'graphql';
 
-import { MutationResolvers } from '../../../../gen/graphql/resolvers';
-import { prisma } from '../../../db';
+import { MutationResolvers } from '../../../../../gen/graphql/resolvers';
+import { prisma } from '../../../../db';
 
 export const signupResolver: MutationResolvers['signup'] = async (
   root,

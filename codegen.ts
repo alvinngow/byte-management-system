@@ -11,7 +11,7 @@ const scalars: ScalarsMap = {
 };
 
 const config: CodegenConfig = {
-  schema: [...scalarTypeDefs, './src/graphql/schema/**/*.graphql'],
+  schema: [...scalarTypeDefs, './src/graphql/backend/schema/**/*.graphql'],
   generates: {
     './gen/graphql/resolvers.ts': {
       config: {

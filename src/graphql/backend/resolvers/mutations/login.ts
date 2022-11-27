@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
 import { GraphQLError } from 'graphql';
 
-import { MutationResolvers } from '../../../../gen/graphql/resolvers';
-import { prisma } from '../../../db';
+import { MutationResolvers } from '../../../../../gen/graphql/resolvers';
+import { prisma } from '../../../../db';
 
 export const loginResolver: MutationResolvers['login'] = async (
   root,
