@@ -1,7 +1,14 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
+import type { TypeScriptDocumentsPluginConfig } from '@graphql-codegen/typescript-operations';
 import type { TypeScriptResolversPluginConfig } from '@graphql-codegen/typescript-resolvers';
+import type { ScalarsMap } from '@graphql-codegen/visitor-plugin-common';
 
 import { scalarTypeDefs } from './src/graphql/server/scalars';
+
+const scalars: ScalarsMap = {
+  DateTime: 'string',
+  EmailAddress: 'string',
+};
 
 const config: CodegenConfig = {
   schema: [...scalarTypeDefs, './src/graphql/schema/**/*.graphql'],
@@ -14,12 +21,15 @@ const config: CodegenConfig = {
           CurrentUser: '@prisma/client#User',
           User: '@prisma/client#User',
         },
-        scalars: {
-          DateTime: 'string',
-          EmailAddress: 'string',
-        },
+        scalars,
       } as TypeScriptResolversPluginConfig,
       plugins: ['typescript', 'typescript-resolvers'],
+    },
+    './gen/graphql/operations.ts': {
+      config: {
+        scalars,
+      } as TypeScriptDocumentsPluginConfig,
+      plugins: ['typescript', 'typescript-operations'],
     },
     './gen/graphql/schema.graphql': {
       plugins: ['schema-ast'],
