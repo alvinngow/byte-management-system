@@ -34,4 +34,13 @@ export default class Context {
     };
     await this.req.session.save();
   }
+
+  async destroySession() {
+    if (this.req.session.user == null) {
+      return false;
+    }
+
+    this.req.session.destroy();
+    return true;
+  }
 }
