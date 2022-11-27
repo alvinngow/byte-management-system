@@ -4,7 +4,7 @@ import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { withIronSessionApiRoute } from 'iron-session/next';
 
 import appSchemas from '../../../gen/graphql/schema.graphql';
-import Context from '../../graphql/Context';
+import { Context } from '../../graphql/Context';
 import appResolvers from '../../graphql/resolvers';
 import ApolloServerPluginLandingPageGraphiQL from '../../graphql/server/ApolloServerPluginLandingPageGraphiQL';
 import { scalarResolvers, scalarTypeDefs } from '../../graphql/server/scalars';
