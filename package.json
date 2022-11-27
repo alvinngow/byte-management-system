@@ -15,6 +15,7 @@
     "prod:db:migrate": "yarn prisma migrate deploy"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.1",
     "@apollo/server": "^4.2.1",
     "@as-integrations/next": "^1.2.0",
     "@prisma/client": "4.6.1",
