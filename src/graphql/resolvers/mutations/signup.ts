@@ -43,7 +43,7 @@ export const signupResolver: MutationResolvers['signup'] = async (
     throw e;
   }
 
-  context.req.session.user = { id: user.id };
-  await context.req.session.save();
+  await context.setupSession(user);
+
   return user;
 };

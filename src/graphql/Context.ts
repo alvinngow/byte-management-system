@@ -27,4 +27,11 @@ export default class Context {
 
     return user;
   }
+
+  async setupSession(user: User) {
+    this.req.session.user = {
+      id: user.id,
+    };
+    await this.req.session.save();
+  }
 }
