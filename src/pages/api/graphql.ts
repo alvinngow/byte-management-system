@@ -3,17 +3,21 @@ import { ApolloServerPluginLandingPageDisabled } from '@apollo/server/plugin/dis
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { withIronSessionApiRoute } from 'iron-session/next';
 
-import typeDefs from '../../../gen/graphql/schema.graphql';
+import appSchemas from '../../../gen/graphql/schema.graphql';
 import Context from '../../graphql/Context';
-import resolvers from '../../graphql/resolvers';
+import appResolvers from '../../graphql/resolvers';
 import ApolloServerPluginLandingPageGraphiQL from '../../graphql/server/ApolloServerPluginLandingPageGraphiQL';
+import { scalarResolvers, scalarTypeDefs } from '../../graphql/server/scalars';
 import { ironSessionOptions } from '../../session/iron-session';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  typeDefs: [...scalarTypeDefs, appSchemas],
+  resolvers: {
+    ...scalarResolvers,
+    ...appResolvers,
+  },
   plugins: isProduction
     ? [ApolloServerPluginLandingPageDisabled()]
     : [ApolloServerPluginLandingPageGraphiQL()],

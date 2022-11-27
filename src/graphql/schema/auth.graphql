@@ -1,6 +1,6 @@
 input SignupInput {
   clientMutationId: String
-  email: String!
+  email: EmailAddress!
   password: String!
   firstName: String!
   lastName: String!
@@ -10,7 +10,7 @@ input SignupInput {
 
 input LoginInput {
   clientMutationId: String
-  email: String!
+  email: EmailAddress!
   password: String!
 }
 
