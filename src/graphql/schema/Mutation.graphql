@@ -1,5 +1,5 @@
 type Mutation {
   login(input: LoginInput!): CurrentUser
   signup(input: SignupInput!): CurrentUser
-  logout: Boolean!
+  logout(input: LogoutInput): Boolean!
 }
