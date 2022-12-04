@@ -21,6 +21,7 @@ const config: CodegenConfig = {
           CurrentUser: '@prisma/client#User',
           User: '@prisma/client#User',
         },
+        mapperTypeSuffix: 'Model',
         scalars,
       } as TypeScriptResolversPluginConfig,
       plugins: ['typescript', 'typescript-resolvers'],
