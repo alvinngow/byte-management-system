@@ -16,7 +16,7 @@ const config: CodegenConfig = {
     './gen/graphql/resolvers.ts': {
       config: {
         useIndexSignature: true,
-        contextType: '../../src/graphql/Context#Context',
+        contextType: '../../src/graphql/backend/Context#Context',
         mappers: {
           CurrentUser: '@prisma/client#User',
           User: '@prisma/client#User',
