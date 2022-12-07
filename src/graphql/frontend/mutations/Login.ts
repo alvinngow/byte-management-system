@@ -2,15 +2,15 @@ import { gql } from '@apollo/client';
 
 import {
   CurrentUser,
-  MutationLoginArgs,
+  MutationAccountLoginArgs,
 } from '../../../../gen/graphql/operations';
 
 export type Data = CurrentUser;
-export type Variables = MutationLoginArgs;
+export type Variables = MutationAccountLoginArgs;
 
 export const Mutation = gql`
   mutation Login($input: LoginInput!) {
-    login(input: $input) {
+    accountLogin(input: $input) {
       id
     }
   }
