@@ -1,7 +1,7 @@
 import { Resolvers } from '../../../../gen/graphql/resolvers';
-import { loginResolver } from './mutations/login';
-import { logoutResolver } from './mutations/logout';
-import { signupResolver } from './mutations/signup';
+import { accountLoginResolver } from './mutations/accountLogin';
+import { accountLogoutResolver } from './mutations/accountLogout';
+import { accountSignupResolver } from './mutations/accountSignup';
 import { meResolver } from './queries/me';
 
 const resolvers: Resolvers = {
@@ -9,9 +9,9 @@ const resolvers: Resolvers = {
     me: meResolver,
   },
   Mutation: {
-    login: loginResolver,
-    signup: signupResolver,
-    logout: logoutResolver,
+    accountLogin: accountLoginResolver,
+    accountSignup: accountSignupResolver,
+    accountLogout: accountLogoutResolver,
   },
 };
 

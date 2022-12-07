@@ -1,6 +1,6 @@
 import { MutationResolvers } from '../../../../../gen/graphql/resolvers';
 
-export const logoutResolver: MutationResolvers['logout'] = async (
+export const accountLogoutResolver: MutationResolvers['accountLogout'] = async (
   root,
   args,
   context,

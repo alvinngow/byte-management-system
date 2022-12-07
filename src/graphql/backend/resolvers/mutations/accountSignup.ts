@@ -5,7 +5,7 @@ import { GraphQLError } from 'graphql';
 import { MutationResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 
-export const signupResolver: MutationResolvers['signup'] = async (
+export const accountSignupResolver: MutationResolvers['accountSignup'] = async (
   root,
   args,
   context,
