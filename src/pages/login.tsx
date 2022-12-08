@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 
-import * as Login from '../graphql/frontend/mutations/Login';
+import * as LoginMutation from '../graphql/frontend/mutations/LoginMutation';
 import PlainLayout from '../layouts/PlainLayout';
 
 interface Inputs {
@@ -21,11 +21,14 @@ const LoginPage: NextPage = function (props) {
 
   const router = useRouter();
 
-  const [login] = useMutation<Login.Data, Login.Variables>(Login.Mutation, {
-    onCompleted() {
-      router.push('/home');
-    },
-  });
+  const [login] = useMutation<LoginMutation.Data, LoginMutation.Variables>(
+    LoginMutation.Mutation,
+    {
+      onCompleted() {
+        router.push('/home');
+      },
+    }
+  );
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     login({

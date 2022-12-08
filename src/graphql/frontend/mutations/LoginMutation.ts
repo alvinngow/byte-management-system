@@ -9,7 +9,7 @@ export type Data = CurrentUser;
 export type Variables = MutationAccountLoginArgs;
 
 export const Mutation = gql`
-  mutation Login($input: LoginInput!) {
+  mutation LoginMutation($input: LoginInput!) {
     accountLogin(input: $input) {
       id
     }
