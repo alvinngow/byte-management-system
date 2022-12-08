@@ -26,6 +26,7 @@
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.5",
     "graphql": "^16.6.0",
+    "graphql-parse-resolve-info": "^4.12.3",
     "graphql-scalars": "^1.20.1",
     "iron-session": "^6.3.1",
     "next": "13.0.5",
