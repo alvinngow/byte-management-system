@@ -15,6 +15,16 @@ export class Context {
     this.res = res;
   }
 
+  getCurrentUserId(): string | null {
+    const { user: sessionUser } = this.req.session;
+
+    if (sessionUser == null) {
+      return null;
+    }
+
+    return sessionUser.id;
+  }
+
   async getCurrentUser(): Promise<User | null> {
     const { user: sessionUser } = this.req.session;
 
@@ -32,9 +42,6 @@ export class Context {
   }
 
   async setupSession(user: User) {
-    this.req.session.user = {
-      id: user.id,
-    };
     this.req.session.creationTime = Date.now();
     await this.req.session.save();
   }

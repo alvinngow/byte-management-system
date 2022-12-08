@@ -24,7 +24,16 @@ export const accountSignupResolver: MutationResolvers['accountSignup'] = async (
         pwHash: hashedPassword,
         firstName,
         lastName,
-        school,
+        school: {
+          connectOrCreate: {
+            where: {
+              name: school,
+            },
+            create: {
+              name: school,
+            },
+          },
+        },
         mobileNo,
         avatar: '',
       },

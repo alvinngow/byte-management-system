@@ -2,9 +2,9 @@ type User {
   id: ID!
   firstName: String!
   lastName: String!
-  school: String!
   mobileNo: String!
   avatar: String!
+  school: School
 }
 
 type CurrentUser {
@@ -12,8 +12,8 @@ type CurrentUser {
   email: EmailAddress!
   firstName: String!
   lastName: String!
-  school: String!
   mobileNo: String!
   avatar: String!
   createdAt: DateTime!
+  school: School
 }

@@ -1,0 +1,14 @@
+type School {
+  id: ID!
+  name: String!
+}
+
+type SchoolConnection {
+  edges: [SchoolEdge!]!
+  pageInfo: PageInfo!
+}
+
+type SchoolEdge {
+  node: School!
+  cursor: String!
+}

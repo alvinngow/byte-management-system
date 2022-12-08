@@ -1,3 +1,4 @@
 type Query {
   me: CurrentUser
+  schools(first: Int = 10, after: String): SchoolConnection
 }
