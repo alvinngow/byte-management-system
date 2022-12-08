@@ -10,3 +10,6 @@ run()
     console.error(e);
     process.exit(1);
   });
+
+// https://bobbyhadz.com/blog/typescript-cannot-be-compiled-under-isolatedmodules
+export {};
