@@ -11,15 +11,25 @@ datasource db {
 }
 
 model User {
-  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email     String @unique
+  id        String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email     String  @unique
   pwHash    String
   firstName String
   lastName  String
-  school    String
+  schoolId  String? @db.Uuid
+  school    School? @relation(fields: [schoolId], references: [id])
   mobileNo  String
   avatar    String
-  role      String @default("user")
+  role      String  @default("user")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model School {
+  id   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name String
+  User User[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
