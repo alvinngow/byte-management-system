@@ -9,6 +9,7 @@ import { prisma } from '../../db';
 export class Context {
   req: NextApiRequest;
   res: NextApiResponse;
+  private _state: Record<string, any> = {};
 
   constructor(req: NextApiRequest, res: NextApiResponse) {
     this.req = req;
@@ -53,5 +54,19 @@ export class Context {
 
     this.req.session.destroy();
     return true;
+  }
+
+  getStateValue<T>(key: string) {
+    if (key in this._state) {
+      return this._state[key] as T;
+    }
+
+    return null;
+  }
+
+  setStateValue(partialState: Record<string, any>) {
+    for (const [key, value] of Object.entries(partialState)) {
+      this._state[key] = value;
+    }
   }
 }
