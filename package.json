@@ -9,6 +9,7 @@
     "lint": "next lint",
     "gql:generate": "graphql-codegen",
     "prisma": "dotenv -e .env.local prisma",
+    "db:seed": "yarn prisma db seed",
     "db:migrate": "yarn prisma migrate dev",
     "db:reset": "yarn prisma migrate reset",
     "db:status": "yarn prisma migrate status",
