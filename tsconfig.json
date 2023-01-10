@@ -28,6 +28,9 @@
     "node_modules"
   ],
   "ts-node": {
-    "files": true
+    "files": true,
+    "compilerOptions": {
+      "module": "commonjs"
+    }
   }
 }
