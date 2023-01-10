@@ -43,6 +43,7 @@ export class Context {
   }
 
   async setupSession(user: User) {
+    this.req.session.user = user;
     this.req.session.creationTime = Date.now();
     await this.req.session.save();
   }
