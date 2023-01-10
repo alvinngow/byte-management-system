@@ -1,5 +1,3 @@
-import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
-
 import {
   QueryResolvers,
   SchoolEdge,
