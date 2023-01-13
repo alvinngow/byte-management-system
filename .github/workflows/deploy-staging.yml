@@ -31,6 +31,7 @@ jobs:
           git_remote_url: ssh://dokku@${{ secrets.DOKKU_HOST }}/bims-staging
           ssh_private_key: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
           command: deploy
+          git_push_flags: --force
 
       - uses: chrnorm/deployment-status@v2
         if: success()
