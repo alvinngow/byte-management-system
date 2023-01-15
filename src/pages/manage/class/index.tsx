@@ -1,12 +1,16 @@
 import { NextPage } from 'next';
 
+import NavBar from '../../../components/NavBar';
 import NavHeader from '../../../components/NavHeader';
 import AppLayout from '../../../layouts/AppLayout';
 
 const ClassPage: React.FC = function () {
   return (
     <AppLayout>
-      <NavHeader />
+      <NavBar>
+        <NavHeader />
+        {<div>TEST</div>}
+      </NavBar>
     </AppLayout>
   );
 };
