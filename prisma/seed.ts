@@ -1,7 +1,12 @@
-import { prisma } from '../src/db';
+import { PrismaClient } from '@prisma/client';
+
+import bimsSeed from './seed-data/bimsSeed';
+
+const prisma = new PrismaClient();
 
 async function run() {
   console.log('seed placeholder');
+  await bimsSeed();
 }
 
 run()

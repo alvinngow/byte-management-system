@@ -22,6 +22,11 @@ model User {
   avatar    String
   role      String  @default("user")
 
+  locationClusterSubscriptions LocationClusterSubscription[]
+  inventoryItemMovementLogs    InventoryItemMovementLog[]
+  courseManagers               CourseManager[]
+  sessionAttendees             SessionAttendee[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -33,4 +38,138 @@ model School {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Location {
+  id                       String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                     String                     @unique
+  address                  String
+  description              String
+  inventoryItemMovementLog InventoryItemMovementLog[]
+  session                  Session[]
+  course                   Course[]
+
+  locationClusterLocations LocationClusterLocation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model LocationCluster {
+  id                           String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                         String
+  locationClusterSubscriptions LocationClusterSubscription[]
+
+  locationClusterLocations LocationClusterLocation[]
+}
+
+model LocationClusterLocation {
+  locationId String          @db.Uuid
+  location   Location        @relation(fields: [locationId], references: [id])
+  clusterId  String          @db.Uuid
+  cluster    LocationCluster @relation(fields: [clusterId], references: [id])
+
+  @@unique([clusterId, locationId])
+}
+
+model LocationClusterSubscription {
+  clusterId       String          @db.Uuid
+  locationCluster LocationCluster @relation(fields: [clusterId], references: [id])
+  userId          String          @db.Uuid
+  user            User            @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([clusterId, userId])
+}
+
+// Inventory Management Module
+
+model InventoryItem {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  serialNo       String
+  name           String
+  remarks        String?
+  qty            Int
+  decommissionAt DateTime?
+  type           String
+  status         String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model InventoryItemMovementLog {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  authorId   String   @db.Uuid
+  author     User     @relation(fields: [authorId], references: [id])
+  locationId String   @db.Uuid
+  location   Location @relation(fields: [locationId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Course Management Module
+
+model Session {
+  id                 String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name               String
+  description        String
+  overrideStartTime  DateTime?         @db.Timetz(2)
+  overrideEndTime    DateTime?         @db.Timetz(2)
+  startDate          DateTime          @db.Date
+  endDate            DateTime          @db.Date
+  courseId           String            @db.Uuid
+  course             Course            @relation(fields: [courseId], references: [id])
+  overrideLocationId String?           @db.Uuid
+  overrideLocation   Location?         @relation(fields: [overrideLocationId], references: [id])
+  sessionAttendees   SessionAttendee[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Course {
+  id                String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name              String
+  description       String
+  defaultStartTime  DateTime        @db.Timetz(2)
+  defaultEndTime    DateTime        @db.Timetz(2)
+  defaultLocationId String?         @db.Uuid
+  defaultLocation   Location?       @relation(fields: [defaultLocationId], references: [id])
+  sessions          Session[]
+  courseManagers    CourseManager[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CourseManager {
+  courseId String @db.Uuid
+  course   Course @relation(fields: [courseId], references: [id])
+  userId   String @db.Uuid
+  user     User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([courseId, userId])
+}
+
+// Volunteer Management Module
+
+model SessionAttendee {
+  sessionId           String  @db.Uuid
+  session             Session @relation(fields: [sessionId], references: [id])
+  userId              String  @db.Uuid
+  user                User    @relation(fields: [userId], references: [id])
+  indicatedAttendance String
+  actualAttendance    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([sessionId, userId])
 }

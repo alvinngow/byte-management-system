@@ -1,0 +1,9 @@
+id,email,pwHash,firstName,lastName,schoolId,school,mobileNo,avatar,role
+364c0fb8-0925-4029-8b2c-65ed93e8ffd6,byte@bims.com,bytelovesbims,byte,family,e33f8d0b-0dc3-4c41-b94e-0e1526786d88,SMU,12345678,bytefam,system_administrator
+f1444b1d-4360-42d4-bc1b-c23cd5051fa4,emily@bims.com,emilyinbims,emily,sim,e33f8d0b-0dc3-4c41-b94e-0e1526786d88,SMU,12345678,emilysim,user
+28edcad7-da77-456c-b2a1-9e20470e058a,phillip@bims.com,phillip!@#,phillip,nelson,e7a3a567-320c-40b0-a73c-ec87b69dbf10,SUTD,81159003,phillipnelson,user
+c4bb74c9-77fd-4304-83be-024993ae0c53,layla@bims.com,laylainlalaland,layla,gibson,8ba7c5ae-e926-42e6-a1b5-437ab65a742c,SIM,84447117,laylagibson,user
+3e4a7c05-9ec7-46d9-93c1-69e47eb4e803,julia@bims.com,juliabiscuits,julia,reed,8dfe89ff-92aa-485e-bbe3-97c2936e9afb,SIT,90098871,juliareed,user
+a3fda54f-0710-452b-b164-947abdca1229,samuel@bims.com,samuellovesmulling,samuel,hopkins,85a435ce-f42d-43ee-9c24-362b3ea4c444,SUSS,87339170,samuelhopkins,user
+b38d969e-7591-4ebc-a345-e64b67dfb19d,duncan@bims.com,duncan123,duncan,leo,e33f8d0b-0dc3-4c41-b94e-0e1526786d88,SMU,87654321,duncanleo,committee_member
+3a9a70e3-6116-4d33-b9ac-9da0de9c2778,jessica@bims.com,jessicaloveshamsters,jessica,novianto,e33f8d0b-0dc3-4c41-b94e-0e1526786d88,SMU,92650012,jessicanovianto,committee_member
