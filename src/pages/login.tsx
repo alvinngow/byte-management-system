@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { NextPage } from 'next';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
@@ -44,21 +45,45 @@ const LoginPage: NextPage = function (props) {
 
   return (
     <PlainLayout>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="email"
-          placeholder="Email"
-          aria-invalid={errors.email ? 'true' : 'false'}
-          {...register('email', { required: true })}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          aria-invalid={errors.password ? 'true' : 'false'}
-          {...register('password', { required: true })}
-        />
-        <input type="submit" value="Submit" />
-      </form>
+      <div className="flex flex-col justify-center items-center h-screen">
+        <form
+          className="flex flex-col w-3/4 "
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <img
+            style={{ width: '150px', height: '150px' }}
+            src="https://via.placeholder.com/150"
+            alt=""
+          />
+          <p style={{ fontSize: '20px' }}>Sign in</p>
+          <p>
+            New user?{' '}
+            <Link className="text text-blue-400" href="/signup">
+              Create an account
+            </Link>
+          </p>
+          <input
+            type="email"
+            className="mt-4"
+            placeholder="Email"
+            aria-invalid={errors.email ? 'true' : 'false'}
+            {...register('email', { required: true })}
+          />
+          <input
+            type="password"
+            className="my-4"
+            placeholder="Password"
+            aria-invalid={errors.password ? 'true' : 'false'}
+            {...register('password', { required: true })}
+          />
+          <button
+            type="submit"
+            className="rounded-3xl shadow-lg text-white bg-blue-400 p-2"
+          >
+            Login
+          </button>
+        </form>
+      </div>
     </PlainLayout>
   );
 };
