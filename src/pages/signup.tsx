@@ -1,5 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { NextPage } from 'next';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -39,45 +41,110 @@ const SignupPage: NextPage = function (props) {
 
   return (
     <PlainLayout>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="email"
-          placeholder="Email"
-          aria-invalid={errors.email ? 'true' : 'false'}
-          {...register('email', { required: true })}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          aria-invalid={errors.password ? 'true' : 'false'}
-          {...register('password', { required: true })}
-        />
-        <input
-          type="text"
-          placeholder="First Name"
-          aria-invalid={errors.firstName ? 'true' : 'false'}
-          {...register('firstName', { required: true })}
-        />
-        <input
-          type="text"
-          placeholder="Last Name"
-          aria-invalid={errors.lastName ? 'true' : 'false'}
-          {...register('lastName', { required: true })}
-        />
-        <input
-          type="text"
-          placeholder="Mobile No"
-          aria-invalid={errors.mobileNo ? 'true' : 'false'}
-          {...register('mobileNo', { required: true })}
-        />
-        <input
-          type="text"
-          placeholder="School"
-          aria-invalid={errors.school ? 'true' : 'false'}
-          {...register('school', { required: true })}
-        />
-        <input type="submit" value="Submit" />
-      </form>
+      <div className="flex flex-col justify-center items-center h-screen w-full">
+        <form
+          className="flex flex-col w-3/4 "
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <p style={{ fontSize: '50px' }} className="mb-3">
+            Create an account
+          </p>
+          <p className="mb-6">
+            Registered?{' '}
+            <Link className="text text-blue-400 underline" href="/login">
+              Login here.
+            </Link>
+          </p>
+
+          <div className="grid grid-cols-2 w-full">
+            <div className="pr-2">
+              <label htmlFor="First Name">First Name</label>
+              <input
+                type="text"
+                placeholder="John"
+                className="border-b w-full mt-3 border-gray-400 mr-3 mb-5 py-1 px-2 leading-tight focus:outline-none"
+                aria-invalid={errors.firstName ? 'true' : 'false'}
+                {...register('firstName', { required: true })}
+              />
+            </div>
+            <div className="pl-2">
+              <label htmlFor="Last Name">Last Name</label>
+              <input
+                type="text"
+                placeholder="Doe"
+                className="border-b w-full mt-3 border-gray-400 mr-3 mb-5 py-1 px-2 leading-tight focus:outline-none"
+                aria-invalid={errors.lastName ? 'true' : 'false'}
+                {...register('lastName', { required: true })}
+              />
+            </div>
+          </div>
+
+          <label htmlFor="Email" className="mb-3">
+            Email
+          </label>
+          <input
+            type="email"
+            placeholder="Email"
+            className="border-b w-full border-gray-400 mr-3 mb-5 py-1 px-2 leading-tight focus:outline-none width-full"
+            aria-invalid={errors.email ? 'true' : 'false'}
+            {...register('email', { required: true })}
+          />
+
+          <label htmlFor="Password" className="mb-3">
+            Password
+          </label>
+          <input
+            type="password"
+            placeholder="Password"
+            className="border-b w-full border-gray-400 mr-3 mb-5 py-1 px-2 leading-tight focus:outline-none width-full"
+            aria-invalid={errors.password ? 'true' : 'false'}
+            {...register('password', { required: true })}
+          />
+
+          <label htmlFor="School/ Work" className="mb-3">
+            School/ Work
+          </label>
+          <input
+            type="text"
+            placeholder=""
+            className="border-b w-full border-gray-400 mr-3 mb-5 py-1 px-2 leading-tight focus:outline-none width-full"
+            aria-invalid={errors.school ? 'true' : 'false'}
+            {...register('school', { required: true })}
+          />
+
+          <label htmlFor="Mobile Number" className="mb-3">
+            Mobile Number
+          </label>
+
+          <div className="flex">
+            <span className="border-b border-gray-400 mb-5 py-1 px-2 leading-tight focus:outline-none w-12">
+              +65
+            </span>
+            <input
+              type="text"
+              className="border-b w-full border-gray-400 mr-3 mb-5 py-1 px-2 leading-tight focus:outline-none width-full appearance-none"
+              aria-invalid={errors.mobileNo ? 'true' : 'false'}
+              {...register('mobileNo', { required: true })}
+              placeholder="9123 4567"
+            />
+          </div>
+
+          <label htmlFor="Avatar">Avatar</label>
+          <p className="mb-5"></p>
+          {/* <input type="file" /> */}
+          <p className="mb-10 text text-blue-400 underline">
+            Add Profile Picture
+          </p>
+
+          <button
+            type="submit"
+            className="rounded-3xl shadow-lg text-white bg-blue-400 p-2"
+          >
+            {' '}
+            Sign Up
+          </button>
+        </form>
+      </div>
     </PlainLayout>
   );
 };
