@@ -2,6 +2,8 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
 
+import NavBar from '../../../components/NavBar';
+import NavHeader from '../../../components/NavHeader';
 import AppLayout from '../../../layouts/AppLayout';
 
 const SingleStaffJourney: NextPage = function () {
@@ -10,7 +12,10 @@ const SingleStaffJourney: NextPage = function () {
 
   return (
     <AppLayout>
-      <h1>hello {id}</h1>
+      <NavBar>
+        <NavHeader />
+        <div>Test</div>
+      </NavBar>
     </AppLayout>
   );
 };
