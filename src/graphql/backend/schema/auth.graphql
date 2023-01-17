@@ -17,3 +17,20 @@ input LoginInput {
 input LogoutInput {
   clientMutationId: String
 }
+
+enum UserRole {
+  user
+  committee_member
+  system_administrator
+}
+
+input AccountRoleUpdateInput {
+  clientMutationId: String
+  userId: ID!
+  role: UserRole!
+}
+
+type AccountRoleUpdatePayload {
+  clientMutationId: String
+  user: User
+}

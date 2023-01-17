@@ -1,6 +1,7 @@
 import { User } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+import { UserRole } from '../../../gen/graphql/resolvers';
 import { prisma } from '../../db';
 
 /**
@@ -40,6 +41,29 @@ export class Context {
     });
 
     return user;
+  }
+
+  async getCurrentUserRole(): Promise<UserRole | null> {
+    const { user: sessionUser } = this.req.session;
+
+    if (sessionUser == null) {
+      return null;
+    }
+
+    const user = await prisma.user.findFirst({
+      where: {
+        id: sessionUser.id,
+      },
+      select: {
+        role: true,
+      },
+    });
+
+    if (user == null) {
+      return null;
+    }
+
+    return user.role as UserRole;
   }
 
   async setupSession(user: User) {

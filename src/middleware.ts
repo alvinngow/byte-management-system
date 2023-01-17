@@ -6,7 +6,7 @@ import { ironSessionOptions } from './session/iron-session';
 
 const ROUTES_UNAUTHENTICATED = new Set<string>(['/', '/login']);
 
-const ROUTES_AUTHENTICATED = new Set<string>(['/logout']);
+const ROUTES_AUTHENTICATED = new Set<string>(['/logout', '/manage/users']);
 
 const isProduction = process.env.NODE_ENV === 'production';
 
