@@ -17,7 +17,7 @@ async function readFile<T>(fileName: string) {
 interface BIMSSeedUser {
   id: string;
   email: string;
-  pwHash: string;
+  password: string;
   firstName: string;
   lastName: string;
   schoolId?: string;

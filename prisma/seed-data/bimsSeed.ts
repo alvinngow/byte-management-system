@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
 import {
   readLocationClusters,
@@ -46,15 +47,26 @@ export default async function bimsSeed() {
   const usersIdMap: Record<string, string> = {};
 
   for (const user of users) {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+
     const createdUser = await prisma.user.upsert({
       where: {
         id: user.id,
       },
-      update: {},
+      update: {
+        email: user.email,
+        pwHash: hashedPassword,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        schoolId: user.schoolId,
+        mobileNo: user.mobileNo,
+        avatar: user.avatar,
+        role: user.role,
+      },
       create: {
         id: user.id,
         email: user.email,
-        pwHash: user.pwHash,
+        pwHash: hashedPassword,
         firstName: user.firstName,
         lastName: user.lastName,
         schoolId: user.schoolId,

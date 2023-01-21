@@ -1,4 +1,4 @@
-id,email,pwHash,firstName,lastName,schoolId,school,mobileNo,avatar,role
+id,email,password,firstName,lastName,schoolId,school,mobileNo,avatar,role
 364c0fb8-0925-4029-8b2c-65ed93e8ffd6,byte@bims.com,bytelovesbims,byte,family,e33f8d0b-0dc3-4c41-b94e-0e1526786d88,SMU,12345678,bytefam,system_administrator
 f1444b1d-4360-42d4-bc1b-c23cd5051fa4,emily@bims.com,emilyinbims,emily,sim,e33f8d0b-0dc3-4c41-b94e-0e1526786d88,SMU,12345678,emilysim,user
 28edcad7-da77-456c-b2a1-9e20470e058a,phillip@bims.com,phillip!@#,phillip,nelson,e7a3a567-320c-40b0-a73c-ec87b69dbf10,SUTD,81159003,phillipnelson,user
