@@ -8,7 +8,11 @@ export const usersResolver: QueryResolvers['users'] = async (
   context,
   info
 ) => {
-  await requireCurrentUserRole(context, UserRole.SystemAdministrator);
+  await requireCurrentUserRole(
+    context,
+    UserRole.CommitteeMember,
+    UserRole.SystemAdministrator
+  );
 
   const { first, after } = args;
 

@@ -10,7 +10,7 @@ import { Context } from '../../Context';
  */
 export default async function requireCurrentUserRole(
   context: Context,
-  role: UserRole
+  ...roles: UserRole[]
 ) {
   const currentUserRole = await context.getCurrentUserRole();
 
@@ -22,7 +22,9 @@ export default async function requireCurrentUserRole(
     });
   }
 
-  if (currentUserRole !== UserRole.SystemAdministrator) {
+  const rolesSet = new Set(roles);
+
+  if (!rolesSet.has(currentUserRole)) {
     throw new GraphQLError('Forbidden', {
       extensions: {
         code: 'FORBIDDEN',

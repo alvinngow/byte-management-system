@@ -6,7 +6,7 @@ type User {
   mobileNo: String!
   avatar: String!
   school: School
-  role: UserRole!
+  role: UserRole
 }
 
 type CurrentUser {

@@ -10,6 +10,11 @@ import * as UsersQuery from '../../graphql/frontend/queries/UsersQuery';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import AppLayout from '../../layouts/AppLayout';
 
+const ALLOWED_ROLES = new Set([
+  UserRole.SystemAdministrator,
+  UserRole.CommitteeMember,
+]);
+
 const UsersPage: NextPage = function (props) {
   const { me, loading: meLoading } = useCurrentUser();
 
@@ -30,7 +35,7 @@ const UsersPage: NextPage = function (props) {
       return;
     }
 
-    if (me?.role !== UserRole.SystemAdministrator) {
+    if (!ALLOWED_ROLES.has(me.role)) {
       router.push('/404');
     }
   }, [me, router]);
@@ -74,7 +79,9 @@ const UsersPage: NextPage = function (props) {
           <th className="px-6 py-3">Name</th>
           <th className="px-6 py-3">Role</th>
           <th className="px-6 py-3">School</th>
-          <th className="px-6 py-3">Management</th>
+          {me?.role === UserRole.SystemAdministrator && (
+            <th className="px-6 py-3">Management</th>
+          )}
         </thead>
         <tbody>
           {data?.users?.edges?.map((edge) => (
@@ -88,32 +95,35 @@ const UsersPage: NextPage = function (props) {
               </td>
               <td className="px-6 py-4">{edge.node.role}</td>
               <td className="px-6 py-4">{edge.node.school?.name ?? 'N/A'}</td>
-              <td className="px-6 py-4">
-                <button
-                  className="bg-cyan-400 px-3 py-1 rounded-md text-white hover:bg-cyan-500"
-                  onClick={() => {
-                    updateRole(edge.node.id, UserRole.User);
-                  }}
-                >
-                  Make user
-                </button>
-                <button
-                  className="bg-amber-400 px-3 py-1 rounded-md text-white hover:bg-amber-500"
-                  onClick={() => {
-                    updateRole(edge.node.id, UserRole.CommitteeMember);
-                  }}
-                >
-                  Make committee member
-                </button>
-                <button
-                  className="bg-orange-400 px-3 py-1 rounded-md text-white hover:bg-orange-500"
-                  onClick={() => {
-                    updateRole(edge.node.id, UserRole.SystemAdministrator);
-                  }}
-                >
-                  Make system administrator
-                </button>
-              </td>
+
+              {me?.role === UserRole.SystemAdministrator && (
+                <td className="px-6 py-4">
+                  <button
+                    className="bg-cyan-400 px-3 py-1 rounded-md text-white hover:bg-cyan-500"
+                    onClick={() => {
+                      updateRole(edge.node.id, UserRole.User);
+                    }}
+                  >
+                    Make user
+                  </button>
+                  <button
+                    className="bg-amber-400 px-3 py-1 rounded-md text-white hover:bg-amber-500"
+                    onClick={() => {
+                      updateRole(edge.node.id, UserRole.CommitteeMember);
+                    }}
+                  >
+                    Make committee member
+                  </button>
+                  <button
+                    className="bg-orange-400 px-3 py-1 rounded-md text-white hover:bg-orange-500"
+                    onClick={() => {
+                      updateRole(edge.node.id, UserRole.SystemAdministrator);
+                    }}
+                  >
+                    Make system administrator
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

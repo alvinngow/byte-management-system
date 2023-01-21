@@ -7,7 +7,11 @@ export const roleResolver: UserResolvers['role'] = async (
   context,
   info
 ) => {
-  await requireCurrentUserRole(context, UserRole.SystemAdministrator);
+  const currentUserRole = await context.getCurrentUserRole();
+
+  if (currentUserRole !== UserRole.SystemAdministrator) {
+    return null;
+  }
 
   return root.role as UserRole;
 };
