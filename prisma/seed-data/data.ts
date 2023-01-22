@@ -59,3 +59,52 @@ interface BIMSSeedLocation {
 export async function readLocations() {
   return readFile<BIMSSeedLocation[]>('location.csv');
 }
+
+interface BIMSSeedCourse {
+  id: string;
+  name: string;
+  description: string;
+  defaultStartTime: string;
+  defaultEndTime: string;
+  defaultLocationId?: string;
+}
+
+export async function readCourses() {
+  return readFile<BIMSSeedCourse[]>('course.csv');
+}
+
+interface BIMSSeedSession {
+  id: string;
+  name: string;
+  description: string;
+  overrideStartTime?: string;
+  overrideEndTime?: string;
+  startDate: string;
+  endDate: string;
+  courseId: string;
+  overrideLocationId?: string;
+}
+
+export async function readSessions() {
+  return readFile<BIMSSeedSession[]>('session.csv');
+}
+
+interface BIMSSeedCourseManager {
+  course_name: string;
+  user_email: string;
+}
+
+export async function readCourseManagers() {
+  return readFile<BIMSSeedCourseManager[]>('courseManager.csv');
+}
+
+interface BIMSSeedSessionAttendees {
+  session_name: string;
+  user_email: string;
+  indicatedAttendance: string;
+  actualAttendance?: string;
+}
+
+export async function readSessionAttendees() {
+  return readFile<BIMSSeedSessionAttendees[]>('sessionAttendee.csv');
+}

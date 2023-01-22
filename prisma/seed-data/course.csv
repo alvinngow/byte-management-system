@@ -1,0 +1,7 @@
+id,name,description,defaultStartTime,defaultEndTime,defaultLocationId
+55df8193-1890-4ffd-a8a4-a69573c96a97,"Animals & Us","Focus on different types of animals and what makes them special",19:00:00.00,21:00:00.00,00b91e43-769a-460e-a206-d534b1c43cf9
+b114df9b-e00f-4abd-bfd4-1fa18947f4f2,"Our Planet","Focus on different habitats on the planet and their characteristics",19:00:00.00,21:00:00.00,a910312f-fd5f-4370-9c6b-66b40228a157
+a8544556-3e02-4d02-90be-c228a1ff7762,"Climate & Us","Focus on the threat of climate change and how to protect the planet",12:00:00.00,14:00:00.00,32eb110c-d850-4db9-860d-d72257d4fcec
+97fee544-baf2-4ffb-95c8-e3cf5e59b944,"Build a Bot","Focus on chatbot and language processing concepts",12:00:00.00,14:00:00.00,32eb110c-d850-4db9-860d-d72257d4fcec
+1bd97075-86e4-4137-b751-52b270e5caa9,"Machine Learning","Focus on basic machine learning concepts",10:00:00.00,12:00:00.00,cfbc2c96-0972-4af1-9d7b-3c6e1e5c8071
+1d974d08-5d7e-477a-8023-531f41225043,"Data Website","Focus on data, databases and data visualisation",10:00:00.00,12:00:00.00,4b57e2e7-a7b4-412c-9d70-bcbf66944ef0
