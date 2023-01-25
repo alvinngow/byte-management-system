@@ -18,29 +18,34 @@ const LoginPage: NextPage = function (props) {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<Inputs>();
 
   const router = useRouter();
 
   const [login] = useMutation<LoginMutation.Data, LoginMutation.Variables>(
-    LoginMutation.Mutation,
-    {
-      onCompleted() {
-        router.push('/home');
-      },
-    }
+    LoginMutation.Mutation
   );
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    login({
-      variables: {
-        input: {
-          clientMutationId: uuidv4(),
-          email: data.email,
-          password: data.password,
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      await login({
+        variables: {
+          input: {
+            clientMutationId: uuidv4(),
+            email: data.email,
+            password: data.password,
+          },
         },
-      },
-    });
+      });
+
+      await router.push('/home');
+    } catch (e) {
+      setError('password', {
+        type: 'server',
+        message: 'Invalid credentials',
+      });
+    }
   };
 
   return (
@@ -69,6 +74,9 @@ const LoginPage: NextPage = function (props) {
             aria-invalid={errors.email ? 'true' : 'false'}
             {...register('email', { required: true })}
           />
+          {errors.email && (
+            <span className="text-red-400">{errors.email.message}</span>
+          )}
           <input
             type="password"
             className="my-4"
@@ -76,6 +84,9 @@ const LoginPage: NextPage = function (props) {
             aria-invalid={errors.password ? 'true' : 'false'}
             {...register('password', { required: true })}
           />
+          {errors.password && (
+            <span className="text-red-400">{errors.password.message}</span>
+          )}
           <button
             type="submit"
             className="rounded-3xl shadow-lg text-white bg-blue-400 p-2"

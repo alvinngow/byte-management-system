@@ -4,11 +4,31 @@ import { NextResponse } from 'next/server';
 
 import { ironSessionOptions } from './session/iron-session';
 
-const ROUTES_UNAUTHENTICATED = new Set<string>(['/', '/login']);
+const ROUTES_UNAUTHENTICATED = ['/login', '/signup'];
 
-const ROUTES_AUTHENTICATED = new Set<string>(['/logout', '/manage/users']);
+const ROUTES_AUTHENTICATED = [
+  '/home',
+  '/logout',
+  '/manage/users',
+  '/manage/class',
+];
 
-const isProduction = process.env.NODE_ENV === 'production';
+function getRouteType(
+  pathname: string
+): 'authenticated_only' | 'unauthenticated_only' | 'everyone' {
+  for (const route of ROUTES_AUTHENTICATED) {
+    if (pathname.startsWith(route)) {
+      return 'authenticated_only';
+    }
+  }
+  for (const route of ROUTES_UNAUTHENTICATED) {
+    if (pathname.startsWith(route)) {
+      return 'unauthenticated_only';
+    }
+  }
+
+  return 'everyone';
+}
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
@@ -32,25 +52,29 @@ export async function middleware(req: NextRequest) {
 
   const { pathname } = req.nextUrl;
 
-  if (ROUTES_UNAUTHENTICATED.has(pathname)) {
-    if (!isUserAuthenticated) {
+  const routeType = getRouteType(pathname);
+
+  switch (routeType) {
+    case 'unauthenticated_only': {
+      if (!isUserAuthenticated) {
+        return res;
+      }
+
+      // Authenticated user, redirect to home
+      return NextResponse.redirect(new URL('/home', req.url));
+    }
+    case 'authenticated_only': {
+      if (isUserAuthenticated) {
+        return res;
+      }
+
+      // Unauthenticated user, redirect to login page
+      return NextResponse.redirect(new URL('/login', req.url));
+    }
+    default: {
       return res;
     }
-
-    // Authenticated user, redirect to home
-    return NextResponse.redirect(new URL('/home', req.url));
   }
-
-  if (ROUTES_AUTHENTICATED.has(pathname)) {
-    if (isUserAuthenticated) {
-      return res;
-    }
-
-    // Unauthenticated user, redirect to login page
-    return NextResponse.redirect(new URL('/login', req.url));
-  }
-
-  return res;
 }
 
 export const config = {};

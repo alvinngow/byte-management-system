@@ -22,21 +22,33 @@ const SignupPage: NextPage = function (props) {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<Inputs>();
+
+  const router = useRouter();
 
   const [signup] = useMutation<SignupMutation.Data, SignupMutation.Variables>(
     SignupMutation.Mutation
   );
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    signup({
-      variables: {
-        input: {
-          clientMutationId: uuidv4(),
-          ...data,
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      await signup({
+        variables: {
+          input: {
+            clientMutationId: uuidv4(),
+            ...data,
+          },
         },
-      },
-    });
+      });
+
+      await router.push('/home');
+    } catch (e) {
+      setError('password', {
+        type: 'server',
+        message: 'Invalid credentials',
+      });
+    }
   };
 
   return (
@@ -66,6 +78,9 @@ const SignupPage: NextPage = function (props) {
                 aria-invalid={errors.firstName ? 'true' : 'false'}
                 {...register('firstName', { required: true })}
               />
+              {errors.firstName && (
+                <span className="text-red-400">{errors.firstName.message}</span>
+              )}
             </div>
             <div className="pl-2">
               <label htmlFor="Last Name">Last Name</label>
@@ -76,6 +91,9 @@ const SignupPage: NextPage = function (props) {
                 aria-invalid={errors.lastName ? 'true' : 'false'}
                 {...register('lastName', { required: true })}
               />
+              {errors.lastName && (
+                <span className="text-red-400">{errors.lastName.message}</span>
+              )}
             </div>
           </div>
 
@@ -89,6 +107,9 @@ const SignupPage: NextPage = function (props) {
             aria-invalid={errors.email ? 'true' : 'false'}
             {...register('email', { required: true })}
           />
+          {errors.email && (
+            <span className="text-red-400">{errors.email.message}</span>
+          )}
 
           <label htmlFor="Password" className="mb-3">
             Password
@@ -100,6 +121,9 @@ const SignupPage: NextPage = function (props) {
             aria-invalid={errors.password ? 'true' : 'false'}
             {...register('password', { required: true })}
           />
+          {errors.password && (
+            <span className="text-red-400">{errors.password.message}</span>
+          )}
 
           <label htmlFor="School/ Work" className="mb-3">
             School/ Work
@@ -111,6 +135,9 @@ const SignupPage: NextPage = function (props) {
             aria-invalid={errors.school ? 'true' : 'false'}
             {...register('school', { required: true })}
           />
+          {errors.school && (
+            <span className="text-red-400">{errors.school.message}</span>
+          )}
 
           <label htmlFor="Mobile Number" className="mb-3">
             Mobile Number
@@ -127,6 +154,9 @@ const SignupPage: NextPage = function (props) {
               {...register('mobileNo', { required: true })}
               placeholder="9123 4567"
             />
+            {errors.mobileNo && (
+              <span className="text-red-400">{errors.mobileNo.message}</span>
+            )}
           </div>
 
           <label htmlFor="Avatar">Avatar</label>
