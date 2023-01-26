@@ -58,9 +58,7 @@ const SignupPage: NextPage = function (props) {
           className="flex flex-col w-3/4 "
           onSubmit={handleSubmit(onSubmit)}
         >
-          <p style={{ fontSize: '50px' }} className="mb-3">
-            Create an account
-          </p>
+          <p className="mb-3 text-xl">Create an account</p>
           <p className="mb-6">
             Registered?{' '}
             <Link className="text text-blue-400 underline" href="/login">
@@ -166,13 +164,14 @@ const SignupPage: NextPage = function (props) {
             Add Profile Picture
           </p>
 
-          <button
+          <a
+            href="login"
             type="submit"
-            className="rounded-3xl shadow-lg text-white bg-blue-400 p-2"
+            className="rounded-3xl shadow-lg text-white bg-blue-400 p-2 text-center"
           >
             {' '}
             Sign Up
-          </button>
+          </a>
         </form>
       </div>
     </PlainLayout>
