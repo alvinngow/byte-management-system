@@ -28,15 +28,15 @@ export class Context {
   }
 
   async getCurrentUser(): Promise<User | null> {
-    const { user: sessionUser } = this.req.session;
+    const currentUserId = this.getCurrentUserId();
 
-    if (sessionUser == null) {
+    if (currentUserId == null) {
       return null;
     }
 
     const user = await prisma.user.findFirst({
       where: {
-        id: sessionUser.id,
+        id: currentUserId,
       },
     });
 
@@ -44,15 +44,15 @@ export class Context {
   }
 
   async getCurrentUserRole(): Promise<UserRole | null> {
-    const { user: sessionUser } = this.req.session;
+    const currentUserId = this.getCurrentUserId();
 
-    if (sessionUser == null) {
+    if (currentUserId == null) {
       return null;
     }
 
     const user = await prisma.user.findFirst({
       where: {
-        id: sessionUser.id,
+        id: currentUserId,
       },
       select: {
         role: true,

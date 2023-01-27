@@ -7,6 +7,7 @@ import { accountLoginResolver } from './mutations/accountLogin';
 import { accountLogoutResolver } from './mutations/accountLogout';
 import { accountRoleUpdateResolver } from './mutations/accountRoleUpdate';
 import { accountSignupResolver } from './mutations/accountSignup';
+import { accountTerminateResolver } from './mutations/accountTerminate';
 import { coursesResolver } from './queries/courses';
 import { locationClustersResolver } from './queries/locationClusters';
 import { locationsResolver } from './queries/locations';
@@ -34,6 +35,7 @@ const resolvers: Resolvers = {
     accountSignup: accountSignupResolver,
     accountLogout: accountLogoutResolver,
     accountRoleUpdate: accountRoleUpdateResolver,
+    accountTerminate: accountTerminateResolver,
   },
   CurrentUser: {
     school: schoolResolver,

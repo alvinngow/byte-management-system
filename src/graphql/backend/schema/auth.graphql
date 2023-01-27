@@ -34,3 +34,13 @@ type AccountRoleUpdatePayload {
   clientMutationId: String
   user: User
 }
+
+input AccountTerminateInput {
+  clientMutationId: String
+  userId: ID!
+}
+
+type AccountTerminatePayload {
+  clientMutationId: String
+  ok: Boolean
+}

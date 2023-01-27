@@ -3,4 +3,5 @@ type Mutation {
   accountSignup(input: SignupInput!): CurrentUser
   accountLogout(input: LogoutInput): Boolean!
   accountRoleUpdate(input: AccountRoleUpdateInput!): AccountRoleUpdatePayload!
+  accountTerminate(input: AccountTerminateInput!): AccountTerminatePayload!
 }
