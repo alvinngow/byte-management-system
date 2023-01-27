@@ -50,9 +50,9 @@ const LoginPage: NextPage = function (props) {
 
   return (
     <PlainLayout>
-      <div className="flex flex-col justify-center items-center h-screen">
+      <div className="flex h-screen flex-col items-center justify-center">
         <form
-          className="flex flex-col w-3/4 "
+          className="flex w-3/4 flex-col "
           onSubmit={handleSubmit(onSubmit)}
         >
           <img
@@ -89,7 +89,7 @@ const LoginPage: NextPage = function (props) {
           )}
           <button
             type="submit"
-            className="rounded-3xl shadow-lg text-white bg-blue-400 p-2"
+            className="rounded-3xl bg-blue-400 p-2 text-white shadow-lg"
           >
             Login
           </button>

@@ -28,7 +28,7 @@ const NavBar: React.FC<Props> = function (props) {
           ))}
         </ul>
       </nav>
-      <div className="ml-48 relative">{children}</div>
+      <div className="relative ml-48">{children}</div>
     </>
   );
 };

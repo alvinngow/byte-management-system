@@ -53,9 +53,9 @@ const SignupPage: NextPage = function (props) {
 
   return (
     <PlainLayout>
-      <div className="flex flex-col justify-center items-center h-screen w-full">
+      <div className="flex h-screen w-full flex-col items-center justify-center">
         <form
-          className="flex flex-col w-3/4 "
+          className="flex w-3/4 flex-col "
           onSubmit={handleSubmit(onSubmit)}
         >
           <p className="mb-3 text-xl">Create an account</p>
@@ -66,13 +66,13 @@ const SignupPage: NextPage = function (props) {
             </Link>
           </p>
 
-          <div className="grid grid-cols-2 w-full">
+          <div className="grid w-full grid-cols-2">
             <div className="pr-2">
               <label htmlFor="First Name">First Name</label>
               <input
                 type="text"
                 placeholder="John"
-                className="border-b w-full mt-3 border-gray-400 mr-3 mb-5 py-1 px-2 leading-tight focus:outline-none"
+                className="mt-3 mr-3 mb-5 w-full border-b border-gray-400 py-1 px-2 leading-tight focus:outline-none"
                 aria-invalid={errors.firstName ? 'true' : 'false'}
                 {...register('firstName', { required: true })}
               />
@@ -85,7 +85,7 @@ const SignupPage: NextPage = function (props) {
               <input
                 type="text"
                 placeholder="Doe"
-                className="border-b w-full mt-3 border-gray-400 mr-3 mb-5 py-1 px-2 leading-tight focus:outline-none"
+                className="mt-3 mr-3 mb-5 w-full border-b border-gray-400 py-1 px-2 leading-tight focus:outline-none"
                 aria-invalid={errors.lastName ? 'true' : 'false'}
                 {...register('lastName', { required: true })}
               />
@@ -101,7 +101,7 @@ const SignupPage: NextPage = function (props) {
           <input
             type="email"
             placeholder="Email"
-            className="border-b w-full border-gray-400 mr-3 mb-5 py-1 px-2 leading-tight focus:outline-none width-full"
+            className="width-full mr-3 mb-5 w-full border-b border-gray-400 py-1 px-2 leading-tight focus:outline-none"
             aria-invalid={errors.email ? 'true' : 'false'}
             {...register('email', { required: true })}
           />
@@ -115,7 +115,7 @@ const SignupPage: NextPage = function (props) {
           <input
             type="password"
             placeholder="Password"
-            className="border-b w-full border-gray-400 mr-3 mb-5 py-1 px-2 leading-tight focus:outline-none width-full"
+            className="width-full mr-3 mb-5 w-full border-b border-gray-400 py-1 px-2 leading-tight focus:outline-none"
             aria-invalid={errors.password ? 'true' : 'false'}
             {...register('password', { required: true })}
           />
@@ -129,7 +129,7 @@ const SignupPage: NextPage = function (props) {
           <input
             type="text"
             placeholder=""
-            className="border-b w-full border-gray-400 mr-3 mb-5 py-1 px-2 leading-tight focus:outline-none width-full"
+            className="width-full mr-3 mb-5 w-full border-b border-gray-400 py-1 px-2 leading-tight focus:outline-none"
             aria-invalid={errors.school ? 'true' : 'false'}
             {...register('school', { required: true })}
           />
@@ -142,12 +142,12 @@ const SignupPage: NextPage = function (props) {
           </label>
 
           <div className="flex">
-            <span className="border-b border-gray-400 mb-5 py-1 px-2 leading-tight focus:outline-none w-12">
+            <span className="mb-5 w-12 border-b border-gray-400 py-1 px-2 leading-tight focus:outline-none">
               +65
             </span>
             <input
               type="text"
-              className="border-b w-full border-gray-400 mr-3 mb-5 py-1 px-2 leading-tight focus:outline-none width-full appearance-none"
+              className="width-full mr-3 mb-5 w-full appearance-none border-b border-gray-400 py-1 px-2 leading-tight focus:outline-none"
               aria-invalid={errors.mobileNo ? 'true' : 'false'}
               {...register('mobileNo', { required: true })}
               placeholder="9123 4567"
@@ -160,14 +160,14 @@ const SignupPage: NextPage = function (props) {
           <label htmlFor="Avatar">Avatar</label>
           <p className="mb-5"></p>
           {/* <input type="file" /> */}
-          <p className="mb-10 text text-blue-400 underline">
+          <p className="text mb-10 text-blue-400 underline">
             Add Profile Picture
           </p>
 
           <a
             href="login"
             type="submit"
-            className="rounded-3xl shadow-lg text-white bg-blue-400 p-2 text-center"
+            className="rounded-3xl bg-blue-400 p-2 text-center text-white shadow-lg"
           >
             {' '}
             Sign Up

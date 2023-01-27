@@ -73,8 +73,8 @@ const UsersPage: NextPage = function (props) {
 
       {loading && <span>Loading</span>}
 
-      <table className="table-fixed w-full text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <table className="w-full table-fixed text-left text-gray-500 dark:text-gray-400">
+        <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <th className="px-6 py-3">Email</th>
           <th className="px-6 py-3">Name</th>
           <th className="px-6 py-3">Role</th>
@@ -87,7 +87,7 @@ const UsersPage: NextPage = function (props) {
           {data?.users?.edges?.map((edge) => (
             <tr
               key={edge.node.id}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+              className="border-b bg-white dark:border-gray-700 dark:bg-gray-800"
             >
               <td className="px-6 py-4">{edge.node.email}</td>
               <td className="px-6 py-4">
@@ -99,7 +99,7 @@ const UsersPage: NextPage = function (props) {
               {me?.role === UserRole.SystemAdministrator && (
                 <td className="px-6 py-4">
                   <button
-                    className="bg-cyan-400 px-3 py-1 rounded-md text-white hover:bg-cyan-500"
+                    className="rounded-md bg-cyan-400 px-3 py-1 text-white hover:bg-cyan-500"
                     onClick={() => {
                       updateRole(edge.node.id, UserRole.User);
                     }}
@@ -107,7 +107,7 @@ const UsersPage: NextPage = function (props) {
                     Make user
                   </button>
                   <button
-                    className="bg-amber-400 px-3 py-1 rounded-md text-white hover:bg-amber-500"
+                    className="rounded-md bg-amber-400 px-3 py-1 text-white hover:bg-amber-500"
                     onClick={() => {
                       updateRole(edge.node.id, UserRole.CommitteeMember);
                     }}
@@ -115,7 +115,7 @@ const UsersPage: NextPage = function (props) {
                     Make committee member
                   </button>
                   <button
-                    className="bg-orange-400 px-3 py-1 rounded-md text-white hover:bg-orange-500"
+                    className="rounded-md bg-orange-400 px-3 py-1 text-white hover:bg-orange-500"
                     onClick={() => {
                       updateRole(edge.node.id, UserRole.SystemAdministrator);
                     }}
