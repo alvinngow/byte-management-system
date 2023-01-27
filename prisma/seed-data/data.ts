@@ -60,6 +60,28 @@ export async function readLocations() {
   return readFile<BIMSSeedLocation[]>('location.csv');
 }
 
+interface BIMSSeedLocationClusterLocation {
+  location_name: string;
+  cluster_name: string;
+}
+
+export async function readLocationClusterLocations() {
+  return readFile<BIMSSeedLocationClusterLocation[]>(
+    'locationClusterLocation.csv'
+  );
+}
+
+interface BIMSSeedLocationClusterSubscription {
+  user_email: string;
+  cluster_name: string;
+}
+
+export async function readLocationClusterSubscriptions() {
+  return readFile<BIMSSeedLocationClusterSubscription[]>(
+    'locationClusterSubscription.csv'
+  );
+}
+
 interface BIMSSeedCourse {
   id: string;
   name: string;

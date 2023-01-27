@@ -5,7 +5,9 @@ import { DateTime } from 'luxon';
 import {
   readCourseManagers,
   readCourses,
+  readLocationClusterLocations,
   readLocationClusters,
+  readLocationClusterSubscriptions,
   readLocations,
   readSchools,
   readSessionAttendees,
@@ -90,8 +92,10 @@ export default async function bimsSeed() {
 
   const locationClusters = await readLocationClusters();
 
+  const locationClustersIdMap: Record<string, string> = {};
+
   for (const locationCluster of locationClusters) {
-    await prisma.locationCluster.upsert({
+    const createdLocationCluster = await prisma.locationCluster.upsert({
       where: {
         id: locationCluster.id,
       },
@@ -103,6 +107,9 @@ export default async function bimsSeed() {
         name: locationCluster.name,
       },
     });
+
+    locationClustersIdMap[createdLocationCluster.name] =
+      createdLocationCluster.id;
   }
 
   /**
@@ -110,13 +117,62 @@ export default async function bimsSeed() {
    */
   const locations = await readLocations();
 
+  const locationsIdMap: Record<string, string> = {};
+
   for (const location of locations) {
-    await prisma.location.upsert({
+    const createdLocation = await prisma.location.upsert({
       where: {
         id: location.id,
       },
       update: location,
       create: location,
+    });
+
+    locationsIdMap[createdLocation.name] = createdLocation.id;
+  }
+
+  /**
+   * LocationClusterLocations
+   */
+  const locationClusterLocations = await readLocationClusterLocations();
+
+  for (const locationClusterLocation of locationClusterLocations) {
+    await prisma.locationClusterLocation.upsert({
+      where: {
+        clusterId_locationId: {
+          clusterId:
+            locationClustersIdMap[locationClusterLocation.cluster_name],
+          locationId: locationsIdMap[locationClusterLocation.location_name],
+        },
+      },
+      update: {},
+      create: {
+        clusterId: locationClustersIdMap[locationClusterLocation.cluster_name],
+        locationId: locationsIdMap[locationClusterLocation.location_name],
+      },
+    });
+  }
+
+  /**
+   * LocationClusterSubscriptions
+   */
+  const locationClusterSubscriptions = await readLocationClusterSubscriptions();
+
+  for (const locationClusterSubscription of locationClusterSubscriptions) {
+    await prisma.locationClusterSubscription.upsert({
+      where: {
+        clusterId_userId: {
+          clusterId:
+            locationClustersIdMap[locationClusterSubscription.cluster_name],
+          userId: usersIdMap[locationClusterSubscription.user_email],
+        },
+      },
+      update: {},
+      create: {
+        clusterId:
+          locationClustersIdMap[locationClusterSubscription.cluster_name],
+        userId: usersIdMap[locationClusterSubscription.user_email],
+      },
     });
   }
 
