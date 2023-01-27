@@ -15,5 +15,18 @@
   "[typescriptreact]": {
     "editor.formatOnSave": false
   },
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "tailwindCSS.experimental.classRegex": [
+    // Adapted from https://github.com/tailwindlabs/tailwindcss/issues/7553#issuecomment-917271069
+    // Highlights from `// @ts` to the next semicolon
+    [
+      "//\\s?@tw\\s?([^;]*);",
+      "'([^']*)'"
+    ],
+    // Adapted from https://github.com/tailwindlabs/tailwindcss/issues/7553#issuecomment-735915659
+    [
+      "classnames\\(([^)]*)\\)",
+      "'([^']*)'"
+    ]
+  ]
 }
