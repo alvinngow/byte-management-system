@@ -1,0 +1,19 @@
+type SessionAttendee {
+    id: ID!
+    sessionId: ID!
+    session: Session!
+    userId: ID!
+    user: User!
+    indicatedAttendance: Attendance!
+    actualAttendance: Attendance
+}
+
+type SessionAttendeeEdge {
+    node: SessionAttendee!
+    cursor: String!
+}
+
+type SessionAttendeeConnection {
+    edges: [SessionAttendeeEdge!]!
+    pageInfo: PageInfo!
+}

@@ -1,0 +1,19 @@
+type Course {
+    id: ID!
+    name: String!
+    description: String!
+    defaultStartTime: Time!
+    defaultEndTime: Time!
+
+    sessions(first: Int = 10, after: String): SessionConnection!
+}
+
+type CourseEdge {
+    node: Course!
+    cursor: String!
+}
+
+type CourseConnection {
+    edges: [CourseEdge!]!
+    pageInfo: PageInfo!
+}

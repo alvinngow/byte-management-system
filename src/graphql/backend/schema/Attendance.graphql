@@ -1,0 +1,4 @@
+enum Attendance {
+    attending
+    not_attending
+}

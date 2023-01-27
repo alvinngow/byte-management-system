@@ -64,6 +64,7 @@ model LocationCluster {
 }
 
 model LocationClusterLocation {
+  id         String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   locationId String          @db.Uuid
   location   Location        @relation(fields: [locationId], references: [id])
   clusterId  String          @db.Uuid
@@ -73,6 +74,7 @@ model LocationClusterLocation {
 }
 
 model LocationClusterSubscription {
+  id              String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   clusterId       String          @db.Uuid
   locationCluster LocationCluster @relation(fields: [clusterId], references: [id])
   userId          String          @db.Uuid
@@ -147,6 +149,7 @@ model Course {
 }
 
 model CourseManager {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   courseId String @db.Uuid
   course   Course @relation(fields: [courseId], references: [id])
   userId   String @db.Uuid
@@ -161,6 +164,7 @@ model CourseManager {
 // Volunteer Management Module
 
 model SessionAttendee {
+  id                  String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   sessionId           String  @db.Uuid
   session             Session @relation(fields: [sessionId], references: [id])
   userId              String  @db.Uuid

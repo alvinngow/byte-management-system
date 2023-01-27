@@ -1,5 +1,8 @@
 type Query {
   me: CurrentUser
-  schools(first: Int = 10, after: String): SchoolConnection
-  users(first: Int = 10, after: String): UserConnection
+  schools(first: Int = 10, after: String): SchoolConnection!
+  users(first: Int = 10, after: String): UserConnection!
+  locationClusters(first: Int = 10, after: String): LocationClusterConnection!
+  locations(first: Int = 10, after: String): LocationConnection!
+  courses(first: Int = 10, after: String): CourseConnection!
 }

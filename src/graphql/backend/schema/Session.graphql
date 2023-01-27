@@ -1,0 +1,27 @@
+type Session {
+    id: ID!
+    name: String!
+    description: String!
+    overrideStartTime: Time
+    overrideEndTime: Time
+    startDate: Date!
+    endDate: Date!
+
+    courseId: ID!
+    course: Course!
+
+    overrideLocationId: ID
+    overrideLocation: Location
+
+    attendees(first: Int = 10, after: String): SessionAttendeeConnection!
+}
+
+type SessionEdge {
+    node: Session!
+    cursor: String!
+}
+
+type SessionConnection {
+    edges: [SessionEdge!]!
+    pageInfo: PageInfo!
+}

@@ -1,0 +1,16 @@
+type LocationCluster {
+    id: ID!
+    name: String!
+
+    locations(first: Int = 10, after: String): LocationConnection!
+}
+
+type LocationClusterEdge {
+    node: LocationCluster!
+    cursor: String!
+}
+
+type LocationClusterConnection {
+    edges: [LocationClusterEdge!]!
+    pageInfo: PageInfo!
+}

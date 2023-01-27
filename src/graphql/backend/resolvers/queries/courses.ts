@@ -2,18 +2,21 @@ import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection
 
 import { QueryResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
+import requireAuthenticated from '../util/requireAuthenticated';
 
-export const schoolsResolver: QueryResolvers['schools'] = async (
+export const coursesResolver: QueryResolvers['courses'] = async (
   root,
   args,
   context,
   info
 ) => {
+  await requireAuthenticated(context);
+
   const { first, after } = args;
 
   const result = await findManyCursorConnection(
-    (args) => prisma.school.findMany(args),
-    () => prisma.school.count(),
+    (args) => prisma.course.findMany(args),
+    () => prisma.course.count(),
     { first, after },
     { resolveInfo: info }
   );
