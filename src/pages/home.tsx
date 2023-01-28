@@ -1,83 +1,13 @@
+import { useQuery } from '@apollo/client';
 import { NextPage } from 'next';
 
+import VolunteerNavHeader from '../components/VolunteerNavHeader';
 import AppLayout from '../layouts/AppLayout';
 
 const HomePage: NextPage = function () {
   return (
     <AppLayout>
-      <div>
-        {/* nav bar */}
-        <nav className="rounded border-gray-200 bg-white px-2 py-2.5 dark:bg-gray-900 sm:px-4">
-          <div className="container mx-auto flex flex-wrap">
-            <a href="https://flowbite.com/" className="flex place-items-start">
-              {/* change to the BYTE logo when ready */}
-              <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                className="mr-3 h-6 sm:h-9"
-                alt="Byte Logo"
-              />
-              <span className="self-center whitespace-nowrap text-xl font-semibold">
-                Byte
-              </span>
-            </a>
-
-            <div
-              className="hidden w-full items-start justify-between md:order-1 md:flex md:w-auto"
-              id="mobile-menu-2"
-            >
-              <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 px-4 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:text-sm md:font-medium">
-                <li>
-                  <a
-                    href="classes/detail/[id]"
-                    className="rounded-lg pt-3 pb-3 pl-3 pr-3 text-gray-700 hover:bg-gray-200 md:hover:text-blue-500"
-                    aria-current="page"
-                  >
-                    DISCOVER CAUSES
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/classes"
-                    className="rounded-lg pt-3 pb-3 pl-3 pr-3 text-gray-700 hover:bg-gray-200 md:hover:text-blue-500"
-                  >
-                    MY SESSIONS
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/classes"
-                    className="block rounded py-2 px-4 pl-3 pr-4 text-gray-700 hover:bg-gray-200 md:p-0 md:hover:text-blue-500"
-                  >
-                    setting icon
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/classes"
-                    className="block rounded py-2 px-4 pl-3 pr-4 text-gray-700 hover:bg-gray-200 md:p-0 md:hover:text-blue-500"
-                  >
-                    bell icon
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/classes"
-                    className="block rounded py-2 px-4 pl-3 pr-4 text-gray-700 hover:bg-gray-200 md:p-0 md:hover:text-blue-500"
-                  >
-                    {/* AVATAR USER ICON */}
-                    <button
-                      id="dropdownUserAvatarButton"
-                      data-dropdown-toggle="dropdownAvatar"
-                      className="mx-3 flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 md:mr-0"
-                      type="button"
-                    ></button>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </div>
+      <VolunteerNavHeader />
 
       <div>
         {/* body */}
