@@ -1,9 +1,9 @@
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
-import Image from 'next/image';
 
 import NavBar from '../../../components/NavBar';
 import NavHeader from '../../../components/NavHeader';
+import NavLink from '../../../components/NavLink';
 import AppLayout from '../../../layouts/AppLayout';
 
 const ClassPage: React.FC = function () {
@@ -11,9 +11,9 @@ const ClassPage: React.FC = function () {
     <AppLayout>
       <NavHeader />
       <div className="my-6 mx-auto flex w-4/5 items-center justify-between">
-        <h6 className="font-bold">Classes</h6>
-        <button className="rounded-full bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700">
-          + ADD CLASS
+        <h6 className="mb-2 font-bold">Classes</h6>
+        <button className="basis-1/5 rounded-full bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700">
+          <NavLink href={`/manage/class/add`}>+ ADD CLASS</NavLink>
         </button>
       </div>
       <div className="mx-auto flex w-80 overflow-x-auto sm:w-[30rem] md:w-min lg:w-4/5">
