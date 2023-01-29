@@ -1,0 +1,53 @@
+.btn-lg {
+  font-size: 15px;
+  @apply p-2;
+}
+
+.btn-sm {
+  font-size: 13px;
+  letter-spacing: 0.46px;
+  @apply p-1;
+}
+
+.btn-md {
+  font-size: 14px;
+  background-color: black;
+  @apply p-1.5;
+}
+
+.btn-xs {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.primary {
+  background: var(--brand-main);
+  transition: 0.5s;
+  @apply text-white;
+}
+
+.btn {
+  text-transform: uppercase;
+  @apply rounded-3xl shadow-lg;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  border-radius: 20px;
+  @apply bg-gray-200 text-gray-400;
+}
+
+.primary:hover:enabled {
+  @apply bg-blue-300;
+}
+
+.default {
+  color: #64748b;
+  border: 1px solid #64748b;
+  border-radius: 30px;
+  transition: 0.5s;
+}
+
+.default:hover:enabled {
+  @apply bg-gray-300;
+}
