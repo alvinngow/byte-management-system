@@ -1,12 +1,19 @@
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { Card } from 'flowbite-react';
+import { NextPage } from 'next';
+import Head from 'next/head';
 import Image from 'next/image';
 
 import Button from '../../src/components/Button';
 
-export default function Home() {
+const LandingPage: NextPage = function () {
   return (
     <div>
+      <Head>
+        <title>Byte&apos;s Volunteering Management System</title>
+        <meta name="description" content="Integrated with Byte.sg" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       {/* jumbotron */}
       <div
         className="none relative overflow-hidden rounded-b-[50px] md:block"
@@ -181,4 +188,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default LandingPage;
