@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { NextPage } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -55,11 +56,7 @@ const LoginPage: NextPage = function (props) {
           className="flex w-3/4 flex-col "
           onSubmit={handleSubmit(onSubmit)}
         >
-          <img
-            style={{ width: '150px', height: '150px' }}
-            src="https://via.placeholder.com/150"
-            alt=""
-          />
+          <Image width="150" height="150" src="/star.png" alt="" />
           <p style={{ fontSize: '20px' }}>Sign in</p>
           <p>
             New user?{' '}
