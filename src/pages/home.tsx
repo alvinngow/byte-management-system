@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { NextPage } from 'next';
 
 import VolunteerNavHeader from '../components/VolunteerNavHeader';
@@ -47,57 +48,31 @@ const HomePage: NextPage = function () {
           </div>
         </form>
         {/* start of dropdown filters */}
-        <div className="mb-8 grid grid-cols-2 gap-4 pl-12 pr-12">
-          <div>
+        <div className="mb-8 flex gap-4 pl-12 pr-12">
+          <div className="w-1/2">
             <p className="text-xs text-gray-500">Skills</p>
-            <button
-              id="dropdownDefaultButton"
-              data-dropdown-toggle="dropdown"
-              className="inline-flex items-center border-b-2 border-solid border-b-neutral-400 py-2.5 text-center text-sm text-gray-500"
-              type="button"
-            >
-              All{' '}
-              <svg
-                className="ml-2 h-4 w-4"
-                aria-hidden="true"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+            <div className="flex">
+              <button
+                id="dropdownDefaultButton"
+                data-dropdown-toggle="dropdown"
+                className="inline-flex w-full flex-initial items-center gap-x-96 border-b-2 border-solid border-b-neutral-400 py-2.5 text-center text-sm text-gray-500"
+                type="button"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 9l-7 7-7-7"
-                ></path>
-              </svg>
-            </button>
+                All{' '}
+                <ChevronDownIcon className="ml-auto h-6 w-6"></ChevronDownIcon>
+              </button>
+            </div>
           </div>
-          <div>
+          <div className="w-1/2">
             <p className="text-xs text-gray-500">Location</p>
             <button
               id="dropdownDefaultButton"
               data-dropdown-toggle="dropdown"
-              className="inline-flex items-center border-b-2 border-solid border-b-neutral-400 py-2.5 text-center text-sm text-gray-500"
+              className="inline-flex w-full items-center border-b-2 border-solid border-b-neutral-400 py-2.5 text-center text-sm text-gray-500"
               type="button"
             >
               All{' '}
-              <svg
-                className="ml-2 h-4 w-4"
-                aria-hidden="true"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 9l-7 7-7-7"
-                ></path>
-              </svg>
+              <ChevronDownIcon className="ml-auto h-6 w-6"></ChevronDownIcon>
             </button>
           </div>
         </div>
