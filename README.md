@@ -1,6 +1,5 @@
 # byte-integrated-management-system
 
-[![Deploy to Staging](https://github.com/kr-pokectr/byte-integrated-management-system/actions/workflows/deploy-staging.yml/badge.svg)](https://github.com/kr-pokectr/byte-integrated-management-system/actions/workflows/deploy-staging.yml)
 [![Playwright Tests](https://github.com/kr-pokectr/byte-integrated-management-system/actions/workflows/test.yml/badge.svg)](https://github.com/kr-pokectr/byte-integrated-management-system/actions/workflows/test.yml)
 [![Build and Push Docker Image](https://github.com/kr-pokectr/byte-integrated-management-system/actions/workflows/build-docker-image.yml/badge.svg)](https://github.com/kr-pokectr/byte-integrated-management-system/actions/workflows/build-docker-image.yml)
 
