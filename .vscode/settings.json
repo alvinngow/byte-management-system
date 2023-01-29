@@ -16,6 +16,9 @@
     "editor.formatOnSave": false
   },
   "editor.tabSize": 2,
+  "typescript.inlayHints.parameterTypes.enabled": true,
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.format.enable": false,
   "tailwindCSS.experimental.classRegex": [
     // Adapted from https://github.com/tailwindlabs/tailwindcss/issues/7553#issuecomment-917271069
     // Highlights from `// @ts` to the next semicolon

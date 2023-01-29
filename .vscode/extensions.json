@@ -3,6 +3,7 @@
     "dbaeumer.vscode-eslint",
     "42crunch.vscode-openapi",
     "prisma.prisma",
-    "graphql.vscode-graphql-syntax"
+    "graphql.vscode-graphql-syntax",
+    "graphql.vscode-graphql"
   ]
 }
