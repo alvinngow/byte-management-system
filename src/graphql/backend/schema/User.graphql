@@ -4,7 +4,7 @@ type User {
   lastName: String!
   email: String!
   mobileNo: String!
-  avatar: String!
+  avatar: String
   school: School
   role: UserRole
 }
@@ -15,7 +15,7 @@ type CurrentUser {
   firstName: String!
   lastName: String!
   mobileNo: String!
-  avatar: String!
+  avatar: String
   createdAt: DateTime!
   school: School
   role: UserRole!

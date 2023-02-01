@@ -1,0 +1,10 @@
+input FileUploadInput {
+    clientMutationId: String
+    contentType: String!
+}
+
+type FileUploadPayload {
+    clientMutationId: String
+    signedUrl: String!
+    fileName: String!
+}

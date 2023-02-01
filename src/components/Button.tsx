@@ -22,6 +22,7 @@ const Button: React.FC<React.PropsWithChildren<PropType>> = (props) => {
     style,
     className,
     children,
+    ...otherProps
   } = props;
   const classes = classNames({
     [styles.btn]: true,
@@ -34,6 +35,7 @@ const Button: React.FC<React.PropsWithChildren<PropType>> = (props) => {
       type={type}
       style={style}
       className={`${classes} ${className}`}
+      {...otherProps}
     >
       {children}
       {label}

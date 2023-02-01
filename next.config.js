@@ -10,6 +10,16 @@ const nextConfig = {
 
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '9000',
+        pathname: `/${process.env.AWS_S3_BUCKET}/**`,
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

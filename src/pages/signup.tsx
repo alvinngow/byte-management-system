@@ -157,13 +157,6 @@ const SignupPage: NextPage = function (props) {
             )}
           </div>
 
-          <label htmlFor="Avatar">Avatar</label>
-          <p className="mb-5"></p>
-          {/* <input type="file" /> */}
-          <p className="text mb-10 text-blue-400 underline">
-            Add Profile Picture
-          </p>
-
           <a
             href="login"
             type="submit"

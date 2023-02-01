@@ -19,7 +19,7 @@ model User {
   schoolId  String? @db.Uuid
   school    School? @relation(fields: [schoolId], references: [id])
   mobileNo  String
-  avatar    String
+  avatar    String?
   role      String  @default("user")
 
   locationClusterSubscriptions LocationClusterSubscription[]
