@@ -6,7 +6,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import NavLink from './NavLink';
 
@@ -70,11 +70,10 @@ const ClassInfo: React.FC = function () {
     },
   ];
 
-  const [activeTab, setActiveTab] = useState<
-    'Class Information' | 'Timeslots' | 'Volunteer Attendees'
-  >('Class Information');
-
   const [classImg, setImg] = useState('null');
+  const [fileValue, setFileValue] = useState<string>('');
+  const fileName = useRef('No file uploaded');
+  const fileSize = useRef('0mb');
 
   function UploadFile(event: React.ChangeEvent<HTMLInputElement>) {
     event.persist();
@@ -84,7 +83,7 @@ const ClassInfo: React.FC = function () {
       const fileURL = URL.createObjectURL(file);
       if (file.size > 3145728) {
         alert('File is too big!');
-        (document.getElementById('file') as HTMLInputElement)!.value = '';
+        setFileValue('');
         return;
       } else {
         var img = document.createElement('img');
@@ -97,11 +96,11 @@ const ClassInfo: React.FC = function () {
                 img.naturalHeight +
                 ' is too big.\nRequired dimensions: 1500x1000'
             );
-            (document.getElementById('file') as HTMLInputElement)!.value = '';
+            setFileValue('');
             return;
           } else {
-            document.getElementById('fileName')!.textContent = file.name;
-            document.getElementById('fileSize')!.textContent =
+            fileName.current = file.name;
+            fileSize.current =
               String((file.size * 0.000001).toPrecision(2)) + 'mb';
             setImg(fileURL);
           }
@@ -109,13 +108,30 @@ const ClassInfo: React.FC = function () {
         img.src = fileURL;
       }
     }
+    console.log((document.getElementById('file') as HTMLInputElement).value);
   }
 
   function DeleteFile() {
-    (document.getElementById('file') as HTMLInputElement)!.value = '';
-    document.getElementById('fileName')!.textContent = 'No file uploaded';
-    document.getElementById('fileSize')!.textContent = '0mb';
+    setFileValue('');
     setImg('null');
+    console.log((document.getElementById('file') as HTMLInputElement).value);
+    fileName.current = 'No file uploaded';
+    fileSize.current = '0mb';
+  }
+
+  function HandleKeyDown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (event.key === 'Enter' && event.currentTarget.id === 'description') {
+      event.currentTarget.value += '\u2022 ';
+    }
+  }
+
+  function HandleFocus(event: React.FocusEvent<HTMLTextAreaElement>) {
+    if (
+      event.currentTarget.id === 'description' &&
+      event.currentTarget.value === ''
+    ) {
+      event.currentTarget.value = '\u2022 ';
+    }
   }
 
   return (
@@ -146,6 +162,8 @@ const ClassInfo: React.FC = function () {
               id={field.id}
               className="w-full whitespace-pre-line border-b-2 bg-white pt-2 outline-none"
               placeholder={field.placeholder}
+              onKeyUp={HandleKeyDown}
+              onFocus={HandleFocus}
             ></textarea>
           ) : (
             <input
@@ -172,6 +190,7 @@ const ClassInfo: React.FC = function () {
             id="file"
             className="hidden"
             accept="image/svg, image/jpeg, image/png, image/gif"
+            value={fileValue}
           />
         </label>
         <span className="block text-center text-gray-400">
@@ -181,13 +200,11 @@ const ClassInfo: React.FC = function () {
       <div className="mt-10">
         <DocumentArrowUpIcon className="mb-7 inline h-7 w-7 rounded-full bg-gray-200 p-1" />
         <div className="inline-block pl-3">
-          <span id="fileName" className="inline-block max-w-lg truncate">
-            No file uploaded
+          <span className="inline-block max-w-lg truncate">
+            {fileName.current}
           </span>
           <br></br>
-          <span id="fileSize" className="text-gray-400">
-            0mb
-          </span>
+          <span className="text-gray-400">{fileSize.current}</span>
           {classImg !== 'null' ? (
             <span className="pl-3 text-gray-400">Complete</span>
           ) : (
@@ -203,7 +220,7 @@ const ClassInfo: React.FC = function () {
       ) : (
         <div className="mt-3">
           <p className="font-semibold">Preview</p>
-          <div className="placeholderBG relative mx-auto mt-2 flex aspect-[3/2] justify-center rounded-md">
+          <div className="placeholderBG relative mx-auto mt-2 flex aspect-[728/225] justify-center rounded-md">
             <Image
               src={classImg}
               alt="icon placeholder"
