@@ -1,0 +1,11 @@
+.link-text {
+  @apply text-brand-main;
+}
+
+.link-underline-light {
+  @apply underline decoration-brand-light;
+}
+
+.link-text-default:hover {
+  @apply underline decoration-brand-main;
+}
