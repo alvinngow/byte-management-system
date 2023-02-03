@@ -19,6 +19,7 @@ export const Query = gql`
           email
           firstName
           lastName
+          mobileNo
           school {
             id
             name
