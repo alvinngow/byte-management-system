@@ -99,7 +99,7 @@ const Select: React.FC<Props> = function (props) {
       >
         <div className="flex flex-col">
           <span className="mb-1 self-start text-xs text-gray-400">{label}</span>
-          <div className="flex items-center justify-between border-b-2 border-b-primary-color">
+          <div className="border-b-primary-color flex items-center justify-between border-b-2">
             <span
               className={classNames('text-md mb-1', {
                 'bg-gray-600': selectedItem == null,
