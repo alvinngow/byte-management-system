@@ -31,5 +31,8 @@
       "classnames\\(([^)]*)\\)",
       "'([^']*)'"
     ]
-  ]
+  ],
+  "yaml.schemas": {
+    "https://json.schemastore.org/prettierrc.json": ".prettierrc"
+  }
 }
