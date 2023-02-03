@@ -1,0 +1,78 @@
+.input-div {
+  @apply flex flex-col;
+}
+
+.input-error * {
+  color: var(--error) !important;
+  border-color: var(--error) !important;
+}
+
+.input-error input::placeholder {
+  color: var(--error) !important;
+}
+
+.input-success * {
+  border-color: var(--success) !important;
+}
+
+.input {
+  border: 0;
+  padding: 7px 0;
+  outline: none;
+  font-size: 16px;
+  border-bottom: 1px solid lightgray;
+}
+
+.input ~ .input-end-icons > .input-tick-icon {
+  @apply opacity-100;
+}
+
+.input:focus ~ .input-end-icons > .input-tick-icon {
+  @apply opacity-0;
+}
+
+.input ~ .input-end-icons > .input-clear-icon {
+  @apply opacity-0;
+}
+
+.input:focus ~ .input-end-icons > .input-clear-icon {
+  @apply opacity-100;
+}
+
+.input ~ .focus-border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #3399ff;
+  transition: 0.4s;
+}
+
+.input:focus ~ .focus-border {
+  width: 100%;
+  transition: 0.4s;
+}
+
+.input-label {
+  font-size: 12px;
+
+  @apply mb-2 text-gray-400;
+}
+
+.input-end-icons {
+  display: flex;
+  bottom: 0;
+  right: 0;
+  @apply absolute;
+}
+
+.message-show {
+  display: flex;
+
+  @apply mt-2;
+}
+
+.message-hide {
+  @apply hidden;
+}
