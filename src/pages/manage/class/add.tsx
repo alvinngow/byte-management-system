@@ -67,11 +67,11 @@ const AddClass: NextPage = function () {
                     key={'button' + i}
                     className={classNames(
                       {
-                        'bg-gray-100 text-sky-600':
+                        'text-sky-600 bg-gray-100':
                           buttonSelected === button.name,
                         'text-gray-500': buttonSelected !== button.name,
                       },
-                      'group mb-0.5 flex w-full items-center rounded-lg py-0.5 px-0.5 hover:bg-gray-100 hover:text-sky-600 sm:py-3 sm:px-4'
+                      'hover:text-sky-600 group mb-0.5 flex w-full items-center rounded-lg py-0.5 px-0.5 hover:bg-gray-100 sm:py-3 sm:px-4'
                     )}
                     onClick={() => handleButtonChange(button.name)}
                   >
@@ -81,7 +81,7 @@ const AddClass: NextPage = function () {
                           'text-sky-600': buttonSelected === button.name,
                           'text-gray-500': buttonSelected !== button.name,
                         },
-                        'h-6 w-6 group-hover:text-sky-600'
+                        'group-hover:text-sky-600 h-6 w-6'
                       )}
                     />
                     <span

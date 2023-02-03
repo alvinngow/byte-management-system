@@ -29,7 +29,7 @@ const NavHeader: React.FC = function () {
             onClick={() => setActiveNavHeaderButton('home')}
             className={classNames(
               activeNavHeaderButton === 'home'
-                ? 'bg-gray-100 text-sky-600'
+                ? 'text-sky-600 bg-gray-100'
                 : 'text-gray-600',
               'items-center rounded-lg py-2 px-2 text-sm italic text-gray-600 sm:px-4'
             )}
@@ -42,7 +42,7 @@ const NavHeader: React.FC = function () {
             onClick={() => setActiveNavHeaderButton('classes')}
             className={classNames(
               activeNavHeaderButton === 'classes'
-                ? 'bg-gray-100 text-sky-600'
+                ? 'text-sky-600 bg-gray-100'
                 : 'text-gray-600',
               'items-center rounded-lg py-2 px-2 text-sm italic text-gray-600 sm:px-4'
             )}
@@ -60,7 +60,7 @@ const NavHeader: React.FC = function () {
         <div className="py-3 pr-3">
           <BellIcon style={{ color: '#6B7280' }} className="h-6 w-6" />
         </div>
-        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-300">
+        <span className="bg-neutral-300 flex h-10 w-10 items-center justify-center rounded-full">
           <Image
             className="h-6"
             src="/profile.png"

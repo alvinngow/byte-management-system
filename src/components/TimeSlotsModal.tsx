@@ -62,7 +62,7 @@ const TimeSlotsModal: React.FC<Props> = function (props) {
         <div className="flex justify-center pb-14">
           <button
             onClick={onClose}
-            className="mr-2.5 basis-1/4 rounded-full bg-zinc-100 py-2 px-4 font-bold text-slate-500 hover:bg-zinc-200"
+            className="bg-zinc-100 text-slate-500 hover:bg-zinc-200 mr-2.5 basis-1/4 rounded-full py-2 px-4 font-bold"
           >
             CANCEL
           </button>

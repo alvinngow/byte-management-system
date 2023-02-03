@@ -55,7 +55,7 @@ const HomePage: NextPage = function () {
               <button
                 id="dropdownDefaultButton"
                 data-dropdown-toggle="dropdown"
-                className="inline-flex w-full flex-initial items-center gap-x-96 border-b-2 border-solid border-b-neutral-400 py-2.5 text-center text-sm text-gray-500"
+                className="border-b-neutral-400 inline-flex w-full flex-initial items-center gap-x-96 border-b-2 border-solid py-2.5 text-center text-sm text-gray-500"
                 type="button"
               >
                 All{' '}
@@ -68,7 +68,7 @@ const HomePage: NextPage = function () {
             <button
               id="dropdownDefaultButton"
               data-dropdown-toggle="dropdown"
-              className="inline-flex w-full items-center border-b-2 border-solid border-b-neutral-400 py-2.5 text-center text-sm text-gray-500"
+              className="border-b-neutral-400 inline-flex w-full items-center border-b-2 border-solid py-2.5 text-center text-sm text-gray-500"
               type="button"
             >
               All{' '}

@@ -99,7 +99,7 @@ const UsersPage: NextPage = function (props) {
               {me?.role === UserRole.SystemAdministrator && (
                 <td className="px-6 py-4">
                   <button
-                    className="rounded-md bg-cyan-400 px-3 py-1 text-white hover:bg-cyan-500"
+                    className="bg-cyan-400 hover:bg-cyan-500 rounded-md px-3 py-1 text-white"
                     onClick={() => {
                       updateRole(edge.node.id, UserRole.User);
                     }}
@@ -107,7 +107,7 @@ const UsersPage: NextPage = function (props) {
                     Make user
                   </button>
                   <button
-                    className="rounded-md bg-amber-400 px-3 py-1 text-white hover:bg-amber-500"
+                    className="bg-amber-400 hover:bg-amber-500 rounded-md px-3 py-1 text-white"
                     onClick={() => {
                       updateRole(edge.node.id, UserRole.CommitteeMember);
                     }}
