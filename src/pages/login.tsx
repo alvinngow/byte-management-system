@@ -6,6 +6,8 @@ import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 
+import Button from '../components/Button';
+import Input from '../components/Input';
 import * as LoginMutation from '../graphql/frontend/mutations/LoginMutation';
 import PlainLayout from '../layouts/PlainLayout';
 
@@ -56,7 +58,7 @@ const LoginPage: NextPage = function (props) {
           className="flex w-3/4 flex-col "
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Image width="150" height="150" src="/star.png" alt="" />
+          <Image width="35" height="35" src="/byte-no-bg.svg" alt="" />
           <p style={{ fontSize: '20px' }}>Sign in</p>
           <p>
             New user?{' '}
@@ -64,7 +66,7 @@ const LoginPage: NextPage = function (props) {
               Create an account
             </Link>
           </p>
-          <input
+          <Input
             type="email"
             className="mt-4"
             placeholder="Email"
@@ -74,7 +76,7 @@ const LoginPage: NextPage = function (props) {
           {errors.email && (
             <span className="text-red-400">{errors.email.message}</span>
           )}
-          <input
+          <Input
             type="password"
             className="my-4"
             placeholder="Password"
@@ -84,12 +86,7 @@ const LoginPage: NextPage = function (props) {
           {errors.password && (
             <span className="text-red-400">{errors.password.message}</span>
           )}
-          <button
-            type="submit"
-            className="rounded-3xl bg-blue-400 p-2 text-white shadow-lg"
-          >
-            Login
-          </button>
+          <Button type="submit">Login</Button>
         </form>
       </div>
     </PlainLayout>
