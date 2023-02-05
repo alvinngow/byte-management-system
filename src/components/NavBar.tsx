@@ -1,34 +1,120 @@
-import React from 'react';
+import { AcademicCapIcon, UsersIcon } from '@heroicons/react/24/outline';
+import classNames from 'classnames';
+import { handleClientScriptLoad } from 'next/script';
+import React, { useEffect, useState } from 'react';
 
+import ByteLogo from './ByteLogo';
 import NavLink from './NavLink';
+import Select from './Select';
 
 interface Links {
   href: string;
-  name: string;
+  name: 'Users' | 'Classes';
+  icon: React.ElementType;
 }
 
 interface Props extends React.PropsWithChildren {}
 
-const NavLinks: Links[] = [
-  { href: '/manage/volunteer', name: 'Volunteer' },
-  { href: '/manage/class', name: 'Class' },
-  { href: '/manage/commitee', name: 'Commitee Member' },
-];
-
 const NavBar: React.FC<Props> = function (props) {
   const { children } = props;
+
+  const NavLinks: Links[] = [
+    { href: '/manage/volunteer', name: 'Users', icon: UsersIcon },
+    { href: '/manage/class', name: 'Classes', icon: AcademicCapIcon },
+  ];
+
+  const [linkSelected, setLinkSelected] = useState<'Users' | 'Classes'>(
+    'Users'
+  );
+  const handleClick = (value: 'Users' | 'Classes') => {
+    setLinkSelected(value);
+  };
+
+  const [viewportSize, setViewport] = useState('desktop');
+
+  useEffect(() => {
+    if (window.innerWidth >= 1024) {
+      setViewport('desktop');
+    } else {
+      setViewport('mobile');
+    }
+
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setViewport('desktop');
+      } else {
+        setViewport('mobile');
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <>
-      <nav className="sidenav">
-        <ul>
-          {NavLinks.map((link, i) => (
-            <li key={'link' + i}>
-              <NavLink href={link.href}>{link.name}</NavLink>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <div className="relative ml-48">{children}</div>
+      {viewportSize === 'desktop' && (
+        <>
+          <nav className="sidenav border-r px-2">
+            <div className="mb-4 inline w-full">
+              <ByteLogo />
+            </div>
+
+            <Select
+              items={[
+                { label: 'Committee Member', value: 'Committee Member' },
+                { label: 'Admin', value: 'Admin' },
+              ]}
+              label={'View As'}
+              value={'Test'}
+              className="w-full"
+              onChange={function (value: string): void {
+                throw new Error('Function not implemented.');
+              }}
+            ></Select>
+            <ul className="w-full">
+              {NavLinks.map((link, i) => (
+                <li
+                  key={'link' + i}
+                  className={classNames(
+                    {
+                      'text-sky-600 bg-gray-100': linkSelected === link.name,
+                      'text-gray-500': linkSelected !== link.name,
+                    },
+                    'hover:text-sky-600 group mb-0.5 flex w-full items-center rounded-lg py-0.5 px-0.5 hover:bg-gray-100 sm:py-3 sm:px-4'
+                  )}
+                  onClick={() => handleClick(link.name)}
+                >
+                  <link.icon
+                    className={classNames(
+                      {
+                        'text-sky-600': linkSelected === link.name,
+                        'text-gray-500': linkSelected !== link.name,
+                      },
+                      'group-hover:text-sky-600 h-6 w-6'
+                    )}
+                  />
+                  <NavLink
+                    className="group pl-4 font-semibold"
+                    href={link.href}
+                  >
+                    {link.name}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </>
+      )}
+      <div
+        className={classNames('relative', {
+          'ml-48': viewportSize === 'desktop',
+        })}
+      >
+        {children}
+      </div>
     </>
   );
 };

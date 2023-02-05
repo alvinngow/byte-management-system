@@ -9,6 +9,7 @@ import { NextPage } from 'next';
 import React from 'react';
 
 import ClassInfo from '../../../components/ClassInfo';
+import NavBar from '../../../components/NavBar';
 import NavHeader from '../../../components/NavHeader';
 import NavLink from '../../../components/NavLink';
 import TimeSlots from '../../../components/TimeSlots';
@@ -46,65 +47,72 @@ const AddClass: NextPage = function () {
 
   return (
     <AppLayout>
-      <NavHeader />
-      <div className="mt-2 ml-2 sm:mt-6 sm:ml-14 lg:mt-12 lg:ml-28">
-        <NavLink href="/manage/class">
+      <NavBar>
+        <NavHeader />
+        <div className="mt-2 ml-2 sm:mt-6 sm:ml-14 lg:mt-12 lg:ml-10">
           <div className="ml-6 mb-12 flex items-center px-2">
-            <ArrowLeftIcon
-              style={{ color: '#0F172A' }}
-              className="mr-2.5 h-6 w-6"
-            />
-            <p>Back to Classes</p>
+            <NavLink href="/manage/class">
+              <p className="flex">
+                <ArrowLeftIcon
+                  style={{ color: '#0F172A' }}
+                  className="h-6 w-6"
+                />
+                <span className="pl-2">Back to Classes</span>
+              </p>
+            </NavLink>
           </div>
-        </NavLink>
-        <div className="ml-6 flex flex-col">
-          <p className="text-2xl font-semibold">Add Class</p>
-          <div className="flex">
-            <div className="mr-6 basis-1/4">
-              {RenderButtons.map((button, i) => {
-                return (
-                  <button
-                    key={'button' + i}
-                    className={classNames(
-                      {
-                        'text-sky-600 bg-gray-100':
-                          buttonSelected === button.name,
-                        'text-gray-500': buttonSelected !== button.name,
-                      },
-                      'hover:text-sky-600 group mb-0.5 flex w-full items-center rounded-lg py-0.5 px-0.5 hover:bg-gray-100 sm:py-3 sm:px-4'
-                    )}
-                    onClick={() => handleButtonChange(button.name)}
-                  >
-                    <button.isrc
+          <div className="ml-6 flex flex-col">
+            <p className="text-2xl font-semibold">Add Class</p>
+            <div className="flex">
+              <div className="mr-6 basis-1/4">
+                {RenderButtons.map((button, i) => {
+                  return (
+                    <button
+                      key={'button' + i}
                       className={classNames(
                         {
-                          'text-sky-600': buttonSelected === button.name,
+                          'text-sky-600 bg-gray-100':
+                            buttonSelected === button.name,
                           'text-gray-500': buttonSelected !== button.name,
                         },
-                        'group-hover:text-sky-600 h-6 w-6'
+                        'hover:text-sky-600 group mb-0.5 flex w-full items-center rounded-lg py-0.5 px-0.5 hover:bg-gray-100 sm:py-3 sm:px-4'
                       )}
-                    />
-                    <span
-                      className={classNames('pl-1 group-hover:text-blue-500', {
-                        'text-blue-500': buttonSelected === button.name,
-                      })}
+                      onClick={() => handleButtonChange(button.name)}
                     >
-                      {button.name}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-            <div className="basis-1/2">
-              {buttonSelected === 'Class Information' && <ClassInfo />}
-              {buttonSelected === 'Timeslots' && <TimeSlots />}
-              {buttonSelected === 'Volunteer Attendees' && (
-                <h1>Volunteer Attendees</h1>
-              )}
+                      <button.isrc
+                        className={classNames(
+                          {
+                            'text-sky-600': buttonSelected === button.name,
+                            'text-gray-500': buttonSelected !== button.name,
+                          },
+                          'group-hover:text-sky-600 h-6 w-6'
+                        )}
+                      />
+                      <span
+                        className={classNames(
+                          'pl-1 group-hover:text-blue-500',
+                          {
+                            'text-blue-500': buttonSelected === button.name,
+                          }
+                        )}
+                      >
+                        {button.name}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="basis-1/2">
+                {buttonSelected === 'Class Information' && <ClassInfo />}
+                {buttonSelected === 'Timeslots' && <TimeSlots />}
+                {buttonSelected === 'Volunteer Attendees' && (
+                  <h1>Volunteer Attendees</h1>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </NavBar>
     </AppLayout>
   );
 };

@@ -97,7 +97,7 @@ const Select: React.FC<Props> = function (props) {
         {...otherProps}
         {...getReferenceProps()}
       >
-        <div className="flex flex-col">
+        <div className="flex w-full flex-col">
           <span className="mb-1 self-start text-xs text-gray-400">{label}</span>
           <div className="border-b-primary-color flex items-center justify-between border-b-2">
             <span
