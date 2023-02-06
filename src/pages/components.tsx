@@ -2,6 +2,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
 
+import BackButton from '../components/BackButton';
 import Select, { SelectItem } from '../components/Select';
 import AppLayout from '../layouts/AppLayout';
 
@@ -43,6 +44,11 @@ const Components: NextPage = function (props) {
         <h1 className="mb-4 text-3xl font-bold">Components showcase</h1>
 
         <SelectShowcase />
+        <BackButton
+          href="/home"
+          className="font-bold text-red-900"
+          text="Example"
+        />
       </div>
     </AppLayout>
   );
