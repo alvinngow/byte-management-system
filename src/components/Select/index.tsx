@@ -22,7 +22,7 @@ interface Props
   extends Omit<React.HTMLAttributes<HTMLButtonElement>, 'onChange'> {
   items: SelectItem[];
   label: string;
-  value: string;
+  value: string | null;
   onChange: (value: string) => void;
 }
 

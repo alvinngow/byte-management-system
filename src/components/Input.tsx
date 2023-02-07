@@ -42,6 +42,10 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, PropType> =
       [styles['message-hide']]: !showMessage,
     });
 
+    React.useEffect(() => {
+      setInputState(value);
+    }, [value]);
+
     return (
       <div
         className={`${styles['input-div']} ${

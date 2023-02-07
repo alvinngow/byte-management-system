@@ -1,7 +1,7 @@
 import React from 'react';
 
-import TimeSlotsEmptyStateIcon from './TimeSlotsEmptyStateIcon';
-import TimeSlotsModal from './TimeSlotsModal';
+import TimeSlotsEmptyStateIcon from './components/TimeSlotsEmptyStateIcon';
+import TimeSlotsModal from './components/TimeSlotsModal';
 
 const TimeSlots: React.FC = function () {
   const [showModal, setShowModal] = React.useState(false);
