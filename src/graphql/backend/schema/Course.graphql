@@ -1,7 +1,9 @@
 type Course {
     id: ID!
     name: String!
+    subtitle: String
     description: String!
+    descriptionPrivate: String
     defaultStartTime: Time!
     defaultEndTime: Time!
 

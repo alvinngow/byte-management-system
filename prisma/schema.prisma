@@ -134,15 +134,17 @@ model Session {
 }
 
 model Course {
-  id                String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name              String
-  description       String
-  defaultStartTime  DateTime        @db.Timetz(2)
-  defaultEndTime    DateTime        @db.Timetz(2)
-  defaultLocationId String?         @db.Uuid
-  defaultLocation   Location?       @relation(fields: [defaultLocationId], references: [id])
-  sessions          Session[]
-  courseManagers    CourseManager[]
+  id                 String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name               String
+  subtitle           String?
+  description        String
+  descriptionPrivate String          @default("")
+  defaultStartTime   DateTime        @db.Timetz(2)
+  defaultEndTime     DateTime        @db.Timetz(2)
+  defaultLocationId  String?         @db.Uuid
+  defaultLocation    Location?       @relation(fields: [defaultLocationId], references: [id])
+  sessions           Session[]
+  courseManagers     CourseManager[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

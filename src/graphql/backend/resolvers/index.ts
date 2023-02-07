@@ -1,4 +1,5 @@
 import { Resolvers } from '../../../../gen/graphql/resolvers';
+import { Course_descriptionPrivateResolver } from './Course/descriptionPrivate';
 import { Course_sessionsResolver } from './Course/sessions';
 import { CurrentUser_roleResolver } from './CurrentUser/role';
 import { Location_clustersResolver } from './Location/clusters';
@@ -60,6 +61,7 @@ const resolvers: Resolvers = {
     clusters: Location_clustersResolver,
   },
   Course: {
+    descriptionPrivate: Course_descriptionPrivateResolver,
     sessions: Course_sessionsResolver,
   },
   Session: {
