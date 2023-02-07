@@ -3,6 +3,8 @@ type Location {
     name: String!
     address: String!
     description: String!
+    lat: Float!
+    lng: Float!
 
     clusters(first: Int = 10, after: String): LocationClusterConnection!
 }
