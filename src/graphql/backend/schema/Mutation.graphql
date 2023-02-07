@@ -6,4 +6,5 @@ type Mutation {
   accountTerminate(input: AccountTerminateInput!): AccountTerminatePayload!
   accountAvatarUpdate(input: AccountAvatarUpdateInput!): CurrentUser!
   fileUpload(input: FileUploadInput!): FileUploadPayload!
+  courseAdd(input: CourseAddInput!): CourseAddPayload!
 }

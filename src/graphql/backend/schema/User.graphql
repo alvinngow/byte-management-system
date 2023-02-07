@@ -30,3 +30,8 @@ type UserEdge {
   node: User!
   cursor: String!
 }
+
+input UserFiltering {
+  role: [UserRole!]
+  searchTerm: String
+}

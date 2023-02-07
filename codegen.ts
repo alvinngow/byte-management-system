@@ -9,7 +9,7 @@ const scalars: ScalarsMap = {
   Date: 'Date',
   DateTime: 'string',
   EmailAddress: 'string',
-  Time: 'Date',
+  Time: 'string',
 };
 
 const config: CodegenConfig = {

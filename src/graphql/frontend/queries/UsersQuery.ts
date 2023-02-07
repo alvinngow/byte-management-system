@@ -1,6 +1,9 @@
 import { gql } from '@apollo/client';
 
-import { UserConnection } from '../../../../gen/graphql/resolvers';
+import {
+  UserConnection,
+  UserFiltering,
+} from '../../../../gen/graphql/resolvers';
 
 export interface Data {
   users: UserConnection;
@@ -8,11 +11,12 @@ export interface Data {
 
 export interface Variables {
   after?: string;
+  filter?: UserFiltering;
 }
 
 export const Query = gql`
-  query UsersQuery($after: String) {
-    users(first: 10, after: $after) {
+  query UsersQuery($after: String, $filter: UserFiltering) {
+    users(first: 10, after: $after, filter: $filter) {
       edges {
         node {
           id

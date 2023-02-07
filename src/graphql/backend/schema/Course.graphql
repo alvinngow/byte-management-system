@@ -6,6 +6,7 @@ type Course {
     descriptionPrivate: String
     defaultStartTime: Time!
     defaultEndTime: Time!
+    coverImage: String!
 
     sessions(first: Int = 10, after: String): SessionConnection!
 }
@@ -18,4 +19,26 @@ type CourseEdge {
 type CourseConnection {
     edges: [CourseEdge!]!
     pageInfo: PageInfo!
+}
+
+input CourseAddInput {
+    clientMutationId: String
+    courseName: String!
+    courseDescription: String!
+    courseDescriptionPrivate: String
+    courseSubtitle: String
+    courseCoverFilename: String
+    courseDefaultStartTime: Time!
+    courseDefaultEndTime: Time!
+    locationName: String!
+    locationAddress: String!
+    locationDescription: String!
+    locationLat: Float!
+    locationLng: Float!
+    locationClusterId: String
+}
+
+type CourseAddPayload {
+    clientMutationId: String
+    course: Course!
 }

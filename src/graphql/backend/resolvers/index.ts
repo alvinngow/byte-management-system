@@ -1,4 +1,7 @@
 import { Resolvers } from '../../../../gen/graphql/resolvers';
+import { Course_coverImageResolver } from './Course/coverImage';
+import { Course_defaultEndTimeResolver } from './Course/defaultEndTime';
+import { Course_defaultStartTimeResolver } from './Course/defaultStartTime';
 import { Course_descriptionPrivateResolver } from './Course/descriptionPrivate';
 import { Course_sessionsResolver } from './Course/sessions';
 import { CurrentUser_roleResolver } from './CurrentUser/role';
@@ -10,7 +13,9 @@ import { accountLogoutResolver } from './mutations/accountLogout';
 import { accountRoleUpdateResolver } from './mutations/accountRoleUpdate';
 import { accountSignupResolver } from './mutations/accountSignup';
 import { accountTerminateResolver } from './mutations/accountTerminate';
+import { courseAddResolver } from './mutations/courseAdd';
 import fileUploadResolver from './mutations/fileUpload';
+import { courseResolver } from './queries/course';
 import { coursesResolver } from './queries/courses';
 import { locationClustersResolver } from './queries/locationClusters';
 import { locationsResolver } from './queries/locations';
@@ -33,6 +38,7 @@ const resolvers: Resolvers = {
     locationClusters: locationClustersResolver,
     locations: locationsResolver,
     courses: coursesResolver,
+    course: courseResolver,
   },
   Mutation: {
     accountLogin: accountLoginResolver,
@@ -42,6 +48,7 @@ const resolvers: Resolvers = {
     accountTerminate: accountTerminateResolver,
     accountAvatarUpdate: accountAvatarUpdateResolver,
     fileUpload: fileUploadResolver,
+    courseAdd: courseAddResolver,
   },
   CurrentUser: {
     avatar: User_avatarResolver,
@@ -61,8 +68,11 @@ const resolvers: Resolvers = {
     clusters: Location_clustersResolver,
   },
   Course: {
+    coverImage: Course_coverImageResolver,
     descriptionPrivate: Course_descriptionPrivateResolver,
     sessions: Course_sessionsResolver,
+    defaultStartTime: Course_defaultStartTimeResolver,
+    defaultEndTime: Course_defaultEndTimeResolver,
   },
   Session: {
     attendees: Session_attendeesResolver,
