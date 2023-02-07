@@ -147,6 +147,7 @@ model Course {
   defaultLocation    Location?       @relation(fields: [defaultLocationId], references: [id])
   sessions           Session[]
   courseManagers     CourseManager[]
+  coverImage         String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
