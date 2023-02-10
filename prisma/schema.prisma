@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -53,8 +54,9 @@ model Location {
 
   locationClusterLocations LocationClusterLocation[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  CourseWithSessionInfo CourseWithSessionInfo[]
 }
 
 model LocationCluster {
@@ -130,6 +132,31 @@ model Session {
   overrideLocationId String?           @db.Uuid
   overrideLocation   Location?         @relation(fields: [overrideLocationId], references: [id])
   sessionAttendees   SessionAttendee[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// This is a DB view, it is the Course model with details on the
+// session information (start date of the first session, end date of the last session)
+//
+// NOTE: THIS NEEDS TO BE KEPT IN SYNC WITH Course MODEL.
+// only the `defaultLocation` relation is mapped due to Prisma views
+// not properly supporting relations (https://github.com/prisma/prisma/issues/17335)
+//
+view CourseWithSessionInfo {
+  id                    String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                  String
+  subtitle              String?
+  description           String
+  descriptionPrivate    String    @default("")
+  defaultStartTime      DateTime  @db.Timetz(2)
+  defaultEndTime        DateTime  @db.Timetz(2)
+  defaultLocationId     String?   @db.Uuid
+  defaultLocation       Location? @relation(fields: [defaultLocationId], references: [id])
+  coverImage            String?
+  firstSessionStartDate DateTime?
+  lastSessionEndDate    DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

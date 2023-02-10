@@ -21,6 +21,28 @@ type CourseConnection {
     pageInfo: PageInfo!
 }
 
+"""
+Represents sorting options for Course
+"""
+enum CourseSortKey {
+    NAME
+    LOCATION_NAME
+    START_DATE
+    END_DATE
+}
+
+enum CourseDateFiltering {
+    UPCOMING
+    PAST
+}
+
+"""
+Represents filtering options for Course
+"""
+input CourseFiltering {
+    date: CourseDateFiltering
+}
+
 input CourseAddInput {
     clientMutationId: String
     courseName: String!
