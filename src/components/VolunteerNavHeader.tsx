@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import React from 'react';
 
-import ByteLogo from '../components/ByteLogo';
+import ByteLogo from '../components/icons/ByteLogo';
 import * as MeQuery from '../graphql/frontend/queries/MeQuery';
 import NavLink from './NavLink';
 const NavHeader: React.FC = function () {
@@ -29,7 +29,7 @@ const NavHeader: React.FC = function () {
             onClick={() => setActiveNavHeaderButton('home')}
             className={classNames(
               activeNavHeaderButton === 'home'
-                ? 'text-sky-600 bg-gray-100'
+                ? 'bg-gray-100 text-sky-600'
                 : 'text-gray-600',
               'items-center rounded-lg py-2 px-2 text-sm italic text-gray-600 sm:px-4'
             )}
@@ -42,7 +42,7 @@ const NavHeader: React.FC = function () {
             onClick={() => setActiveNavHeaderButton('classes')}
             className={classNames(
               activeNavHeaderButton === 'classes'
-                ? 'text-sky-600 bg-gray-100'
+                ? 'bg-gray-100 text-sky-600'
                 : 'text-gray-600',
               'items-center rounded-lg py-2 px-2 text-sm italic text-gray-600 sm:px-4'
             )}
@@ -60,7 +60,7 @@ const NavHeader: React.FC = function () {
         <div className="py-3 pr-3">
           <BellIcon style={{ color: '#6B7280' }} className="h-6 w-6" />
         </div>
-        <span className="bg-neutral-300 flex h-10 w-10 items-center justify-center rounded-full">
+        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-300">
           <Image
             className="h-6"
             src="/profile.png"

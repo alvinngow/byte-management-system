@@ -16,10 +16,10 @@ const TabButton: React.FC<React.PropsWithChildren<Props>> = function (props) {
     <button
       className={classNames(
         {
-          'text-sky-600 bg-gray-100': active,
+          'bg-gray-100 text-sky-600': active,
           'text-gray-500': !active,
         },
-        'hover:text-sky-600 group mb-0.5 flex w-full items-center rounded-lg py-0.5 px-0.5 hover:bg-gray-100 sm:py-3 sm:px-4'
+        'group mb-0.5 flex w-full items-center rounded-lg py-0.5 px-0.5 hover:bg-gray-100 hover:text-sky-600 sm:py-3 sm:px-4'
       )}
       onClick={onClick}
     >
@@ -29,7 +29,7 @@ const TabButton: React.FC<React.PropsWithChildren<Props>> = function (props) {
             'text-sky-600': active,
             'text-gray-500': !active,
           },
-          'group-hover:text-sky-600 h-6 w-6'
+          'h-6 w-6 group-hover:text-sky-600'
         )}
       />
       <span

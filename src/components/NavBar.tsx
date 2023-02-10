@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { handleClientScriptLoad } from 'next/script';
 import React, { useEffect, useState } from 'react';
 
-import ByteLogo from './ByteLogo';
+import ByteLogo from './icons/ByteLogo';
 import NavLink from './NavLink';
 import Select from './Select';
 
@@ -80,10 +80,10 @@ const NavBar: React.FC<Props> = function (props) {
                   key={'link' + i}
                   className={classNames(
                     {
-                      'text-sky-600 bg-gray-100': linkSelected === link.name,
+                      'bg-gray-100 text-sky-600': linkSelected === link.name,
                       'text-gray-500': linkSelected !== link.name,
                     },
-                    'hover:text-sky-600 group mb-0.5 flex w-full items-center rounded-lg py-0.5 px-0.5 hover:bg-gray-100 sm:py-3 sm:px-4'
+                    'group mb-0.5 flex w-full items-center rounded-lg py-0.5 px-0.5 hover:bg-gray-100 hover:text-sky-600 sm:py-3 sm:px-4'
                   )}
                   onClick={() => handleClick(link.name)}
                 >
@@ -93,7 +93,7 @@ const NavBar: React.FC<Props> = function (props) {
                         'text-sky-600': linkSelected === link.name,
                         'text-gray-500': linkSelected !== link.name,
                       },
-                      'group-hover:text-sky-600 h-6 w-6'
+                      'h-6 w-6 group-hover:text-sky-600'
                     )}
                   />
                   <NavLink

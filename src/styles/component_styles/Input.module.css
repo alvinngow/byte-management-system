@@ -21,6 +21,8 @@
   outline: none;
   font-size: 16px;
   border-bottom: 1px solid lightgray;
+  @apply focus:outline-none focus:ring-white focus:border-white
+
 }
 
 .input ~ .input-end-icons > .input-tick-icon {
@@ -52,6 +54,7 @@
 .input:focus ~ .focus-border {
   width: 100%;
   transition: 0.4s;
+
 }
 
 .input-label {

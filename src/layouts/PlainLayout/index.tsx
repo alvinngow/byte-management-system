@@ -11,7 +11,7 @@ const PlainLayout: React.FC<React.PropsWithChildren> = function (props) {
         className="relative hidden overflow-hidden lg:block"
         style={{ backgroundColor: '#F1F4FB' }}
       >
-        <h1 className="px-12 text-center text-5xl font-bold md:mt-32 xl:mt-24">
+        <h1 className="px-10 text-center text-5xl font-bold sm:mt-14 md:mt-20 xl:mt-24">
           Welcome to our community!
         </h1>
         <Image
@@ -22,7 +22,7 @@ const PlainLayout: React.FC<React.PropsWithChildren> = function (props) {
           alt="Translucent blue background"
         />
         <Image
-          className="absolute left-0 right-0 bottom-0 mx-auto md:shrink-0"
+          className="absolute left-0 right-0 bottom-0 mx-auto md:w-10/12 md:shrink-0 xl:w-10/12"
           src="/welcome-community.png"
           alt="Welcome Community"
           width="798"

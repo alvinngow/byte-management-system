@@ -10,6 +10,7 @@ interface PropType extends React.InputHTMLAttributes<HTMLInputElement> {
   showMessage?: Boolean;
   message?: ReactElement;
   value?: string;
+  prefixElement?: ReactElement;
 }
 
 const Input: React.ForwardRefRenderFunction<HTMLInputElement, PropType> =
@@ -24,6 +25,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, PropType> =
       message,
       color,
       value = '',
+      prefixElement,
       ...otherProps
     } = props;
     const [inputState, setInputState] = useState(value);
@@ -56,7 +58,12 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, PropType> =
           {label}
         </label>
 
-        <div className={`${styles['input-box']} relative w-full`}>
+        <div className={`${styles['input-box']} relative flex w-full`}>
+          {prefixElement && (
+            <span className={`${styles['input']} focus:outline-none`}>
+              {prefixElement}
+            </span>
+          )}
           <input
             className={`${styles['input']} w-full`}
             id={id}

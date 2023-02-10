@@ -5,6 +5,9 @@ import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 
+import Button from '../components/Button';
+import Input from '../components/Input';
+import CustomLink from '../components/Link';
 import * as SignupMutation from '../graphql/frontend/mutations/SignupMutation';
 import PlainLayout from '../layouts/PlainLayout';
 
@@ -55,116 +58,126 @@ const SignupPage: NextPage = function (props) {
     <PlainLayout>
       <div className="flex h-screen w-full flex-col items-center justify-center">
         <form
-          className="flex w-3/4 flex-col "
+          className="flex flex-col xsm:w-full xsm:w-4/5 md:w-3/4 md:px-0 xl:w-1/2"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <p className="mb-3 text-xl">Create an account</p>
-          <p className="mb-6">
+          <h3 className="mb-3">Create an account</h3>
+          <p className="body1 mb-4">
             Registered?{' '}
-            <Link className="text text-blue-400 underline" href="/login">
-              Login here.
-            </Link>
+            <CustomLink text="Login here." href="/login" variant="underlined">
+              Login here
+            </CustomLink>
           </p>
-
-          <div className="grid w-full grid-cols-2">
-            <div className="pr-2">
-              <label htmlFor="First Name">First Name</label>
-              <input
+          <div className="grid gap-5">
+            <div className="grid w-full grid-cols-2 gap-5 py-2">
+              <Input
                 type="text"
                 placeholder="John"
-                className="mt-3 mr-3 mb-5 w-full border-b border-gray-400 py-1 px-2 leading-tight focus:outline-none"
-                aria-invalid={errors.firstName ? 'true' : 'false'}
+                label="First Name"
+                showMessage={errors.firstName ? true : false}
+                message={
+                  errors.firstName ? (
+                    <span className="text-red-400">
+                      {errors.firstName.message}
+                    </span>
+                  ) : (
+                    <></>
+                  )
+                }
                 {...register('firstName', { required: true })}
-              />
-              {errors.firstName && (
-                <span className="text-red-400">{errors.firstName.message}</span>
-              )}
-            </div>
-            <div className="pl-2">
-              <label htmlFor="Last Name">Last Name</label>
-              <input
+              ></Input>
+              <Input
                 type="text"
                 placeholder="Doe"
-                className="mt-3 mr-3 mb-5 w-full border-b border-gray-400 py-1 px-2 leading-tight focus:outline-none"
-                aria-invalid={errors.lastName ? 'true' : 'false'}
+                label="Last Name"
+                showMessage={errors.lastName ? true : false}
+                message={
+                  errors.lastName ? (
+                    <span className="text-red-400">
+                      {errors.lastName.message}
+                    </span>
+                  ) : (
+                    <></>
+                  )
+                }
                 {...register('lastName', { required: true })}
-              />
-              {errors.lastName && (
-                <span className="text-red-400">{errors.lastName.message}</span>
-              )}
+              ></Input>
             </div>
-          </div>
 
-          <label htmlFor="Email" className="mb-3">
-            Email
-          </label>
-          <input
-            type="email"
-            placeholder="Email"
-            className="width-full mr-3 mb-5 w-full border-b border-gray-400 py-1 px-2 leading-tight focus:outline-none"
-            aria-invalid={errors.email ? 'true' : 'false'}
-            {...register('email', { required: true })}
-          />
-          {errors.email && (
-            <span className="text-red-400">{errors.email.message}</span>
-          )}
+            <Input
+              type="email"
+              placeholder="johndoe@email.com"
+              label="Email"
+              showMessage={errors.email ? true : false}
+              message={
+                errors.email ? (
+                  <span className="text-red-400">{errors.email.message}</span>
+                ) : (
+                  <></>
+                )
+              }
+              {...register('email', { required: true })}
+            ></Input>
 
-          <label htmlFor="Password" className="mb-3">
-            Password
-          </label>
-          <input
-            type="password"
-            placeholder="Password"
-            className="width-full mr-3 mb-5 w-full border-b border-gray-400 py-1 px-2 leading-tight focus:outline-none"
-            aria-invalid={errors.password ? 'true' : 'false'}
-            {...register('password', { required: true })}
-          />
-          {errors.password && (
-            <span className="text-red-400">{errors.password.message}</span>
-          )}
+            <Input
+              type="password"
+              label="Password"
+              showMessage={errors.password ? true : false}
+              message={
+                errors.password ? (
+                  <span className="text-red-400">
+                    {errors.password.message}
+                  </span>
+                ) : (
+                  <></>
+                )
+              }
+              {...register('password', { required: true })}
+            ></Input>
 
-          <label htmlFor="School/ Work" className="mb-3">
-            School/ Work
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className="width-full mr-3 mb-5 w-full border-b border-gray-400 py-1 px-2 leading-tight focus:outline-none"
-            aria-invalid={errors.school ? 'true' : 'false'}
-            {...register('school', { required: true })}
-          />
-          {errors.school && (
-            <span className="text-red-400">{errors.school.message}</span>
-          )}
-
-          <label htmlFor="Mobile Number" className="mb-3">
-            Mobile Number
-          </label>
-
-          <div className="flex">
-            <span className="mb-5 w-12 border-b border-gray-400 py-1 px-2 leading-tight focus:outline-none">
-              +65
-            </span>
-            <input
+            <Input
               type="text"
-              className="width-full mr-3 mb-5 w-full appearance-none border-b border-gray-400 py-1 px-2 leading-tight focus:outline-none"
-              aria-invalid={errors.mobileNo ? 'true' : 'false'}
-              {...register('mobileNo', { required: true })}
-              placeholder="9123 4567"
-            />
-            {errors.mobileNo && (
-              <span className="text-red-400">{errors.mobileNo.message}</span>
-            )}
-          </div>
+              label="School/ Work"
+              showMessage={errors.school ? true : false}
+              message={
+                errors.school ? (
+                  <span className="text-red-400">{errors.school.message}</span>
+                ) : (
+                  <></>
+                )
+              }
+              {...register('school', { required: true })}
+            ></Input>
 
-          <a
-            href="login"
-            type="submit"
-            className="rounded-3xl bg-blue-400 p-2 text-center text-white shadow-lg"
-          >
-            {' '}
-            Sign Up
-          </a>
+            <Input
+              type="number"
+              placeholder="9123 4567"
+              label="Mobile Number"
+              showMessage={errors.mobileNo ? true : false}
+              message={
+                errors.mobileNo ? (
+                  <span className="text-red-400">
+                    {errors.mobileNo.message}
+                  </span>
+                ) : (
+                  <></>
+                )
+              }
+              prefixElement={
+                <span className="mb-5 h-full w-12 py-0 pr-2 leading-tight focus:outline-none">
+                  +65
+                </span>
+              }
+              {...register('mobileNo', { required: true })}
+            ></Input>
+
+            <Button
+              className="mt-1"
+              href="/signup"
+              type="submit"
+              label="Sign up"
+            ></Button>
+          </div>
         </form>
       </div>
     </PlainLayout>

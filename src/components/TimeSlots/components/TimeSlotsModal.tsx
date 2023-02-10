@@ -21,7 +21,7 @@ const TimeSlotsModal: React.FC<Props> = function (props) {
       onClick={onClose}
     >
       <div
-        className="mb:w-1/2 w-full rounded-xl bg-white sm:w-2/3 2xl:w-1/4"
+        className="mb:w-1/2 2xl:w-1/4 w-full rounded-xl bg-white sm:w-2/3"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="mb-12 flex flex-col gap-4 px-14 pt-14">
@@ -62,7 +62,7 @@ const TimeSlotsModal: React.FC<Props> = function (props) {
         <div className="flex justify-center pb-14">
           <button
             onClick={onClose}
-            className="bg-zinc-100 text-slate-500 hover:bg-zinc-200 mr-2.5 basis-1/4 rounded-full py-2 px-4 font-bold"
+            className="mr-2.5 basis-1/4 rounded-full bg-zinc-100 py-2 px-4 font-bold text-slate-500 hover:bg-zinc-200"
           >
             CANCEL
           </button>

@@ -35,63 +35,63 @@ const TimeSlots: React.FC = function () {
         </div>
       ) : (
         <div className="w-36 overflow-x-auto sm:w-72 md:w-auto">
-          <table className="border-slate-300 m-auto my-5 border">
+          <table className="m-auto my-5 border border-slate-300">
             <thead>
               <tr>
-                <th className="border-slate-300 border py-4 pl-4 text-left">
+                <th className="border border-slate-300 py-4 pl-4 text-left">
                   Date
                 </th>
-                <th className="border-slate-300 border py-4 pl-4 text-left">
+                <th className="border border-slate-300 py-4 pl-4 text-left">
                   Start Time
                 </th>
-                <th className="border-slate-300 border py-4 pl-4 text-left">
+                <th className="border border-slate-300 py-4 pl-4 text-left">
                   End Time
                 </th>
-                <th className="border-slate-300 border py-4 pl-4 text-left">
+                <th className="border border-slate-300 py-4 pl-4 text-left">
                   Volunteer Slots
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="border-slate-300 border py-4 pl-4 text-left">
+                <td className="border border-slate-300 py-4 pl-4 text-left">
                   #1 Date placeholder
                 </td>
-                <td className="border-slate-300 border py-4 pl-4 text-left">
+                <td className="border border-slate-300 py-4 pl-4 text-left">
                   #1 Start Time placeholder
                 </td>
-                <td className="border-slate-300 border py-4 pl-4 text-left">
+                <td className="border border-slate-300 py-4 pl-4 text-left">
                   #1 End Time placeholder
                 </td>
-                <td className="border-slate-300 border py-4 pl-4 text-left">
+                <td className="border border-slate-300 py-4 pl-4 text-left">
                   #1 Volunteer Slots placeholder
                 </td>
               </tr>
               <tr>
-                <td className="border-slate-300 border py-4 pl-4 text-left">
+                <td className="border border-slate-300 py-4 pl-4 text-left">
                   #2 Date placeholder
                 </td>
-                <td className="border-slate-300 border py-4 pl-4 text-left">
+                <td className="border border-slate-300 py-4 pl-4 text-left">
                   #2 Start Time placeholder
                 </td>
-                <td className="border-slate-300 border py-4 pl-4 text-left">
+                <td className="border border-slate-300 py-4 pl-4 text-left">
                   #2 End Time placeholder
                 </td>
-                <td className="border-slate-300 border py-4 pl-4 text-left">
+                <td className="border border-slate-300 py-4 pl-4 text-left">
                   #2 Volunteer Slots placeholder
                 </td>
               </tr>
               <tr>
-                <td className="border-slate-300 border py-4 pl-4 text-left">
+                <td className="border border-slate-300 py-4 pl-4 text-left">
                   #3 Date placeholder
                 </td>
-                <td className="border-slate-300 border py-4 pl-4 text-left">
+                <td className="border border-slate-300 py-4 pl-4 text-left">
                   #3 Start Time placeholder
                 </td>
-                <td className="border-slate-300 border py-4 pl-4 text-left">
+                <td className="border border-slate-300 py-4 pl-4 text-left">
                   #3 End Time placeholder
                 </td>
-                <td className="border-slate-300 border py-4 pl-4 text-left">
+                <td className="border border-slate-300 py-4 pl-4 text-left">
                   #3 Volunteer Slots placeholder
                 </td>
               </tr>

@@ -7,7 +7,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 
 import Button from '../components/Button';
+import ByteLogoIcon from '../components/icons/ByteLogoIcon';
 import Input from '../components/Input';
+import CustomLink from '../components/Link';
 import * as LoginMutation from '../graphql/frontend/mutations/LoginMutation';
 import PlainLayout from '../layouts/PlainLayout';
 
@@ -55,38 +57,55 @@ const LoginPage: NextPage = function (props) {
     <PlainLayout>
       <div className="flex h-screen flex-col items-center justify-center">
         <form
-          className="flex w-3/4 flex-col "
+          className="flex flex-col xsm:w-full xsm:w-4/5 md:w-3/4 md:px-0 xl:w-1/2"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Image width="35" height="35" src="/byte-no-bg.svg" alt="" />
-          <p style={{ fontSize: '20px' }}>Sign in</p>
-          <p>
+          <ByteLogoIcon className="mb-9" />
+          <h3 className="mb-4">Sign in</h3>
+          <p className="body1 text-secondary">
             New user?{' '}
-            <Link className="text text-blue-400" href="/signup">
-              Create an account
-            </Link>
+            <CustomLink
+              text="Create an account"
+              href="/signup"
+              variant="underlined"
+            >
+              Login here.
+            </CustomLink>
           </p>
-          <Input
-            type="email"
-            className="mt-4"
-            placeholder="Email"
-            aria-invalid={errors.email ? 'true' : 'false'}
-            {...register('email', { required: true })}
-          />
-          {errors.email && (
-            <span className="text-red-400">{errors.email.message}</span>
-          )}
-          <Input
-            type="password"
-            className="my-4"
-            placeholder="Password"
-            aria-invalid={errors.password ? 'true' : 'false'}
-            {...register('password', { required: true })}
-          />
-          {errors.password && (
-            <span className="text-red-400">{errors.password.message}</span>
-          )}
-          <Button type="submit">Login</Button>
+          <div className="my-6 grid gap-5">
+            <Input
+              type="email"
+              label="Email"
+              color={errors.email ? 'error' : 'default'}
+              showMessage={errors.email ? true : false}
+              message={
+                errors.email ? (
+                  <span className="text-red-400">{errors.email.message}</span>
+                ) : (
+                  <></>
+                )
+              }
+              {...register('email', { required: true })}
+            ></Input>
+
+            <Input
+              type="password"
+              label="Password"
+              color={errors.password ? 'error' : 'default'}
+              showMessage={errors.password ? true : false}
+              message={
+                errors.password ? (
+                  <span className="text-red-400">
+                    {errors.password.message}
+                  </span>
+                ) : (
+                  <></>
+                )
+              }
+              {...register('password', { required: true })}
+            ></Input>
+            <Button className="mt-1" type="submit" label="Log in"></Button>
+          </div>
         </form>
       </div>
     </PlainLayout>

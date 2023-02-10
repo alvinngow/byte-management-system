@@ -1,18 +1,18 @@
 .btn-lg {
   font-size: 15px;
-  @apply p-2;
+  @apply py-3 px-8;
 }
 
 .btn-sm {
   font-size: 13px;
   letter-spacing: 0.46px;
-  @apply p-1;
+  @apply py-1.5 px-6;
 }
 
 .btn-md {
   font-size: 14px;
   background-color: black;
-  @apply p-1.5;
+  @apply py-2.5 px-7;
 }
 
 .btn-xs {
@@ -27,13 +27,14 @@
 }
 
 .btn {
+  font-weight: 700;
   text-transform: uppercase;
-  @apply rounded-3xl shadow-lg;
+  line-height: 26px;
+  @apply rounded-3xl;
 }
 
 .btn:disabled {
   cursor: not-allowed;
-  border-radius: 20px;
   @apply bg-gray-200 text-gray-400;
 }
 
@@ -41,13 +42,12 @@
   @apply bg-blue-300;
 }
 
-.default {
-  color: #64748b;
-  border: 1px solid #64748b;
-  border-radius: 30px;
+.secondary {
+  background:none;
   transition: 0.5s;
+  @apply text-slate-500 border-[1.5px] border-gray-300;
 }
 
-.default:hover:enabled {
-  @apply bg-gray-300;
+.secondary:hover:enabled {
+  @apply bg-gray-100;
 }

@@ -58,38 +58,39 @@
 
 h1 {
   font-weight: bold;
+  line-height: 70px;
   letter-spacing: -1.5px;
-  @apply text-8xl;
+  @apply text-6xl;
 }
 
 h2 {
   font-weight: 600;
   letter-spacing: -0.5px;
-  @apply text-6xl;
+  @apply text-4xl;
 }
 
 h3 {
   font-weight: 600;
   letter-spacing: 0px;
-  @apply text-5xl;
+  @apply text-3xl;
 }
 
 h4 {
   font-weight: 600;
   letter-spacing: 0.25px;
-  @apply text-4xl;
+  @apply text-2xl;
 }
 
 h5 {
   font-weight: 600;
   letter-spacing: 0px;
-  @apply text-2xl;
+  @apply text-xl;
 }
 
 h6 {
   font-weight: 700;
   letter-spacing: 0.15px;
-  @apply text-xl;
+  @apply text-lg;
 }
 
 @tailwind components;
@@ -149,6 +150,11 @@ h6 {
   letter-spacing: 0px;
 }
 
+.text-secondary{
+  @apply text-slate-500
+}
+
+
 @tailwind utilities;
 
 :root {
@@ -162,10 +168,11 @@ h6 {
 }
 
 html,
-body {
+body{
   padding: 0;
   margin: 0;
-  font-family: 'Visby Round CF';
+  font-family: 'Visby Round CF', Arial, Helvetica, sans-serif;
+  @apply text-slate-900
 }
 
 a {

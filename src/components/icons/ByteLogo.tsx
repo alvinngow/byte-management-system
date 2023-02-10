@@ -1,12 +1,15 @@
+import classNames from 'classnames';
 import React from 'react';
 
 interface ByteLogoProps {
   width?: string;
   height?: string;
+  className?: string;
+  alt?: string;
 }
 
 const ByteLogo: React.FC<ByteLogoProps> = function (props) {
-  const { width = '84px', height = '37px' } = props;
+  const { width = '84px', height = '37px', className, ...otherProps } = props;
   return (
     <svg
       width={width}
@@ -14,6 +17,8 @@ const ByteLogo: React.FC<ByteLogoProps> = function (props) {
       viewBox="0 0 125 46"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      {...otherProps}
     >
       <path
         d="M114.7 41.9H112.1C111.2 41.9 110.5 41.2 110.5 40.3C110.5 39.4 111.2 38.7 112.1 38.7H114.7C115.6 38.7 116.3 39.4 116.3 40.3C116.3 41.2 115.6 41.9 114.7 41.9Z"

@@ -17,57 +17,57 @@ const ClassPage: React.FC = function () {
         </button>
       </div>
       <div className="mx-auto flex w-80 overflow-x-auto sm:w-[30rem] md:w-min lg:w-4/5">
-        <table className="border-slate-300 border md:w-full">
+        <table className="border border-slate-300 md:w-full">
           <thead>
             <tr>
-              <th className="border-slate-300 border-b py-4 pl-4 text-left">
+              <th className="border-b border-slate-300 py-4 pl-4 text-left">
                 ID
               </th>
-              <th className="border-slate-300 border-b py-4 pl-4 text-left">
+              <th className="border-b border-slate-300 py-4 pl-4 text-left">
                 Title
               </th>
-              <th className="border-slate-300 border-b py-4 pl-4 text-left">
+              <th className="border-b border-slate-300 py-4 pl-4 text-left">
                 Location
               </th>
-              <th className="border-slate-300 border-b py-4 pl-4 text-left">
+              <th className="border-b border-slate-300 py-4 pl-4 text-left">
                 Trainer
               </th>
-              <th className="border-slate-300 border-b py-4 pl-4 text-left">
+              <th className="border-b border-slate-300 py-4 pl-4 text-left">
                 Date
               </th>
-              <th className="border-slate-300 border-b py-4 pl-4 text-left">
+              <th className="border-b border-slate-300 py-4 pl-4 text-left">
                 Student Attendees
               </th>
-              <th className="border-slate-300 border-b py-4 pl-4 text-left">
+              <th className="border-b border-slate-300 py-4 pl-4 text-left">
                 Volunteer Attendees
               </th>
-              <th className="border-slate-300 border-b py-4 pl-4 text-left" />
+              <th className="border-b border-slate-300 py-4 pl-4 text-left" />
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 1
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 Learn Music Production From Scratch
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 Sembawang CC
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 John Doe
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 26 Nov 2023
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 4
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 4
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 <div className="flex gap-2.5">
                   <PencilIcon
                     style={{ color: '#6B7280' }}
@@ -78,28 +78,28 @@ const ClassPage: React.FC = function () {
               </td>
             </tr>
             <tr>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 2
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 The Complete Stock Trading Course 2023
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 Ngee Ann Polytechnic
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 John Doe
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 26 Nov 2023
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 4
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 4
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 <div className="flex gap-2.5">
                   <PencilIcon
                     style={{ color: '#6B7280' }}
@@ -110,28 +110,28 @@ const ClassPage: React.FC = function () {
               </td>
             </tr>
             <tr>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 3
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 Live Coding Masterclass: Beginners To Advanced
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 Singapore Management University
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 John Doe
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 26 Nov 2023
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 4
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 4
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 <div className="flex gap-2.5">
                   <PencilIcon
                     style={{ color: '#6B7280' }}
@@ -142,28 +142,28 @@ const ClassPage: React.FC = function () {
               </td>
             </tr>
             <tr>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 4
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 How To Become A Gardening Pro In 30 Days
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 Singapore Management University
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 John Doe
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 26 Nov 2023
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 4
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 4
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 <div className="flex gap-2.5">
                   <PencilIcon
                     style={{ color: '#6B7280' }}
@@ -174,28 +174,28 @@ const ClassPage: React.FC = function () {
               </td>
             </tr>
             <tr>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 5
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 Microsoft Excel Ninja Course
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 Singapore Management University
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 John Doe
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 26 Nov 2023
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 4
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 4
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 <div className="flex gap-2.5">
                   <PencilIcon
                     style={{ color: '#6B7280' }}
@@ -206,28 +206,28 @@ const ClassPage: React.FC = function () {
               </td>
             </tr>
             <tr>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 6
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 Learn Music Production From Scratch
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 Singapore Management University
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 John Doe
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 26 Nov 2023
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 4
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 4
               </td>
-              <td className="border-slate-300 border-b py-4 pl-4 text-left">
+              <td className="border-b border-slate-300 py-4 pl-4 text-left">
                 <div className="flex gap-2.5">
                   <PencilIcon
                     style={{ color: '#6B7280' }}

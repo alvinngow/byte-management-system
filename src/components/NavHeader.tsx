@@ -11,7 +11,7 @@ import Image from 'next/image';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import * as Me from '../graphql/frontend/queries/MeQuery';
-import ByteLogo from './ByteLogo';
+import ByteLogo from './icons/ByteLogo';
 import NavLink from './NavLink';
 import Select from './Select';
 
@@ -162,10 +162,10 @@ const NavHeader: React.FC<Props> = function (props) {
                   key={'link' + i}
                   className={classNames(
                     {
-                      'text-sky-600 bg-gray-100': linkSelected === link.name,
+                      'bg-gray-100 text-sky-600': linkSelected === link.name,
                       'text-gray-500': linkSelected !== link.name,
                     },
-                    'hover:text-sky-600 group mb-0.5 flex w-full items-center rounded-lg py-3 px-3 hover:bg-gray-100 sm:py-3 sm:px-4'
+                    'group mb-0.5 flex w-full items-center rounded-lg py-3 px-3 hover:bg-gray-100 hover:text-sky-600 sm:py-3 sm:px-4'
                   )}
                   onClick={() => setLinkSelected(link.name)}
                 >
@@ -175,7 +175,7 @@ const NavHeader: React.FC<Props> = function (props) {
                         'text-sky-600': linkSelected === link.name,
                         'text-gray-500': linkSelected !== link.name,
                       },
-                      'group-hover:text-sky-600 h-6 w-6'
+                      'h-6 w-6 group-hover:text-sky-600'
                     )}
                   />
                   <NavLink

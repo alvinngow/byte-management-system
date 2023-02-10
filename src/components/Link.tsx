@@ -20,10 +20,7 @@ const CustomLink: React.FC<PropType> = (props) => {
   });
 
   return (
-    <Link
-      className={`text-brand-main" ${linkStyles} ${className}`}
-      {...otherProps}
-    >
+    <Link className={`${linkStyles} ${className}`} {...otherProps}>
       {text}
     </Link>
   );

@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { ReactPropTypes } from 'react';
 
@@ -6,10 +7,14 @@ import styles from '../styles/component_styles/Button.module.css';
 
 interface PropType extends React.HTMLAttributes<HTMLButtonElement> {
   size?: 'xs' | 'sm' | 'md' | 'lg';
-  variant?: 'default' | 'primary' | 'success' | 'warning' | 'error';
+  variant?: 'secondary' | 'primary' | 'success' | 'warning' | 'error';
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
-  label?: String;
+  label?: string;
+  /**
+   * Optional client-side page link.
+   */
+  href?: string;
 }
 
 const Button: React.FC<React.PropsWithChildren<PropType>> = (props) => {
@@ -22,8 +27,28 @@ const Button: React.FC<React.PropsWithChildren<PropType>> = (props) => {
     style,
     className,
     children,
+    onClick,
+    href,
     ...otherProps
   } = props;
+
+  const router = useRouter();
+
+  /**
+   * If href is provided, automatically route to that page
+   */
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    onClick?.(e);
+
+    if (!e.isDefaultPrevented() && href != null) {
+      if (href.startsWith('/')) {
+        router.push(href);
+      } else if (typeof window !== 'undefined') {
+        window.location.href = href;
+      }
+    }
+  };
+
   const classes = classNames({
     [styles.btn]: true,
     [styles[variant]]: true,
@@ -35,6 +60,7 @@ const Button: React.FC<React.PropsWithChildren<PropType>> = (props) => {
       type={type}
       style={style}
       className={`${classes} ${className}`}
+      onClick={handleClick}
       {...otherProps}
     >
       {children}

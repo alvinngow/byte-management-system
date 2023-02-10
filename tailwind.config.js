@@ -7,16 +7,24 @@ module.exports = {
     'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
-    colors: {
-      'brand-main': 'var(--brand-main)',
-      'brand-light': 'var(--brand-light)',
-      'brand-dark': 'var(--brand-dark)',
-      'brand-hover': 'var(--brand-hover)',
-      'brand-grey': 'var(--brand-grey)',
-      success: 'var(--success)',
-      error: 'var(--error)',
+    screens: {
+      xsm: '380px',
+      sm: '480px',
+      md: '768px',
+      lg: '976px',
+      xl: '1440px',
     },
-    extend: {},
+    extend: {
+      colors: {
+        'brand-main': 'var(--brand-main)',
+        'brand-light': 'var(--brand-light)',
+        'brand-dark': 'var(--brand-dark)',
+        'brand-hover': 'var(--brand-hover)',
+        'brand-grey': 'var(--brand-grey)',
+        success: 'var(--success)',
+        error: 'var(--error)',
+      },
+    },
   },
   plugins: [require('flowbite/plugin')],
 };
