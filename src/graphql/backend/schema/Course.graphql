@@ -64,3 +64,28 @@ type CourseAddPayload {
     clientMutationId: String
     course: Course!
 }
+
+input CourseEditInput {
+    clientMutationId: String
+    courseId: ID!
+
+    courseName: String!
+    courseDescription: String!
+    courseDescriptionPrivate: String
+    courseSubtitle: String
+    courseCoverFilename: String
+    courseDefaultStartTime: Time!
+    courseDefaultEndTime: Time!
+    locationName: String!
+    locationAddress: String!
+    locationDescription: String!
+    locationLat: Float!
+    locationLng: Float!
+    locationClusterId: String
+}
+
+type CourseEditPayload {
+    clientMutationId: String
+
+    course: Course!
+}

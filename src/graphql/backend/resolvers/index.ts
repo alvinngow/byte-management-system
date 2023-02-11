@@ -14,6 +14,7 @@ import { accountRoleUpdateResolver } from './mutations/accountRoleUpdate';
 import { accountSignupResolver } from './mutations/accountSignup';
 import { accountTerminateResolver } from './mutations/accountTerminate';
 import { courseAddResolver } from './mutations/courseAdd';
+import { courseEditResolver } from './mutations/courseEdit';
 import fileUploadResolver from './mutations/fileUpload';
 import { courseResolver } from './queries/course';
 import { coursesResolver } from './queries/courses';
@@ -49,6 +50,7 @@ const resolvers: Resolvers = {
     accountAvatarUpdate: accountAvatarUpdateResolver,
     fileUpload: fileUploadResolver,
     courseAdd: courseAddResolver,
+    courseEdit: courseEditResolver,
   },
   CurrentUser: {
     avatar: User_avatarResolver,

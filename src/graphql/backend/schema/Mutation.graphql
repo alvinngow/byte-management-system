@@ -7,4 +7,5 @@ type Mutation {
   accountAvatarUpdate(input: AccountAvatarUpdateInput!): CurrentUser!
   fileUpload(input: FileUploadInput!): FileUploadPayload!
   courseAdd(input: CourseAddInput!): CourseAddPayload!
+  courseEdit(input: CourseEditInput!): CourseEditPayload!
 }

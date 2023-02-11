@@ -10,6 +10,7 @@ import {
 
 import Input from '../../../Input';
 import NavLink from '../../../NavLink';
+import Spinner from '../../../Spinner';
 import {
   CourseData,
   CourseWizardContext,
@@ -202,130 +203,135 @@ const ClassInfo: React.FC<Props> = function (props) {
   return (
     <div className="mb-10 flex h-max flex-col gap-y-2 rounded border px-5 pt-2 shadow-md shadow-gray-400">
       <p className="font-semibold">Class Information</p>
-      <Input
-        value={state.context.courseData.name}
-        onChange={handleTitleChange}
-        label="Title"
-        placeholder="eg. Live Coding Masterclass: Beginners To Advanced"
-      />
-      <Input
-        value={state.context.courseData.subtitle ?? undefined}
-        label="Subtitle"
-        onChange={handleSubtitleChange}
-        placeholder="Short description about the course"
-      />
-      <Input
-        value={state.context.courseData.description}
-        label="Description"
-        onChange={handleDescriptionChange}
-        placeholder="Course modules, class size, attire required etc."
-      />
-      <Input
-        value={state.context.courseData.descriptionPrivate ?? undefined}
-        label="Description (only visible to volunteers)"
-        onChange={handleDescriptionPrivateChange}
-        placeholder="Course modules, class size, attire required etc."
-      />
-      <div className="flex items-center gap-x-4">
-        <LocationPicker
-          locationText={state.context.locationText}
-          onLocationTextChange={handleLocationTextChange}
-          onLocationPicked={handleLocationPicked}
-        />
-        <LocationClusterPicker
-          locationClusterId={state.context.locationClusterId}
-          onLocationClusterPicked={handleLocationClusterPicked}
-        />
-      </div>
-      <ManagersPicker
-        managerUserIds={state.context.managerUserIds}
-        onManagerAdded={handleManagerAdded}
-        onManagerRemoved={handleManagerRemoved}
-      />
-      <div className="flex items-center gap-x-4">
-        <Input
-          className="basis-1/2"
-          type="time"
-          label="Session Default Start Time"
-          value={state.context.courseData.defaultStartTime}
-          onChange={handleDefaultStartTimeChange}
-        />
-        <Input
-          className="basis-1/2"
-          type="time"
-          label="Session Default End Time"
-          value={state.context.courseData.defaultEndTime}
-          onChange={handleDefaultEndTimeChange}
-        />
-      </div>
-      <p className="pt-4 text-lg font-semibold">Cover</p>
-      <div className="mx-auto w-full rounded-md border-2 border-dashed py-4">
-        <label htmlFor="file" className="block text-center">
-          <DocumentArrowUpIcon className="mx-auto h-7 w-7 rounded-full bg-gray-200 p-1 hover:bg-gray-400" />
-          <span className="font-semibold">
-            <span className="text-blue-400 underline">
-              Click to upload&#160;
-            </span>
-          </span>
-          <input
-            onChange={handleInputFileChange}
-            type="file"
-            id="file"
-            className="hidden"
-            accept="image/svg, image/jpeg, image/png, image/gif"
+      {state.matches('loading') && <Spinner />}
+      {state.matches('idle') && (
+        <>
+          <Input
+            value={state.context.courseData.name}
+            onChange={handleTitleChange}
+            label="Title"
+            placeholder="eg. Live Coding Masterclass: Beginners To Advanced"
           />
-
-          <span className="block text-center text-gray-400">
-            SVG, PNG, JPG or GIF (max. 3MB)
-          </span>
-        </label>
-      </div>
-      <div className="mt-10">
-        <DocumentArrowUpIcon className="mb-7 inline h-7 w-7 rounded-full bg-gray-200 p-1" />
-        <div className="inline-block pl-3">
-          <span className="inline-block max-w-lg truncate">
-            {state.context.file?.name ?? 'No file uploaded'}
-          </span>
-          <br></br>
-          <span className="text-gray-400">
-            {((state.context.file?.size ?? 0) * 0.000001).toPrecision(2)} mb
-          </span>
-          <span className="pl-3 text-gray-400">Complete</span>
-        </div>
-        <button
-          onClick={handleFileRemoveClick}
-          className="float-right mt-3 inline"
-        >
-          <XMarkIcon className="h-6 w-6" />
-        </button>
-      </div>
-      {state.context.file != null && (
-        <div className="mt-3">
-          <p className="font-semibold">Preview</p>
-          <div className="placeholderBG relative mx-auto mt-2 flex aspect-[728/225] justify-center rounded-md">
-            <Image
-              src={URL.createObjectURL(state.context.file)}
-              alt="icon placeholder"
-              fill={true}
-              id="classImg"
-              className="rounded-md object-cover"
+          <Input
+            value={state.context.courseData.subtitle ?? undefined}
+            label="Subtitle"
+            onChange={handleSubtitleChange}
+            placeholder="Short description about the course"
+          />
+          <Input
+            value={state.context.courseData.description}
+            label="Description"
+            onChange={handleDescriptionChange}
+            placeholder="Course modules, class size, attire required etc."
+          />
+          <Input
+            value={state.context.courseData.descriptionPrivate ?? undefined}
+            label="Description (only visible to volunteers)"
+            onChange={handleDescriptionPrivateChange}
+            placeholder="Course modules, class size, attire required etc."
+          />
+          <div className="flex items-center gap-x-4">
+            <LocationPicker
+              locationText={state.context.locationText}
+              onLocationTextChange={handleLocationTextChange}
+              onLocationPicked={handleLocationPicked}
+            />
+            <LocationClusterPicker
+              locationClusterId={state.context.locationClusterId}
+              onLocationClusterPicked={handleLocationClusterPicked}
             />
           </div>
-        </div>
+          <ManagersPicker
+            managerUserIds={state.context.managerUserIds}
+            onManagerAdded={handleManagerAdded}
+            onManagerRemoved={handleManagerRemoved}
+          />
+          <div className="flex items-center gap-x-4">
+            <Input
+              className="basis-1/2"
+              type="time"
+              label="Session Default Start Time"
+              value={state.context.courseData.defaultStartTime}
+              onChange={handleDefaultStartTimeChange}
+            />
+            <Input
+              className="basis-1/2"
+              type="time"
+              label="Session Default End Time"
+              value={state.context.courseData.defaultEndTime}
+              onChange={handleDefaultEndTimeChange}
+            />
+          </div>
+          <p className="pt-4 text-lg font-semibold">Cover</p>
+          <div className="mx-auto w-full rounded-md border-2 border-dashed py-4">
+            <label htmlFor="file" className="block text-center">
+              <DocumentArrowUpIcon className="mx-auto h-7 w-7 rounded-full bg-gray-200 p-1 hover:bg-gray-400" />
+              <span className="font-semibold">
+                <span className="text-blue-400 underline">
+                  Click to upload&#160;
+                </span>
+              </span>
+              <input
+                onChange={handleInputFileChange}
+                type="file"
+                id="file"
+                className="hidden"
+                accept="image/svg, image/jpeg, image/png, image/gif"
+              />
+
+              <span className="block text-center text-gray-400">
+                SVG, PNG, JPG or GIF (max. 3MB)
+              </span>
+            </label>
+          </div>
+          <div className="mt-10">
+            <DocumentArrowUpIcon className="mb-7 inline h-7 w-7 rounded-full bg-gray-200 p-1" />
+            <div className="inline-block pl-3">
+              <span className="inline-block max-w-lg truncate">
+                {state.context.file?.name ?? 'No file uploaded'}
+              </span>
+              <br></br>
+              <span className="text-gray-400">
+                {((state.context.file?.size ?? 0) * 0.000001).toPrecision(2)} mb
+              </span>
+              <span className="pl-3 text-gray-400">Complete</span>
+            </div>
+            <button
+              onClick={handleFileRemoveClick}
+              className="float-right mt-3 inline"
+            >
+              <XMarkIcon className="h-6 w-6" />
+            </button>
+          </div>
+          {state.context.file != null && (
+            <div className="mt-3">
+              <p className="font-semibold">Preview</p>
+              <div className="placeholderBG relative mx-auto mt-2 flex aspect-[728/225] justify-center rounded-md">
+                <Image
+                  src={URL.createObjectURL(state.context.file)}
+                  alt="icon placeholder"
+                  fill={true}
+                  id="classImg"
+                  className="rounded-md object-cover"
+                />
+              </div>
+            </div>
+          )}
+          <div className="my-6">
+            <button
+              className="rounded-full bg-blue-500 py-2 px-5 text-sm font-semibold uppercase text-gray-100"
+              onClick={() => {
+                send({ type: 'SUBMIT' });
+              }}
+            >
+              Add Course
+            </button>
+            <button className="ml-3 rounded-full border border-gray-300 py-2 px-5 text-sm font-semibold uppercase text-gray-400">
+              <NavLink href={'./'}>Cancel</NavLink>
+            </button>
+          </div>
+        </>
       )}
-      <div className="my-6">
-        <button
-          className="rounded-full bg-blue-500 py-2 px-5 text-sm font-semibold uppercase text-gray-100"
-          onClick={() => {
-            send({ type: 'SUBMIT' });
-          }}
-        >
-          Add Course
-        </button>
-        <button className="ml-3 rounded-full border border-gray-300 py-2 px-5 text-sm font-semibold uppercase text-gray-400">
-          <NavLink href={'./'}>Cancel</NavLink>
-        </button>
-      </div>
       {state.matches('submitting') && (
         <span className="text-brand-main">Submitting...</span>
       )}

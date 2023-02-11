@@ -51,8 +51,21 @@ const CourseWizard: React.FC<Props> = function (props) {
 
     return {
       ...result.data.course,
-      defaultStartTime: result.data.course.defaultStartTime,
-      defaultEndTime: result.data.course.defaultStartTime,
+
+      /**
+       * Transform required as browser HTML <input type="time" /> does not
+       * accept ISO time string with offset included
+       */
+      defaultStartTime: DateTime.fromISO(
+        result.data.course.defaultStartTime
+      ).toISOTime({
+        includeOffset: false,
+      }),
+      defaultEndTime: DateTime.fromISO(
+        result.data.course.defaultEndTime
+      ).toISOTime({
+        includeOffset: false,
+      }),
     };
   }, [apolloClient, courseId]);
 
@@ -144,7 +157,7 @@ const CourseWizard: React.FC<Props> = function (props) {
 
   return (
     <div className=" flex flex-col">
-      {!state.matches('loading') && <ClassInfo state={state} send={send} />}
+      <ClassInfo state={state} send={send} />
     </div>
   );
 };

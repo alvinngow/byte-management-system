@@ -21,18 +21,18 @@ const AddClass: NextPage = function () {
         <NavHeader />
         <div className="mt-2 ml-2 sm:mt-6 sm:ml-14 lg:mt-12 lg:ml-10">
           <div className="ml-6 mb-6 flex items-center px-2">
-            <NavLink href="/manage/class">
+            <NavLink href="/manage/course">
               <p className="flex items-center">
                 <ArrowLeftIcon
                   style={{ color: '#0F172A' }}
                   className="h-6 w-6"
                 />
-                <span className="p-2">Back to Classes</span>
+                <span className="p-2">Back to Courses</span>
               </p>
             </NavLink>
           </div>
           <div className="ml-6 flex flex-col">
-            <p className="text-2xl font-semibold">Add Class</p>
+            <p className="text-2xl font-semibold">Add Course</p>
           </div>
           <div className="flex">
             <div className="mr-6 basis-1/4">
