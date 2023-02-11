@@ -1,9 +1,11 @@
+import { StarIcon } from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 
 import BackButton from '../components/BackButton';
 import Select, { SelectItem } from '../components/Select';
+import Tab from '../components/TwoStateTab';
 import AppLayout from '../layouts/AppLayout';
 
 const SelectShowcase: React.FC = function () {
@@ -29,6 +31,7 @@ const SelectShowcase: React.FC = function () {
 
 const Components: NextPage = function (props) {
   const router = useRouter();
+  const [tab, setTab] = React.useState('none');
 
   React.useEffect(() => {
     if (process.env.NODE_ENV !== 'production') {
@@ -48,6 +51,12 @@ const Components: NextPage = function (props) {
           href="/home"
           className="font-bold text-red-900"
           text="Example"
+        />
+        <Tab
+          Icon={StarIcon}
+          selectedID={tab}
+          tabID="1"
+          onClick={() => setTab('1')}
         />
       </div>
     </AppLayout>

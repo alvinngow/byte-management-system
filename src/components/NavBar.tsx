@@ -80,17 +80,17 @@ const NavBar: React.FC<Props> = function (props) {
                   key={'link' + i}
                   className={classNames(
                     {
-                      'bg-gray-100 text-sky-600': linkSelected === link.name,
+                      'bg-gray-100 text-brand-main': linkSelected === link.name,
                       'text-gray-500': linkSelected !== link.name,
                     },
-                    'group mb-0.5 flex w-full items-center rounded-lg py-0.5 px-0.5 hover:bg-gray-100 hover:text-sky-600 sm:py-3 sm:px-4'
+                    'group mb-0.5 flex w-full items-center rounded-lg py-0.5 px-0.5 hover:bg-gray-100 hover:text-brand-main sm:py-3 sm:px-4'
                   )}
                   onClick={() => handleClick(link.name)}
                 >
                   <link.icon
                     className={classNames(
                       {
-                        'text-sky-600': linkSelected === link.name,
+                        'text-brand-main': linkSelected === link.name,
                         'text-gray-500': linkSelected !== link.name,
                       },
                       'h-6 w-6 group-hover:text-sky-600'
