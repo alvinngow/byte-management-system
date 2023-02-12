@@ -3,6 +3,8 @@ import { ArrowUpIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import React from 'react';
 
+import PillWithText from './PillWithText';
+
 interface Props extends React.PropsWithChildren {
   className?: string;
   label: string;
@@ -26,23 +28,16 @@ const ClassOverviewCard: React.FC<Props> = function (props) {
         className
       )}
     >
-      <div className="inline-flex">
+      <div className="inline-block flex">
         {children}
         <span className="mb-3 inline-flex text-gray-500">{label}</span>
       </div>
 
-      <p className="mr-auto text-3xl">{currentData}</p>
+      <p className="mr-auto inline text-3xl">{currentData}</p>
+      <PillWithText>2-hours this week</PillWithText>
 
       <span className="mb-3 inline-flex text-gray-500">{pastData}</span>
       <p className="mr-auto text-3xl">{pastDataLabel}</p>
-      <div className="inline-flex flex-wrap justify-center space-x-2">
-        <div className="inline-flex">
-          <span className="align-center ml-auto inline-flex w-max cursor-pointer rounded-full bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-500 transition duration-300">
-            <ArrowUpIcon className="inline-flex h-4 w-4"></ArrowUpIcon>2{' '}
-          </span>
-          <span className="text-align inline-flex">hours this week</span>
-        </div>
-      </div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React, { MouseEventHandler } from 'react';
 
 import BackButton from '../components/BackButton';
+import PillWithText from '../components/ClassOverviewCard/PillWithText';
 import Select, { SelectItem } from '../components/Select';
 import Tab from '../components/TwoStateTab';
 import AppLayout from '../layouts/AppLayout';
@@ -58,6 +59,9 @@ const Components: NextPage = function (props) {
           tabID="1"
           onClick={() => setTab('1')}
         />
+        <PillWithText pillColor="red">2-cancelled this week</PillWithText>
+        <PillWithText pillColor="blue">3-hours this week</PillWithText>
+        <PillWithText>2-hours this week</PillWithText>
       </div>
     </AppLayout>
   );
