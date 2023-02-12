@@ -28,7 +28,7 @@ const BACKGROUND_COLORS = [
 
 interface Links {
   href: string;
-  name: 'Users' | 'Classes';
+  name: 'Users' | 'Courses';
   icon: React.ElementType;
 }
 interface Props extends React.PropsWithChildren {}
@@ -38,10 +38,10 @@ const NavHeader: React.FC<Props> = function (props) {
 
   const NavLinks: Links[] = [
     { href: '/manage/volunteer', name: 'Users', icon: UsersIcon },
-    { href: '/manage/class', name: 'Classes', icon: AcademicCapIcon },
+    { href: '/manage/class', name: 'Courses', icon: AcademicCapIcon },
   ];
 
-  const [linkSelected, setLinkSelected] = useState<'Users' | 'Classes'>(
+  const [linkSelected, setLinkSelected] = useState<'Users' | 'Courses'>(
     'Users'
   );
 

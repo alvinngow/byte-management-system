@@ -13,7 +13,7 @@ import * as MeQuery from '../graphql/frontend/queries/MeQuery';
 import NavLink from './NavLink';
 const NavHeader: React.FC = function () {
   const [activeNavHeaderButton, setActiveNavHeaderButton] = React.useState<
-    'home' | 'classes'
+    'home' | 'courses'
   >('home');
   const { data } = useQuery<MeQuery.Data>(MeQuery.Query);
   const firstName = data?.me?.firstName;
@@ -35,20 +35,20 @@ const NavHeader: React.FC = function () {
             )}
           >
             <NavLink href="/home">
-              <p className="text-xs sm:text-sm">DISCOVER CLASSES</p>
+              <p className="text-xs sm:text-sm">DISCOVER COURSES</p>
             </NavLink>
           </button>
           <button
-            onClick={() => setActiveNavHeaderButton('classes')}
+            onClick={() => setActiveNavHeaderButton('courses')}
             className={classNames(
-              activeNavHeaderButton === 'classes'
+              activeNavHeaderButton === 'courses'
                 ? 'bg-gray-100 text-sky-600'
                 : 'text-gray-600',
               'items-center rounded-lg py-2 px-2 text-sm italic text-gray-600 sm:px-4'
             )}
           >
-            <NavLink href="/classes">
-              <p className="text-xs sm:text-sm">MY CLASSES</p>
+            <NavLink href="/courses">
+              <p className="text-xs sm:text-sm">MY COURSES</p>
             </NavLink>
           </button>
         </div>

@@ -9,7 +9,7 @@ import Select from './Select';
 
 interface Links {
   href: string;
-  name: 'Users' | 'Classes';
+  name: 'Users' | 'Courses';
   icon: React.ElementType;
 }
 
@@ -20,13 +20,13 @@ const NavBar: React.FC<Props> = function (props) {
 
   const NavLinks: Links[] = [
     { href: '/manage/volunteer', name: 'Users', icon: UsersIcon },
-    { href: '/manage/class', name: 'Classes', icon: AcademicCapIcon },
+    { href: '/manage/class', name: 'Courses', icon: AcademicCapIcon },
   ];
 
-  const [linkSelected, setLinkSelected] = useState<'Users' | 'Classes'>(
+  const [linkSelected, setLinkSelected] = useState<'Users' | 'Courses'>(
     'Users'
   );
-  const handleClick = (value: 'Users' | 'Classes') => {
+  const handleClick = (value: 'Users' | 'Courses') => {
     setLinkSelected(value);
   };
 

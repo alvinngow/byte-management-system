@@ -29,7 +29,7 @@ const ALLOWED_ROLES = new Set([
   UserRole.CommitteeMember,
 ]);
 
-const ClassPage: React.FC = function () {
+const CoursePage: React.FC = function () {
   const { me, loading: meLoading } = useCurrentUser();
 
   const { data, loading, fetchMore } = useQuery<
@@ -87,21 +87,21 @@ const ClassPage: React.FC = function () {
         <p className="ml-20 mr-20 text-xl">Overview</p>
       </div>
       <div className="my-5 ml-20 mr-20 grid grid-cols-4 divide-x divide-gray-500">
-        <ClassOverviewCard label="Upcoming Classes" currentData="3">
+        <ClassOverviewCard label="Upcoming Courses" currentData="3">
           <PresentationChartLineIcon className="mr-2 h-6 w-6" />
         </ClassOverviewCard>
-        <ClassOverviewCard label="Class Attended" currentData="3">
+        <ClassOverviewCard label="Course Attended" currentData="3">
           <TickPresentationChartLineIcon />
         </ClassOverviewCard>
         <ClassOverviewCard label="Hours Accumulated" currentData="3">
           <ClockIcon className="mr-2 h-6 w-6" />
         </ClassOverviewCard>
-        <ClassOverviewCard label="Classes Cancelled" currentData="3">
+        <ClassOverviewCard label="Courses Cancelled" currentData="3">
           <CrossPresentationChartLineIcon />
         </ClassOverviewCard>
       </div>
       <div className="my-6 mx-auto flex">
-        <p className="ml-20 mr-20 text-xl">Classes</p>
+        <p className="ml-20 mr-20 text-xl">Courses</p>
       </div>
 
       <div className="ml-20 mr-20 flex text-center text-sm font-medium text-gray-500">
@@ -297,4 +297,4 @@ const ClassPage: React.FC = function () {
   );
 };
 
-export default ClassPage;
+export default CoursePage;
