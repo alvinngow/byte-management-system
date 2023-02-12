@@ -6,7 +6,7 @@ export const ironSessionOptions: IronSessionOptions = {
   cookieOptions: {
     secure:
       process.env.NODE_ENV === 'production' &&
-      process.env.CYPRESS_TEST !== 'true',
+      process.env.PLAYWRIGHT_TEST !== 'true',
     maxAge: 2592000, // 30 days
   },
 };

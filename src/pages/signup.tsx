@@ -1,6 +1,5 @@
 import { useMutation } from '@apollo/client';
 import { NextPage } from 'next';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
@@ -153,6 +152,7 @@ const SignupPage: NextPage = function (props) {
               type="number"
               placeholder="9123 4567"
               label="Mobile Number"
+              autoComplete="tel-local"
               showMessage={errors.mobileNo ? true : false}
               message={
                 errors.mobileNo ? (
