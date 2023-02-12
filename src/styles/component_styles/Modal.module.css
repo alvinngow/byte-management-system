@@ -1,0 +1,14 @@
+.modal-overlay{
+  @apply fixed top-0 right-0 flex h-screen w-screen items-center justify-center bg-gray-400 bg-opacity-75
+}
+
+.modal-body{
+  animation-name: show-modal;
+  animation-duration: 0.5s;
+  @apply absolute rounded-lg 
+}
+
+@keyframes show-modal {
+  from{scale:0}
+  to{scale:100%}
+}
