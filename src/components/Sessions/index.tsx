@@ -1,9 +1,11 @@
 import { useQuery } from '@apollo/client';
 import React from 'react';
 
+import { Session } from '../../../gen/graphql/resolvers';
 import * as CourseSessions from '../../graphql/frontend/queries/CourseSessionsQuery';
 import Button from '../Button';
 import Spinner from '../Spinner';
+import SessionEditModal from './components/SessionEditModal';
 import SessionRow from './components/SessionRow';
 import SessionsEmptyStateIcon from './components/SessionsEmptyStateIcon';
 import SessionsModal from './components/SessionsModal';
@@ -16,6 +18,8 @@ const Sessions: React.FC<Props> = function (props) {
   const { courseId } = props;
 
   const [showModal, setShowModal] = React.useState(false);
+  const [editModalSession, setEditModalSession] =
+    React.useState<Session | null>(null);
 
   const { data, loading, error } = useQuery<
     CourseSessions.Data,
@@ -43,6 +47,12 @@ const Sessions: React.FC<Props> = function (props) {
           showModal={showModal}
           onClose={() => setShowModal(false)}
         />
+        {editModalSession != null && (
+          <SessionEditModal
+            session={editModalSession}
+            onClose={() => setEditModalSession(null)}
+          />
+        )}
       </div>
       {sessionEdges.length === 0 ? (
         <div className="m-auto flex flex-col">
@@ -73,6 +83,7 @@ const Sessions: React.FC<Props> = function (props) {
                 <th className="border border-slate-300 py-4 pl-4 text-left">
                   Volunteer Slots
                 </th>
+                <th className="border border-slate-300 py-4 pl-4 text-left"></th>
               </tr>
             </thead>
             <tbody>
@@ -80,6 +91,7 @@ const Sessions: React.FC<Props> = function (props) {
                 <SessionRow
                   key={sessionEdge.node.id}
                   session={sessionEdge.node}
+                  onEditClick={setEditModalSession}
                 />
               ))}
             </tbody>

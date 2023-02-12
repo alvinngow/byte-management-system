@@ -40,3 +40,17 @@ type SessionAddPayload {
     clientMutationId: String
     session: Session
 }
+
+input SessionEditInput {
+    clientMutationId: String
+    sessionId: ID!
+    date: Date!
+    startTime: Time!
+    endTime: Time!
+    volunteerSlotCount: Int
+}
+
+type SessionEditPayload {
+    clientMutationId: String
+    session: Session
+}

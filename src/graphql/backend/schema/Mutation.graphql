@@ -9,4 +9,5 @@ type Mutation {
   courseAdd(input: CourseAddInput!): CourseAddPayload!
   courseEdit(input: CourseEditInput!): CourseEditPayload!
   sessionAdd(input: SessionAddInput!): SessionAddPayload!
+  sessionEdit(input: SessionEditInput!): SessionEditPayload!
 }

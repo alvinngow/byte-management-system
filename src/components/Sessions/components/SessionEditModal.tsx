@@ -4,34 +4,45 @@ import { DateTime } from 'luxon';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import * as SessionAdd from '../../../graphql/frontend/mutations/SessionAddMutation';
-import * as CourseSessions from '../../../graphql/frontend/queries/CourseSessionsQuery';
+import { Session } from '../../../../gen/graphql/resolvers';
+import * as SessionEdit from '../../../graphql/frontend/mutations/SessionEditMutation';
 import Button from '../../Button';
 import Input from '../../Input';
 import Spinner from '../../Spinner';
 import { DEFAULT_END_TIME, DEFAULT_START_TIME } from '../constants';
 
 interface Props {
-  courseId: string;
-  showModal: boolean;
-  onClose: React.MouseEventHandler<HTMLButtonElement | HTMLDivElement>;
+  session: Session;
+  onClose: () => void;
 }
 
-const SessionsModal: React.FC<Props> = function (props) {
-  const { showModal, onClose, courseId } = props;
+const SessionEditModal: React.FC<Props> = function (props) {
+  const { onClose, session } = props;
 
-  const [sessionAdd, { loading, error }] = useMutation<
-    SessionAdd.Data,
-    SessionAdd.Variables
-  >(SessionAdd.Mutation);
+  const [sessionEdit, { loading, error }] = useMutation<
+    SessionEdit.Data,
+    SessionEdit.Variables
+  >(SessionEdit.Mutation);
 
   const [date, setDate] = React.useState(() => {
-    return DateTime.now().plus({ days: 1 }).toFormat('yyyy-MM-dd');
+    return DateTime.fromISO(session.startDate).toISODate();
   });
 
-  const [startTime, setStartTime] = React.useState(DEFAULT_START_TIME);
-  const [endTime, setEndTime] = React.useState(DEFAULT_END_TIME);
-  const [volunteerSlotCount, setVolunteerSlotCount] = React.useState(0);
+  const [startTime, setStartTime] = React.useState(() => {
+    return DateTime.fromISO(session.startTime).toISOTime({
+      includeOffset: false,
+      suppressMilliseconds: true,
+    });
+  });
+  const [endTime, setEndTime] = React.useState(() => {
+    return DateTime.fromISO(session.endTime).toISOTime({
+      includeOffset: false,
+      suppressMilliseconds: true,
+    });
+  });
+  const [volunteerSlotCount, setVolunteerSlotCount] = React.useState(
+    session.volunteerSlotCount ?? 0
+  );
 
   const handleDateChange = React.useCallback<
     React.ChangeEventHandler<HTMLInputElement>
@@ -57,14 +68,14 @@ const SessionsModal: React.FC<Props> = function (props) {
     setVolunteerSlotCount(parseInt(e.target.value, 10));
   }, []);
 
-  const handleAddClick = React.useCallback<
+  const handleEditClick = React.useCallback<
     React.MouseEventHandler<HTMLButtonElement>
-  >(() => {
-    sessionAdd({
+  >(async () => {
+    await sessionEdit({
       variables: {
         input: {
           clientMutationId: uuidv4(),
-          courseId,
+          sessionId: session.id,
           date,
           startTime: DateTime.fromISO(startTime).toISOTime({
             includeOffset: true,
@@ -75,48 +86,18 @@ const SessionsModal: React.FC<Props> = function (props) {
           volunteerSlotCount,
         },
       },
-      update: (cache, mutationResult) => {
-        const createdSession = mutationResult.data?.sessionAdd?.session;
-
-        if (createdSession == null) {
-          return;
-        }
-
-        const queryData = cache.readQuery<
-          CourseSessions.Data,
-          CourseSessions.Variables
-        >({
-          query: CourseSessions.Query,
-          variables: {
-            id: courseId,
-          },
-        });
-
-        if (queryData == null) {
-          return;
-        }
-
-        cache.writeQuery<CourseSessions.Data, CourseSessions.Variables>({
-          query: CourseSessions.Query,
-          variables: {
-            id: courseId,
-          },
-          data: produce(queryData, (draftData) => {
-            const { edges } = draftData.course.sessions;
-
-            edges.push({
-              node: createdSession,
-              cursor: createdSession.id,
-            });
-          }),
-        });
-      },
     });
-  }, [courseId, date, endTime, sessionAdd, startTime, volunteerSlotCount]);
 
-  if (!showModal) {
-    return null;
-  }
+    onClose();
+  }, [
+    sessionEdit,
+    session.id,
+    date,
+    startTime,
+    endTime,
+    volunteerSlotCount,
+    onClose,
+  ]);
 
   return (
     <div
@@ -128,7 +109,7 @@ const SessionsModal: React.FC<Props> = function (props) {
         onClick={(event) => event.stopPropagation()}
       >
         <div className="mb-12 flex flex-col gap-4 px-14 pt-14">
-          <p className="text-center text-3xl font-semibold">Add Session</p>
+          <p className="text-center text-3xl font-semibold">Edit Session</p>
           <div>
             <div className="py-3">
               <Input
@@ -175,7 +156,10 @@ const SessionsModal: React.FC<Props> = function (props) {
                 <Button onClick={onClose} variant="secondary">
                   CANCEL
                 </Button>
-                <Button onClick={handleAddClick}>ADD</Button>
+                <Button onClick={onClose} variant="secondary" disabled>
+                  DELETE
+                </Button>
+                <Button onClick={handleEditClick}>EDIT</Button>
               </>
             )}
           </div>
@@ -185,4 +169,4 @@ const SessionsModal: React.FC<Props> = function (props) {
   );
 };
 
-export default SessionsModal;
+export default SessionEditModal;
