@@ -5,7 +5,7 @@ interface TimeSlotsEmptyStateIconProps {
   height?: string;
 }
 
-const TimeSlotsEmptyStateIcon: React.FC<TimeSlotsEmptyStateIconProps> =
+const SessionsEmptyStateIcon: React.FC<TimeSlotsEmptyStateIconProps> =
   function (props) {
     const { width = '197', height = '194' } = props;
     return (
@@ -97,4 +97,4 @@ const TimeSlotsEmptyStateIcon: React.FC<TimeSlotsEmptyStateIconProps> =
     );
   };
 
-export default TimeSlotsEmptyStateIcon;
+export default SessionsEmptyStateIcon;

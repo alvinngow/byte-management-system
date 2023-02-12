@@ -8,4 +8,5 @@ type Mutation {
   fileUpload(input: FileUploadInput!): FileUploadPayload!
   courseAdd(input: CourseAddInput!): CourseAddPayload!
   courseEdit(input: CourseEditInput!): CourseEditPayload!
+  sessionAdd(input: SessionAddInput!): SessionAddPayload!
 }

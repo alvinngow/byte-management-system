@@ -1,5 +1,6 @@
 import {
   ArrowLeftIcon,
+  CalendarDaysIcon,
   ClipboardDocumentListIcon,
 } from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
@@ -11,8 +12,11 @@ import TabButton from '../../../../components/CourseWizard/components/TabButton'
 import NavBar from '../../../../components/NavBar';
 import NavHeader from '../../../../components/NavHeader';
 import NavLink from '../../../../components/NavLink';
+import Sessions from '../../../../components/Sessions';
 import Spinner from '../../../../components/Spinner';
 import AppLayout from '../../../../layouts/AppLayout';
+
+type Tab = 'class_information' | 'sessions';
 
 interface ManageCourseProps {
   courseId: string;
@@ -21,19 +25,31 @@ interface ManageCourseProps {
 const ManageCourse: React.FC<ManageCourseProps> = function (props) {
   const { courseId } = props;
 
+  const [activeTab, setActiveTab] = React.useState<Tab>('class_information');
+
   return (
     <>
       <div className="mr-6 basis-1/4">
         <TabButton
-          active
-          onClick={() => {}}
+          active={activeTab === 'class_information'}
+          onClick={() => setActiveTab('class_information')}
           HeroIcon={ClipboardDocumentListIcon}
         >
           Course Information
         </TabButton>
+        <TabButton
+          active={activeTab === 'sessions'}
+          onClick={() => setActiveTab('sessions')}
+          HeroIcon={CalendarDaysIcon}
+        >
+          Sessions
+        </TabButton>
       </div>
       <div className="basis-1/2">
-        <CourseWizard courseId={courseId} />
+        {activeTab === 'class_information' && (
+          <CourseWizard courseId={courseId} />
+        )}
+        {activeTab === 'sessions' && <Sessions courseId={courseId} />}
       </div>
     </>
   );

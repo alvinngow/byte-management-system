@@ -45,6 +45,7 @@
     "graphql": "^16.6.0",
     "graphql-parse-resolve-info": "^4.12.3",
     "graphql-scalars": "^1.20.1",
+    "immer": "^9.0.19",
     "iron-session": "^6.3.1",
     "luxon": "^3.2.1",
     "next": "13.0.5",

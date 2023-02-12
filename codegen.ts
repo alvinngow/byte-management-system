@@ -6,7 +6,7 @@ import type { ScalarsMap } from '@graphql-codegen/visitor-plugin-common';
 import { scalarTypeDefs } from './src/graphql/backend/scalars';
 
 const scalars: ScalarsMap = {
-  Date: 'Date',
+  Date: 'string',
   DateTime: 'string',
   EmailAddress: 'string',
   Time: 'string',

@@ -2,10 +2,11 @@ type Session {
     id: ID!
     name: String!
     description: String!
-    overrideStartTime: Time
-    overrideEndTime: Time
     startDate: Date!
     endDate: Date!
+    startTime: Time!
+    endTime: Time!
+    volunteerSlotCount: Int
 
     courseId: ID!
     course: Course!
@@ -24,4 +25,18 @@ type SessionEdge {
 type SessionConnection {
     edges: [SessionEdge!]!
     pageInfo: PageInfo!
+}
+
+input SessionAddInput {
+    clientMutationId: String
+    courseId: ID!
+    date: Date!
+    startTime: Time!
+    endTime: Time!
+    volunteerSlotCount: Int
+}
+
+type SessionAddPayload {
+    clientMutationId: String
+    session: Session
 }

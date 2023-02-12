@@ -16,6 +16,7 @@ import { accountTerminateResolver } from './mutations/accountTerminate';
 import { courseAddResolver } from './mutations/courseAdd';
 import { courseEditResolver } from './mutations/courseEdit';
 import fileUploadResolver from './mutations/fileUpload';
+import { sessionAddResolver } from './mutations/sessionAdd';
 import { courseResolver } from './queries/course';
 import { coursesResolver } from './queries/courses';
 import { locationClustersResolver } from './queries/locationClusters';
@@ -25,6 +26,8 @@ import { schoolsResolver } from './queries/schools';
 import { usersResolver } from './queries/users';
 import { Session_attendeesResolver } from './Session/attendees';
 import { Session_courseResolver } from './Session/course';
+import { Session_endTimeResolver } from './Session/endTime';
+import { Session_startTimeResolver } from './Session/startTime';
 import { SessionAttendee_userResolver } from './SessionAttendee/user';
 import User_avatarResolver from './User/avatar';
 import { emailResolver } from './User/email';
@@ -51,6 +54,7 @@ const resolvers: Resolvers = {
     fileUpload: fileUploadResolver,
     courseAdd: courseAddResolver,
     courseEdit: courseEditResolver,
+    sessionAdd: sessionAddResolver,
   },
   CurrentUser: {
     avatar: User_avatarResolver,
@@ -79,6 +83,8 @@ const resolvers: Resolvers = {
   Session: {
     attendees: Session_attendeesResolver,
     course: Session_courseResolver,
+    startTime: Session_startTimeResolver,
+    endTime: Session_endTimeResolver,
   },
   SessionAttendee: {
     user: SessionAttendee_userResolver,

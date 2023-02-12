@@ -132,6 +132,7 @@ model Session {
   overrideLocationId String?           @db.Uuid
   overrideLocation   Location?         @relation(fields: [overrideLocationId], references: [id])
   sessionAttendees   SessionAttendee[]
+  volunteerSlotCount Int?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
