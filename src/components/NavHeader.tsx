@@ -65,45 +65,12 @@ const NavHeader: React.FC<Props> = function (props) {
     }
   };
 
-  const [viewportSize, setViewport] = useState('desktop');
-
-  useEffect(() => {
-    if (window.innerWidth >= 1024) {
-      setViewport('desktop');
-    } else {
-      setViewport('mobile');
-    }
-
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) {
-        setViewport('desktop');
-      } else {
-        setViewport('mobile');
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
   return (
     <>
-      <header
-        className={classNames(
-          {
-            'justify-between': viewportSize === 'mobile',
-            'justify-end': viewportSize === 'desktop',
-          },
-          'absolute sticky top-0 z-20 flex items-center border border-solid border-gray-300 bg-white py-2 pr-6'
-        )}
-      >
-        {viewportSize === 'mobile' && (
-          <div className="pl-2">
-            <ByteLogo />
-          </div>
-        )}
+      <header className="absolute sticky top-0 z-20 flex items-center border border-solid border-gray-300 bg-white py-2 pr-6 sm:justify-between md:justify-end">
+        <div className="pl-2 sm:inline-block md:hidden">
+          <ByteLogo />
+        </div>
         <div className="flex">
           <div className="py-3 pr-3">
             <CogIcon style={{ color: '#6B7280' }} className="h-6 w-6" />
@@ -132,13 +99,11 @@ const NavHeader: React.FC<Props> = function (props) {
               </span>
             )}
           </span>
-          {viewportSize === 'mobile' && (
-            <Bars3Icon
-              onClick={() => handleClick()}
-              style={{ color: '#6B7280' }}
-              className="m-3 h-6 w-6"
-            />
-          )}
+          <Bars3Icon
+            onClick={() => handleClick()}
+            style={{ color: '#6B7280' }}
+            className="m-3 h-6 w-6 sm:inline-block md:hidden"
+          />
         </div>
       </header>
       {modal && (
