@@ -20,7 +20,7 @@ const NavBar: React.FC<Props> = function (props) {
 
   const NavLinks: Links[] = [
     { href: '/manage/volunteer', name: 'Users', icon: UsersIcon },
-    { href: '/manage/class', name: 'Courses', icon: AcademicCapIcon },
+    { href: '/manage/course', name: 'Courses', icon: AcademicCapIcon },
   ];
 
   const [linkSelected, setLinkSelected] = useState<'Users' | 'Courses'>(

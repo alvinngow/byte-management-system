@@ -10,7 +10,7 @@ const ROUTES_AUTHENTICATED = [
   '/home',
   '/logout',
   '/manage/users',
-  '/manage/class',
+  '/manage/course',
 ];
 
 function getRouteType(
