@@ -7,6 +7,7 @@ module.exports = {
     'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
+
     screens: {
       xsm: '380px',
       sm: '480px',
@@ -23,6 +24,8 @@ module.exports = {
         'brand-grey': 'var(--brand-grey)',
         success: 'var(--success)',
         error: 'var(--error)',
+        'lime-500': '#84CC16',
+        'lime-50': '#F7FEE7',
       },
     },
   },

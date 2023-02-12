@@ -1,0 +1,25 @@
+
+
+.present{
+  @apply !text-lime-500 bg-lime-50
+}
+
+ .absent{
+  @apply !text-red-500 bg-red-50
+}
+
+
+.icons-slot > *{
+  transition-duration: 0.3s;
+  @apply text-gray-400 rounded-full
+}
+
+
+
+.present{
+  @apply text-gray-400
+}
+
+.absent{
+  @apply text-gray-400
+}
