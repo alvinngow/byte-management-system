@@ -5,6 +5,7 @@ import { Session } from '../../../gen/graphql/resolvers';
 import * as CourseSessions from '../../graphql/frontend/queries/CourseSessionsQuery';
 import Button from '../Button';
 import Spinner from '../Spinner';
+import SessionDeleteModal from './components/SessionDeleteModal';
 import SessionEditModal from './components/SessionEditModal';
 import SessionRow from './components/SessionRow';
 import SessionsEmptyStateIcon from './components/SessionsEmptyStateIcon';
@@ -19,6 +20,9 @@ const Sessions: React.FC<Props> = function (props) {
 
   const [showModal, setShowModal] = React.useState(false);
   const [editModalSession, setEditModalSession] =
+    React.useState<Session | null>(null);
+
+  const [deleteModalSession, setDeleteModalSession] =
     React.useState<Session | null>(null);
 
   const { data, loading, error } = useQuery<
@@ -51,6 +55,12 @@ const Sessions: React.FC<Props> = function (props) {
           <SessionEditModal
             session={editModalSession}
             onClose={() => setEditModalSession(null)}
+          />
+        )}
+        {deleteModalSession != null && (
+          <SessionDeleteModal
+            session={deleteModalSession}
+            onClose={() => setDeleteModalSession(null)}
           />
         )}
       </div>
@@ -92,6 +102,7 @@ const Sessions: React.FC<Props> = function (props) {
                   key={sessionEdge.node.id}
                   session={sessionEdge.node}
                   onEditClick={setEditModalSession}
+                  onDeleteClick={setDeleteModalSession}
                 />
               ))}
             </tbody>

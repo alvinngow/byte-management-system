@@ -17,6 +17,7 @@ import { courseAddResolver } from './mutations/courseAdd';
 import { courseEditResolver } from './mutations/courseEdit';
 import fileUploadResolver from './mutations/fileUpload';
 import { sessionAddResolver } from './mutations/sessionAdd';
+import { sessionDeleteResolver } from './mutations/sessionDelete';
 import { sessionEditResolver } from './mutations/sessionEdit';
 import { courseResolver } from './queries/course';
 import { coursesResolver } from './queries/courses';
@@ -57,6 +58,7 @@ const resolvers: Resolvers = {
     courseEdit: courseEditResolver,
     sessionAdd: sessionAddResolver,
     sessionEdit: sessionEditResolver,
+    sessionDelete: sessionDeleteResolver,
   },
   CurrentUser: {
     avatar: User_avatarResolver,

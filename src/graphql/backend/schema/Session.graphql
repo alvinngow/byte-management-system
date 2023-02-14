@@ -54,3 +54,13 @@ type SessionEditPayload {
     clientMutationId: String
     session: Session
 }
+
+input SessionDeleteInput {
+    clientMutationId: String
+    sessionId: ID!
+}
+
+type SessionDeletePayload {
+    clientMutationId: String
+    ok: Boolean
+}

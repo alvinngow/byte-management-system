@@ -199,9 +199,9 @@ model CourseManager {
 model SessionAttendee {
   id                  String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   sessionId           String  @db.Uuid
-  session             Session @relation(fields: [sessionId], references: [id])
+  session             Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   userId              String  @db.Uuid
-  user                User    @relation(fields: [userId], references: [id])
+  user                User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   indicatedAttendance String
   actualAttendance    String?
 

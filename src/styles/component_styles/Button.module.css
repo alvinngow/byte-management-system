@@ -51,3 +51,13 @@
 .secondary:hover:enabled {
   @apply bg-gray-100;
 }
+
+.danger {
+  background: none;
+  transition: 0.5s;
+  @apply bg-red-500 text-white;
+}
+
+.danger:hover:enabled {
+  @apply bg-red-400;
+}

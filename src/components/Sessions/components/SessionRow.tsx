@@ -1,4 +1,4 @@
-import { PencilIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 import React from 'react';
@@ -8,10 +8,11 @@ import { Session } from '../../../../gen/graphql/resolvers';
 interface Props {
   session: Session;
   onEditClick: (session: Session) => void;
+  onDeleteClick: (session: Session) => void;
 }
 
 const SessionRow: React.FC<Props> = function (props) {
-  const { session, onEditClick } = props;
+  const { session, onEditClick, onDeleteClick } = props;
 
   return (
     <tr>
@@ -39,6 +40,10 @@ const SessionRow: React.FC<Props> = function (props) {
         <PencilIcon
           className="h-4 w-4 hover:cursor-pointer hover:text-brand-main"
           onClick={() => onEditClick(session)}
+        />
+        <TrashIcon
+          className="h-4 w-4 hover:cursor-pointer hover:text-brand-main"
+          onClick={() => onDeleteClick(session)}
         />
       </td>
     </tr>

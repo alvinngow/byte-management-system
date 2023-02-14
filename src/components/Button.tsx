@@ -1,13 +1,18 @@
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { ReactPropTypes } from 'react';
 
 import styles from '../styles/component_styles/Button.module.css';
 
 interface PropType extends React.HTMLAttributes<HTMLButtonElement> {
   size?: 'xs' | 'sm' | 'md' | 'lg';
-  variant?: 'secondary' | 'primary' | 'success' | 'warning' | 'error';
+  variant?:
+    | 'secondary'
+    | 'primary'
+    | 'danger'
+    | 'success'
+    | 'warning'
+    | 'error';
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   label?: string;
