@@ -33,7 +33,7 @@ const NavBar: React.FC<Props> = function (props) {
   return (
     <>
       <>
-        <nav className="sidenav border-r px-2 sm:hidden md:flex">
+        <nav className="sidenav border-r px-2 xsm:hidden md:flex">
           <div className="mb-4 inline w-full">
             <ByteLogo />
           </div>

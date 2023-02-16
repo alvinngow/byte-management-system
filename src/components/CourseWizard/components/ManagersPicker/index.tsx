@@ -111,23 +111,18 @@ const ManagersPicker: React.FC<Props> = function (props) {
   return (
     <div className="relative flex flex-col">
       <div className="flex items-center">
-        {Array.from(managerUserIds).map((userId) => (
-          <ManagerChip
-            key={userId}
-            userId={userId}
-            onManagerRemoved={onManagerRemoved}
-          />
-        ))}
         <Input
           className="grow"
           type="text"
           label="Trainer"
+          placeholder="Trainer's Name"
           value={searchTerm}
           onChange={handleInputChange}
           onFocus={handleInputFocus}
           onKeyDown={handleInputKeyDown}
         />
       </div>
+
       {isOpen && (
         <div
           className="fixed top-0 left-0 right-0 bottom-0"
@@ -136,7 +131,7 @@ const ManagersPicker: React.FC<Props> = function (props) {
       )}
       {isOpen && (
         <div className="relative">
-          <div className="absolute top-0 left-0 right-0 z-10">
+          <div className="absolute top-0 left-0 right-0 z-50 flex w-full flex-col gap-y-0.5 overflow-hidden rounded-b-lg bg-gray-300 shadow-lg">
             <ManagerResults
               userEdges={data?.users?.edges ?? []}
               focusedIndex={focusedIndex}
@@ -146,6 +141,15 @@ const ManagersPicker: React.FC<Props> = function (props) {
           </div>
         </div>
       )}
+      <div className="mt-2 inline-flex gap-x-2.5">
+        {Array.from(managerUserIds).map((userId) => (
+          <ManagerChip
+            key={userId}
+            userId={userId}
+            onManagerRemoved={onManagerRemoved}
+          />
+        ))}
+      </div>
     </div>
   );
 };

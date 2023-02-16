@@ -13,6 +13,8 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 import classNames from 'classnames';
 import React, { useState } from 'react';
 
+import styles from '../../styles/component_styles/Input.module.css';
+
 export interface SelectItem {
   label: string;
   value: string;
@@ -97,15 +99,21 @@ const Select: React.FC<Props> = function (props) {
         {...otherProps}
         {...getReferenceProps()}
       >
-        <div className="flex w-full flex-col">
-          <span className="mb-1 self-start text-xs text-gray-400">{label}</span>
-          <div className="border-b-primary-color flex items-center justify-between border-b-2">
+        <div className={`${styles['input-div']} w-full`}>
+          <label
+            className={`${styles['input-label']} self-start text-xs text-gray-400`}
+          >
+            {label}
+          </label>
+          <div
+            className={`${styles['input']} flex items-center justify-between`}
+          >
             <span
-              className={classNames('text-md mb-1', {
-                'bg-gray-600': selectedItem == null,
+              className={classNames('text-md', {
+                'text-gray-500': selectedItem == null,
               })}
             >
-              {selectedItem?.label ?? 'Not selected'}
+              {selectedItem?.label ?? 'None'}
             </span>
             {isOpen ? (
               <ChevronUpIcon className="h-4 w-4" />
@@ -113,6 +121,7 @@ const Select: React.FC<Props> = function (props) {
               <ChevronDownIcon className="h-4 w-4" />
             )}
           </div>
+          <span className={styles['focus-border']}></span>
         </div>
       </button>
 
@@ -120,7 +129,7 @@ const Select: React.FC<Props> = function (props) {
         <FloatingFocusManager context={context} modal={false}>
           <div
             ref={refs.setFloating}
-            className="flex w-full flex-col gap-y-0.5 overflow-hidden rounded-b-lg bg-gray-300 shadow-lg"
+            className="z-50 flex w-full flex-col gap-y-px overflow-hidden rounded-b-lg bg-gray-300 shadow-lg"
             style={{
               position: strategy,
               top: y ?? 0,
@@ -132,9 +141,12 @@ const Select: React.FC<Props> = function (props) {
             {items.map((item, index) => (
               <span
                 key={item.value}
-                className={classNames('text-md bg-white px-2 py-2', {
-                  'bg-gray-200': index === focusedIndex,
-                })}
+                className={classNames(
+                  'text-md cursor-pointer bg-white px-2 py-2',
+                  {
+                    'bg-brand-hover': index === focusedIndex,
+                  }
+                )}
                 onClick={() => {
                   onChange(item.value);
                   setIsOpen(false);

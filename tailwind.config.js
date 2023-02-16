@@ -7,9 +7,8 @@ module.exports = {
     'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
-
     screens: {
-      xsm: '380px',
+      xsm: '360px',
       sm: '480px',
       md: '768px',
       lg: '976px',

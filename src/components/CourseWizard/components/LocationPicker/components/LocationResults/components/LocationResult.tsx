@@ -28,14 +28,17 @@ const LocationResult: React.FC<Props> = function (props) {
     <div
       ref={elementRef}
       key={result.ADDRESS}
-      className={classNames('flex flex-col hover:bg-brand-hover', {
-        'bg-brand-hover': focused,
-      })}
+      className={classNames(
+        'flex cursor-pointer flex-col bg-white px-2 py-2 hover:bg-brand-hover',
+        {
+          'bg-brand-hover': focused,
+        }
+      )}
       onClick={(e) => {
         onResultSelected(result);
       }}
     >
-      <span className="font-bold">{result.BUILDING}</span>
+      <span className="subtitle1">{result.BUILDING}</span>
       <span>{result.ADDRESS}</span>
     </div>
   );

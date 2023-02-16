@@ -1,6 +1,7 @@
 import React from 'react';
 
 import useDebounce from '../../../../hooks/useDebounce';
+import styles from '../../../../styles/component_styles/Input.module.css';
 import searchOneMap, {
   OneMapSearchResult,
 } from '../../../../util/searchOneMap';
@@ -124,11 +125,13 @@ const LocationPicker: React.FC<Props> = function (props) {
         {/* HACK: Using position: absolute div instead of proper Floating UI popup */}
         <div className="relative">
           {isOpen && (
-            <div className="absolute top-0 left-0 right-0 z-10 flex w-full flex-col gap-y-0.5 overflow-hidden rounded-b-lg bg-gray-300 shadow-lg">
+            <div className="absolute top-0 left-0 right-0 z-50 flex w-full flex-col gap-y-0.5 overflow-hidden rounded-b-lg bg-gray-300 shadow-lg">
+              {/* <span className={`relative`}> */}
               <LocationResults
                 state={state}
                 onResultSelected={handleResultSelected}
               />
+              {/* </span> */}
             </div>
           )}
         </div>

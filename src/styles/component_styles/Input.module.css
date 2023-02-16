@@ -59,8 +59,7 @@
 
 .input-label {
   font-size: 12px;
-
-  @apply mb-2 text-gray-400;
+  @apply text-gray-400;
 }
 
 .input-end-icons {

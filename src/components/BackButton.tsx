@@ -16,12 +16,12 @@ const BackButton: React.FC<PropsWithChildren<Prop>> = (
     <>
       <div className="flex">
         <NavLink href={href}>
-          <p className={className + ' group flex items-center'}>
+          <p className={className + ' group items-center md:flex'}>
             <ArrowLeftIcon
               style={{ color: '#0F172A' }}
-              className="mr-1 h-6 w-6 group-hover:-translate-x-px"
+              className="mr-2.5 h-6 w-6 group-hover:-translate-x-px"
             />
-            <span>{text}</span>
+            <span className="xsm:hidden md:block">{text}</span>
           </p>
         </NavLink>
       </div>

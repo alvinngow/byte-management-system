@@ -15,7 +15,7 @@ const ManagerResults: React.FC<Props> = function (props) {
   const { userEdges, focusedIndex, loading, onManagerAdded } = props;
 
   return (
-    <div className="z-10 flex flex-col gap-y-1 bg-gray-300">
+    <div className="flex max-h-72 flex-col gap-y-px overflow-y-scroll bg-gray-300">
       {loading && <Spinner />}
       {userEdges.map((edge, index) => (
         <ManagerResult

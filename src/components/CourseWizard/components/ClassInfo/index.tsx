@@ -8,6 +8,7 @@ import {
   TypegenDisabled,
 } from 'xstate';
 
+import Button from '../../../Button';
 import Input from '../../../Input';
 import NavLink from '../../../NavLink';
 import Spinner from '../../../Spinner';
@@ -201,8 +202,8 @@ const ClassInfo: React.FC<Props> = function (props) {
   }
 
   return (
-    <div className="mb-10 flex h-max flex-col gap-y-2 rounded border px-5 pt-2 shadow-md shadow-gray-400">
-      <p className="font-semibold">Class Information</p>
+    <div className="flex h-max flex-col gap-y-4 rounded-lg border border-gray-100 px-5 py-4 shadow-md md:filter-none">
+      <p className="subtitle1 mb-2">Course Information</p>
       {state.matches('loading') && <Spinner />}
       {state.matches('idle') && (
         <>
@@ -210,7 +211,7 @@ const ClassInfo: React.FC<Props> = function (props) {
             value={state.context.courseData.name}
             onChange={handleTitleChange}
             label="Title"
-            placeholder="eg. Live Coding Masterclass: Beginners To Advanced"
+            placeholder="Live Coding Masterclass: Beginners To Advanced"
           />
           <Input
             value={state.context.courseData.subtitle ?? undefined}
@@ -226,36 +227,42 @@ const ClassInfo: React.FC<Props> = function (props) {
           />
           <Input
             value={state.context.courseData.descriptionPrivate ?? undefined}
-            label="Description (only visible to volunteers)"
+            label="Instructions (only visible to volunteers)"
             onChange={handleDescriptionPrivateChange}
-            placeholder="Course modules, class size, attire required etc."
+            placeholder="Top secret information only volunteers can know."
           />
-          <div className="flex items-center gap-x-4">
-            <LocationPicker
-              locationText={state.context.locationText}
-              onLocationTextChange={handleLocationTextChange}
-              onLocationPicked={handleLocationPicked}
+          <LocationPicker
+            locationText={state.context.locationText}
+            onLocationTextChange={handleLocationTextChange}
+            onLocationPicked={handleLocationPicked}
+          />
+          <div className="grid gap-4 md:grid-cols-2 md:items-center">
+            {/* insert unit number from GraphQL here */}
+            <Input
+              value="#03-120"
+              label="Apt, suite, unit number, etc. (optional)"
+              // onChange={}
+              placeholder="#01-123"
             />
             <LocationClusterPicker
               locationClusterId={state.context.locationClusterId}
               onLocationClusterPicked={handleLocationClusterPicked}
             />
           </div>
+
           <ManagersPicker
             managerUserIds={state.context.managerUserIds}
             onManagerAdded={handleManagerAdded}
             onManagerRemoved={handleManagerRemoved}
           />
-          <div className="flex items-center gap-x-4">
+          <div className="grid gap-4 md:grid-cols-2 md:items-center">
             <Input
-              className="basis-1/2"
               type="time"
               label="Session Default Start Time"
               value={state.context.courseData.defaultStartTime}
               onChange={handleDefaultStartTimeChange}
             />
             <Input
-              className="basis-1/2"
               type="time"
               label="Session Default End Time"
               value={state.context.courseData.defaultEndTime}
@@ -317,18 +324,15 @@ const ClassInfo: React.FC<Props> = function (props) {
               </div>
             </div>
           )}
-          <div className="my-6">
-            <button
-              className="rounded-full bg-blue-500 py-2 px-5 text-sm font-semibold uppercase text-gray-100"
+          <div className="my-6 grid gap-3 md:grid-cols-2 lg:max-w-fit">
+            <Button
+              size="sm"
               onClick={() => {
                 send({ type: 'SUBMIT' });
               }}
-            >
-              Add Course
-            </button>
-            <button className="ml-3 rounded-full border border-gray-300 py-2 px-5 text-sm font-semibold uppercase text-gray-400">
-              <NavLink href={'./'}>Cancel</NavLink>
-            </button>
+              label="Add Course"
+            />
+            <Button size="sm" variant="secondary" href={'./'} label="Cancel" />
           </div>
         </>
       )}

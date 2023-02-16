@@ -16,25 +16,25 @@ const TabButton: React.FC<React.PropsWithChildren<Props>> = function (props) {
     <button
       className={classNames(
         {
-          'bg-gray-100 text-sky-600': active,
+          'bg-gray-100 text-brand-main': active,
           'text-gray-500': !active,
         },
-        'group mb-0.5 flex w-full items-center rounded-lg py-0.5 px-0.5 hover:bg-gray-100 hover:text-sky-600 sm:py-3 sm:px-4'
+        'group mb-0.5 flex w-full items-center rounded-lg py-0.5 px-0.5 hover:bg-gray-100 hover:text-sky-600 xsm:py-3 xsm:px-4'
       )}
       onClick={onClick}
     >
       <HeroIcon
         className={classNames(
           {
-            'text-sky-600': active,
-            'text-gray-500': !active,
+            'text-brand-main': active,
+            'text-secondary': !active,
           },
-          'h-6 w-6 group-hover:text-sky-600'
+          'h-6 w-6 group-hover:text-brand-main'
         )}
       />
       <span
-        className={classNames('pl-1 group-hover:text-blue-500', {
-          'text-blue-500': active,
+        className={classNames('subtitle1 pl-2.5 group-hover:text-brand-main', {
+          'text-brand-main': active,
         })}
       >
         {children}

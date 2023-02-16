@@ -32,7 +32,7 @@ const LocationClusterPicker: React.FC<Props> = function (props) {
   }, [data]);
 
   return (
-    <div className="flex">
+    <div className="relative flex flex-col">
       <Select
         items={items}
         label="Region"

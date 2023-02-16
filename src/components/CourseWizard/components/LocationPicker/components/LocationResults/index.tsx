@@ -14,8 +14,10 @@ const LocationResults: React.FC<Props> = function (props) {
   const { state, onResultSelected } = props;
 
   return (
-    <div className="flex max-h-72 flex-col gap-y-4 overflow-y-scroll">
-      {state.results.length === 0 && <span>No results</span>}
+    <div className="flex max-h-72 flex-col gap-y-px overflow-y-scroll bg-gray-300">
+      {state.results.length === 0 && (
+        <span className="bg-white px-2 py-2">No results</span>
+      )}
       {state.loading && <Spinner />}
       {state.results.map((result, index) => (
         <LocationResult

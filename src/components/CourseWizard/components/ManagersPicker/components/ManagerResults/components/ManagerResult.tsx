@@ -15,13 +15,16 @@ const ManagerResult: React.FC<Props> = function (props) {
 
   return (
     <div
-      className={classNames('flex items-center gap-x-2', {
-        'bg-brand-hover': focused,
-      })}
+      className={classNames(
+        'inline-flex w-full cursor-pointer items-center bg-white px-2 py-2 hover:bg-brand-hover',
+        {
+          'bg-brand-hover': focused,
+        }
+      )}
       onClick={() => onManagerAdded(manager.id)}
     >
-      <button className="inline-block h-7 w-7 rounded-full bg-gray-400"></button>
-      <span>
+      <span className="mr-2.5 h-10 w-10 rounded-full bg-gray-400"></span>
+      <span className="body1">
         {manager.firstName} {manager.lastName}
       </span>
     </div>

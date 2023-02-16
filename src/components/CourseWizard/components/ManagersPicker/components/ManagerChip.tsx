@@ -1,9 +1,10 @@
 import { useApolloClient } from '@apollo/client';
-import { TrashIcon } from '@heroicons/react/24/solid';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 import React from 'react';
 
 import { User } from '../../../../../../gen/graphql/resolvers';
 import * as UserFragment from '../../../../../graphql/frontend/fragments/UserFragment';
+import Chip from '../../../../Chip';
 
 interface Props {
   userId: string;
@@ -27,24 +28,27 @@ const ManagerChip: React.FC<Props> = function (props) {
   }, [apolloClient, userId]);
 
   return (
-    <div className="flex">
+    <Chip
+      scheme="disabled"
+      className="max-w-fit cursor-pointer"
+      onClick={(e) => {
+        e.stopPropagation();
+        onManagerRemoved(userId);
+      }}
+    >
       {user != null ? (
         <>
+          <span className="mr-2 h-6 w-6 rounded-full bg-gray-400"></span>
+
           <span>
             {user.firstName} {user.lastName}
           </span>
-          <TrashIcon
-            className="h-6 w-6"
-            onClick={(e) => {
-              e.stopPropagation();
-              onManagerRemoved(userId);
-            }}
-          />
+          <XMarkIcon className="h-4 w-4" />
         </>
       ) : (
         <span>Unknown user</span>
       )}
-    </div>
+    </Chip>
   );
 };
 
