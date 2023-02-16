@@ -5,11 +5,11 @@ import { Session } from '../../../gen/graphql/resolvers';
 import * as CourseSessions from '../../graphql/frontend/queries/CourseSessionsQuery';
 import Button from '../Button';
 import Spinner from '../Spinner';
+import SessionAddModal from './components/SessionAddModal';
 import SessionDeleteModal from './components/SessionDeleteModal';
 import SessionEditModal from './components/SessionEditModal';
 import SessionRow from './components/SessionRow';
 import SessionsEmptyStateIcon from './components/SessionsEmptyStateIcon';
-import SessionsModal from './components/SessionsModal';
 
 interface Props {
   courseId: string;
@@ -46,7 +46,7 @@ const Sessions: React.FC<Props> = function (props) {
       <div className="flex items-center justify-between">
         <p>Sessions</p>
         <Button onClick={() => setShowModal(true)}>ADD SESSION</Button>
-        <SessionsModal
+        <SessionAddModal
           courseId={courseId}
           showModal={showModal}
           onClose={() => setShowModal(false)}

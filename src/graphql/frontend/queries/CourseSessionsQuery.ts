@@ -26,6 +26,7 @@ export const Query = gql`
             endDate
             startTime
             endTime
+            volunteerSlotCount
           }
           cursor
         }

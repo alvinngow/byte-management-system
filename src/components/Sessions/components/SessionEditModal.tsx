@@ -5,10 +5,12 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Session } from '../../../../gen/graphql/resolvers';
+import { SESSION_MODAL_DEFAULT_VOLUNTEER_SLOT_COUNT } from '../../../constants/sessionModal';
 import * as SessionEdit from '../../../graphql/frontend/mutations/SessionEditMutation';
 import Button from '../../Button';
 import Input from '../../Input';
 import Spinner from '../../Spinner';
+import Switch from '../../Switch';
 import { DEFAULT_END_TIME, DEFAULT_START_TIME } from '../constants';
 
 interface Props {
@@ -40,9 +42,9 @@ const SessionEditModal: React.FC<Props> = function (props) {
       suppressMilliseconds: true,
     });
   });
-  const [volunteerSlotCount, setVolunteerSlotCount] = React.useState(
-    session.volunteerSlotCount ?? 0
-  );
+  const [volunteerSlotCount, setVolunteerSlotCount] = React.useState<
+    number | null
+  >(session.volunteerSlotCount ?? null);
 
   const handleDateChange = React.useCallback<
     React.ChangeEventHandler<HTMLInputElement>
@@ -66,6 +68,14 @@ const SessionEditModal: React.FC<Props> = function (props) {
     React.ChangeEventHandler<HTMLInputElement>
   >((e) => {
     setVolunteerSlotCount(parseInt(e.target.value, 10));
+  }, []);
+
+  const handleVolunteerSlotCountSwitchChange = React.useCallback<
+    React.ChangeEventHandler<HTMLInputElement>
+  >((e) => {
+    setVolunteerSlotCount(
+      e.target.checked ? SESSION_MODAL_DEFAULT_VOLUNTEER_SLOT_COUNT : null
+    );
   }, []);
 
   const handleEditClick = React.useCallback<
@@ -138,16 +148,27 @@ const SessionEditModal: React.FC<Props> = function (props) {
               />
             </div>
           </div>
-          <div>
-            <Input
-              label="Volunteer Slots (No of Pax)"
-              type="number"
-              placeholder="0"
-              min={0}
-              value={volunteerSlotCount.toString(10)}
-              onChange={handleVolunteerSlotCountChange}
+          <div className="flex items-center gap-x-3">
+            <span className="text-xs text-gray-400">
+              Unlimited volunteer slots
+            </span>
+            <Switch
+              checked={volunteerSlotCount != null}
+              onChange={handleVolunteerSlotCountSwitchChange}
             />
           </div>
+          {volunteerSlotCount != null && (
+            <div>
+              <Input
+                label="Volunteer Slots (No of Pax)"
+                type="number"
+                placeholder="0"
+                min={0}
+                value={volunteerSlotCount.toString(10)}
+                onChange={handleVolunteerSlotCountChange}
+              />
+            </div>
+          )}
           <div className="flex justify-center gap-x-4 pb-14">
             {loading ? (
               <Spinner />

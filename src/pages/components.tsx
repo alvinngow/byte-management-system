@@ -8,6 +8,7 @@ import PillWithText from '../components/ClassOverviewCard/PillWithText';
 import NavBar from '../components/NavBar';
 import NavHeader from '../components/NavHeader';
 import Select, { SelectItem } from '../components/Select';
+import Switch from '../components/Switch';
 import Tab from '../components/TwoStateTab';
 import AppLayout from '../layouts/AppLayout';
 
@@ -65,6 +66,7 @@ const Components: NextPage = function (props) {
           <PillWithText pillColor="red">2-cancelled this week</PillWithText>
           <PillWithText pillColor="blue">3-hours this week</PillWithText>
           <PillWithText>2-hours this week</PillWithText>
+          <Switch />
         </div>
       </NavBar>
     </AppLayout>
