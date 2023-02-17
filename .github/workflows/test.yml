@@ -1,5 +1,7 @@
 name: Playwright Tests
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
 jobs:
@@ -7,9 +9,9 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/bims-database?schema=public"
+      DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/bims-database?schema=public"
       SECRET_COOKIE_PASSWORD: "qLVhCjXDmd05ejEZVgFKYv8MkzwFcrrC"
-      PLAYWRIGHT_TEST: 'true'
+      PLAYWRIGHT_TEST: "true"
     services:
       postgres:
         image: postgres:14-bullseye
@@ -28,37 +30,18 @@ jobs:
           MINIO_ROOT_USER: "minio"
           MINIO_ROOT_PASSWORD: "miniominio"
           MINIO_DEFAULT_BUCKETS: "bims-files"
+    container:
+      image: mcr.microsoft.com/playwright:v1.30.0-focal
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          ref: ${{ format('refs/heads/{0}', github.event.pull_request.head.ref) }}
       - uses: actions/setup-node@v3
         with:
           node-version: 16
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v3
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      # taken from https://playwrightsolutions.com/playwright-github-action-to-cache-the-browser-binaries/
-      - name: Get installed Playwright version
-        id: playwright-version
-        run: echo "PLAYWRIGHT_VERSION=$(yarn -s info @playwright/test version)" >> $GITHUB_ENV
-      - name: Cache playwright binaries
-        uses: actions/cache@v3
-        id: playwright-cache
-        with:
-          path: |
-            ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
       - name: Install dependencies
         run: yarn
       - name: Build app
@@ -67,18 +50,16 @@ jobs:
         run: yarn prod:db:migrate
       - name: Seed database
         run: yarn db:seed
-      - name: Install Playwright Browsers
-        run: yarn playwright install --with-deps
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-      - name: Install Playwright Deps
-        run: yarn playwright install-deps
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
       - name: Run Playwright tests
         run: yarn playwright test
         env:
           AWS_S3_ACCESS_KEY_ID: minio
           AWS_S3_SECRET_ACCESS_KEY: miniominio
-          NODE_ENV: 'production'
+          AWS_S3_REGION: auto
+          AWS_S3_ENDPOINT: http://minio:9000
+          AWS_S3_BUCKET: bims-files
+          NODE_ENV: "production"
+          HOME: /root # workaround https://github.com/microsoft/playwright/issues/6500
       - uses: actions/upload-artifact@v3
         if: always()
         with:
@@ -91,3 +72,4 @@ jobs:
         env:
           AWS_S3_ACCESS_KEY_ID: minio
           AWS_S3_SECRET_ACCESS_KEY: miniominio
+          NODE_ENV: "production"

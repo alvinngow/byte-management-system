@@ -64,7 +64,7 @@
     "@graphql-codegen/typescript": "^2.8.2",
     "@graphql-codegen/typescript-operations": "^2.5.7",
     "@graphql-codegen/typescript-resolvers": "^2.7.7",
-    "@playwright/test": "^1.29.2",
+    "@playwright/test": "1.30.0",
     "@types/bcrypt": "^5.0.0",
     "@types/jest": "^29.2.5",
     "@types/luxon": "^3.2.0",
