@@ -1,0 +1,6 @@
+.card {
+  min-width: 100px;
+  min-height: 100px;
+
+  @apply rounded-lg shadow-md;
+}
