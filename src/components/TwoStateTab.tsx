@@ -14,6 +14,7 @@ interface Prop extends HTMLAttributes<HTMLButtonElement> {
   text?: string;
   href?: string;
   Icon?: ComponentType<React.SVGProps<SVGSVGElement>>;
+  hasIcon?: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
   underline?: boolean;
 }
@@ -29,6 +30,7 @@ const Tab: React.FC<PropsWithChildren<Prop>> = (
     href = '',
     Icon = QuestionMarkCircleIcon,
     onClick,
+    hasIcon = true,
     selectedID,
   } = prop;
 
@@ -47,15 +49,17 @@ const Tab: React.FC<PropsWithChildren<Prop>> = (
               'group flex p-2 pr-3' + className
             )}
           >
-            <Icon
-              className={classNames(
-                {
-                  'fill-brand-main text-brand-main': selectedID === tabID,
-                  'text-gray-500': selectedID !== tabID,
-                },
-                'h-6 w-6 group-hover:fill-brand-main group-hover:text-brand-main'
-              )}
-            />
+            {hasIcon && (
+              <Icon
+                className={classNames(
+                  {
+                    'fill-brand-main text-brand-main': selectedID === tabID,
+                    'text-gray-500': selectedID !== tabID,
+                  },
+                  'h-6 w-6 group-hover:fill-brand-main group-hover:text-brand-main'
+                )}
+              />
+            )}
             <span
               className={classNames(
                 {
