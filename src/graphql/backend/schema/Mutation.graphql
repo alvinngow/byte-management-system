@@ -9,6 +9,9 @@ type Mutation {
   courseAdd(input: CourseAddInput!): CourseAddPayload!
   courseEdit(input: CourseEditInput!): CourseEditPayload!
   sessionAdd(input: SessionAddInput!): SessionAddPayload!
+
+  # used by a committee member to report on an attendee's actual attendance
+  sessionAttendReport(input: SessionAttendReportInput!): SessionAttendReportPayload!
   sessionEdit(input: SessionEditInput!): SessionEditPayload!
   sessionDelete(input: SessionDeleteInput!): SessionDeletePayload!
   sessionAttend(input: SessionAttendInput!): SessionAttendPayload!

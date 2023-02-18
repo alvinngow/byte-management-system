@@ -28,3 +28,15 @@ type SessionAttendPayload {
     clientMutationId: String
     sessionAttendee: SessionAttendee!
 }
+
+input SessionAttendReportInput {
+    clientMutationId: String
+    sessionId: ID!
+    userId: ID!
+    actualAttendance: Attendance!
+}
+
+type SessionAttendReportPayload {
+    clientMutationId: String
+    sessionAttendee: SessionAttendee!
+}
