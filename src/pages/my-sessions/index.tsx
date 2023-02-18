@@ -280,7 +280,7 @@ const MySessionsPage: React.FC = function () {
                     </td>
                     <td className="px-6 py-4  text-black">Sembawang CC</td>
                     <td className="px-6 py-4  text-center text-black">
-                      <Chip scheme={'danger'}>Chip</Chip>
+                      <Chip scheme={'danger'} />
                     </td>
                   </tr>
                 ))}

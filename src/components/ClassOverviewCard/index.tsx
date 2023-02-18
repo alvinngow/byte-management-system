@@ -3,7 +3,7 @@ import { ArrowUpIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import React from 'react';
 
-import PillWithText from './PillWithText';
+import Chip from '../Chip';
 
 interface Props extends React.PropsWithChildren {
   className?: string;
@@ -34,7 +34,13 @@ const ClassOverviewCard: React.FC<Props> = function (props) {
       </div>
 
       <p className="mr-auto inline text-3xl">{currentData}</p>
-      <PillWithText>2-hours this week</PillWithText>
+      <Chip
+        scheme={'success'}
+        className="float-right"
+        text={'in two week'}
+        number={'2'}
+        Icon={ArrowUpIcon}
+      />
 
       <span className="mb-3 inline-flex text-gray-500">{pastData}</span>
       <p className="mr-auto text-3xl">{pastDataLabel}</p>

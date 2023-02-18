@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { ComponentType } from 'react';
 
 type Scheme = 'danger' | 'success' | 'warning' | 'info' | 'disabled';
 
@@ -14,26 +14,47 @@ const SchemeClassMap: Record<Scheme, string> = {
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   scheme: Scheme;
+  text?: string;
+  number?: string;
+  Icon?: ComponentType<React.SVGProps<SVGSVGElement>>;
 }
 
 const Chip: React.ForwardRefRenderFunction<
   HTMLDivElement,
   React.PropsWithChildren<Props>
 > = function (props, ref) {
-  const { children, className, scheme, ...otherProps } = props;
+  const {
+    children,
+    className,
+    scheme,
+    text = 'placeholder',
+    number = '0',
+    Icon,
+    ...otherProps
+  } = props;
 
   return (
-    <div
-      ref={ref}
-      className={classNames(
-        'd-flex inline-flex items-center gap-x-1.5 rounded-2xl px-3 py-2 text-sm font-light',
-        SchemeClassMap[scheme],
-        className
-      )}
-      {...otherProps}
-    >
-      {children}
-    </div>
+    <>
+      <div className={className}>
+        <div
+          ref={ref}
+          className={classNames(
+            'd-flex inline-flex items-center rounded-2xl py-2 px-2.5 text-sm font-light',
+            SchemeClassMap[scheme]
+          )}
+          {...otherProps}
+        >
+          {Icon && <Icon className="h-4 w-4" />}
+          {number}
+        </div>
+        <div
+          className={classNames('ml-2 inline max-w-[50%] truncate align-[3px]')}
+        >
+          {children}
+          {text}
+        </div>
+      </div>
+    </>
   );
 };
 

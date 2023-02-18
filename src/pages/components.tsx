@@ -1,10 +1,10 @@
-import { StarIcon } from '@heroicons/react/24/outline';
+import { ArrowDownIcon, StarIcon } from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { MouseEventHandler, useState } from 'react';
 
 import BackButton from '../components/BackButton';
-import PillWithText from '../components/ClassOverviewCard/PillWithText';
+import Chip from '../components/Chip';
 import Modal from '../components/Modal';
 import NavBar from '../components/NavBar';
 import NavHeader from '../components/NavHeader';
@@ -65,9 +65,6 @@ const Components: NextPage = function (props) {
             tabID="1"
             onClick={() => setTab('1')}
           />
-          <PillWithText pillColor="red">2-cancelled this week</PillWithText>
-          <PillWithText pillColor="blue">3-hours this week</PillWithText>
-          <PillWithText>2-hours this week</PillWithText>
           <button onClick={() => setModalState(true)}>Open Modal</button>
           {modalState ? (
             <Modal onClose={() => setModalState(false)}>
@@ -76,6 +73,15 @@ const Components: NextPage = function (props) {
           ) : (
             ''
           )}
+          <div className="flex">
+            <Chip scheme={'success'} number={'2'} />
+            <Chip
+              scheme={'danger'}
+              text={'negative text'}
+              number={'2'}
+              Icon={ArrowDownIcon}
+            />
+          </div>
           <Switch />
         </div>
       </NavBar>
