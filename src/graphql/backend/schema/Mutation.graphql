@@ -11,4 +11,5 @@ type Mutation {
   sessionAdd(input: SessionAddInput!): SessionAddPayload!
   sessionEdit(input: SessionEditInput!): SessionEditPayload!
   sessionDelete(input: SessionDeleteInput!): SessionDeletePayload!
+  sessionAttend(input: SessionAttendInput!): SessionAttendPayload!
 }

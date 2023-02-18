@@ -17,3 +17,14 @@ type SessionAttendeeConnection {
     edges: [SessionAttendeeEdge!]!
     pageInfo: PageInfo!
 }
+
+input SessionAttendInput {
+    clientMutationId: String
+    sessionId: ID!
+    indicatedAttendance: Attendance!
+}
+
+type SessionAttendPayload {
+    clientMutationId: String
+    sessionAttendee: SessionAttendee!
+}
