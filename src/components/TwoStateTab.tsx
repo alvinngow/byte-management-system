@@ -15,15 +15,17 @@ interface Prop extends HTMLAttributes<HTMLButtonElement> {
   href?: string;
   Icon?: ComponentType<React.SVGProps<SVGSVGElement>>;
   onClick: MouseEventHandler<HTMLButtonElement>;
+  underline?: boolean;
 }
 
 const Tab: React.FC<PropsWithChildren<Prop>> = (
   prop: PropsWithChildren<Prop>
 ) => {
   const {
+    underline,
     tabID,
     className,
-    text = 'Tab',
+    text = 'TAB',
     href = '',
     Icon = QuestionMarkCircleIcon,
     onClick,
@@ -32,15 +34,17 @@ const Tab: React.FC<PropsWithChildren<Prop>> = (
 
   return (
     <>
-      <div className="group flex">
-        <NavLink href={href} onClick={onClick}>
+      <div className="flex">
+        <NavLink href={href} onClick={onClick} className="group font-semibold">
           <p
             className={classNames(
               {
-                'bg-gray-100 text-brand-main': selectedID === tabID,
+                'rounded-lg bg-gray-100': selectedID === tabID && !underline,
+                'border-b-2 border-brand-main':
+                  selectedID === tabID && underline,
                 'text-gray-500': selectedID !== tabID,
               },
-              'group flex rounded-lg p-2 hover:bg-gray-100 ' + className
+              'group flex p-2 pr-3' + className
             )}
           >
             <Icon
@@ -58,7 +62,7 @@ const Tab: React.FC<PropsWithChildren<Prop>> = (
                   'text-brand-main': selectedID === tabID,
                   'text-gray-500': selectedID !== tabID,
                 },
-                'h-6 w-6 group-hover:text-brand-main'
+                'h-6 w-max group-hover:text-brand-main'
               )}
             >
               {text}

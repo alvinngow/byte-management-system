@@ -1,7 +1,7 @@
-import { ArrowDownIcon, StarIcon } from '@heroicons/react/24/outline';
+import { ArrowDownIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import React, { MouseEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 
 import BackButton from '../components/BackButton';
 import Chip from '../components/Chip';
@@ -59,12 +59,6 @@ const Components: NextPage = function (props) {
             className="font-bold text-red-900"
             text="Example"
           />
-          <Tab
-            Icon={StarIcon}
-            selectedID={tab}
-            tabID="1"
-            onClick={() => setTab('1')}
-          />
           <button onClick={() => setModalState(true)}>Open Modal</button>
           {modalState ? (
             <Modal onClose={() => setModalState(false)}>
@@ -73,6 +67,24 @@ const Components: NextPage = function (props) {
           ) : (
             ''
           )}
+          <div className="flex">
+            <Tab
+              text="SAMPLE TEXT"
+              Icon={SparklesIcon}
+              selectedID={tab}
+              tabID="1"
+              onClick={() => setTab('1')}
+            />
+            <Tab
+              Icon={SparklesIcon}
+              selectedID={tab}
+              tabID="2"
+              onClick={() => setTab('2')}
+              text="underline"
+              underline
+              className="uppercase"
+            />
+          </div>
           <div className="flex">
             <Chip scheme={'success'} number={'2'} />
             <Chip
