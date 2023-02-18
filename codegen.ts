@@ -28,6 +28,7 @@ const config: CodegenConfig = {
           Session: '@prisma/client#Session',
           Course: '@prisma/client#Course',
           SessionAttendee: '@prisma/client#SessionAttendee',
+          CourseManager: '@prisma/client#CourseManager',
         },
         mapperTypeSuffix: 'Model',
         scalars,

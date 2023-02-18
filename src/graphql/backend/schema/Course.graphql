@@ -4,16 +4,20 @@ type Course {
     subtitle: String
     description: String!
     descriptionPrivate: String
+    firstSessionStartDate: Date
+    lastSessionStartDate: Date
     defaultStartTime: Time!
     defaultEndTime: Time!
     coverImage: String!
+    defaultLocation: Location
 
+    courseManagers(first: Int = 10, after: String): CourseManagerConnection!
     sessions(first: Int = 10, after: String): SessionConnection!
 }
 
 type CourseEdge {
-    node: Course!
-    cursor: String!
+  node: Course!
+  cursor: String!
 }
 
 type CourseConnection {

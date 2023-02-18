@@ -1,9 +1,12 @@
 import { Resolvers } from '../../../../gen/graphql/resolvers';
+import { Course_courseManagersResolver } from './Course/courseManager';
 import { Course_coverImageResolver } from './Course/coverImage';
 import { Course_defaultEndTimeResolver } from './Course/defaultEndTime';
 import { Course_defaultStartTimeResolver } from './Course/defaultStartTime';
 import { Course_descriptionPrivateResolver } from './Course/descriptionPrivate';
+import { Course_defaultLocationResolver } from './Course/location';
 import { Course_sessionsResolver } from './Course/sessions';
+import { CourseManager_userResolver } from './CourseManager/user';
 import { CurrentUser_roleResolver } from './CurrentUser/role';
 import { Location_clustersResolver } from './Location/clusters';
 import { LocationCluster_locationsResolver } from './LocationCluster/locations';
@@ -87,6 +90,8 @@ const resolvers: Resolvers = {
     sessions: Course_sessionsResolver,
     defaultStartTime: Course_defaultStartTimeResolver,
     defaultEndTime: Course_defaultEndTimeResolver,
+    defaultLocation: Course_defaultLocationResolver,
+    courseManagers: Course_courseManagersResolver,
   },
   Session: {
     attendees: Session_attendeesResolver,
@@ -96,6 +101,9 @@ const resolvers: Resolvers = {
   },
   SessionAttendee: {
     user: SessionAttendee_userResolver,
+  },
+  CourseManager: {
+    user: CourseManager_userResolver,
   },
 };
 

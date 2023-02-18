@@ -1,0 +1,15 @@
+type CourseManager {
+  id: ID!
+  course: Course!
+  user: User!
+}
+
+type CourseManagerEdge {
+  node: CourseManager!
+  cursor: String!
+}
+
+type CourseManagerConnection {
+  edges: [CourseManagerEdge!]!
+  pageInfo: PageInfo!
+}
