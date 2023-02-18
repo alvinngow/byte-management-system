@@ -6,14 +6,16 @@ import styles from '../styles/component_styles/Modal.module.css';
 import ModalHeader from './ModalHeader';
 
 interface PropTypes extends React.HTMLAttributes<HTMLDivElement> {
-  modalTitle?: ReactNode;
+  modalTitle?: string;
   onClose: () => void;
 }
 
 const ModalBody: React.FC<React.PropsWithChildren<PropTypes>> = (props) => {
   const { onClose, modalTitle, className, children } = props;
 
-  const classes = classNames('bg-white', className, [styles['modal-body']]);
+  const classes = classNames('bg-white', 'p-2', className, [
+    styles['modal-body'],
+  ]);
 
   return (
     <div

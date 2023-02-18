@@ -1,10 +1,11 @@
 import { StarIcon } from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 
 import BackButton from '../components/BackButton';
 import PillWithText from '../components/ClassOverviewCard/PillWithText';
+import Modal from '../components/Modal';
 import NavBar from '../components/NavBar';
 import NavHeader from '../components/NavHeader';
 import Select, { SelectItem } from '../components/Select';
@@ -36,6 +37,7 @@ const SelectShowcase: React.FC = function () {
 const Components: NextPage = function (props) {
   const router = useRouter();
   const [tab, setTab] = React.useState('none');
+  const [modalState, setModalState] = useState(false);
 
   React.useEffect(() => {
     if (process.env.NODE_ENV !== 'production') {
@@ -66,6 +68,14 @@ const Components: NextPage = function (props) {
           <PillWithText pillColor="red">2-cancelled this week</PillWithText>
           <PillWithText pillColor="blue">3-hours this week</PillWithText>
           <PillWithText>2-hours this week</PillWithText>
+          <button onClick={() => setModalState(true)}>Open Modal</button>
+          {modalState ? (
+            <Modal onClose={() => setModalState(false)}>
+              <div>asiofh</div>
+            </Modal>
+          ) : (
+            ''
+          )}
           <Switch />
         </div>
       </NavBar>
