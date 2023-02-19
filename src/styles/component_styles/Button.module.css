@@ -11,7 +11,7 @@
 
 .btn-md {
   font-size: 14px;
-  background-color: black;
+  font-weight: 700;
   @apply py-2.5 px-7;
 }
 

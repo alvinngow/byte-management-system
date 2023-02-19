@@ -1,8 +1,10 @@
+import { useQuery } from '@apollo/client';
 import { AcademicCapIcon, UsersIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { handleClientScriptLoad } from 'next/script';
 import React, { useEffect, useState } from 'react';
 
+import * as Me from '../graphql/frontend/queries/MeQuery';
 import ByteLogo from './icons/ByteLogo';
 import NavLink from './NavLink';
 import Select from './Select';
@@ -17,6 +19,7 @@ interface Props extends React.PropsWithChildren {}
 
 const NavBar: React.FC<Props> = function (props) {
   const { children } = props;
+  const { data: meData } = useQuery<Me.Data>(Me.Query);
 
   const NavLinks: Links[] = [
     { href: '/manage/volunteer', name: 'Users', icon: UsersIcon },
@@ -33,33 +36,36 @@ const NavBar: React.FC<Props> = function (props) {
   return (
     <>
       <>
-        <nav className="sidenav border-r px-2 xsm:hidden md:flex">
-          <div className="mb-4 inline w-full">
-            <ByteLogo />
+        <nav className="sidenav border border-r-gray-300 px-3 xsm:hidden md:flex md:items-start">
+          <NavLink className="mt-2 mb-10" href="/">
+            <ByteLogo className="pr-5" width="84px sm:45px" />
+          </NavLink>
+          <div className="relative mb-2 w-full">
+            <Select
+              items={[
+                { label: 'Volunteer', value: 'user' },
+                { label: 'Committee Member', value: 'committee_member' },
+                { label: 'Admin', value: 'system_administrator' },
+              ]}
+              label={'View As'}
+              value={meData?.me?.role ?? 'None'}
+              className="mb-3 w-full"
+              onChange={function (value: string): void {
+                throw new Error('Function not implemented.');
+              }}
+            />
           </div>
-
-          <Select
-            items={[
-              { label: 'Committee Member', value: 'Committee Member' },
-              { label: 'Admin', value: 'Admin' },
-            ]}
-            label={'View As'}
-            value={'Test'}
-            className="w-full"
-            onChange={function (value: string): void {
-              throw new Error('Function not implemented.');
-            }}
-          ></Select>
           <ul className="w-full">
             {NavLinks.map((link, i) => (
               <li
                 key={'link' + i}
                 className={classNames(
                   {
-                    'bg-gray-100 text-brand-main': linkSelected === link.name,
-                    'text-gray-500': linkSelected !== link.name,
+                    'bg-brand-hover text-brand-main':
+                      linkSelected === link.name,
+                    'text-secondary': linkSelected !== link.name,
                   },
-                  'group mb-0.5 flex w-full items-center rounded-lg py-0.5 px-0.5 hover:bg-gray-100 hover:text-brand-main sm:py-3 sm:px-4'
+                  'group mb-0.5 flex w-full cursor-pointer items-center rounded-lg py-0.5 px-0.5 hover:bg-brand-hover hover:text-brand-main sm:py-3 sm:px-4'
                 )}
                 onClick={() => handleClick(link.name)}
               >
@@ -67,9 +73,9 @@ const NavBar: React.FC<Props> = function (props) {
                   className={classNames(
                     {
                       'text-brand-main': linkSelected === link.name,
-                      'text-gray-500': linkSelected !== link.name,
+                      'text-secondary': linkSelected !== link.name,
                     },
-                    'h-6 w-6 group-hover:text-sky-600'
+                    'h-6 w-6 group-hover:text-brand-main'
                   )}
                 />
                 <NavLink className="group pl-4 font-semibold" href={link.href}>
@@ -80,7 +86,7 @@ const NavBar: React.FC<Props> = function (props) {
           </ul>
         </nav>
       </>
-      <div className="md:ml-48">{children}</div>
+      <div className="md:ml-64">{children}</div>
     </>
   );
 };

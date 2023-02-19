@@ -136,6 +136,7 @@ h6 {
   font-weight: 400;
   font-size: 20;
   letter-spacing: 0.14px;
+  @apply uppercase
 }
 
 .helperText {
@@ -186,7 +187,7 @@ a {
 
 .sidenav {
   height: 100%;
-  width: 12rem;
+  width: 16rem;
   position: fixed;
   z-index: 1;
   top: 0;

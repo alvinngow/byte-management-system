@@ -1,10 +1,15 @@
-import { ArrowDownIcon, SparklesIcon } from '@heroicons/react/24/outline';
+import {
+  ArrowDownIcon,
+  SparklesIcon,
+  TvIcon,
+} from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 import BackButton from '../components/BackButton';
 import Chip from '../components/Chip';
+import IconButton from '../components/IconButton';
 import Modal from '../components/Modal';
 import NavBar from '../components/NavBar';
 import NavHeader from '../components/NavHeader';
@@ -95,6 +100,7 @@ const Components: NextPage = function (props) {
             />
           </div>
           <Switch />
+          <IconButton HeroIcon={(props) => <TvIcon />}></IconButton>
         </div>
       </NavBar>
     </AppLayout>

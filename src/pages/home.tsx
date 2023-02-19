@@ -9,7 +9,6 @@ const HomePage: NextPage = function () {
   return (
     <AppLayout>
       <VolunteerNavHeader />
-
       <div>
         {/* body */}
         <h1 className="mb-6 mt-4 flex p-4 px-12 text-3xl">

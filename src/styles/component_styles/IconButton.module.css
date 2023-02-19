@@ -1,11 +1,7 @@
 .icon-button {
-  @apply text-gray-400;
+  @apply text-gray-400 w-6 h-6;
 }
 
-.icon-button:hover:enabled {
+.icon-button:hover:enabled, .icon-button:focus:disabled{
   @apply text-gray-500;
-}
-
-.icon-button:focus:enabled {
-  @apply text-brand-main;
 }
