@@ -16,7 +16,7 @@ import Chip from '../../components/Chip';
 import ClassOverviewCard from '../../components/ClassOverviewCard';
 import CrossPresentationChartLineIcon from '../../components/icons/CrossPresentationChartLineIcon';
 import TickPresentationChartLineIcon from '../../components/icons/TickPresentationChartLineIcon';
-import NavHeader from '../../components/NavHeader';
+import VolunteerNavHeader from '../../components/VolunteerNavHeader';
 import * as AccountRoleUpdate from '../../graphql/frontend/mutations/AccountRoleUpdateMutation';
 import * as UsersQuery from '../../graphql/frontend/queries/UsersQuery';
 import useCurrentUser from '../../hooks/useCurrentUser';
@@ -83,9 +83,9 @@ const MySessionsPage: React.FC = function () {
   }
   return (
     <AppLayout>
-      <NavHeader />
+      <VolunteerNavHeader />
       <div className="my-6 mx-auto flex">
-        <p className="ml-20 mr-20 text-xl">Overview</p>
+        <p className="h6 ml-20 mr-20 text-xl">Overview</p>
       </div>
       <div className="my-5 ml-20 mr-20 grid grid-cols-4 divide-x divide-gray-500">
         <ClassOverviewCard label="Upcoming Courses" currentData="3">
@@ -102,7 +102,7 @@ const MySessionsPage: React.FC = function () {
         </ClassOverviewCard>
       </div>
       <div className="my-6 mx-auto flex">
-        <p className="ml-20 mr-20 text-xl">Courses</p>
+        <p className="h6 ml-20 mr-20 text-xl">Courses</p>
       </div>
 
       <div className="ml-20 mr-20 flex text-center text-sm font-medium text-gray-500">
@@ -120,7 +120,7 @@ const MySessionsPage: React.FC = function () {
               )}
               aria-current="page"
             >
-              Upcoming Sessions
+              UPCOMING SESSIONS
             </div>
           </li>
           <li className="mr-2">
@@ -135,7 +135,7 @@ const MySessionsPage: React.FC = function () {
                 'cursor-default px-4 py-5 group-hover:text-brand-main'
               )}
             >
-              Session History
+              SESSION HISTORY
             </div>
           </li>
         </ul>
@@ -227,7 +227,7 @@ const MySessionsPage: React.FC = function () {
               </button>
             </div>
             <div className="w-2/5">
-              <p className="mb-1 mt-5 text-center text-xs text-gray-500">
+              <p className="mb-1 mt-5 text-xs text-gray-500">
                 Attendance Status
               </p>
               <div className="flex">
