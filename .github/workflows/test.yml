@@ -6,7 +6,7 @@ on:
     branches: [main]
 jobs:
   test:
-    timeout-minutes: 10
+    timeout-minutes: 15
     runs-on: self-hosted
     env:
       DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/bims-database?schema=public"
