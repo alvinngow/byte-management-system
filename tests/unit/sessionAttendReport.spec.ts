@@ -38,7 +38,7 @@ const Mutation = gql`
 describe('sessionAttendReport', () => {
   test('committee member can report on attendance', async () => {
     const clientMutationId = uuidv4();
-    const actualAttendance = Attendance.NotAttending;
+    const actualAttendance = Attendance.Absent;
 
     const response = await testServer.executeOperation<Data, Variables>(
       {
@@ -81,7 +81,7 @@ describe('sessionAttendReport', () => {
 
   test('volunteer cannot report on attendance', async () => {
     const clientMutationId = uuidv4();
-    const actualAttendance = Attendance.NotAttending;
+    const actualAttendance = Attendance.Absent;
 
     const response = await testServer.executeOperation<Data, Variables>(
       {
@@ -110,7 +110,7 @@ describe('sessionAttendReport', () => {
 
   test('guest cannot report on attendance', async () => {
     const clientMutationId = uuidv4();
-    const actualAttendance = Attendance.NotAttending;
+    const actualAttendance = Attendance.Absent;
 
     const response = await testServer.executeOperation<Data, Variables>(
       {

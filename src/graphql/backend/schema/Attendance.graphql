@@ -1,4 +1,4 @@
 enum Attendance {
-    attending
-    not_attending
+    attend
+    absent
 }

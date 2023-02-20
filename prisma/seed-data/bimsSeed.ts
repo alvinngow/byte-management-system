@@ -269,7 +269,10 @@ export default async function bimsSeed() {
           userId: usersIdMap[sessionAttendee.user_email],
         },
       },
-      update: {},
+      update: {
+        indicatedAttendance: sessionAttendee.indicatedAttendance,
+        actualAttendance: sessionAttendee.actualAttendance,
+      },
       create: {
         sessionId: sessionsIdMap[sessionAttendee.session_name],
         userId: usersIdMap[sessionAttendee.user_email],

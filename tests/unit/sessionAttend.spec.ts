@@ -37,7 +37,7 @@ const SESSION_ID_SEEDED = 'ff6f6872-5f81-44ac-8978-848fdc6ed1ef';
 describe('sessionAttend', () => {
   test('can indicate attendance for existing session', async () => {
     const clientMutationId = uuidv4();
-    const indicatedAttendance = Attendance.Attending;
+    const indicatedAttendance = Attendance.Attend;
 
     const response = await testServer.executeOperation<Data, Variables>(
       {
@@ -79,7 +79,7 @@ describe('sessionAttend', () => {
 
   test('cannot indicate attendance for non-existent session', async () => {
     const clientMutationId = uuidv4();
-    const indicatedAttendance = Attendance.Attending;
+    const indicatedAttendance = Attendance.Attend;
 
     const response = await testServer.executeOperation<Data, Variables>(
       {
@@ -107,7 +107,7 @@ describe('sessionAttend', () => {
 
   test('cannot indicate attendance for guest', async () => {
     const clientMutationId = uuidv4();
-    const indicatedAttendance = Attendance.Attending;
+    const indicatedAttendance = Attendance.Attend;
 
     const response = await testServer.executeOperation<Data, Variables>(
       {
