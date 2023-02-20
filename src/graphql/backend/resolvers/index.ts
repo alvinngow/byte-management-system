@@ -8,6 +8,7 @@ import { Course_defaultLocationResolver } from './Course/location';
 import { Course_sessionsResolver } from './Course/sessions';
 import { CourseManager_userResolver } from './CourseManager/user';
 import { CurrentUser_roleResolver } from './CurrentUser/role';
+import { CurrentUser_sessionAttendeesResolver } from './CurrentUser/sessionAttendees';
 import { Location_clustersResolver } from './Location/clusters';
 import { LocationCluster_locationsResolver } from './LocationCluster/locations';
 import accountAvatarUpdateResolver from './mutations/accountAvatarUpdate';
@@ -73,6 +74,7 @@ const resolvers: Resolvers = {
     avatar: User_avatarResolver,
     school: schoolResolver,
     role: CurrentUser_roleResolver,
+    sessionAttendees: CurrentUser_sessionAttendeesResolver,
   },
   User: {
     avatar: User_avatarResolver,

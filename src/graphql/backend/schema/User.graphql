@@ -19,6 +19,9 @@ type CurrentUser {
   createdAt: DateTime!
   school: School
   role: UserRole!
+
+
+  sessionAttendees(first: Int = 10, after: String, sortKey: SessionAttendeeSortKey, filter: SessionAttendeeFiltering, reverse: Boolean): SessionAttendeeConnection!
 }
 
 type UserConnection {

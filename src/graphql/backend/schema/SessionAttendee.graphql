@@ -18,6 +18,29 @@ type SessionAttendeeConnection {
     pageInfo: PageInfo!
 }
 
+"""
+Represents sorting options for SessionAttendee
+"""
+enum SessionAttendeeSortKey {
+    SESSION_START
+    SESSION_END
+}
+
+enum SessionAttendeeDateFiltering {
+    UPCOMING
+    PAST
+}
+
+"""
+Represents filtering options for SessionAttendee
+"""
+input SessionAttendeeFiltering {
+    searchText: String
+    date: SessionAttendeeDateFiltering
+    indicatedAttendance: Attendance
+    actualAttendance: Attendance
+}
+
 input SessionAttendInput {
     clientMutationId: String
     sessionId: ID!
