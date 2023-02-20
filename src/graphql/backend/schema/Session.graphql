@@ -11,8 +11,7 @@ type Session {
     courseId: ID!
     course: Course!
 
-    overrideLocationId: ID
-    overrideLocation: Location
+    location: Location
 
     attendees(first: Int = 10, after: String): SessionAttendeeConnection!
 }

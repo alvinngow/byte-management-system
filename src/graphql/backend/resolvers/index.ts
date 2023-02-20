@@ -34,7 +34,9 @@ import { usersResolver } from './queries/users';
 import { Session_attendeesResolver } from './Session/attendees';
 import { Session_courseResolver } from './Session/course';
 import { Session_endTimeResolver } from './Session/endTime';
+import { Session_locationResolver } from './Session/location';
 import { Session_startTimeResolver } from './Session/startTime';
+import { SessionAttendee_sessionResolver } from './SessionAttendee/session';
 import { SessionAttendee_userResolver } from './SessionAttendee/user';
 import User_avatarResolver from './User/avatar';
 import { emailResolver } from './User/email';
@@ -98,9 +100,11 @@ const resolvers: Resolvers = {
     course: Session_courseResolver,
     startTime: Session_startTimeResolver,
     endTime: Session_endTimeResolver,
+    location: Session_locationResolver,
   },
   SessionAttendee: {
     user: SessionAttendee_userResolver,
+    session: SessionAttendee_sessionResolver,
   },
   CourseManager: {
     user: CourseManager_userResolver,

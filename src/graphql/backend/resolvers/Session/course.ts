@@ -18,7 +18,7 @@ export const Session_courseResolver: SessionResolvers['course'] = async (
 
   const course = await prisma.course.findFirst({
     where: {
-      id: root.id,
+      id: root.courseId,
     },
   });
 
