@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-import { DateTime } from 'luxon';
 import { v4 as uuidv4 } from 'uuid';
 
 import { CurrentUser, SignupInput } from '../../gen/graphql/resolvers';
@@ -11,7 +10,7 @@ const testServer = setupApolloServer();
 describe('signup', () => {
   test('can signup with valid parameters', async () => {
     const clientMutationId = uuidv4();
-    const email = `test-${DateTime.now().valueOf()}-account@example.com`;
+    const email = `test-${uuidv4()}-account@example.com`;
     const password = 'abcdef';
     const firstName = 'John';
     const lastName = 'Smith';
@@ -75,7 +74,7 @@ describe('signup', () => {
 
   test('cannot signup with missing parameters', async () => {
     const clientMutationId = uuidv4();
-    const email = `test-${DateTime.now().valueOf()}-account@example.com`;
+    const email = `test-${uuidv4()}-account@example.com`;
 
     const response = await testServer.executeOperation<
       {

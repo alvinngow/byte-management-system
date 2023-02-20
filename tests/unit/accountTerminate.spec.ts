@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-import { DateTime } from 'luxon';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -51,7 +50,7 @@ describe('accountTerminate', () => {
         variables: {
           input: {
             clientMutationId,
-            email: `test-${DateTime.now().valueOf()}-user@example.com`,
+            email: `test-${uuidv4()}-user@example.com`,
             mobileNo: '91234567',
             firstName: 'Test',
             lastName: 'User',
