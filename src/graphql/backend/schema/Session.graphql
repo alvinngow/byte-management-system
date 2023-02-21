@@ -26,6 +26,26 @@ type SessionConnection {
     pageInfo: PageInfo!
 }
 
+"""
+Represents sorting options for Session
+"""
+enum SessionSortKey {
+    START
+    END
+}
+
+enum SessionDateFiltering {
+    UPCOMING
+    PAST
+}
+
+"""
+Represents filtering options for Session
+"""
+input SessionFiltering {
+    date: SessionDateFiltering
+}
+
 input SessionAddInput {
     clientMutationId: String
     courseId: ID!

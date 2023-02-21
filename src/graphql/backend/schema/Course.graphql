@@ -12,7 +12,7 @@ type Course {
     defaultLocation: Location
 
     courseManagers(first: Int = 10, after: String): CourseManagerConnection!
-    sessions(first: Int = 10, after: String): SessionConnection!
+    sessions(first: Int = 10, after: String, sortKey: SessionSortKey, filter: SessionFiltering, reverse: Boolean): SessionConnection!
 }
 
 type CourseEdge {
