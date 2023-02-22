@@ -101,11 +101,11 @@ const UsersPage: NextPage = function (props) {
           {/* start of table */}
           <div className="border-grey-400 ml-12 mr-12 mb-12 border-2 pl-5 pr-5">
             {/* search bar */}
-            <div className="mb-2 grid grid-cols-2 gap-4 pl-5 pr-5 pt-6 pb-6">
-              <div>
+            <div className="mb-2 flex flex-col gap-4 pl-5 pr-5 pt-6 pb-6 md:flex-row lg:flex-row">
+              <div className="sm:w-full md:w-3/4 lg:w-3/4">
                 <Input label="Search" placeholder={'Name, Email, School... '} />
               </div>
-              <div className="relative">
+              <div className="relative sm:w-full md:w-1/4 lg:w-1/4">
                 <Select
                   items={[
                     { label: 'All', value: 'All' },
@@ -187,11 +187,13 @@ const UsersPage: NextPage = function (props) {
                     <tr key={edge.node.id} className="border-b bg-white">
                       <td className="body2 flex items-center gap-2 px-6 py-4 text-black">
                         <div className="w-[40px]">
-                          <Image
+                          {/* <Image
                             className="h-[40px] w-[40px] rounded-full"
                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU1wZeXDnAu6XK5bB6UsG69B-b2P_gnQfsfw&usqp=CAU"
                             alt="avatar-image"
-                          />
+                            width={40}
+                            height={40}
+                          /> */}
                           {/* avatar is not appearing */}
                           {edge.node.avatar}
                         </div>
