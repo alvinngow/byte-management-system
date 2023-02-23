@@ -19,13 +19,12 @@ const ModalBody: React.FC<React.PropsWithChildren<PropTypes>> = (props) => {
 
   return (
     <div
-      className={`${classes}`}
+      className={`${classes} flex flex-col items-center justify-center`}
       onClick={(e) => {
         e.stopPropagation();
       }}
     >
       <ModalHeader onClose={onClose} modalTitle={modalTitle}></ModalHeader>
-
       {children}
     </div>
   );

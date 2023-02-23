@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Session } from '../../../../gen/graphql/resolvers';
 import * as SessionDelete from '../../../graphql/frontend/mutations/SessionDeleteMutation';
 import Button from '../../Button';
+import Modal from '../../Modal';
 import Spinner from '../../Spinner';
 
 interface Props {
@@ -46,16 +47,13 @@ const SessionDeleteModal: React.FC<Props> = function (props) {
   }, [onClose, session.id, sessionDelete]);
 
   return (
-    <div
-      className="fixed inset-0 flex items-center justify-center bg-black/20"
-      onClick={onClose}
-    >
-      <div
-        className="mb:w-1/2 2xl:w-1/4 flex w-full flex-col gap-y-4 rounded-xl bg-white pt-4 pb-8 sm:w-2/3"
-        onClick={(event) => event.stopPropagation()}
+    <>
+      <Modal
+        className="xsm:w-11/12 md:w-96"
+        onClose={onClose}
+        modalTitle="Delete Session"
       >
-        <p className="text-center text-3xl font-semibold">Delete Session</p>
-        <p className="text-center">
+        <p className=" my-2 mx-4 text-center">
           Are you sure you want to delete the session from{' '}
           {DateTime.fromISO(session.startTime).toLocaleString(
             DateTime.TIME_SIMPLE
@@ -66,7 +64,7 @@ const SessionDeleteModal: React.FC<Props> = function (props) {
           )}
           ?
         </p>
-        <div className="flex justify-center gap-x-4">
+        <div className="my-5 mb-6 flex justify-center xsm:gap-x-2 md:gap-x-4">
           {error != null && (
             <span className="text-red-400">An Error Occurred</span>
           )}
@@ -77,14 +75,14 @@ const SessionDeleteModal: React.FC<Props> = function (props) {
               <Button onClick={onClose} variant="secondary">
                 Cancel
               </Button>
-              <Button onClick={handleDeleteClick} variant="danger">
+              <Button onClick={handleDeleteClick} href="" variant="danger">
                 Delete
               </Button>
             </>
           )}
         </div>
-      </div>
-    </div>
+      </Modal>
+    </>
   );
 };
 

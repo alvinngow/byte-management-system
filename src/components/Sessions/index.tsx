@@ -4,6 +4,7 @@ import React from 'react';
 import { Session } from '../../../gen/graphql/resolvers';
 import * as CourseSessions from '../../graphql/frontend/queries/CourseSessionsQuery';
 import Button from '../Button';
+import Select from '../Select';
 import Spinner from '../Spinner';
 import SessionAddModal from './components/SessionAddModal';
 import SessionDeleteModal from './components/SessionDeleteModal';
@@ -40,12 +41,14 @@ const Sessions: React.FC<Props> = function (props) {
   );
 
   return (
-    <div className="mb-10 h-max rounded border px-5 pt-2 shadow-md shadow-gray-400">
+    <div className="flex h-max flex-col gap-y-4 rounded-lg border border-gray-100 px-5 py-4 shadow-md md:filter-none">
       {loading && <Spinner />}
       {error != null && <span className="text-red-400">An Error Occurred</span>}
       <div className="flex items-center justify-between">
-        <p>Sessions</p>
-        <Button onClick={() => setShowModal(true)}>ADD SESSION</Button>
+        <p className="subtitle1 mb-2">Sessions</p>
+        <Button size="sm" onClick={() => setShowModal(true)}>
+          ADD SESSION
+        </Button>
         <SessionAddModal
           courseId={courseId}
           showModal={showModal}
@@ -55,6 +58,7 @@ const Sessions: React.FC<Props> = function (props) {
           <SessionEditModal
             session={editModalSession}
             onClose={() => setEditModalSession(null)}
+            onDeleteClick={setDeleteModalSession}
           />
         )}
         {deleteModalSession != null && (
@@ -77,36 +81,50 @@ const Sessions: React.FC<Props> = function (props) {
           </p>
         </div>
       ) : (
-        <div className="w-36 overflow-x-auto sm:w-72 md:w-auto">
-          <table className="my-5 w-full border border-slate-300">
-            <thead>
-              <tr>
-                <th className="border border-slate-300 py-4 pl-4 text-left">
-                  Date
-                </th>
-                <th className="border border-slate-300 py-4 pl-4 text-left">
-                  Start Time
-                </th>
-                <th className="border border-slate-300 py-4 pl-4 text-left">
-                  End Time
-                </th>
-                <th className="border border-slate-300 py-4 pl-4 text-left">
-                  Volunteer Slots
-                </th>
-                <th className="border border-slate-300 py-4 pl-4 text-left"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {sessionEdges.map((sessionEdge) => (
-                <SessionRow
-                  key={sessionEdge.node.id}
-                  session={sessionEdge.node}
-                  onEditClick={setEditModalSession}
-                  onDeleteClick={setDeleteModalSession}
-                />
-              ))}
-            </tbody>
-          </table>
+        <div className="w-36 xsm:w-full md:w-auto">
+          <div className="relative md:w-1/2">
+            <Select
+              className="w-full"
+              items={[
+                { label: 'All', value: 'all' },
+                { label: 'Upcoming sessions', value: 'upcoming-sessions' },
+                { label: 'Past sessions', value: 'past-sessions' },
+              ]}
+              label={'Show'}
+              value={'upcoming-sessions'}
+              onChange={function (value: string): void {
+                throw new Error('Function not implemented.');
+              }}
+            />
+          </div>
+          <div className="snap-x overflow-x-auto scroll-smooth">
+            <table className="my-5 w-full shadow-sm">
+              <thead>
+                <tr>
+                  <th className="py-4 pl-4 text-left">Date</th>
+                  <th className="py-4 pl-4 text-left xsm:whitespace-nowrap md:whitespace-normal">
+                    Start Time
+                  </th>
+                  <th className="py-4 pl-4 text-left xsm:whitespace-nowrap md:whitespace-normal">
+                    End Time
+                  </th>
+                  <th className="py-4 pl-4 text-left xsm:whitespace-nowrap md:whitespace-normal">
+                    Volunteer Slots
+                  </th>
+                  <th className="py-4 pl-4 text-left"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {sessionEdges.map((sessionEdge) => (
+                  <SessionRow
+                    key={sessionEdge.node.id}
+                    session={sessionEdge.node}
+                    onEditClick={setEditModalSession}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

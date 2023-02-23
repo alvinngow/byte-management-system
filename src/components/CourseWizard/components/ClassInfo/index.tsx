@@ -1,5 +1,6 @@
 import { DocumentArrowUpIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React from 'react';
 import {
   BaseActionObject,
@@ -46,6 +47,9 @@ const MAX_FILE_SIZE_BYTES = 3145728;
 
 const ClassInfo: React.FC<Props> = function (props) {
   const { state, send } = props;
+  const router = useRouter();
+
+  const { courseId } = router.query;
 
   const handleTitleChange = React.useCallback<
     React.ChangeEventHandler<HTMLInputElement>
@@ -330,7 +334,7 @@ const ClassInfo: React.FC<Props> = function (props) {
               onClick={() => {
                 send({ type: 'SUBMIT' });
               }}
-              label="Add Course"
+              label={courseId != undefined ? 'Update' : 'Next'}
             />
             <Button size="sm" variant="secondary" href={'./'} label="Cancel" />
           </div>

@@ -1,50 +1,55 @@
-import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import {
+  ClipboardDocumentCheckIcon,
+  PencilIcon,
+  TrashIcon,
+} from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 import React from 'react';
 
 import { Session } from '../../../../gen/graphql/resolvers';
+import Chip from '../../Chip';
+import IconButton from '../../IconButton';
 
 interface Props {
   session: Session;
   onEditClick: (session: Session) => void;
-  onDeleteClick: (session: Session) => void;
 }
 
 const SessionRow: React.FC<Props> = function (props) {
-  const { session, onEditClick, onDeleteClick } = props;
+  const { session, onEditClick } = props;
 
   return (
-    <tr>
-      <td className="border border-slate-300 py-4 pl-4 text-left">
+    <tr className="border border-x-0 border-y-gray-200">
+      <td className="py-4 pl-4 text-left xsm:whitespace-nowrap md:whitespace-normal">
         {DateTime.fromISO(session.startDate).toLocaleString(DateTime.DATE_MED)}
       </td>
-      <td className="border border-slate-300 py-4 pl-4 text-left">
+      <td className="py-4 pl-4 text-left">
         {DateTime.fromISO(session.startTime).toLocaleString(
           DateTime.TIME_SIMPLE
         )}
       </td>
-      <td className="border border-slate-300 py-4 pl-4 text-left">
+      <td className="py-4 pl-4 text-left">
         {DateTime.fromISO(session.endTime).toLocaleString(DateTime.TIME_SIMPLE)}
       </td>
       <td
-        className={classNames('border border-slate-300 py-4 pl-4 text-left', {
+        className={classNames('py-4 pl-4 text-left', {
           'text-neutral-400':
             session.volunteerSlotCount === 0 ||
             session.volunteerSlotCount == null,
         })}
       >
-        {session.volunteerSlotCount || 'UNLIMITED'}
+        {session.volunteerSlotCount || (
+          <Chip scheme={'disabled'}>Unlimited</Chip>
+        )}
       </td>
-      <td className="border border-slate-300 py-4 pl-4 text-left">
-        <PencilIcon
-          className="h-4 w-4 hover:cursor-pointer hover:text-brand-main"
-          onClick={() => onEditClick(session)}
-        />
-        <TrashIcon
-          className="h-4 w-4 hover:cursor-pointer hover:text-brand-main"
-          onClick={() => onDeleteClick(session)}
-        />
+      <td className="py-4 pl-4 text-left xsm:pr-4 md:pr-0">
+        <div className="flex gap-y-3 gap-x-2.5 xsm:flex-col md:flex-row ">
+          <IconButton
+            HeroIcon={() => <PencilIcon onClick={() => onEditClick(session)} />}
+          />
+          <IconButton HeroIcon={() => <ClipboardDocumentCheckIcon />} />
+        </div>
       </td>
     </tr>
   );

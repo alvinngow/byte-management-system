@@ -7,8 +7,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { Session } from '../../../../gen/graphql/resolvers';
 import { SESSION_MODAL_DEFAULT_VOLUNTEER_SLOT_COUNT } from '../../../constants/sessionModal';
 import * as SessionEdit from '../../../graphql/frontend/mutations/SessionEditMutation';
+import inputStyles from '../../../styles/component_styles/Input.module.css';
 import Button from '../../Button';
 import Input from '../../Input';
+import Modal from '../../Modal';
 import Spinner from '../../Spinner';
 import Switch from '../../Switch';
 import { DEFAULT_END_TIME, DEFAULT_START_TIME } from '../constants';
@@ -16,10 +18,11 @@ import { DEFAULT_END_TIME, DEFAULT_START_TIME } from '../constants';
 interface Props {
   session: Session;
   onClose: () => void;
+  onDeleteClick: (session: Session) => void;
 }
 
 const SessionEditModal: React.FC<Props> = function (props) {
-  const { onClose, session } = props;
+  const { onClose, session, onDeleteClick } = props;
 
   const [sessionEdit, { loading, error }] = useMutation<
     SessionEdit.Data,
@@ -74,7 +77,7 @@ const SessionEditModal: React.FC<Props> = function (props) {
     React.ChangeEventHandler<HTMLInputElement>
   >((e) => {
     setVolunteerSlotCount(
-      e.target.checked ? SESSION_MODAL_DEFAULT_VOLUNTEER_SLOT_COUNT : null
+      !e.target.checked ? SESSION_MODAL_DEFAULT_VOLUNTEER_SLOT_COUNT : null
     );
   }, []);
 
@@ -110,83 +113,76 @@ const SessionEditModal: React.FC<Props> = function (props) {
   ]);
 
   return (
-    <div
-      className="fixed inset-0 flex items-center justify-center bg-black/20"
-      onClick={onClose}
-    >
-      <div
-        className="mb:w-1/2 2xl:w-1/4 w-full rounded-xl bg-white sm:w-2/3"
-        onClick={(event) => event.stopPropagation()}
-      >
-        <div className="mb-12 flex flex-col gap-4 px-14 pt-14">
-          <p className="text-center text-3xl font-semibold">Edit Session</p>
-          <div>
-            <div className="py-3">
-              <Input
-                label="Date"
-                type="date"
-                value={date}
-                onChange={handleDateChange}
-              />
-            </div>
-          </div>
-          <div className="flex justify-items-stretch gap-x-4">
-            <div className="grow">
-              <Input
-                label="Start Time"
-                type="time"
-                value={startTime}
-                onChange={handleStartTimeChange}
-              />
-            </div>
-            <div className="grow">
-              <Input
-                label="End Time"
-                type="time"
-                value={endTime}
-                onChange={handleEndTimeChange}
-              />
-            </div>
-          </div>
-          <div className="flex items-center gap-x-3">
-            <span className="text-xs text-gray-400">
-              Unlimited volunteer slots
-            </span>
-            <Switch
-              checked={volunteerSlotCount != null}
-              onChange={handleVolunteerSlotCountSwitchChange}
+    <Modal className="w-auto" onClose={onClose} modalTitle="Edit Session">
+      <div className="my-2 mx-4 flex flex-col gap-4">
+        <div>
+          <div className="py-3">
+            <Input
+              label="Date"
+              type="date"
+              value={date}
+              onChange={handleDateChange}
             />
           </div>
-          {volunteerSlotCount != null && (
-            <div>
-              <Input
-                label="Volunteer Slots (No of Pax)"
-                type="number"
-                placeholder="0"
-                min={0}
-                value={volunteerSlotCount.toString(10)}
-                onChange={handleVolunteerSlotCountChange}
-              />
-            </div>
-          )}
-          <div className="flex justify-center gap-x-4 pb-14">
-            {loading ? (
-              <Spinner />
-            ) : (
-              <>
-                <Button onClick={onClose} variant="secondary">
-                  CANCEL
-                </Button>
-                <Button onClick={onClose} variant="secondary" disabled>
-                  DELETE
-                </Button>
-                <Button onClick={handleEditClick}>EDIT</Button>
-              </>
-            )}
+        </div>
+        <div className="flex justify-items-stretch gap-x-4">
+          <div className="grow">
+            <Input
+              label="Start Time"
+              type="time"
+              value={startTime}
+              onChange={handleStartTimeChange}
+            />
+          </div>
+          <div className="grow">
+            <Input
+              label="End Time"
+              type="time"
+              value={endTime}
+              onChange={handleEndTimeChange}
+            />
           </div>
         </div>
+        <div className="flex items-center gap-x-3">
+          <span className={inputStyles['input-label']}>
+            Unlimited volunteer slots
+          </span>
+          <Switch
+            checked={volunteerSlotCount == null}
+            onChange={handleVolunteerSlotCountSwitchChange}
+          />
+        </div>
+        {volunteerSlotCount != null && (
+          <div>
+            <Input
+              label="Volunteer Slots (No of Pax)"
+              type="number"
+              placeholder="0"
+              min={0}
+              value={volunteerSlotCount.toString(10)}
+              onChange={handleVolunteerSlotCountChange}
+            />
+          </div>
+        )}
+        <div className="my-5 mb-6 flex justify-center xsm:gap-x-2 md:gap-x-4">
+          {loading ? (
+            <Spinner />
+          ) : (
+            <>
+              <Button variant="danger" onClick={() => onDeleteClick(session)}>
+                DELETE
+              </Button>
+              <Button onClick={onClose} variant="secondary">
+                CANCEL
+              </Button>
+
+              <Button onClick={handleEditClick}>EDIT</Button>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+      {/* </div> */}
+    </Modal>
   );
 };
 
