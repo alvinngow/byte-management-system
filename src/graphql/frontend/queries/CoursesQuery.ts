@@ -36,6 +36,7 @@ export const Query = gql`
           id
           name
           description
+          coverImage
           firstSessionStartDate
           lastSessionStartDate
           defaultLocation {

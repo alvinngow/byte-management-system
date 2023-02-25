@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { ClassAttributes, HTMLAttributes } from 'react';
@@ -13,6 +14,7 @@ type CardProps = {
   titleClass?: string;
   fill?: boolean;
   linkTo?: string;
+  className?: string;
 };
 
 const Card: React.FC<React.PropsWithChildren<CardProps>> = (props) => {
@@ -24,6 +26,7 @@ const Card: React.FC<React.PropsWithChildren<CardProps>> = (props) => {
     titleClass,
     children,
     linkTo,
+    className,
   } = props;
 
   let imgProps = {};
@@ -44,19 +47,25 @@ const Card: React.FC<React.PropsWithChildren<CardProps>> = (props) => {
       router.push(linkTo);
     }
   }
-
+  const baseCardClass = classNames(
+    className,
+    'grid grid-flow-row grid-rows-3',
+    { 'cursor-pointer': linkTo }
+  );
   return (
-    <BaseCard
-      className={`grid grid-flow-row grid-rows-3 ${
-        linkTo ? 'cursor-pointer' : ''
-      }`}
-      onClick={clickHandler}
-    >
+    <BaseCard className={baseCardClass} onClick={clickHandler}>
       <div className="relative row-span-2 flex justify-center">
-        <Image src={coverImage} alt="cover image" {...imgProps}></Image>
+        <Image
+          className="rounded-t-lg"
+          src={coverImage}
+          alt="cover image"
+          {...imgProps}
+        ></Image>
       </div>
       <div>
-        <h2 className={`text-xl text-brand-main ${titleClass}`}>{title}</h2>
+        <h2 className={`px-4 pt-4 pb-1 text-xl text-brand-main ${titleClass}`}>
+          {title}
+        </h2>
         {children}
       </div>
     </BaseCard>

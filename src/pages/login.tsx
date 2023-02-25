@@ -44,7 +44,7 @@ const LoginPage: NextPage = function (props) {
         },
       });
 
-      await router.push('/home');
+      await router.push('/discover-courses');
     } catch (e) {
       setError('password', {
         type: 'server',

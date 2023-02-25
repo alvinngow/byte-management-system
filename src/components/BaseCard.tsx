@@ -10,7 +10,7 @@ const BaseCard: React.FC<
 
   const classes = classNames(className, styles.card);
   return (
-    <div className={`${classes} p-4`} {...otherProps}>
+    <div className={`${classes}`} {...otherProps}>
       {props.children}
     </div>
   );

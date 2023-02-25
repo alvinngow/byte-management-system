@@ -60,7 +60,7 @@ const Components: NextPage = function (props) {
           <h1 className="mb-4 text-3xl font-bold">Components showcase</h1>
           <SelectShowcase />
           <BackButton
-            href="/home"
+            href="/discover-courses"
             className="font-bold text-red-900"
             text="Example"
           />

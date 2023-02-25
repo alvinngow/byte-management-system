@@ -7,7 +7,7 @@ import { ironSessionOptions } from './session/iron-session';
 const ROUTES_UNAUTHENTICATED = ['/login', '/signup'];
 
 const ROUTES_AUTHENTICATED = [
-  '/home',
+  '/discover-courses',
   '/logout',
   '/manage/users',
   '/manage/course',
@@ -60,8 +60,8 @@ export async function middleware(req: NextRequest) {
         return res;
       }
 
-      // Authenticated user, redirect to home
-      return NextResponse.redirect(new URL('/home', req.url));
+      // Authenticated user, redirect to /discover-courses
+      return NextResponse.redirect(new URL('/discover-courses', req.url));
     }
     case 'authenticated_only': {
       if (isUserAuthenticated) {

@@ -151,31 +151,31 @@ const ClassPage: React.FC = function () {
                     <th className="border-b border-slate-300 py-4 pl-4 text-left">
                       <div className="flex items-center gap-1.5">
                         <span>Title</span>
-                        <IconButton
-                          HeroIcon={(props) => (
-                            <ArrowsUpDownIcon
-                              onClick={() => {
-                                setSortKeyForCourse(CourseSortKey.Name);
-                                setSortDirection((prevState) => !prevState);
-                              }}
-                            />
-                          )}
-                        />
+                        <span>
+                          <ArrowsUpDownIcon
+                            style={{ color: '#9CA3AF' }}
+                            className="h-5 w-5"
+                            onClick={() => {
+                              setSortKeyForCourse(CourseSortKey.Name);
+                              setSortDirection((prevState) => !prevState);
+                            }}
+                          />
+                        </span>
                       </div>
                     </th>
                     <th className="border-b border-slate-300 py-4 pl-4 text-left">
                       <div className="flex items-center gap-1.5">
                         <span>Location</span>
-                        <IconButton
-                          HeroIcon={(props) => (
-                            <ArrowsUpDownIcon
-                              onClick={() => {
-                                setSortKeyForCourse(CourseSortKey.LocationName);
-                                setSortDirection((prevState) => !prevState);
-                              }}
-                            />
-                          )}
-                        />
+                        <span>
+                          <ArrowsUpDownIcon
+                            style={{ color: '#9CA3AF' }}
+                            className="h-5 w-5"
+                            onClick={() => {
+                              setSortKeyForCourse(CourseSortKey.LocationName);
+                              setSortDirection((prevState) => !prevState);
+                            }}
+                          />
+                        </span>
                       </div>
                     </th>
                     <th className="border-b border-slate-300 py-4 pl-4 text-left">
@@ -187,31 +187,31 @@ const ClassPage: React.FC = function () {
                     <th className="border-b border-slate-300 py-4 pl-4 text-left">
                       <div className="flex items-center gap-1.5">
                         <span>Start Date</span>
-                        <IconButton
-                          HeroIcon={(props) => (
-                            <ArrowsUpDownIcon
-                              onClick={() => {
-                                setSortKeyForCourse(CourseSortKey.StartDate);
-                                setSortDirection((prevState) => !prevState);
-                              }}
-                            />
-                          )}
-                        />
+                        <span>
+                          <ArrowsUpDownIcon
+                            style={{ color: '#9CA3AF' }}
+                            className="h-5 w-5"
+                            onClick={() => {
+                              setSortKeyForCourse(CourseSortKey.StartDate);
+                              setSortDirection((prevState) => !prevState);
+                            }}
+                          />
+                        </span>
                       </div>
                     </th>
                     <th className="border-b border-slate-300 py-4 pl-4 text-left">
                       <div className="flex items-center gap-1.5">
                         <span>End Date</span>
-                        <IconButton
-                          HeroIcon={(props) => (
-                            <ArrowsUpDownIcon
-                              onClick={() => {
-                                setSortKeyForCourse(CourseSortKey.EndDate);
-                                setSortDirection((prevState) => !prevState);
-                              }}
-                            />
-                          )}
-                        />
+                        <span>
+                          <ArrowsUpDownIcon
+                            style={{ color: '#9CA3AF' }}
+                            className="h-5 w-5"
+                            onClick={() => {
+                              setSortKeyForCourse(CourseSortKey.EndDate);
+                              setSortDirection((prevState) => !prevState);
+                            }}
+                          />
+                        </span>
                       </div>
                     </th>
                     <th className="border-b border-slate-300 py-4 pl-4 text-left" />
@@ -241,9 +241,15 @@ const ClassPage: React.FC = function () {
                       <td className="border-b border-slate-300 p-4 text-left">
                         <div className="flex gap-2.5">
                           <NavLink href={`/manage/course/${course.courseId}`}>
-                            <IconButton HeroIcon={(props) => <PencilIcon />} />
+                            <PencilIcon
+                              style={{ color: '#6B7280' }}
+                              className="h-6 w-6"
+                            />
                           </NavLink>
-                          <IconButton HeroIcon={(props) => <TrashIcon />} />
+                          <TrashIcon
+                            style={{ color: '#6B7280' }}
+                            className="h-6 w-6"
+                          />
                         </div>
                       </td>
                     </tr>

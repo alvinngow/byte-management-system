@@ -6,7 +6,7 @@ async function login(page: Page, username: string, password: string) {
   await page.locator('input[name="password"]').fill(password);
   await page.getByRole('button', { name: 'Log in' }).click();
 
-  await expect(page).toHaveURL('/home');
+  await expect(page).toHaveURL('/discover-courses');
   await expect(page.locator('h1')).toHaveText(
     'Discover Causes (Courses) That Matter To You'
   );
