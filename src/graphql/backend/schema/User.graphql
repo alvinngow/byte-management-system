@@ -22,11 +22,26 @@ type CurrentUser {
 
 
   sessionAttendees(first: Int = 10, after: String, sortKey: SessionAttendeeSortKey, filter: SessionAttendeeFiltering, reverse: Boolean): SessionAttendeeConnection!
+  overview: [CurrentUserOverview!]!
+}
+
+enum CurrentUserOverviewType {
+  COURSES_UPCOMING
+  COURSES_ATTENDED
+  HOURS_ACCUMULATED
+  COURSES_CANCELLED
+}
+
+type CurrentUserOverview {
+  type: CurrentUserOverviewType!
+  value: Float!
+  change: Float
 }
 
 type UserConnection {
   edges: [UserEdge!]!
   pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 type UserEdge {

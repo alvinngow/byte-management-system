@@ -1,106 +1,271 @@
 import { useMutation, useQuery } from '@apollo/client';
-import {
-  ArrowsUpDownIcon,
-  ChevronDownIcon,
-  ClockIcon,
-  PresentationChartLineIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline';
+import { ArrowsUpDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
-import { useRouter } from 'next/router';
+import { DateTime } from 'luxon';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { UserRole } from '../../../gen/graphql/resolvers';
-import Chip from '../../components/Chip';
-import ClassOverviewCard from '../../components/ClassOverviewCard';
-import CrossPresentationChartLineIcon from '../../components/icons/CrossPresentationChartLineIcon';
-import TickPresentationChartLineIcon from '../../components/icons/TickPresentationChartLineIcon';
+import {
+  Attendance,
+  SessionAttendeeConnection,
+  SessionAttendeeDateFiltering,
+  SessionAttendeeSortKey,
+} from '../../../gen/graphql/resolvers';
+import ActualAttendancePill from '../../components/ActualAttendancePill';
+import Input from '../../components/Input';
+import MySessionsOverview from '../../components/MySessionsOverview';
+import Select from '../../components/Select';
+import SEO from '../../components/SEO';
+import Spinner from '../../components/Spinner';
 import VolunteerNavHeader from '../../components/VolunteerNavHeader';
-import * as AccountRoleUpdate from '../../graphql/frontend/mutations/AccountRoleUpdateMutation';
-import * as UsersQuery from '../../graphql/frontend/queries/UsersQuery';
-import useCurrentUser from '../../hooks/useCurrentUser';
+import * as SessionAttend from '../../graphql/frontend/mutations/SessionAttendMutation';
+import * as MeSessions from '../../graphql/frontend/queries/MeSessionAttendeesQuery';
+import useDebounce from '../../hooks/useDebounce';
 import AppLayout from '../../layouts/AppLayout';
 
-const ALLOWED_ROLES = new Set([
-  UserRole.SystemAdministrator,
-  UserRole.CommitteeMember,
-]);
+interface TabUpcomingProps {
+  sessionAttendeeConnection: SessionAttendeeConnection;
+  reverse: boolean;
+  handleReverseToggle: React.MouseEventHandler;
+}
+
+const TabUpcoming: React.FC<TabUpcomingProps> = function (props) {
+  const { sessionAttendeeConnection, reverse, handleReverseToggle } = props;
+
+  const [sessionAttend] = useMutation<
+    SessionAttend.Data,
+    SessionAttend.Variables
+  >(SessionAttend.Mutation);
+
+  return (
+    <table className="w-full text-left text-gray-500">
+      <thead className="text-sm text-gray-700">
+        <th className="flex columns-1 px-6 py-3">
+          Date
+          <button
+            className="ml-auto hover:cursor-pointer"
+            onClick={handleReverseToggle}
+          >
+            <ArrowsUpDownIcon
+              className={classNames('h-4 w-4', {
+                'text-gray-300': reverse,
+              })}
+            />
+          </button>
+        </th>
+        <th className="columns-1 px-6 py-3">Start Time </th>
+        <th className="columns-1 px-6 py-3">End Time </th>
+        <th className="columns-1 px-6 py-3">Course Title </th>
+        <th className="columns-1 px-6 py-3">Location </th>
+      </thead>
+      <tbody>
+        {sessionAttendeeConnection.edges.map((edge) => (
+          <tr key={edge.node.id} className="border-b bg-white">
+            <td className="px-6 py-4 text-black">
+              {DateTime.fromISO(edge.node.session.startDate).toLocaleString(
+                DateTime.DATE_MED
+              )}
+            </td>
+            <td className="px-6 py-4 text-black">
+              {DateTime.fromISO(edge.node.session.startTime).toLocaleString(
+                DateTime.TIME_SIMPLE
+              )}
+            </td>
+            <td className="px-6 py-4 text-black">
+              {DateTime.fromISO(edge.node.session.endTime).toLocaleString(
+                DateTime.TIME_SIMPLE
+              )}
+            </td>
+            <td className="px-6 py-4 text-blue-500 underline">
+              {edge.node.session.course.name}
+            </td>
+            <td className="px-6 py-4 text-black">
+              {edge.node.session.location?.name}
+            </td>
+            <td className="px-6 py-4 text-black">
+              <button>
+                <XMarkIcon
+                  className="ml-auto h-6 w-6"
+                  onClick={() => {
+                    if (
+                      !window.confirm('Are you sure you are not attending?')
+                    ) {
+                      return;
+                    }
+
+                    sessionAttend({
+                      variables: {
+                        input: {
+                          clientMutationId: uuidv4(),
+                          sessionId: edge.node.id,
+                          indicatedAttendance: Attendance.Absent,
+                        },
+                      },
+                    });
+                  }}
+                ></XMarkIcon>
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};
+
+interface TabHistoryProps {
+  sessionAttendeeConnection: SessionAttendeeConnection;
+  reverse: boolean;
+  handleReverseToggle: React.MouseEventHandler;
+}
+
+const TabHistory: React.FC<TabHistoryProps> = function (props) {
+  const { sessionAttendeeConnection, reverse, handleReverseToggle } = props;
+
+  return (
+    <table className="w-full text-left text-gray-500">
+      <thead className="text-sm text-gray-700">
+        <th className="flex columns-1 px-6 py-3">
+          Date
+          <button
+            className="ml-auto hover:cursor-pointer"
+            onClick={handleReverseToggle}
+          >
+            <ArrowsUpDownIcon
+              className={classNames('h-4 w-4', {
+                'text-gray-300': reverse,
+              })}
+            />
+          </button>
+        </th>
+        <th className="columns-1 px-6 py-3">Start Time </th>
+        <th className="columns-1 px-6 py-3">End Time </th>
+        <th className="columns-1 px-6 py-3">Course Title </th>
+        <th className="columns-1 px-6 py-3">Location </th>
+        <th className="columns-1 px-6 py-3 text-center">Attendance Status</th>
+      </thead>
+      <tbody>
+        {sessionAttendeeConnection.edges.map((edge) => (
+          <tr key={edge.node.id} className="border-b bg-white">
+            <td className="px-6 py-4 text-black">
+              {DateTime.fromISO(edge.node.session.startDate).toLocaleString(
+                DateTime.DATE_MED
+              )}
+            </td>
+            <td className="px-6 py-4 text-black">
+              {DateTime.fromISO(edge.node.session.startTime).toLocaleString(
+                DateTime.TIME_SIMPLE
+              )}
+            </td>
+            <td className="px-6 py-4 text-black">
+              {DateTime.fromISO(edge.node.session.endTime).toLocaleString(
+                DateTime.TIME_SIMPLE
+              )}
+            </td>
+            <td className="px-6 py-4 text-blue-500 underline">
+              {edge.node.session.course.name}
+            </td>
+            <td className="px-6 py-4 text-black">
+              {edge.node.session.location?.name}
+            </td>
+
+            <td className="px-6 py-4  text-center text-black">
+              <ActualAttendancePill
+                actualAttendance={edge.node.actualAttendance ?? null}
+              />
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};
 
 const MySessionsPage: React.FC = function () {
-  const { me, loading: meLoading } = useCurrentUser();
-  const [linkSelected, setLinkSelected] = React.useState<
-    'Upcoming Sessions' | 'Session History'
-  >('Upcoming Sessions');
+  const [tab, setTab] = React.useState<'Upcoming Sessions' | 'Session History'>(
+    'Upcoming Sessions'
+  );
+
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const searchTermDebounced = useDebounce(searchTerm);
+
+  const [reverse, setReverse] = React.useState(false);
+
+  const [filterActualAttendance, setFilterActualAttendance] = React.useState<
+    Attendance | undefined
+  >(undefined);
+
+  const variables = React.useMemo<MeSessions.Variables>(() => {
+    switch (tab) {
+      case 'Upcoming Sessions': {
+        return {
+          filter: {
+            actualAttendance: filterActualAttendance,
+            date: SessionAttendeeDateFiltering.Upcoming,
+            searchText: searchTermDebounced || undefined,
+          },
+          sortKey: SessionAttendeeSortKey.SessionStart,
+          reverse,
+        };
+      }
+      case 'Session History': {
+        return {
+          filter: {
+            actualAttendance: filterActualAttendance,
+            date: SessionAttendeeDateFiltering.Past,
+            searchText: searchTermDebounced || undefined,
+          },
+          sortKey: SessionAttendeeSortKey.SessionStart,
+          reverse,
+        };
+      }
+    }
+  }, [filterActualAttendance, reverse, searchTermDebounced, tab]);
 
   const { data, loading, fetchMore } = useQuery<
-    UsersQuery.Data,
-    UsersQuery.Variables
-  >(UsersQuery.Query);
+    MeSessions.Data,
+    MeSessions.Variables
+  >(MeSessions.Query, {
+    variables,
+  });
 
-  const [accountRoleUpdate] = useMutation<
-    AccountRoleUpdate.Data,
-    AccountRoleUpdate.Variables
-  >(AccountRoleUpdate.Mutation);
-
-  const router = useRouter();
-
-  React.useEffect(() => {
-    if (me == null) {
-      return;
-    }
-
-    if (!ALLOWED_ROLES.has(me.role)) {
-      router.push('/404');
-    }
-  }, [me, router]);
+  const endCursor = data?.me.sessionAttendees.pageInfo.endCursor;
 
   const handleLoadMoreClick = React.useCallback<React.MouseEventHandler>(() => {
     fetchMore({
       variables: {
-        after: data?.users.pageInfo.endCursor,
+        ...variables,
+        after: endCursor,
       },
     });
-  }, [data?.users.pageInfo.endCursor, fetchMore]);
+  }, [endCursor, fetchMore, variables]);
 
-  const updateRole = React.useCallback(
-    (userId: string, role: UserRole) => {
-      accountRoleUpdate({
-        variables: {
-          input: {
-            clientMutationId: uuidv4(),
-            userId,
-            role,
-          },
-        },
-      });
-    },
-    [accountRoleUpdate]
-  );
+  const handleSortByDateClick: React.MouseEventHandler = () => {
+    setReverse((prevState) => !prevState);
+  };
 
-  if (meLoading) {
-    return null;
-  }
+  const handleSearchInputChange = React.useCallback<
+    React.ChangeEventHandler<HTMLInputElement>
+  >((e) => {
+    setSearchTerm(e.target.value);
+  }, []);
+
+  const handleAttendanceStatusChange = React.useCallback((value: string) => {
+    setFilterActualAttendance(value ? (value as Attendance) : undefined);
+  }, []);
+
+  const toggleReverse = React.useCallback(() => {
+    setReverse((prevState) => !prevState);
+  }, []);
+
   return (
     <AppLayout>
+      <SEO title="My Sessions" />
       <VolunteerNavHeader />
       <div className="my-6 mx-auto flex">
         <p className="h6 ml-20 mr-20 text-xl">Overview</p>
       </div>
-      <div className="my-5 ml-20 mr-20 grid grid-cols-4 divide-x divide-gray-500">
-        <ClassOverviewCard label="Upcoming Courses" currentData="3">
-          <PresentationChartLineIcon className="mr-2 h-6 w-6" />
-        </ClassOverviewCard>
-        <ClassOverviewCard label="Course Attended" currentData="3">
-          <TickPresentationChartLineIcon />
-        </ClassOverviewCard>
-        <ClassOverviewCard label="Hours Accumulated" currentData="3">
-          <ClockIcon className="mr-2 h-6 w-6" />
-        </ClassOverviewCard>
-        <ClassOverviewCard label="Courses Cancelled" currentData="3">
-          <CrossPresentationChartLineIcon />
-        </ClassOverviewCard>
-      </div>
+      <MySessionsOverview />
       <div className="my-6 mx-auto flex">
         <p className="h6 ml-20 mr-20 text-xl">Courses</p>
       </div>
@@ -109,12 +274,12 @@ const MySessionsPage: React.FC = function () {
         <ul className="-mb-px flex flex-wrap">
           <li className="mr-2">
             <div
-              onClick={() => setLinkSelected('Upcoming Sessions')}
+              onClick={() => setTab('Upcoming Sessions')}
               className={classNames(
                 {
                   'border-b-2 border-brand-main text-brand-main':
-                    linkSelected === 'Upcoming Sessions',
-                  'text-gray-500': linkSelected !== 'Upcoming Sessions',
+                    tab === 'Upcoming Sessions',
+                  'text-gray-500': tab !== 'Upcoming Sessions',
                 },
                 'cursor-default px-4 py-5 group-hover:text-brand-main'
               )}
@@ -125,12 +290,12 @@ const MySessionsPage: React.FC = function () {
           </li>
           <li className="mr-2">
             <div
-              onClick={() => setLinkSelected('Session History')}
+              onClick={() => setTab('Session History')}
               className={classNames(
                 {
                   'border-b-2 border-brand-main text-brand-main':
-                    linkSelected === 'Session History',
-                  'text-gray-500': linkSelected !== 'Session History',
+                    tab === 'Session History',
+                  'text-gray-500': tab !== 'Session History',
                 },
                 'cursor-default px-4 py-5 group-hover:text-brand-main'
               )}
@@ -141,157 +306,67 @@ const MySessionsPage: React.FC = function () {
         </ul>
       </div>
 
-      {linkSelected === 'Upcoming Sessions' && (
-        <div className="border-grey-400 ml-20 mr-20 mb-12 border-2 pl-5 pr-5">
-          <div>
-            <p className="mb-1 mt-5 text-xs text-gray-500">Search</p>
-            <button
-              id="dropdownDefaultButton"
-              data-dropdown-toggle="dropdown"
-              className="mb-5 inline-flex w-full items-center whitespace-pre border-b-2 border-solid border-b-neutral-400 py-2.5 text-center text-sm text-gray-500"
-              type="button"
-            >
-              Course, Location...{' '}
-            </button>
-          </div>
-          <div className="snap-x overflow-x-auto scroll-smooth">
-            {loading && <span>Loading</span>}
+      <div className="border-grey-400 ml-20 mr-20 mb-12 border-2 pl-5 pr-5">
+        <div className="mb-8 flex w-full justify-around gap-4">
+          <Input
+            className="grow"
+            label="Search"
+            placeholder="Course, Location..."
+            value={searchTerm}
+            onChange={handleSearchInputChange}
+          />
 
-            <table className="w-full text-left text-gray-500">
-              <thead className="text-sm text-gray-700">
-                <th className="columns-1 px-6 py-3">
-                  Date{' '}
-                  <button>
-                    <span className="inline-flex">
-                      <ArrowsUpDownIcon className="ml-1 h-5 w-5"></ArrowsUpDownIcon>
-                    </span>
-                  </button>
-                </th>
-                <th className="columns-1 px-6 py-3">
-                  Start Time{' '}
-                  <button>
-                    <span className="inline-flex">
-                      <ArrowsUpDownIcon className="ml-1 h-5 w-5"></ArrowsUpDownIcon>
-                    </span>
-                  </button>
-                </th>
-                <th className="columns-1 px-6 py-3">
-                  End Time{' '}
-                  <button>
-                    <span className="inline-flex">
-                      <ArrowsUpDownIcon className="ml-1 h-5 w-5"></ArrowsUpDownIcon>
-                    </span>
-                  </button>
-                </th>
-                <th className="columns-1 px-6 py-3">Course Title </th>
-                <th className="columns-1 px-6 py-3">Location </th>
-              </thead>
-              <tbody>
-                {data?.users?.edges?.map((edge) => (
-                  <tr key={edge.node.id} className="border-b bg-white">
-                    <td className="px-6 py-4 text-black">10 Jan 2023</td>
-                    <td className="px-6 py-4 text-black">4:00 PM</td>
-                    <td className="px-6 py-4 text-black">5:00 PM</td>
-                    <td className="px-6 py-4 text-blue-500 underline">
-                      Learn Music Production From Scratch
-                    </td>
-                    <td className="px-6 py-4 text-black">Sembawang CC</td>
-                    <td className="px-6 py-4 text-black">
-                      <button>
-                        <XMarkIcon className="ml-auto h-6 w-6"></XMarkIcon>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {data?.users?.pageInfo?.hasNextPage && (
-              <button onClick={handleLoadMoreClick}>Load more</button>
-            )}
-          </div>
-        </div>
-      )}
-
-      {linkSelected === 'Session History' && (
-        <div className="border-grey-400 ml-20 mr-20 mb-12 border-2 pl-5 pr-5">
-          <div className="mb-8 flex gap-4">
-            <div className="w-3/5">
-              <p className="mb-1 mt-5 text-xs text-gray-500">Search</p>
-              <button
-                id="dropdownDefaultButton"
-                data-dropdown-toggle="dropdown"
-                className="inline-flex w-full items-center whitespace-pre border-b-2 border-solid border-b-neutral-400 py-2.5 text-center text-sm text-gray-500"
-                type="button"
-              >
-                Course, Location...{' '}
-              </button>
-            </div>
-            <div className="w-2/5">
-              <p className="mb-1 mt-5 text-xs text-gray-500">
-                Attendance Status
-              </p>
-              <div className="flex">
-                <button
-                  id="dropdownDefaultButton"
-                  data-dropdown-toggle="dropdown"
-                  className="inline-flex w-full items-center whitespace-pre border-b-2 border-solid border-b-neutral-400 py-2.5 text-center text-sm text-gray-500"
-                  type="button"
-                >
-                  All{' '}
-                  <ChevronDownIcon className="ml-auto h-6 w-6"></ChevronDownIcon>
-                </button>
+          {tab === 'Session History' && (
+            <>
+              <div className="relative flex grow">
+                <Select
+                  className="grow"
+                  items={[
+                    {
+                      label: 'None',
+                      value: '',
+                    },
+                    {
+                      label: 'Attending',
+                      value: Attendance.Attend,
+                    },
+                    {
+                      label: 'Not Attending',
+                      value: Attendance.Absent,
+                    },
+                  ]}
+                  label="Attendance Status"
+                  value={filterActualAttendance as string}
+                  onChange={handleAttendanceStatusChange}
+                />
               </div>
-            </div>
-            <div className="w-2/5">
-              <p className="mb-1 mt-5 text-xs text-gray-500">Sort by</p>
-              <div className="flex">
-                <button
-                  id="dropdownDefaultButton"
-                  data-dropdown-toggle="dropdown"
-                  className="inline-flex w-full items-center whitespace-pre border-b-2 border-solid border-b-neutral-400 py-2.5 text-center text-sm text-gray-500"
-                  type="button"
-                >
-                  Date{' '}
-                  <ArrowsUpDownIcon className="ml-auto h-6 w-6"></ArrowsUpDownIcon>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="snap-x overflow-x-auto scroll-smooth">
-            {loading && <span>Loading</span>}
-
-            <table className="w-full text-left text-gray-500">
-              <thead className="text-sm text-gray-700">
-                <th className="columns-1 px-6 py-3">Date </th>
-                <th className="columns-1 px-6 py-3">Start Time </th>
-                <th className="columns-1 px-6 py-3">End Time </th>
-                <th className="columns-1 px-6 py-3">Course Title </th>
-                <th className="columns-1 px-6 py-3">Location </th>
-                <th className="columns-1 px-6 py-3">Attendance Status </th>
-              </thead>
-              <tbody>
-                {data?.users?.edges?.map((edge) => (
-                  <tr key={edge.node.id} className="border-b bg-white">
-                    <td className="px-6 py-4 text-black">10 Jan 2023</td>
-                    <td className="px-6 py-4 text-black">4:00 PM</td>
-                    <td className="px-6 py-4 text-black">5:00 PM</td>
-                    <td className="px-6 py-4 text-blue-500 underline">
-                      Learn Music Production From Scratch
-                    </td>
-                    <td className="px-6 py-4  text-black">Sembawang CC</td>
-                    <td className="px-6 py-4  text-center text-black">
-                      <Chip scheme={'danger'} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {data?.users?.pageInfo?.hasNextPage && (
-              <button onClick={handleLoadMoreClick}>Load more</button>
-            )}
-          </div>
+            </>
+          )}
         </div>
-      )}
+
+        <div className="snap-x overflow-x-auto scroll-smooth">
+          {loading && <Spinner />}
+          {tab === 'Upcoming Sessions' && data != null && (
+            <TabUpcoming
+              sessionAttendeeConnection={data.me.sessionAttendees}
+              reverse={reverse}
+              handleReverseToggle={toggleReverse}
+            />
+          )}
+
+          {tab === 'Session History' && data != null && (
+            <TabHistory
+              sessionAttendeeConnection={data.me.sessionAttendees}
+              reverse={reverse}
+              handleReverseToggle={toggleReverse}
+            />
+          )}
+
+          {data?.me.sessionAttendees.pageInfo.hasNextPage && (
+            <button onClick={handleLoadMoreClick}>Load more</button>
+          )}
+        </div>
+      </div>
     </AppLayout>
   );
 };

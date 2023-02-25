@@ -17,4 +17,5 @@ type LocationEdge {
 type LocationConnection {
     edges: [LocationEdge!]!
     pageInfo: PageInfo!
+    totalCount: Int!
 }

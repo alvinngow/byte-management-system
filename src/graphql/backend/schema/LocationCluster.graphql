@@ -13,4 +13,5 @@ type LocationClusterEdge {
 type LocationClusterConnection {
     edges: [LocationClusterEdge!]!
     pageInfo: PageInfo!
+    totalCount: Int!
 }

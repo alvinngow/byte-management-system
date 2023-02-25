@@ -6,6 +6,7 @@ type School {
 type SchoolConnection {
   edges: [SchoolEdge!]!
   pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 type SchoolEdge {

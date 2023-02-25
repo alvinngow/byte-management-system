@@ -1,6 +1,7 @@
 import { ArrowUpIcon } from '@heroicons/react/24/outline';
 // import Chip from 'Chip';
 import classNames from 'classnames';
+import { DateTime, Duration } from 'luxon';
 import React from 'react';
 
 import Chip from '../Chip';
@@ -11,6 +12,7 @@ interface Props extends React.PropsWithChildren {
   currentData: string;
   pastData?: string;
   pastDataLabel?: string;
+  change: number | null;
 }
 
 /**
@@ -18,8 +20,15 @@ interface Props extends React.PropsWithChildren {
  * but it is intended for client-side redirects.
  */
 const ClassOverviewCard: React.FC<Props> = function (props) {
-  const { className, label, currentData, pastData, pastDataLabel, children } =
-    props;
+  const {
+    className,
+    label,
+    currentData,
+    pastData,
+    pastDataLabel,
+    children,
+    change,
+  } = props;
 
   return (
     <div
@@ -34,13 +43,15 @@ const ClassOverviewCard: React.FC<Props> = function (props) {
       </div>
 
       <p className="mr-auto inline text-3xl">{currentData}</p>
-      <Chip
-        scheme={'success'}
-        className="float-right"
-        text={'in two week'}
-        number={'2'}
-        Icon={ArrowUpIcon}
-      />
+      {change != null && (
+        <Chip
+          scheme={change > 0 ? 'success' : 'danger'}
+          className="float-right"
+          text="this week"
+          number={change.toString()}
+          Icon={ArrowUpIcon}
+        />
+      )}
 
       <span className="mb-3 inline-flex text-gray-500">{pastData}</span>
       <p className="mr-auto text-3xl">{pastDataLabel}</p>

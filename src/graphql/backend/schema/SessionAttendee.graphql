@@ -16,6 +16,7 @@ type SessionAttendeeEdge {
 type SessionAttendeeConnection {
     edges: [SessionAttendeeEdge!]!
     pageInfo: PageInfo!
+    totalCount: Int!
 }
 
 """

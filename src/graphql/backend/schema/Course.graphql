@@ -23,6 +23,7 @@ type CourseEdge {
 type CourseConnection {
     edges: [CourseEdge!]!
     pageInfo: PageInfo!
+    totalCount: Int!
 }
 
 """

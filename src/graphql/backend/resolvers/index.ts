@@ -7,6 +7,7 @@ import { Course_descriptionPrivateResolver } from './Course/descriptionPrivate';
 import { Course_defaultLocationResolver } from './Course/location';
 import { Course_sessionsResolver } from './Course/sessions';
 import { CourseManager_userResolver } from './CourseManager/user';
+import { CurrentUser_overviewResolver } from './CurrentUser/overview';
 import { CurrentUser_roleResolver } from './CurrentUser/role';
 import { CurrentUser_sessionAttendeesResolver } from './CurrentUser/sessionAttendees';
 import { Location_clustersResolver } from './Location/clusters';
@@ -75,6 +76,7 @@ const resolvers: Resolvers = {
     school: schoolResolver,
     role: CurrentUser_roleResolver,
     sessionAttendees: CurrentUser_sessionAttendeesResolver,
+    overview: CurrentUser_overviewResolver,
   },
   User: {
     avatar: User_avatarResolver,

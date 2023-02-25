@@ -12,4 +12,5 @@ type CourseManagerEdge {
 type CourseManagerConnection {
   edges: [CourseManagerEdge!]!
   pageInfo: PageInfo!
+    totalCount: Int!
 }
