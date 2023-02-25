@@ -77,7 +77,9 @@ const TabUpcoming: React.FC<TabUpcomingProps> = function (props) {
               )}
             </td>
             <td className="px-6 py-4 text-blue-500 underline">
-              {edge.node.session.course.name}
+              <a href={`/course/${edge.node.session.course.id}`}>
+                {edge.node.session.course.name}
+              </a>
             </td>
             <td className="px-6 py-4 text-black">
               {edge.node.session.location?.name}
@@ -163,7 +165,9 @@ const TabHistory: React.FC<TabHistoryProps> = function (props) {
               )}
             </td>
             <td className="px-6 py-4 text-blue-500 underline">
-              {edge.node.session.course.name}
+              <a href={`/course/${edge.node.session.course.id}`}>
+                {edge.node.session.course.name}
+              </a>
             </td>
             <td className="px-6 py-4 text-black">
               {edge.node.session.location?.name}

@@ -9,6 +9,7 @@ const ROUTES_UNAUTHENTICATED = ['/login', '/signup'];
 const ROUTES_AUTHENTICATED = [
   '/discover-courses',
   '/logout',
+  '/my-sessions',
   '/manage/users',
   '/manage/course',
 ];
