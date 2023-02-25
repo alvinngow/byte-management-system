@@ -17,15 +17,15 @@ import styles from '../../styles/component_styles/Input.module.css';
 
 export interface SelectItem {
   label: string;
-  value: string;
+  value?: string;
 }
 
 interface Props
   extends Omit<React.HTMLAttributes<HTMLButtonElement>, 'onChange'> {
   items: SelectItem[];
   label: string;
-  value: string | null;
-  onChange: (value: string) => void;
+  value: any;
+  onChange: (value: any) => void;
 }
 
 const Select: React.FC<Props> = function (props) {
@@ -113,7 +113,7 @@ const Select: React.FC<Props> = function (props) {
                 'text-gray-500': selectedItem == null,
               })}
             >
-              {selectedItem?.label ?? 'None'}
+              {selectedItem?.label ?? 'No Filter Selected'}
             </span>
             {isOpen ? (
               <ChevronUpIcon className="h-4 w-4" />
