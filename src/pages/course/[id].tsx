@@ -88,16 +88,23 @@ const CourseDetailPage: React.FC = function () {
         <div className="mx-auto flex w-[80vw]">
           <div className="mr-14 w-8/12">
             <h6 className="mb-6">
-              From{' '}
-              {DateTime.fromISO(
-                course.firstSessionStartDate ?? ''
-              ).toLocaleString(DateTime.DATE_MED)}{' '}
-              -{' '}
-              {DateTime.fromISO(course.lastSessionEndDate ?? '').toLocaleString(
-                DateTime.DATE_MED
+              {course.firstSessionStartDate != null &&
+              course.lastSessionEndDate != null ? (
+                <>
+                  From{' '}
+                  {DateTime.fromISO(
+                    course.firstSessionStartDate ?? ''
+                  ).toLocaleString(DateTime.DATE_MED)}{' '}
+                  -{' '}
+                  {DateTime.fromISO(
+                    course.lastSessionEndDate ?? ''
+                  ).toLocaleString(DateTime.DATE_MED)}
+                </>
+              ) : (
+                <>No sessions</>
               )}
             </h6>
-            <h2 className="mb-6">Volunteer for Teaching Students Art 2022</h2>
+            <h2 className="mb-6">{course.name}</h2>
             <div className="subtitle1 mb-5">{course.subtitle}</div>
             <div>
               <div className="flex gap-4">
@@ -186,6 +193,13 @@ const CourseDetailPage: React.FC = function () {
                         </tr>
                       </thead>
                       <tbody>
+                        {course.sessions.edges.length === 0 && (
+                          <tr>
+                            <span className="px-3 text-gray-400">
+                              There are no sessions for this course.
+                            </span>
+                          </tr>
+                        )}
                         {course.sessions.edges.map((edge) => (
                           <tr key={edge.cursor}>
                             <td className="body2 border-b border-slate-300 py-4 pl-4 text-left">
@@ -219,7 +233,8 @@ const CourseDetailPage: React.FC = function () {
                         <button onClick={handleLoadMoreClick}>Load more</button>
                       )}
                       <div>
-                        1 - {course.sessions.edges.length} of{' '}
+                        {Math.min(course.sessions.totalCount, 1)} -{' '}
+                        {course.sessions.edges.length} of{' '}
                         {course.sessions.totalCount}
                       </div>
                     </div>
@@ -228,8 +243,11 @@ const CourseDetailPage: React.FC = function () {
                 {linkSelected === 'Description' && <p>{course.description}</p>}
                 {linkSelected === 'Volunteer Instructions' && (
                   <p>
-                    {course.descriptionPrivate ||
-                      'There are no instructions available.'}
+                    {course.descriptionPrivate || (
+                      <span className="px-3 text-gray-400">
+                        There are no instructions available.
+                      </span>
+                    )}
                   </p>
                 )}
               </div>
@@ -238,16 +256,12 @@ const CourseDetailPage: React.FC = function () {
           <div className="w-4/12">
             <div className="border-full mb-12 block w-full rounded-lg border bg-white p-10 shadow-lg">
               <div className="subtitle1 mb-2.5 uppercase">location</div>
-              <div className="mb-2.5">Placeholder</div>
+              <div className="mb-2.5">{course.defaultLocation?.name}</div>
               <div className="body1 mb-8">
                 {course.defaultLocation?.address}
               </div>
               <div className="subtitle1 mb-2.5 uppercase">contact details</div>
-              <div className="body1">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
-                Ut et massa mi. <br />
-                Aliquam in hendrerit urna.
-              </div>
+              <div className="body1">N/A</div>
             </div>
           </div>
         </div>
