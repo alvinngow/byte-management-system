@@ -5,7 +5,7 @@ type Course {
     description: String!
     descriptionPrivate: String
     firstSessionStartDate: Date
-    lastSessionStartDate: Date
+    lastSessionEndDate: Date
     defaultStartTime: Time!
     defaultEndTime: Time!
     coverImage: String!

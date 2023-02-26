@@ -76,7 +76,7 @@ const ClassPage: React.FC = function () {
             ' ' +
             course.node.courseManagers.edges[0]?.node.user.lastName,
           courseStartDate: course.node?.firstSessionStartDate,
-          courseEndDate: course.node?.lastSessionStartDate,
+          courseEndDate: course.node?.lastSessionEndDate,
         };
         emptyArray.push(sortedCourse);
       });

@@ -38,7 +38,7 @@ export const Query = gql`
           description
           coverImage
           firstSessionStartDate
-          lastSessionStartDate
+          lastSessionEndDate
           defaultLocation {
             name
             clusters {

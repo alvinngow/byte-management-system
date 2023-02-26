@@ -12,7 +12,7 @@ export const courseResolver: QueryResolvers['course'] = async (
 
   const { id } = args;
 
-  const course = await prisma.course.findFirst({
+  const course = await prisma.courseWithSessionInfo.findFirst({
     where: {
       id,
     },

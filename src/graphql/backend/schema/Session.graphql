@@ -6,6 +6,7 @@ type Session {
     endDate: Date!
     startTime: Time!
     endTime: Time!
+    volunteerSlotAvailableCount: Int
     volunteerSlotCount: Int
 
     courseId: ID!
