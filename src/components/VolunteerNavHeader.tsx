@@ -76,7 +76,7 @@ const NavHeader: React.FC = function () {
                   'w-max items-center rounded-lg text-gray-600 hover:bg-brand-hover'
                 )}
               >
-                <NavLink href="/home">
+                <NavLink href="/discover-courses">
                   <p className={`${styles['btn-md']}`}>DISCOVER COURSES</p>
                 </NavLink>
               </button>
@@ -175,7 +175,7 @@ const NavHeader: React.FC = function () {
                   'items-center rounded-lg text-gray-600 hover:bg-brand-hover xsm:w-full xsm:py-2 xsm:text-left md:w-max md:py-0 md:text-center'
                 )}
               >
-                <NavLink className="w-full" href="/home">
+                <NavLink className="w-full" href="/discover-courses">
                   <p className={`${styles['btn-md']}`}>DISCOVER COURSES</p>
                 </NavLink>
               </button>

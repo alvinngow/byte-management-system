@@ -11,7 +11,7 @@ interface Prop extends HTMLAttributes<HTMLButtonElement> {
 const BackButton: React.FC<PropsWithChildren<Prop>> = (
   prop: PropsWithChildren<Prop>
 ) => {
-  const { className, text = 'placeholder', href = '/home' } = prop;
+  const { className, text = 'placeholder', href = '/discover-courses' } = prop;
   return (
     <>
       <div className="flex">
