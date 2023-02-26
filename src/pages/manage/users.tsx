@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import {
   ArrowsUpDownIcon,
+  ChevronDoubleDownIcon,
   EllipsisVerticalIcon,
 } from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
@@ -96,16 +97,18 @@ const UsersPage: NextPage = function (props) {
         <NavHeader />
         <div>
           <div>
-            <h4 className="mb-6 mt-4 flex p-4 px-12">Users</h4>
+            <h4 className="mt-8 flex xsm:mx-5 xsm:mb-8 md:mx-12 md:mb-12">
+              Users
+            </h4>
           </div>
           {/* start of table */}
-          <div className="border-grey-400 ml-12 mr-12 mb-12 border-2 pl-5 pr-5">
+          <div className="mx-5 mb-12 rounded-lg px-5 pb-12 shadow-lg xsm:mx-5 xsm:mb-8 md:mx-12 md:mb-12">
             {/* search bar */}
-            <div className="mb-2 flex flex-col gap-4 pl-5 pr-5 pt-6 pb-6 md:flex-row lg:flex-row">
-              <div className="sm:w-full md:w-3/4 lg:w-3/4">
+            <div className="mb-2 grid grid-cols-2 gap-4 pl-5 pr-5 pt-6 pb-6">
+              <div>
                 <Input label="Search" placeholder={'Name, Email, School... '} />
               </div>
-              <div className="relative sm:w-full md:w-1/4 lg:w-1/4">
+              <div className="relative">
                 <Select
                   items={[
                     { label: 'All', value: 'All' },
@@ -191,8 +194,6 @@ const UsersPage: NextPage = function (props) {
                             className="h-[40px] w-[40px] rounded-full"
                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU1wZeXDnAu6XK5bB6UsG69B-b2P_gnQfsfw&usqp=CAU"
                             alt="avatar-image"
-                            width={40}
-                            height={40}
                           /> */}
                           {/* avatar is not appearing */}
                           {edge.node.avatar}
@@ -279,6 +280,16 @@ const UsersPage: NextPage = function (props) {
                   ))}
                 </tbody>
               </table>
+              <div className="px-3 py-3 text-center">
+                <button className="inline-flex">
+                  <IconButton
+                    HeroIcon={() => (
+                      <ChevronDoubleDownIcon className="h-5 w-5 text-brand-main" />
+                    )}
+                  />
+                  <p className="body1 text-brand-main">Load More</p>
+                </button>
+              </div>
               {data?.users?.pageInfo?.hasNextPage && (
                 <button onClick={handleLoadMoreClick}>Load more</button>
               )}
