@@ -35,6 +35,7 @@ export const courseEditResolver: MutationResolvers['courseEdit'] = async (
     locationLat,
     locationName,
     locationLng,
+    locationUnit,
   } = args.input;
 
   const course = await prisma.course.update({
@@ -54,6 +55,9 @@ export const courseEditResolver: MutationResolvers['courseEdit'] = async (
         courseDefaultEndTime as unknown as Date
       ).toJSDate(),
       defaultLocation: {
+        update: {
+          unit: locationUnit,
+        },
         connectOrCreate: {
           where: {
             name: locationName,
@@ -64,6 +68,7 @@ export const courseEditResolver: MutationResolvers['courseEdit'] = async (
             description: locationDescription,
             lat: locationLat,
             lng: locationLng,
+            unit: locationUnit,
             locationClusterLocations:
               locationClusterId != null
                 ? {

@@ -28,7 +28,13 @@ export interface CourseWizardContext {
   courseData: CourseData;
   error?: Error;
   managerUserIds: Set<string>;
+  /**
+   * Raw search text that the user types into the address box
+   *
+   * This is only used for search purposes, it is not submitted.
+   */
   locationText: string;
+  locationUnit: string;
   locationData: LocationData | null;
   locationClusterId: string | null;
   regionName: string;
@@ -65,6 +71,10 @@ export type CourseWizardEvent =
   | {
       type: 'SET_LOCATION_TEXT';
       value: string;
+    }
+  | {
+      type: 'SET_LOCATION_UNIT';
+      unit: string;
     }
   | {
       type: 'SET_LOCATION_CLUSTER_ID';
@@ -153,6 +163,8 @@ const CourseWizardMachine = createMachine<
             },
             locationData: (context, event) =>
               event.data.defaultLocation ?? null,
+            locationUnit: (context, event) =>
+              event.data.defaultLocation?.unit ?? '',
             managerUserIds: (context, event) =>
               new Set(
                 event.data.courseManagers?.edges?.map(
@@ -234,6 +246,11 @@ const CourseWizardMachine = createMachine<
         SET_LOCATION_TEXT: {
           actions: assign({
             locationText: (context, event) => event.value,
+          }),
+        },
+        SET_LOCATION_UNIT: {
+          actions: assign({
+            locationUnit: (context, event) => event.unit,
           }),
         },
         SET_LOCATION_CLUSTER_ID: {

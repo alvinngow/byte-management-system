@@ -34,6 +34,7 @@ export const Query = gql`
         description
         lat
         lng
+        unit
       }
       courseManagers {
         edges {

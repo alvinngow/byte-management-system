@@ -62,6 +62,7 @@ input CourseAddInput {
     locationDescription: String!
     locationLat: Float!
     locationLng: Float!
+    locationUnit: String!
     locationClusterId: String
 }
 
@@ -86,6 +87,7 @@ input CourseEditInput {
     locationDescription: String!
     locationLat: Float!
     locationLng: Float!
+    locationUnit: String!
     locationClusterId: String
 }
 

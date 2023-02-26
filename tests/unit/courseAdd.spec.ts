@@ -54,6 +54,7 @@ describe('courseAdd', () => {
             locationAddress: '123 ABC Street',
             locationLat: 1,
             locationLng: 103,
+            locationUnit: '#01-01',
             locationClusterId: 'd8bf4880-75d8-4443-869a-d9d96c3a5149',
           },
         },

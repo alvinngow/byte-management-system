@@ -34,6 +34,7 @@ export const courseAddResolver: MutationResolvers['courseAdd'] = async (
     locationLat,
     locationName,
     locationLng,
+    locationUnit,
   } = args.input;
 
   const course = await prisma.course.create({
@@ -60,6 +61,7 @@ export const courseAddResolver: MutationResolvers['courseAdd'] = async (
             description: locationDescription,
             lat: locationLat,
             lng: locationLng,
+            unit: locationUnit,
             locationClusterLocations:
               locationClusterId != null
                 ? {

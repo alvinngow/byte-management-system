@@ -54,6 +54,7 @@ async function editCourseWithName(courseName: string) {
           locationLng: 0,
           locationClusterId: '7883dc25-e051-4a1d-a2e9-7fb03d10c516',
           locationDescription: '',
+          locationUnit: '#01-01',
           locationName: 'Bukit Batok East Zone 1 RC',
         },
       },

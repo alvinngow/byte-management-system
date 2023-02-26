@@ -2,6 +2,7 @@ type Location {
     id: ID!
     name: String!
     address: String!
+    unit: String!
     description: String!
     lat: Float!
     lng: Float!

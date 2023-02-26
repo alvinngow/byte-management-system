@@ -166,6 +166,18 @@ const ClassInfo: React.FC<Props> = function (props) {
     [send]
   );
 
+  const handleLocationUnitChange = React.useCallback<
+    React.ChangeEventHandler<HTMLInputElement>
+  >(
+    (e) => {
+      send({
+        type: 'SET_LOCATION_UNIT',
+        unit: e.target.value,
+      });
+    },
+    [send]
+  );
+
   const handleLocationClusterPicked = React.useCallback(
     (locationClusterId: string | null) => {
       send({
@@ -264,10 +276,11 @@ const ClassInfo: React.FC<Props> = function (props) {
           <div className="grid gap-4 md:grid-cols-2 md:items-center">
             {/* insert unit number from GraphQL here */}
             <Input
-              value="#03-120"
+              value={state.context.locationUnit}
               label="Apt, suite, unit number, etc. (optional)"
-              // onChange={}
-              placeholder="#01-123"
+              onChange={handleLocationUnitChange}
+              placeholder="e.g. #01-123"
+              disabled={state.context.locationData == null}
             />
             <LocationClusterPicker
               locationClusterId={state.context.locationClusterId}
@@ -363,6 +376,9 @@ const ClassInfo: React.FC<Props> = function (props) {
       )}
       {state.matches('submitting') && (
         <span className="text-brand-main">Submitting...</span>
+      )}
+      {state.matches('submitted') && (
+        <span className="text-green-500">Course updated!</span>
       )}
       {state.matches('error') && (
         <span className="text-red-400">An error occurred</span>

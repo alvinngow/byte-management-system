@@ -48,6 +48,7 @@ model Location {
   lat                      Float                      @default(0)
   lng                      Float                      @default(0)
   description              String
+  unit                     String                     @default("")
   inventoryItemMovementLog InventoryItemMovementLog[]
   session                  Session[]
   course                   Course[]
