@@ -11,10 +11,11 @@ interface PropType extends HTMLAttributes<HTMLDivElement> {
     optionStyle?: string;
   }[];
   onOptionClick: (value: string) => void;
+  popRight?: boolean;
 }
 
 const DotsMoreOptions: React.FC<PropType> = (props) => {
-  const { options, className, onOptionClick } = props;
+  const { options, className, onOptionClick, popRight } = props;
   const [menuState, setMenuState] = useState(false);
 
   const ellipsisClasses = classNames('cursor-pointer', className);
@@ -39,7 +40,9 @@ const DotsMoreOptions: React.FC<PropType> = (props) => {
           onClick={() => setMenuState(!menuState)}
         />
         <BaseCard
-          className={`absolute z-[9999] flex flex-col bg-white p-0 ${
+          className={`absolute ${
+            popRight ? '' : 'right-0'
+          } z-[9999] flex !min-w-[200px] flex-col bg-white p-0 ${
             !menuState && 'hidden'
           }`}
         >
