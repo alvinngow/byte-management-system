@@ -7,6 +7,7 @@ import Card from '../../components/Card';
 import Input from '../../components/Input';
 import NavLink from '../../components/NavLink';
 import Select, { SelectItem } from '../../components/Select';
+import SEO from '../../components/SEO';
 import VolunteerNavHeader from '../../components/VolunteerNavHeader';
 import * as CoursesQuery from '../../graphql/frontend/queries/CoursesQuery';
 import AppLayout from '../../layouts/AppLayout';
@@ -91,6 +92,8 @@ const DiscoverCoursesPage: NextPage = function () {
   return (
     <AppLayout>
       <VolunteerNavHeader />
+
+      <SEO title="Discover Courses" />
 
       <div>
         <div className="mx-5 mt-6 mb-11 w-auto sm:mx-auto sm:w-[80vw]">

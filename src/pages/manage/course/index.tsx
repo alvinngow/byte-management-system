@@ -18,6 +18,7 @@ import NavBar from '../../../components/NavBar';
 import NavHeader from '../../../components/NavHeader';
 import NavLink from '../../../components/NavLink';
 import Select, { SelectItem } from '../../../components/Select';
+import SEO from '../../../components/SEO';
 import * as CoursesQuery from '../../../graphql/frontend/queries/CoursesQuery';
 import AppLayout from '../../../layouts/AppLayout';
 
@@ -127,6 +128,9 @@ const ClassPage: React.FC = function () {
     <AppLayout>
       <NavBar>
         <NavHeader />
+
+        <SEO title="Courses" />
+
         <div className="my-6 mx-5 flex w-auto justify-between sm:mx-auto sm:w-4/5">
           <h3>Courses</h3>
           <Button label="+ ADD CLASS" href={`/manage/course/add`} />
