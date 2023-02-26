@@ -73,3 +73,34 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+      - name: Add Failure label
+        uses: actions/github-script@v6
+        if: ${{ github.event_name == 'pull_request' && failure() }}
+        with:
+          script: |
+            try {
+              github.rest.issues.addLabels({
+                issue_number: context.payload.pull_request.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['tests/failure']
+              })
+            } catch (e) {
+              console.error(e);
+            }
+
+      - name: Remove Failure Label
+        uses: actions/github-script@v6
+        if: ${{ github.event_name == 'pull_request' && success() }}
+        with:
+          script: |
+            try {
+              github.rest.issues.removeLabel({
+                issue_number: context.payload.pull_request.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: 'tests/failure'
+              })
+            } catch (e) {
+              console.error(e);
+            }
