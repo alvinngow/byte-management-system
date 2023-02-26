@@ -47,6 +47,8 @@ describe('login', () => {
     if (response.body.kind !== 'single') {
       throw new Error();
     }
+
+    expect(response.body.singleResult.errors).toBeUndefined();
     expect(response.body.singleResult.data).toEqual({
       accountLogin: {
         id: '364c0fb8-0925-4029-8b2c-65ed93e8ffd6',
@@ -94,6 +96,6 @@ describe('login', () => {
     if (response.body.kind !== 'single') {
       throw new Error();
     }
-    expect(response.body.singleResult.errors).not.toBeNull();
+    expect(response.body.singleResult.errors).not.toBeUndefined();
   });
 });

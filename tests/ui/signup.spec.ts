@@ -14,7 +14,7 @@ test('signup', async ({ page }) => {
   await page.getByRole('button', { name: 'Sign up' }).click();
 
   await expect(page).toHaveURL('/discover-courses');
-  await expect(page.locator('h1')).toHaveText(
+  await expect(page.locator('h3')).toHaveText(
     'Discover Causes (Courses) That Matter To You'
   );
 });

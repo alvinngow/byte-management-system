@@ -59,6 +59,7 @@ describe('signup', () => {
       throw new Error();
     }
 
+    expect(response.body.singleResult.errors).toBeUndefined();
     expect(response.body.singleResult.data).toEqual({
       accountSignup: {
         email,
@@ -113,6 +114,6 @@ describe('signup', () => {
       throw new Error();
     }
 
-    expect(response.body.singleResult.errors).not.toBeNull();
+    expect(response.body.singleResult.errors).not.toBeUndefined();
   });
 });
