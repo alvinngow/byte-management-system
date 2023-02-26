@@ -1,25 +1,19 @@
 import { useQuery } from '@apollo/client';
-import {
-  ClockIcon,
-  PresentationChartLineIcon,
-} from '@heroicons/react/24/outline';
 import React from 'react';
 
 import { CurrentUserOverviewType } from '../../gen/graphql/resolvers';
 import * as MeSessionOverview from '../graphql/frontend/queries/MeSessionOverviewQuery';
 import ClassOverviewCard from './ClassOverviewCard';
 import CrossPresentationChartLineIcon from './icons/CrossPresentationChartLineIcon';
+import HoursAccumulatedIcon from './icons/HoursAccumulatedIcon';
 import TickPresentationChartLineIcon from './icons/TickPresentationChartLineIcon';
+import UpcomingCoursesIcon from './icons/UpcomingCoursesIcon';
 import Spinner from './Spinner';
 
 const IconMap: Record<CurrentUserOverviewType, React.ReactNode> = {
-  [CurrentUserOverviewType.CoursesUpcoming]: (
-    <PresentationChartLineIcon className="mr-2 h-4 w-6" />
-  ),
+  [CurrentUserOverviewType.CoursesUpcoming]: <UpcomingCoursesIcon />,
   [CurrentUserOverviewType.CoursesAttended]: <TickPresentationChartLineIcon />,
-  [CurrentUserOverviewType.HoursAccumulated]: (
-    <ClockIcon className="mr-2 h-6 w-6" />
-  ),
+  [CurrentUserOverviewType.HoursAccumulated]: <HoursAccumulatedIcon />,
   [CurrentUserOverviewType.CoursesCancelled]: (
     <CrossPresentationChartLineIcon />
   ),
@@ -38,7 +32,7 @@ const MySessionsOverview: React.FC = function () {
   );
 
   return (
-    <div className="my-5 ml-20 mr-20 grid grid-cols-4 divide-x divide-gray-500">
+    <div className="my-5 grid xsm:grid-cols-2 md:grid-cols-4 md:divide-x md:divide-gray-300">
       {loading && <Spinner />}
       {data?.me?.overview?.map((overview) => (
         <ClassOverviewCard

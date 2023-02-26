@@ -23,7 +23,7 @@ const Tab: React.FC<PropsWithChildren<Prop>> = (
   prop: PropsWithChildren<Prop>
 ) => {
   const {
-    underline = false,
+    underline,
     tabID,
     className,
     text = 'TAB',
@@ -36,43 +36,44 @@ const Tab: React.FC<PropsWithChildren<Prop>> = (
 
   return (
     <>
-      <NavLink href={href} onClick={onClick} className="group font-semibold">
-        <p
-          className={classNames(
-            {
-              'rounded-lg bg-brand-hover hover:bg-brand-hover':
-                selectedID === tabID && !underline,
-              'border-b-2 border-brand-main': selectedID === tabID && underline,
-              'rounded-lg text-gray-500 hover:bg-brand-hover':
-                selectedID !== tabID,
-            },
-            'group flex p-2 pr-3' + className
-          )}
-        >
-          {hasIcon && (
-            <Icon
+      <div className="flex">
+        <NavLink href={href} onClick={onClick} className="group font-bold">
+          <p
+            className={classNames(
+              {
+                'rounded-lg bg-gray-100': selectedID === tabID && !underline,
+                'border-b-2 border-brand-main px-4 pb-4':
+                  selectedID === tabID && underline,
+                'px-4 pb-4 text-gray-500': selectedID !== tabID,
+              },
+              'group flex p-2 pr-3' + className
+            )}
+          >
+            {hasIcon && (
+              <Icon
+                className={classNames(
+                  {
+                    'fill-brand-main text-brand-main': selectedID === tabID,
+                    'text-gray-500': selectedID !== tabID,
+                  },
+                  'h-6 w-6 group-hover:fill-brand-main group-hover:text-brand-main'
+                )}
+              />
+            )}
+            <span
               className={classNames(
                 {
                   'text-brand-main': selectedID === tabID,
                   'text-gray-500': selectedID !== tabID,
                 },
-                'mr-2.5 h-6 w-6 group-hover:text-brand-main'
+                'h-6 w-max group-hover:text-brand-main'
               )}
-            />
-          )}
-          <span
-            className={classNames(
-              {
-                'text-brand-main': selectedID === tabID,
-                'text-gray-500': selectedID !== tabID,
-              },
-              'h-6 w-max group-hover:text-brand-main'
-            )}
-          >
-            {text}
-          </span>
-        </p>
-      </NavLink>
+            >
+              {text}
+            </span>
+          </p>
+        </NavLink>
+      </div>
     </>
   );
 };

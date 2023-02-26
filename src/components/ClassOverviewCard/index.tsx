@@ -1,5 +1,4 @@
 import { ArrowUpIcon } from '@heroicons/react/24/outline';
-// import Chip from 'Chip';
 import classNames from 'classnames';
 import { DateTime, Duration } from 'luxon';
 import React from 'react';
@@ -31,30 +30,39 @@ const ClassOverviewCard: React.FC<Props> = function (props) {
   } = props;
 
   return (
-    <div
-      className={classNames(
-        'col-span-1 mr-2 mb-2 px-5 py-2.5 text-left font-medium text-gray-900',
-        className
-      )}
-    >
-      <div className="inline-block flex">
-        {children}
-        <span className="mb-3 inline-flex text-gray-500">{label}</span>
+    <div className="mb-5 pr-4">
+      <div
+        className={classNames(
+          'mb-2-5 col-span-1 ml-3 text-left font-medium text-gray-900',
+          className
+        )}
+      >
+        {/* upcoming courses */}
+        <div className="flex">
+          <div className="text-secondary mr-2 h-6 w-6">{children}</div>
+          <span className="text-secondary mb-3 inline-flex">{label}</span>
+        </div>
+
+        {/* number */}
+        <div className="relative inline-flex w-full xsm:pr-6 md:pr-0">
+          <h3 className="mr-auto inline">{currentData}</h3>
+          {change != null && (
+            <div className="justify-end">
+              <Chip
+                scheme={change > 0 ? 'success' : 'danger'}
+                className="text-secondary caption ml-5 whitespace-nowrap"
+                text=""
+                number={change.toString()}
+                Icon={ArrowUpIcon}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* ignore first */}
+        <span className="mb-3 inline-flex text-gray-500">{pastData}</span>
+        <p className="mr-auto text-3xl">{pastDataLabel}</p>
       </div>
-
-      <p className="mr-auto inline text-3xl">{currentData}</p>
-      {change != null && (
-        <Chip
-          scheme={change > 0 ? 'success' : 'danger'}
-          className="float-right"
-          text="this week"
-          number={change.toString()}
-          Icon={ArrowUpIcon}
-        />
-      )}
-
-      <span className="mb-3 inline-flex text-gray-500">{pastData}</span>
-      <p className="mr-auto text-3xl">{pastDataLabel}</p>
     </div>
   );
 };
