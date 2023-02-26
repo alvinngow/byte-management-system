@@ -6,6 +6,7 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import * as CourseAdd from '../../graphql/frontend/mutations/CourseAddMutation';
+import * as CourseEdit from '../../graphql/frontend/mutations/CourseEditMutation';
 import * as FileUpload from '../../graphql/frontend/mutations/FileUploadMutation';
 import * as CourseQuery from '../../graphql/frontend/queries/CourseQuery';
 import ClassInfo from './components/ClassInfo';
@@ -30,6 +31,10 @@ const CourseWizard: React.FC<Props> = function (props) {
 
   const [courseAdd] = useMutation<CourseAdd.Data, CourseAdd.Variables>(
     CourseAdd.Mutation
+  );
+
+  const [courseEdit] = useMutation<CourseEdit.Data, CourseEdit.Variables>(
+    CourseEdit.Mutation
   );
 
   const loadCourse = React.useCallback<
@@ -105,10 +110,47 @@ const CourseWizard: React.FC<Props> = function (props) {
     ) => Promise<CourseWizardServiceMap['submit']['data']>
   >(
     async (context) => {
-      const result = await courseAdd({
+      if (courseId == null) {
+        const result = await courseAdd({
+          variables: {
+            input: {
+              clientMutationId: uuidv4(),
+              courseName: context.courseData.name,
+              courseDescription: context.courseData.description,
+              courseDescriptionPrivate: context.courseData.descriptionPrivate,
+              courseSubtitle: context.courseData.subtitle,
+              courseDefaultStartTime: DateTime.fromISO(
+                context.courseData.defaultStartTime
+              ).toISOTime({
+                includeOffset: true,
+              }),
+              courseDefaultEndTime: DateTime.fromISO(
+                context.courseData.defaultEndTime
+              ).toISOTime({
+                includeOffset: true,
+              }),
+              locationName: context.locationData!.name,
+              locationDescription: context.locationData!.description,
+              locationAddress: context.locationData!.address,
+              locationLat: context.locationData!.lat,
+              locationLng: context.locationData!.lng,
+              locationClusterId: context.locationClusterId,
+            },
+          },
+        });
+
+        if (result.data == null) {
+          throw result.errors;
+        }
+
+        return result.data.courseAdd;
+      }
+
+      const result = await courseEdit({
         variables: {
           input: {
             clientMutationId: uuidv4(),
+            courseId,
             courseName: context.courseData.name,
             courseDescription: context.courseData.description,
             courseDescriptionPrivate: context.courseData.descriptionPrivate,
@@ -137,9 +179,9 @@ const CourseWizard: React.FC<Props> = function (props) {
         throw result.errors;
       }
 
-      return result.data.courseAdd;
+      return result.data.courseEdit;
     },
-    [courseAdd]
+    [courseAdd, courseEdit, courseId]
   );
 
   const [state, send] = useMachine(CourseWizardMachine, {

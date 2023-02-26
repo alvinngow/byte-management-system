@@ -1,4 +1,4 @@
-import { useApolloClient } from '@apollo/client';
+import { useApolloClient, useFragment_experimental } from '@apollo/client';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import React from 'react';
 
@@ -14,18 +14,15 @@ interface Props {
 const ManagerChip: React.FC<Props> = function (props) {
   const { userId, onManagerRemoved } = props;
 
-  const apolloClient = useApolloClient();
-
-  const [user, setUser] = React.useState<User | null>(null);
-
-  React.useEffect(() => {
-    const data = apolloClient.readFragment<UserFragment.Data>({
+  const { data: user } = useFragment_experimental<UserFragment.Data, undefined>(
+    {
       fragment: UserFragment.Fragment,
-      id: `User:${userId}`,
-    });
-
-    setUser(data ?? null);
-  }, [apolloClient, userId]);
+      from: {
+        __typename: 'User',
+        id: userId,
+      },
+    }
+  );
 
   return (
     <Chip

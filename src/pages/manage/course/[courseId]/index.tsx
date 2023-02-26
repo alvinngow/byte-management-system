@@ -15,6 +15,7 @@ import ManageCourseTabs from '../../../../components/ManageCourseTabs';
 import NavBar from '../../../../components/NavBar';
 import NavHeader from '../../../../components/NavHeader';
 import NavLink from '../../../../components/NavLink';
+import SEO from '../../../../components/SEO';
 import Spinner from '../../../../components/Spinner';
 import AppLayout from '../../../../layouts/AppLayout';
 
@@ -25,6 +26,7 @@ const SingleCoursePage: NextPage = function (props) {
     <AppLayout>
       <NavBar>
         <NavHeader />
+        <SEO title="Manage Course" />
 
         <div className="ml-12 xsm:mx-5 xsm:mt-6 md:mt-12 md:ml-14">
           {courseId != null ? (

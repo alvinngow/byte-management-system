@@ -24,7 +24,29 @@ export const Query = gql`
       descriptionPrivate
       defaultStartTime
       defaultEndTime
+      firstSessionStartDate
+      lastSessionEndDate
       coverImage
+      defaultLocation {
+        id
+        name
+        address
+        description
+        lat
+        lng
+      }
+      courseManagers {
+        edges {
+          node {
+            id
+            user {
+              id
+              firstName
+              lastName
+            }
+          }
+        }
+      }
     }
   }
 `;

@@ -15,6 +15,7 @@ import TabButton from '../../../components/CourseWizard/components/TabButton';
 import ManageCourseTabs from '../../../components/ManageCourseTabs';
 import NavBar from '../../../components/NavBar';
 import NavHeader from '../../../components/NavHeader';
+import SEO from '../../../components/SEO';
 import Spinner from '../../../components/Spinner';
 import AppLayout from '../../../layouts/AppLayout';
 
@@ -32,6 +33,7 @@ const AddCourse: NextPage = function () {
     <AppLayout>
       <NavBar>
         <NavHeader />
+        <SEO title="Add Course" />
         <div className="ml-12 xsm:mx-5 xsm:mt-6 md:mt-12 md:ml-14">
           <ManageCourseTabs />
         </div>

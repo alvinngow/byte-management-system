@@ -3,6 +3,8 @@ import { assign, createMachine, ServiceMap } from 'xstate';
 import {
   Course,
   CourseAddPayload,
+  CourseEditPayload,
+  CourseManagerEdge,
   FileUploadPayload,
   Location,
   User,
@@ -125,7 +127,7 @@ export interface CourseWizardServiceMap extends ServiceMap {
     data: FileUploadPayload | null;
   };
   submit: {
-    data: CourseAddPayload;
+    data: CourseAddPayload | CourseEditPayload;
   };
 }
 
@@ -146,6 +148,17 @@ const CourseWizardMachine = createMachine<
           target: 'idle',
           actions: assign({
             courseData: (context, event) => event.data,
+            locationText: (context, event) => {
+              return event.data.defaultLocation?.address ?? '';
+            },
+            locationData: (context, event) =>
+              event.data.defaultLocation ?? null,
+            managerUserIds: (context, event) =>
+              new Set(
+                event.data.courseManagers?.edges?.map(
+                  (edge: CourseManagerEdge) => edge.node.user.id
+                ) ?? []
+              ),
           }),
         },
         onError: {
