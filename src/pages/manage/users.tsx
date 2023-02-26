@@ -1,24 +1,27 @@
 import { useMutation, useQuery } from '@apollo/client';
 import {
   ArrowsUpDownIcon,
+  ChevronDownIcon,
   ChevronDoubleDownIcon,
   EllipsisVerticalIcon,
 } from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { UserRole } from '../../../gen/graphql/resolvers';
-import IconButton from '../../components/IconButton';
+import { UserFiltering, UserRole } from '../../../gen/graphql/resolvers';
+import DotsMoreOptions from '../../components/DotsMoreOptions';
 import Input from '../../components/Input';
 import NavBar from '../../components/NavBar';
 import NavHeader from '../../components/NavHeader';
 import Select from '../../components/Select';
 import * as AccountRoleUpdate from '../../graphql/frontend/mutations/AccountRoleUpdateMutation';
+import * as AccountTerminate from '../../graphql/frontend/mutations/AccountTerminateMutation';
 import * as UsersQuery from '../../graphql/frontend/queries/UsersQuery';
 import useCurrentUser from '../../hooks/useCurrentUser';
+import useDebounce from '../../hooks/useDebounce';
 import AppLayout from '../../layouts/AppLayout';
 
 const ALLOWED_ROLES = new Set([
@@ -26,21 +29,49 @@ const ALLOWED_ROLES = new Set([
   UserRole.CommitteeMember,
 ]);
 
+const userTypeMap = {
+  [UserRole.User]: 'User',
+  [UserRole.SystemAdministrator]: 'System Administrator',
+  [UserRole.CommitteeMember]: 'Committee Member',
+};
+
 const UsersPage: NextPage = function (props) {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [volunteerFilter, setVolunteerFilter] = useState<UserRole | string>('');
+
+  const debouncedSearchTerm = useDebounce(searchTerm);
   const { me, loading: meLoading } = useCurrentUser();
 
-  const { data, loading, fetchMore } = useQuery<
+  const variables = React.useMemo<UsersQuery.Variables>(() => {
+    const filter: UserFiltering = { searchTerm: debouncedSearchTerm };
+    if (volunteerFilter) {
+      filter.role = [volunteerFilter as UserRole];
+    }
+    return {
+      filter,
+    };
+  }, [debouncedSearchTerm, volunteerFilter]);
+
+  const { data, loading, refetch, fetchMore } = useQuery<
     UsersQuery.Data,
     UsersQuery.Variables
-  >(UsersQuery.Query);
+  >(UsersQuery.Query, { variables });
 
   const [accountRoleUpdate] = useMutation<
     AccountRoleUpdate.Data,
     AccountRoleUpdate.Variables
   >(AccountRoleUpdate.Mutation);
 
+  const [accountTerminate] = useMutation<
+    AccountTerminate.Data,
+    AccountTerminate.Variables
+  >(AccountTerminate.Mutation);
+
   const router = useRouter();
-  const [modal, setModal] = React.useState(false);
+
+  useEffect(() => {
+    refetch();
+  }, [debouncedSearchTerm, volunteerFilter, refetch]);
 
   React.useEffect(() => {
     if (me == null) {
@@ -74,17 +105,29 @@ const UsersPage: NextPage = function (props) {
     },
     [accountRoleUpdate]
   );
-  const handleClick = () => {
-    if (modal) {
-      setModal(false);
-    } else {
-      setModal(true);
-    }
-    console.log(modal);
-  };
-  const handleBackdropClick: React.MouseEventHandler<HTMLDivElement> = () => {
-    setModal(false);
-  };
+
+  const terminateAccount = React.useCallback(
+    (userId: string) => {
+      accountTerminate({
+        variables: {
+          input: {
+            clientMutationId: uuidv4(),
+            userId,
+          },
+        },
+        update: (cache, mutationResult) => {
+          const normalizedId = cache.identify({
+            id: userId,
+            __typename: 'User',
+          });
+          cache.evict({ id: normalizedId });
+          cache.gc();
+        },
+      });
+    },
+
+    [accountTerminate]
+  );
 
   if (meLoading) {
     return null;
@@ -92,11 +135,12 @@ const UsersPage: NextPage = function (props) {
 
   return (
     <AppLayout>
+      <NavHeader></NavHeader>
       {/* start of body DIV*/}
       <NavBar>
-        <NavHeader />
         <div>
           <div>
+
             <h4 className="mt-8 flex xsm:mx-5 xsm:mb-8 md:mx-12 md:mb-12">
               Users
             </h4>
@@ -104,23 +148,33 @@ const UsersPage: NextPage = function (props) {
           {/* start of table */}
           <div className="mx-5 mb-12 rounded-lg px-5 pb-12 shadow-lg xsm:mx-5 xsm:mb-8 md:mx-12 md:mb-12">
             {/* search bar */}
-            <div className="mb-2 grid grid-cols-2 gap-4 pl-5 pr-5 pt-6 pb-6">
-              <div>
-                <Input label="Search" placeholder={'Name, Email, School... '} />
+            <div className="mb-2 flex flex-col gap-4 pl-5 pr-5 pt-6 pb-6 md:flex-row lg:flex-row">
+              <div className="sm:w-full md:w-3/4 lg:w-3/4">
+                <Input
+                  label="Search"
+                  placeholder={'Name, Email, School... '}
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                  }}
+                />
               </div>
               <div className="relative">
                 <Select
                   items={[
-                    { label: 'All', value: 'All' },
-                    { label: 'Volunteer', value: 'Volunteer' },
-                    { label: 'Committee Member', value: 'Committee Member' },
-                    { label: 'Admin', value: 'Admin' },
+                    { label: 'All', value: '' },
+                    { label: 'Volunteer', value: UserRole.User },
+                    {
+                      label: 'Committee Member',
+                      value: UserRole.CommitteeMember,
+                    },
+                    { label: 'Admin', value: UserRole.SystemAdministrator },
                   ]}
                   label={'User Type'}
-                  value={'All'}
+                  value={volunteerFilter}
                   className="relative mb-3 w-full"
                   onChange={function (value: string): void {
-                    throw new Error('Function not implemented.');
+                    setVolunteerFilter(value);
                   }}
                 />
               </div>
@@ -129,151 +183,125 @@ const UsersPage: NextPage = function (props) {
             <div className="snap-x overflow-x-auto scroll-smooth">
               {loading && <span>Loading</span>}
 
-              <table className="w-full table-auto text-left">
-                <thead className="subtitle2 py-auto">
-                  <th className="px-6 py-3">
-                    <div className="flex gap-1">
-                      <p className="whitespace-nowrap">User Name</p>
-                      <IconButton
-                        HeroIcon={(props) => (
-                          <ArrowsUpDownIcon className="h-5 w-5" />
-                        )}
-                      />
-                    </div>
-                  </th>
-                  <th className="px-6 py-3">
-                    <div className="flex gap-1">
-                      <p className="whitespace-nowrap">Contact Number</p>
-                      <IconButton
-                        HeroIcon={(props) => (
-                          <ArrowsUpDownIcon className="h-5 w-5" />
-                        )}
-                      />
-                    </div>
-                  </th>
-                  <th className="px-6 py-3">
-                    <div className="flex gap-1">
-                      <p className="whitespace-nowrap">School/ Work</p>
-                      <IconButton
-                        HeroIcon={(props) => (
-                          <ArrowsUpDownIcon className="h-5 w-5" />
-                        )}
-                      />
-                    </div>
-                  </th>
-                  <th className="px-6 py-3">
-                    <div className="flex gap-1">
-                      <p className="whitespace-nowrap">User Type</p>
-                      <IconButton
-                        HeroIcon={(props) => (
-                          <ArrowsUpDownIcon className="h-5 w-5" />
-                        )}
-                      />
-                    </div>
-                  </th>
-                  <th className="px-6 py-3">
-                    <div className="flex gap-1">
-                      <p className="whitespace-nowrap">Account Status</p>
-                      <IconButton
-                        HeroIcon={(props) => (
-                          <ArrowsUpDownIcon className="h-5 w-5" />
-                        )}
-                      />
-                    </div>
-                  </th>
-                  {me?.role === UserRole.SystemAdministrator && (
-                    <th className="px-6 py-3">Management</th>
-                  )}
+              <table className="w-full text-left text-gray-500">
+                <thead className="text-sm text-gray-700">
+                  <tr className="text-center">
+                    {/* need to add the up-down arrow icon */}
+                    <th className="columns-1 px-4 py-3">
+                      <div className="flex justify-center">
+                        <p>User Name</p>
+                        <button className="ml-2">
+                          <ArrowsUpDownIcon className="h-5 w-5"></ArrowsUpDownIcon>
+                        </button>
+                      </div>
+                    </th>
+                    <th className=" columns-1 px-4 py-3">
+                      <div className="flex justify-center">
+                        <p>Contact Number</p>
+                        <button className="ml-2">
+                          <ArrowsUpDownIcon className="h-5 w-5"></ArrowsUpDownIcon>
+                        </button>
+                      </div>
+                    </th>
+                    <th className=" columns-1 px-4 py-3">
+                      School/ Work
+                      <button className="ml-2">
+                        <ArrowsUpDownIcon className="h-5 w-5"></ArrowsUpDownIcon>
+                      </button>
+                    </th>
+                    <th className=" columns-1 px-4 py-3">
+                      User Type
+                      <button className="ml-2">
+                        <ArrowsUpDownIcon className="h-5 w-5"></ArrowsUpDownIcon>
+                      </button>
+                    </th>
+                    <th className=" columns-1 px-4 py-3">
+                      Account Status
+                      <button className="ml-2">
+                        <ArrowsUpDownIcon className="h-5 w-5"></ArrowsUpDownIcon>
+                      </button>
+                    </th>
+                    {me?.role === UserRole.SystemAdministrator && (
+                      <th className="px-6 py-3">Management</th>
+                    )}
+                  </tr>
                 </thead>
                 <tbody>
                   {data?.users?.edges?.map((edge) => (
-                    <tr key={edge.node.id} className="border-b bg-white">
-                      <td className="body2 flex items-center gap-2 px-6 py-4 text-black">
-                        <div className="w-[40px]">
-                          {/* <Image
-                            className="h-[40px] w-[40px] rounded-full"
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU1wZeXDnAu6XK5bB6UsG69B-b2P_gnQfsfw&usqp=CAU"
-                            alt="avatar-image"
-                          /> */}
-                          {/* avatar is not appearing */}
-                          {edge.node.avatar}
-                        </div>
-                        <div className="flex flex-col">
-                          <span>
-                            {edge.node.firstName} {edge.node.lastName}
-                          </span>
-                          <span className="text-secondary">
-                            {edge.node.email}
-                          </span>
+                    <tr
+                      key={edge.node.id}
+                      className="border-b bg-white text-center"
+                    >
+                      <td className="items-center  py-4 text-black">
+                        {/* avatar is not appearing */}
+                        <div className="grid grid-cols-[100px_1fr]">
+                          <div className="flex">
+                            <Image
+                              className="h-10 w-10 rounded-full"
+                              src="/favicon.ico"
+                              alt="Rounded avatar"
+                              width={100}
+                              height={100}
+                            />
+                            {edge.node.avatar}
+                            <div className="ml-4">
+                              {edge.node.firstName} {edge.node.lastName}
+                              <br />
+                              <span className="text-gray-500">
+                                {edge.node.email}
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </td>
-                      <td className="px-6">{edge.node.mobileNo}</td>
-                      <td className="px-6">
+                      <td className="px-4 py-4 text-black">
+                        {edge.node.mobileNo}
+                      </td>
+                      <td className="px-6 py-4 text-black">
                         {edge.node.school?.name ?? 'N/A'}
                       </td>
-                      <td className="px-6">{edge.node.role}</td>
-                      <td className="px-6 text-red-500">NOT IN GRAPHQL</td>
-                      <td className="relative">
-                        <div onClick={handleClick}>
-                          <IconButton
-                            HeroIcon={() => (
-                              <EllipsisVerticalIcon className="h-5 w-5" />
-                            )}
+                      <td className="px-6 py-4 text-black">
+                        {userTypeMap[edge.node.role!]}
+                      </td>
+                      <td className="px-6 py-4 text-red-500">
+                        NOT IMPLEMENTED IN GRAPHQL
+                      </td>
+                      <td className="flex justify-center px-6 py-4 text-black">
+                        {/* dropdown code starts here */}
+                        {me?.role === UserRole.SystemAdministrator && (
+                          <DotsMoreOptions
+                            className="h-6 w-6"
+                            aria-hidden="true"
+                            onOptionClick={(value: string) => {
+                              switch (value) {
+                                case 'delete':
+                                  terminateAccount(edge.node.id);
+                                  break;
+                                default:
+                                  updateRole(edge.node.id, value as UserRole);
+                                  break;
+                              }
+                            }}
+                            options={[
+                              {
+                                label: 'Make as Comm Member',
+                                value: UserRole.CommitteeMember,
+                              },
+                              {
+                                label: 'Make as System Admin',
+                                value: UserRole.SystemAdministrator,
+                              },
+                              {
+                                label: 'Make as Volunteer',
+                                value: UserRole.User,
+                              },
+                              {
+                                label: 'Delete User',
+                                value: 'delete',
+                                optionStyle: 'text-center text-red-500',
+                              },
+                            ]}
                           />
-                        </div>
-
-                        {/* dropdown is hidden for now */}
-                        {modal && (
-                          <div
-                            key={edge.node.id}
-                            className="absolute top-0 left-10 z-50 flex flex-col items-start gap-y-px overflow-hidden rounded-b-lg bg-white p-2.5 shadow-lg"
-                          >
-                            <ul className="text-secondary subtitle2 py-2">
-                              <li>
-                                <button
-                                  className="text-secondary px-4 py-2 text-left hover:bg-gray-100"
-                                  onClick={() => {
-                                    updateRole(
-                                      edge.node.id,
-                                      UserRole.CommitteeMember
-                                    );
-                                  }}
-                                >
-                                  Make as Comm Member
-                                </button>
-                              </li>
-                              {me?.role === UserRole.SystemAdministrator && (
-                                <li>
-                                  <button
-                                    className="text-secondary px-4 py-2 text-left hover:bg-gray-100"
-                                    onClick={() => {
-                                      updateRole(
-                                        edge.node.id,
-                                        UserRole.SystemAdministrator
-                                      );
-                                    }}
-                                  >
-                                    Make as System Admin
-                                  </button>
-                                </li>
-                              )}
-                              <li>
-                                <button
-                                  className="text-secondary px-4 py-2 text-left hover:bg-gray-100"
-                                  onClick={() => {
-                                    updateRole(edge.node.id, UserRole.User);
-                                  }}
-                                >
-                                  Make as Volunteer
-                                </button>
-                              </li>
-                              <li>
-                                <button className="px-4 py-2 text-left text-red-500 hover:bg-gray-100">
-                                  Delete User
-                                </button>
-                              </li>
-                            </ul>
-                          </div>
                         )}
                       </td>
                     </tr>
