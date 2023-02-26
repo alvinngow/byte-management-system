@@ -1,9 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import {
   ArrowsUpDownIcon,
-  ChevronDownIcon,
   ChevronDoubleDownIcon,
-  EllipsisVerticalIcon,
 } from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
 import Image from 'next/image';
@@ -13,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { UserFiltering, UserRole } from '../../../gen/graphql/resolvers';
 import DotsMoreOptions from '../../components/DotsMoreOptions';
+import IconButton from '../../components/IconButton';
 import Input from '../../components/Input';
 import NavBar from '../../components/NavBar';
 import NavHeader from '../../components/NavHeader';
@@ -140,7 +139,6 @@ const UsersPage: NextPage = function (props) {
       <NavBar>
         <div>
           <div>
-
             <h4 className="mt-8 flex xsm:mx-5 xsm:mb-8 md:mx-12 md:mb-12">
               Users
             </h4>
