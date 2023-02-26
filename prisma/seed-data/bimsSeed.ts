@@ -67,7 +67,7 @@ export default async function bimsSeed() {
         lastName: user.lastName,
         schoolId: user.schoolId,
         mobileNo: user.mobileNo,
-        avatar: user.avatar,
+        avatar: user.avatar || null,
         role: user.role,
       },
       create: {
@@ -78,7 +78,7 @@ export default async function bimsSeed() {
         lastName: user.lastName,
         schoolId: schoolsIdMap[user.id],
         mobileNo: user.mobileNo,
-        avatar: user.avatar,
+        avatar: user.avatar || null,
         role: user.role,
       },
     });
