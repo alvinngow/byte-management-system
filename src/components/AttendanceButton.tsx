@@ -23,13 +23,15 @@ const AttendanceButton: React.FC<React.PropsWithChildren<PropType>> = (
     <div>
       <div className={`${styles['icons-slot']} flex`}>
         <CheckIcon
-          className={`${attendanceState ? styles.present : ''} cursor-pointer`}
+          className={`${
+            attendanceState ? styles.present : ''
+          } cursor-pointer hover:bg-gray-100`}
           onClick={() => updateAttendaceState(true)}
         ></CheckIcon>
         <XMarkIcon
           className={`${
             attendanceState === false ? styles.absent : ''
-          } cursor-pointer`}
+          } cursor-pointer hover:bg-gray-100`}
           onClick={() => updateAttendaceState(false)}
         ></XMarkIcon>
       </div>
