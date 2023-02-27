@@ -131,11 +131,11 @@ const ClassPage: React.FC = function () {
 
         <SEO title="Courses" />
 
-        <div className="my-6 mx-5 flex w-auto justify-between sm:mx-auto sm:w-4/5">
+        <div className="my-6 mx-5 flex w-auto justify-between sm:mx-auto sm:w-11/12 md:w-4/5">
           <h3>Courses</h3>
           <Button label="+ ADD CLASS" href={`/manage/course/add`} />
         </div>
-        <div className="mx-5 flex w-auto justify-between sm:mx-auto sm:w-4/5">
+        <div className="mx-5 flex w-auto justify-between sm:mx-auto sm:w-11/12 md:w-4/5">
           <div className="border-full mb-12 block w-full rounded-lg border bg-white shadow-lg">
             <div className="flex flex-col gap-4 p-4 lg:flex-row">
               <div className="flex basis-2/3 flex-col">

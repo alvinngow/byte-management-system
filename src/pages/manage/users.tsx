@@ -2,6 +2,8 @@ import { useMutation, useQuery } from '@apollo/client';
 import {
   ArrowsUpDownIcon,
   ChevronDoubleDownIcon,
+  ChevronDownIcon,
+  EllipsisVerticalIcon,
 } from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
 import Image from 'next/image';
@@ -134,19 +136,15 @@ const UsersPage: NextPage = function (props) {
 
   return (
     <AppLayout>
-      <NavHeader></NavHeader>
       {/* start of body DIV*/}
       <NavBar>
-        <div>
-          <div>
-            <h4 className="mt-8 flex xsm:mx-5 xsm:mb-8 md:mx-12 md:mb-12">
-              Users
-            </h4>
-          </div>
+        <NavHeader />
+        <div className="mx-5 mb-12 flex w-auto flex-col justify-between sm:mx-auto sm:w-11/12 md:w-4/5">
+          <h3 className="my-6">Users</h3>
           {/* start of table */}
-          <div className="mx-5 mb-12 rounded-lg px-5 pb-12 shadow-lg xsm:mx-5 xsm:mb-8 md:mx-12 md:mb-12">
+          <div className="border-full rounded-lg border shadow-lg">
             {/* search bar */}
-            <div className="mb-2 flex flex-col gap-4 pl-5 pr-5 pt-6 pb-6 md:flex-row lg:flex-row">
+            <div className="flex flex-col gap-4 pl-5 pr-5 pt-6 pb-6 md:flex-row lg:flex-row">
               <div className="sm:w-full md:w-3/4 lg:w-3/4">
                 <Input
                   label="Search"
@@ -157,7 +155,7 @@ const UsersPage: NextPage = function (props) {
                   }}
                 />
               </div>
-              <div className="relative">
+              <div className="relative flex basis-1/3 flex-col">
                 <Select
                   items={[
                     { label: 'All', value: '' },
@@ -170,7 +168,7 @@ const UsersPage: NextPage = function (props) {
                   ]}
                   label={'User Type'}
                   value={volunteerFilter}
-                  className="relative mb-3 w-full"
+                  className="relative w-full"
                   onChange={function (value: string): void {
                     setVolunteerFilter(value);
                   }}
@@ -181,43 +179,59 @@ const UsersPage: NextPage = function (props) {
             <div className="snap-x overflow-x-auto scroll-smooth">
               {loading && <span>Loading</span>}
 
-              <table className="w-full text-left text-gray-500">
-                <thead className="text-sm text-gray-700">
-                  <tr className="text-center">
+              <table className="w-full text-left">
+                <thead className="border-b border-slate-300 py-4 pl-4 text-left">
+                  <tr>
                     {/* need to add the up-down arrow icon */}
-                    <th className="columns-1 px-4 py-3">
-                      <div className="flex justify-center">
+                    <th className="px-4 py-3 xsm:columns-2 md:columns-3">
+                      <div className="flex justify-center whitespace-nowrap">
                         <p>User Name</p>
-                        <button className="ml-2">
-                          <ArrowsUpDownIcon className="h-5 w-5"></ArrowsUpDownIcon>
-                        </button>
+                        <IconButton
+                          HeroIcon={() => (
+                            <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
+                          )}
+                        />
                       </div>
                     </th>
                     <th className=" columns-1 px-4 py-3">
-                      <div className="flex justify-center">
+                      <div className="flex justify-center whitespace-nowrap">
                         <p>Contact Number</p>
-                        <button className="ml-2">
-                          <ArrowsUpDownIcon className="h-5 w-5"></ArrowsUpDownIcon>
-                        </button>
+                        <IconButton
+                          HeroIcon={() => (
+                            <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
+                          )}
+                        />
+                      </div>
+                    </th>
+                    <th className="columns-1 px-4 py-3 ">
+                      <div className="flex justify-center whitespace-nowrap">
+                        <p>School/Work</p>
+                        <IconButton
+                          HeroIcon={() => (
+                            <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
+                          )}
+                        />
                       </div>
                     </th>
                     <th className=" columns-1 px-4 py-3">
-                      School/ Work
-                      <button className="ml-2">
-                        <ArrowsUpDownIcon className="h-5 w-5"></ArrowsUpDownIcon>
-                      </button>
+                      <div className="flex justify-center whitespace-nowrap">
+                        User Type
+                        <IconButton
+                          HeroIcon={() => (
+                            <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
+                          )}
+                        />
+                      </div>
                     </th>
-                    <th className=" columns-1 px-4 py-3">
-                      User Type
-                      <button className="ml-2">
-                        <ArrowsUpDownIcon className="h-5 w-5"></ArrowsUpDownIcon>
-                      </button>
-                    </th>
-                    <th className=" columns-1 px-4 py-3">
-                      Account Status
-                      <button className="ml-2">
-                        <ArrowsUpDownIcon className="h-5 w-5"></ArrowsUpDownIcon>
-                      </button>
+                    <th className="columns-1 px-4 py-3">
+                      <div className="flex justify-center whitespace-nowrap">
+                        Account Status
+                        <IconButton
+                          HeroIcon={() => (
+                            <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
+                          )}
+                        />
+                      </div>
                     </th>
                     {me?.role === UserRole.SystemAdministrator && (
                       <th className="px-6 py-3">Management</th>
@@ -230,10 +244,10 @@ const UsersPage: NextPage = function (props) {
                       key={edge.node.id}
                       className="border-b bg-white text-center"
                     >
-                      <td className="items-center  py-4 text-black">
+                      <td className="items-center px-4 py-4">
                         {/* avatar is not appearing */}
                         <div className="grid grid-cols-[100px_1fr]">
-                          <div className="flex">
+                          <div className="flex ">
                             <Image
                               className="h-10 w-10 rounded-full"
                               src="/favicon.ico"
@@ -242,7 +256,7 @@ const UsersPage: NextPage = function (props) {
                               height={100}
                             />
                             {edge.node.avatar}
-                            <div className="ml-4">
+                            <div className="ml-4 text-left">
                               {edge.node.firstName} {edge.node.lastName}
                               <br />
                               <span className="text-gray-500">
@@ -306,18 +320,18 @@ const UsersPage: NextPage = function (props) {
                   ))}
                 </tbody>
               </table>
-              <div className="px-3 py-3 text-center">
-                <button className="inline-flex">
-                  <IconButton
-                    HeroIcon={() => (
-                      <ChevronDoubleDownIcon className="h-5 w-5 text-brand-main" />
-                    )}
-                  />
-                  <p className="body1 text-brand-main">Load More</p>
-                </button>
-              </div>
+
               {data?.users?.pageInfo?.hasNextPage && (
-                <button onClick={handleLoadMoreClick}>Load more</button>
+                <div className="px-3 py-3 text-center">
+                  <button className="inline-flex">
+                    <IconButton
+                      HeroIcon={() => (
+                        <ChevronDoubleDownIcon className="h-5 w-5 text-brand-main" />
+                      )}
+                    />
+                    <p className="body1 text-brand-main">Load More</p>
+                  </button>
+                </div>
               )}
             </div>
           </div>
