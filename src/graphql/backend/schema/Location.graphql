@@ -6,8 +6,7 @@ type Location {
     description: String!
     lat: Float!
     lng: Float!
-
-    clusters(first: Int = 10, after: String): LocationClusterConnection!
+    cluster: LocationCluster
 }
 
 type LocationEdge {

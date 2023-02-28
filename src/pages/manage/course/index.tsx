@@ -70,8 +70,7 @@ const ClassPage: React.FC = function () {
           courseId: course.node.id,
           courseTitle: course.node.name,
           courseLocation: course.node.defaultLocation?.name,
-          courseRegion:
-            course.node.defaultLocation?.clusters.edges[0]?.node.name,
+          courseRegion: course.node.defaultLocation?.cluster?.name,
           courseTrainer:
             course.node.courseManagers.edges[0]?.node.user.firstName +
             ' ' +

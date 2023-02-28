@@ -41,12 +41,8 @@ export const Query = gql`
           lastSessionEndDate
           defaultLocation {
             name
-            clusters {
-              edges {
-                node {
-                  name
-                }
-              }
+            cluster {
+              name
             }
           }
           courseManagers {

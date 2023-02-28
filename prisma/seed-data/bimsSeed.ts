@@ -5,7 +5,6 @@ import { DateTime } from 'luxon';
 import {
   readCourseManagers,
   readCourses,
-  readLocationClusterLocations,
   readLocationClusters,
   readLocationClusterSubscriptions,
   readLocations,
@@ -129,28 +128,6 @@ export default async function bimsSeed() {
     });
 
     locationsIdMap[createdLocation.name] = createdLocation.id;
-  }
-
-  /**
-   * LocationClusterLocations
-   */
-  const locationClusterLocations = await readLocationClusterLocations();
-
-  for (const locationClusterLocation of locationClusterLocations) {
-    await prisma.locationClusterLocation.upsert({
-      where: {
-        clusterId_locationId: {
-          clusterId:
-            locationClustersIdMap[locationClusterLocation.cluster_name],
-          locationId: locationsIdMap[locationClusterLocation.location_name],
-        },
-      },
-      update: {},
-      create: {
-        clusterId: locationClustersIdMap[locationClusterLocation.cluster_name],
-        locationId: locationsIdMap[locationClusterLocation.location_name],
-      },
-    });
   }
 
   /**

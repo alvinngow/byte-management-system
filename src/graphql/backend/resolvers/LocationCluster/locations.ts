@@ -15,23 +15,13 @@ export const LocationCluster_locationsResolver: LocationClusterResolvers['locati
         prisma.location.findMany({
           ...args,
           where: {
-            locationClusterLocations: {
-              every: {
-                clusterId: root.id,
-              },
-              some: {}, // See https://github.com/prisma/prisma/issues/6456#issuecomment-1237870943
-            },
+            locationClusterId: root.id,
           },
         }),
       () =>
         prisma.location.count({
           where: {
-            locationClusterLocations: {
-              every: {
-                clusterId: root.id,
-              },
-              some: {}, // See https://github.com/prisma/prisma/issues/6456#issuecomment-1237870943
-            },
+            locationClusterId: root.id,
           },
         }),
       { first, after },

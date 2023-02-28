@@ -54,21 +54,12 @@ interface BIMSSeedLocation {
   name: string;
   address: string;
   description: string;
+  unit: string;
+  locationClusterId: string;
 }
 
 export async function readLocations() {
   return readFile<BIMSSeedLocation[]>('location.csv');
-}
-
-interface BIMSSeedLocationClusterLocation {
-  location_name: string;
-  cluster_name: string;
-}
-
-export async function readLocationClusterLocations() {
-  return readFile<BIMSSeedLocationClusterLocation[]>(
-    'locationClusterLocation.csv'
-  );
 }
 
 interface BIMSSeedLocationClusterSubscription {

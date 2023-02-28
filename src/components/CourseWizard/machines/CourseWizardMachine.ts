@@ -158,6 +158,8 @@ const CourseWizardMachine = createMachine<
           target: 'idle',
           actions: assign({
             courseData: (context, event) => event.data,
+            locationClusterId: (context, event) =>
+              event.data.defaultLocation?.cluster?.id ?? null,
             locationText: (context, event) => {
               return event.data.defaultLocation?.address ?? '';
             },

@@ -62,14 +62,7 @@ export const courseAddResolver: MutationResolvers['courseAdd'] = async (
             lat: locationLat,
             lng: locationLng,
             unit: locationUnit,
-            locationClusterLocations:
-              locationClusterId != null
-                ? {
-                    create: {
-                      clusterId: locationClusterId,
-                    },
-                  }
-                : undefined,
+            locationClusterId: locationClusterId,
           },
         },
       },

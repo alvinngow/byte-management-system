@@ -52,12 +52,12 @@ model Location {
   inventoryItemMovementLog InventoryItemMovementLog[]
   session                  Session[]
   course                   Course[]
+  locationClusterId        String?                    @db.Uuid
+  locationCluster          LocationCluster?           @relation(fields: [locationClusterId], references: [id])
+  CourseWithSessionInfo    CourseWithSessionInfo[]
 
-  locationClusterLocations LocationClusterLocation[]
-
-  createdAt             DateTime                @default(now())
-  updatedAt             DateTime                @updatedAt
-  CourseWithSessionInfo CourseWithSessionInfo[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model LocationCluster {
@@ -65,17 +65,7 @@ model LocationCluster {
   name                         String
   locationClusterSubscriptions LocationClusterSubscription[]
 
-  locationClusterLocations LocationClusterLocation[]
-}
-
-model LocationClusterLocation {
-  id         String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  locationId String          @db.Uuid
-  location   Location        @relation(fields: [locationId], references: [id])
-  clusterId  String          @db.Uuid
-  cluster    LocationCluster @relation(fields: [clusterId], references: [id])
-
-  @@unique([clusterId, locationId])
+  Location Location[]
 }
 
 model LocationClusterSubscription {

@@ -35,6 +35,10 @@ export const Query = gql`
         lat
         lng
         unit
+
+        cluster {
+          id
+        }
       }
       courseManagers {
         edges {

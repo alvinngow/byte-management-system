@@ -10,7 +10,7 @@ import { CourseManager_userResolver } from './CourseManager/user';
 import { CurrentUser_overviewResolver } from './CurrentUser/overview';
 import { CurrentUser_roleResolver } from './CurrentUser/role';
 import { CurrentUser_sessionAttendeesResolver } from './CurrentUser/sessionAttendees';
-import { Location_clustersResolver } from './Location/clusters';
+import { Location_clusterResolver } from './Location/cluster';
 import { LocationCluster_locationsResolver } from './LocationCluster/locations';
 import accountAvatarUpdateResolver from './mutations/accountAvatarUpdate';
 import { accountLoginResolver } from './mutations/accountLogin';
@@ -89,7 +89,7 @@ const resolvers: Resolvers = {
     locations: LocationCluster_locationsResolver,
   },
   Location: {
-    clusters: Location_clustersResolver,
+    cluster: Location_clusterResolver,
   },
   Course: {
     coverImage: Course_coverImageResolver,
