@@ -1,9 +1,11 @@
 import { ApolloServer } from '@apollo/server';
+import { ApolloServerErrorCode } from '@apollo/server/errors';
 import { ApolloServerPluginLandingPageDisabled } from '@apollo/server/plugin/disabled';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { withIronSessionApiRoute } from 'iron-session/next';
 
 import appSchemas from '../../../gen/graphql/schema.graphql';
+import ApolloServerPluginErrorLogging from '../../graphql/backend/ApolloServerPluginErrorLogging';
 import ApolloServerPluginLandingPageGraphiQL from '../../graphql/backend/ApolloServerPluginLandingPageGraphiQL';
 import { Context } from '../../graphql/backend/Context';
 import appResolvers from '../../graphql/backend/resolvers';
@@ -20,8 +22,26 @@ const server = new ApolloServer({
   },
   plugins: isProduction
     ? [ApolloServerPluginLandingPageDisabled()]
-    : [ApolloServerPluginLandingPageGraphiQL()],
+    : [
+        ApolloServerPluginLandingPageGraphiQL(),
+        ApolloServerPluginErrorLogging(),
+      ],
   introspection: !isProduction,
+  formatError(formattedError, error) {
+    const code = formattedError.extensions?.code;
+
+    if (typeof code !== 'string') {
+      return formattedError;
+    }
+
+    return {
+      ...formattedError,
+      message: code ?? '',
+      extensions: {
+        code,
+      },
+    };
+  },
 });
 
 const apolloServerHandler = startServerAndCreateNextHandler(server, {
