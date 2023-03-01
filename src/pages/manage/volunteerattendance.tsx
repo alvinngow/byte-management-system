@@ -47,57 +47,55 @@ const SingleClassPage: NextPage = function () {
   return (
     <>
       <AppLayout>
-        <NavBar>
-          <NavHeader />
-          <div className="h-max bg-white text-slate-900">
-            <div className="grid auto-rows-min px-20 pt-5">
-              <div>
-                <NavLink href="/manage/class">
-                  <BackButton text="Back to Courses"></BackButton>
-                </NavLink>
-              </div>
-              <div className="pt-3">
-                <p className="text-3xl">Add Class</p>
-              </div>
-              <div className="mt-2 grid grid-cols-3 gap-4">
-                <div className="col-span-1">
-                  {RenderButtons.map((button, i) => {
-                    return (
-                      <button
-                        key={'button' + i}
+        <div className="h-max bg-white text-slate-900">
+          <div className="grid auto-rows-min px-20 pt-5">
+            <div>
+              <NavLink href="/manage/class">
+                <BackButton text="Back to Courses"></BackButton>
+              </NavLink>
+            </div>
+            <div className="pt-3">
+              <p className="text-3xl">Add Class</p>
+            </div>
+            <div className="mt-2 grid grid-cols-3 gap-4">
+              <div className="col-span-1">
+                {RenderButtons.map((button, i) => {
+                  return (
+                    <button
+                      key={'button' + i}
+                      className={classNames(
+                        'group block w-full rounded-lg pb-1 pt-2 pl-5 text-left',
+                        {
+                          'bg-gray-200': activeTab === button.name,
+                          'bg-white': activeTab !== button.name,
+                        }
+                      )}
+                      onClick={() => setActiveTab(button.name)}
+                    >
+                      <button.isrc
                         className={classNames(
-                          'group block w-full rounded-lg pb-1 pt-2 pl-5 text-left',
+                          'mb-1 inline-block h-6 w-6 group-hover:text-blue-500',
                           {
-                            'bg-gray-200': activeTab === button.name,
-                            'bg-white': activeTab !== button.name,
+                            'text-blue-500': activeTab === button.name,
                           }
                         )}
-                        onClick={() => setActiveTab(button.name)}
+                      />
+                      <span
+                        className={classNames(
+                          'pl-1 group-hover:text-blue-500',
+                          {
+                            'text-blue-500': activeTab === button.name,
+                          }
+                        )}
                       >
-                        <button.isrc
-                          className={classNames(
-                            'mb-1 inline-block h-6 w-6 group-hover:text-blue-500',
-                            {
-                              'text-blue-500': activeTab === button.name,
-                            }
-                          )}
-                        />
-                        <span
-                          className={classNames(
-                            'pl-1 group-hover:text-blue-500',
-                            {
-                              'text-blue-500': activeTab === button.name,
-                            }
-                          )}
-                        >
-                          {button.name}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-                <div className="col-span-2">
-                  {/* {activeTab === 'Class Information' && (
+                        {button.name}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="col-span-2">
+                {/* {activeTab === 'Class Information' && (
                     <ClassInfo
                       state={undefined}
                       send={function (event: CourseWizardEvent): void {
@@ -105,13 +103,12 @@ const SingleClassPage: NextPage = function () {
                       }}
                     />
                   )} */}
-                  {/* {activeTab === 'Timeslots' && <div></div>} */}
-                  {activeTab === 'Sessions' && <VolunteerAttendees />}
-                </div>
+                {/* {activeTab === 'Timeslots' && <div></div>} */}
+                {activeTab === 'Sessions' && <VolunteerAttendees />}
               </div>
             </div>
           </div>
-        </NavBar>
+        </div>
       </AppLayout>
     </>
   );

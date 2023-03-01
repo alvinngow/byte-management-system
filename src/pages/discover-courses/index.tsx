@@ -8,7 +8,6 @@ import Input from '../../components/Input';
 import NavLink from '../../components/NavLink';
 import Select, { SelectItem } from '../../components/Select';
 import SEO from '../../components/SEO';
-import VolunteerNavHeader from '../../components/VolunteerNavHeader';
 import * as CoursesQuery from '../../graphql/frontend/queries/CoursesQuery';
 import AppLayout from '../../layouts/AppLayout';
 
@@ -91,8 +90,6 @@ const DiscoverCoursesPage: NextPage = function () {
 
   return (
     <AppLayout>
-      <VolunteerNavHeader />
-
       <SEO title="Discover Courses" />
 
       <div>

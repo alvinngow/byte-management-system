@@ -24,18 +24,15 @@ const SingleCoursePage: NextPage = function (props) {
   const { courseId } = router.query;
   return (
     <AppLayout>
-      <NavBar>
-        <NavHeader />
-        <SEO title="Manage Course" />
+      <SEO title="Manage Course" />
 
-        <div className="ml-12 xsm:mx-5 xsm:mt-6 md:mt-12 md:ml-14">
-          {courseId != null ? (
-            <ManageCourseTabs courseId={`${courseId}`} editMode={true} />
-          ) : (
-            <Spinner />
-          )}
-        </div>
-      </NavBar>
+      <div className="ml-12 xsm:mx-5 xsm:mt-6 md:mt-12 md:ml-14">
+        {courseId != null ? (
+          <ManageCourseTabs courseId={`${courseId}`} editMode={true} />
+        ) : (
+          <Spinner />
+        )}
+      </div>
     </AppLayout>
   );
 };

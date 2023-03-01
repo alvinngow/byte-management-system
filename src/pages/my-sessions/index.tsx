@@ -18,8 +18,7 @@ import MySessionsOverview from '../../components/MySessionsOverview';
 import Select from '../../components/Select';
 import SEO from '../../components/SEO';
 import Spinner from '../../components/Spinner';
-import Tab from '../../components/TwoStateTab';
-import VolunteerNavHeader from '../../components/VolunteerNavHeader';
+import Tab from '../../components/Tab';
 import * as SessionAttend from '../../graphql/frontend/mutations/SessionAttendMutation';
 import * as MeSessions from '../../graphql/frontend/queries/MeSessionAttendeesQuery';
 import useDebounce from '../../hooks/useDebounce';
@@ -266,7 +265,6 @@ const MySessionsPage: React.FC = function () {
   return (
     <AppLayout>
       <SEO title="My Sessions" />
-      <VolunteerNavHeader />
       <div className="mx-5 mt-6 mb-11 w-auto sm:mx-auto sm:w-[80vw]">
         <h6>Overview</h6>
         <div className="sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
@@ -280,7 +278,6 @@ const MySessionsPage: React.FC = function () {
             tabID="upcoming-sessions"
             onClick={() => setTab('upcoming-sessions')}
             underline={true}
-            hasIcon={false}
             text="UPCOMING SESSIONS"
           />
 
@@ -289,7 +286,6 @@ const MySessionsPage: React.FC = function () {
             tabID="session-history"
             onClick={() => setTab('session-history')}
             underline={true}
-            hasIcon={false}
             text="SESSION HISTORY"
           />
         </div>

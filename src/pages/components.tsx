@@ -15,7 +15,7 @@ import NavBar from '../components/NavBar';
 import NavHeader from '../components/NavHeader';
 import Select, { SelectItem } from '../components/Select';
 import Switch from '../components/Switch';
-import Tab from '../components/TwoStateTab';
+import Tab from '../components/Tab';
 import AppLayout from '../layouts/AppLayout';
 
 const SelectShowcase: React.FC = function () {
@@ -54,55 +54,53 @@ const Components: NextPage = function (props) {
 
   return (
     <AppLayout>
-      <NavBar>
-        <NavHeader />
-        <div className="flex min-h-screen w-full flex-col bg-gray-300">
-          <h1 className="mb-4 text-3xl font-bold">Components showcase</h1>
-          <SelectShowcase />
-          <BackButton
-            href="/discover-courses"
-            className="font-bold text-red-900"
-            text="Example"
+      <div className="flex min-h-screen w-full flex-col bg-gray-300">
+        <h1 className="mb-4 text-3xl font-bold">Components showcase</h1>
+        <SelectShowcase />
+        <BackButton
+          href="/home"
+          className="font-bold text-red-900"
+          text="Example"
+        />
+        <button onClick={() => setModalState(true)}>Open Modal</button>
+        {modalState ? (
+          <Modal onClose={() => setModalState(false)}>
+            <div>asiofh</div>
+          </Modal>
+        ) : (
+          ''
+        )}
+        <div className="flex">
+          <Tab
+            text="SAMPLE TEXT"
+            Icon={SparklesIcon}
+            selectedID={tab}
+            tabID="1"
+            onClick={() => setTab('1')}
+            nofill
           />
-          <button onClick={() => setModalState(true)}>Open Modal</button>
-          {modalState ? (
-            <Modal onClose={() => setModalState(false)}>
-              <div>asiofh</div>
-            </Modal>
-          ) : (
-            ''
-          )}
-          <div className="flex">
-            <Tab
-              text="SAMPLE TEXT"
-              Icon={SparklesIcon}
-              selectedID={tab}
-              tabID="1"
-              onClick={() => setTab('1')}
-            />
-            <Tab
-              Icon={SparklesIcon}
-              selectedID={tab}
-              tabID="2"
-              onClick={() => setTab('2')}
-              text="underline"
-              underline
-              className="uppercase"
-            />
-          </div>
-          <div className="flex">
-            <Chip scheme={'success'} number={'2'} />
-            <Chip
-              scheme={'danger'}
-              text={'negative text'}
-              number={'2'}
-              Icon={ArrowDownIcon}
-            />
-          </div>
-          <Switch />
-          <IconButton HeroIcon={(props) => <TvIcon />}></IconButton>
+          <Tab
+            Icon={SparklesIcon}
+            selectedID={tab}
+            tabID="2"
+            onClick={() => setTab('2')}
+            text="underline"
+            underline
+            className="uppercase"
+          />
         </div>
-      </NavBar>
+        <div className="flex">
+          <Chip scheme={'success'} number={'2'} />
+          <Chip
+            scheme={'danger'}
+            text={'negative text'}
+            number={'2'}
+            Icon={ArrowDownIcon}
+          />
+        </div>
+        <Switch />
+        <IconButton HeroIcon={(props) => <TvIcon />}></IconButton>
+      </div>
     </AppLayout>
   );
 };

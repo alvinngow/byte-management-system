@@ -1,92 +1,97 @@
-import { useQuery } from '@apollo/client';
-import { AcademicCapIcon, UsersIcon } from '@heroicons/react/24/outline';
+import {
+  AcademicCapIcon,
+  CalendarDaysIcon,
+  GlobeAltIcon,
+  UserGroupIcon,
+} from '@heroicons/react/24/outline';
 import classNames from 'classnames';
-import { handleClientScriptLoad } from 'next/script';
-import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { ComponentType, useMemo, useState } from 'react';
 
-import * as Me from '../graphql/frontend/queries/MeQuery';
+import { UserRole } from '../../gen/graphql/operations';
+import useCurrentUser from '../hooks/useCurrentUser';
 import ByteLogo from './icons/ByteLogo';
 import NavLink from './NavLink';
-import Select from './Select';
+import Tab from './Tab';
 
 interface Links {
   href: string;
-  name: 'Users' | 'Courses';
-  icon: React.ElementType;
+  label: string;
+  icon?: ComponentType<React.SVGProps<SVGSVGElement>>;
 }
+
+const NavLinks: Links[] = [
+  { href: '/manage/users', label: 'Users', icon: UserGroupIcon },
+  {
+    href: '/manage/course',
+    label: 'Courses',
+    icon: AcademicCapIcon,
+  },
+  {
+    href: '/discover-courses',
+    label: 'Discover Courses',
+    icon: GlobeAltIcon,
+  },
+  {
+    href: '/my-sessions',
+    label: 'My Sessions',
+    icon: CalendarDaysIcon,
+  },
+];
 
 interface Props extends React.PropsWithChildren {}
 
 const NavBar: React.FC<Props> = function (props) {
   const { children } = props;
-  const { data: meData } = useQuery<Me.Data>(Me.Query);
+  const { me, loading: meLoading } = useCurrentUser();
+  const router = useRouter();
 
-  const NavLinks: Links[] = [
-    { href: '/manage/volunteer', name: 'Users', icon: UsersIcon },
-    { href: '/manage/course', name: 'Courses', icon: AcademicCapIcon },
-  ];
+  const routeName = useMemo(() => {
+    for (const Link of NavLinks) {
+      if (Link.href === router.route) {
+        return Link.label;
+      }
+    }
+  }, [router]);
 
-  const [linkSelected, setLinkSelected] = useState<'Users' | 'Courses'>(
-    'Users'
-  );
-  const handleClick = (value: 'Users' | 'Courses') => {
-    setLinkSelected(value);
-  };
+  const [linkSelected, setLinkSelected] = useState(routeName!);
 
   return (
     <>
-      <>
-        <nav className="sidenav border border-r-gray-300 px-3 xsm:hidden md:flex md:items-start">
-          <NavLink className="mt-2 mb-10" href="/">
-            <ByteLogo className="pr-5" width="84px sm:45px" />
-          </NavLink>
-          <div className="relative mb-2 w-full">
-            <Select
-              items={[
-                { label: 'Volunteer', value: 'user' },
-                { label: 'Committee Member', value: 'committee_member' },
-                { label: 'Admin', value: 'system_administrator' },
-              ]}
-              label={'View As'}
-              value={meData?.me?.role ?? 'None'}
-              className="mb-3 w-full"
-              onChange={function (value: string): void {
-                throw new Error('Function not implemented.');
-              }}
-            />
-          </div>
-          <ul className="w-full">
-            {NavLinks.map((link, i) => (
-              <li
-                key={'link' + i}
-                className={classNames(
-                  {
-                    'bg-brand-hover text-brand-main':
-                      linkSelected === link.name,
-                    'text-secondary': linkSelected !== link.name,
-                  },
-                  'group mb-0.5 flex w-full cursor-pointer items-center rounded-lg py-0.5 px-0.5 hover:bg-brand-hover hover:text-brand-main sm:py-3 sm:px-4'
-                )}
-                onClick={() => handleClick(link.name)}
-              >
-                <link.icon
-                  className={classNames(
-                    {
-                      'text-brand-main': linkSelected === link.name,
-                      'text-secondary': linkSelected !== link.name,
-                    },
-                    'h-6 w-6 group-hover:text-brand-main'
-                  )}
-                />
-                <NavLink className="group pl-4 font-semibold" href={link.href}>
-                  {link.name}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </>
-      <div className="md:ml-64">{children}</div>
+      {me?.role !== UserRole.User && (
+        <div>
+          <nav className="sidenav border border-r-gray-300 px-3 md:flex md:items-start">
+            <NavLink className="mt-2 mb-10" href="/discover-courses">
+              <ByteLogo className="pr-5" width="84px sm:45px" />
+            </NavLink>
+
+            <ul className="w-full">
+              {NavLinks.map((link, i) => (
+                <li key={'link' + i}>
+                  <Tab
+                    selectedID={linkSelected}
+                    tabID={link.label}
+                    text={link.label}
+                    href={link.href}
+                    onClick={() => setLinkSelected(link.label)}
+                    Icon={link.icon}
+                    className="w-full"
+                    nofill
+                    textClass="pl-5 font-bold uppercase"
+                  />
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      )}
+      <div
+        className={classNames('', {
+          'md:ml-64': me?.role !== UserRole.User,
+        })}
+      >
+        {children}
+      </div>
     </>
   );
 };

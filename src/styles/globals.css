@@ -198,7 +198,7 @@ a {
   transition: 0.5s ease;
   overflow-x: hidden;
   padding-top: 20px;
-  display: flex;
+  display: hidden;
   flex-direction: column;
   align-items: center;
 }

@@ -31,13 +31,10 @@ const AddCourse: NextPage = function () {
   };
   return (
     <AppLayout>
-      <NavBar>
-        <NavHeader />
-        <SEO title="Add Course" />
-        <div className="ml-12 xsm:mx-5 xsm:mt-6 md:mt-12 md:ml-14">
-          <ManageCourseTabs />
-        </div>
-      </NavBar>
+      <SEO title="Add Course" />
+      <div className="ml-12 xsm:mx-5 xsm:mt-6 md:mt-12 md:ml-14">
+        <ManageCourseTabs />
+      </div>
     </AppLayout>
   );
 };

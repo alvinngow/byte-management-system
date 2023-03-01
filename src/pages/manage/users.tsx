@@ -137,206 +137,203 @@ const UsersPage: NextPage = function (props) {
   return (
     <AppLayout>
       {/* start of body DIV*/}
-      <NavBar>
-        <NavHeader />
-        <div className="mx-5 mb-12 flex w-auto flex-col justify-between sm:mx-auto sm:w-11/12 md:w-4/5">
-          <h3 className="my-6">Users</h3>
-          {/* start of table */}
-          <div className="border-full rounded-lg border shadow-lg">
-            {/* search bar */}
-            <div className="flex flex-col gap-4 pl-5 pr-5 pt-6 pb-6 md:flex-row lg:flex-row">
-              <div className="sm:w-full md:w-3/4 lg:w-3/4">
-                <Input
-                  label="Search"
-                  placeholder={'Name, Email, School... '}
-                  value={searchTerm}
-                  onChange={(e) => {
-                    setSearchTerm(e.target.value);
-                  }}
-                />
-              </div>
-              <div className="relative flex basis-1/3 flex-col">
-                <Select
-                  items={[
-                    { label: 'All', value: '' },
-                    { label: 'Volunteer', value: UserRole.User },
-                    {
-                      label: 'Committee Member',
-                      value: UserRole.CommitteeMember,
-                    },
-                    { label: 'Admin', value: UserRole.SystemAdministrator },
-                  ]}
-                  label={'User Type'}
-                  value={volunteerFilter}
-                  className="relative w-full"
-                  onChange={function (value: string): void {
-                    setVolunteerFilter(value);
-                  }}
-                />
-              </div>
+      <div className="mx-5 mb-12 flex w-auto flex-col justify-between sm:mx-auto sm:w-11/12 md:w-4/5">
+        <h3 className="my-6">Users</h3>
+        {/* start of table */}
+        <div className="border-full rounded-lg border shadow-lg">
+          {/* search bar */}
+          <div className="flex flex-col gap-4 pl-5 pr-5 pt-6 pb-6 md:flex-row lg:flex-row">
+            <div className="sm:w-full md:w-3/4 lg:w-3/4">
+              <Input
+                label="Search"
+                placeholder={'Name, Email, School... '}
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                }}
+              />
             </div>
-            {/* start of the user's details table */}
-            <div className="snap-x overflow-x-auto scroll-smooth">
-              {loading && <span>Loading</span>}
-
-              <table className="w-full text-left">
-                <thead className="border-b border-slate-300 py-4 pl-4 text-left">
-                  <tr>
-                    {/* need to add the up-down arrow icon */}
-                    <th className="px-4 py-3 xsm:columns-2 md:columns-3">
-                      <div className="flex justify-center whitespace-nowrap">
-                        <p>User Name</p>
-                        <IconButton
-                          HeroIcon={() => (
-                            <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
-                          )}
-                        />
-                      </div>
-                    </th>
-                    <th className=" columns-1 px-4 py-3">
-                      <div className="flex justify-center whitespace-nowrap">
-                        <p>Contact Number</p>
-                        <IconButton
-                          HeroIcon={() => (
-                            <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
-                          )}
-                        />
-                      </div>
-                    </th>
-                    <th className="columns-1 px-4 py-3 ">
-                      <div className="flex justify-center whitespace-nowrap">
-                        <p>School/Work</p>
-                        <IconButton
-                          HeroIcon={() => (
-                            <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
-                          )}
-                        />
-                      </div>
-                    </th>
-                    <th className=" columns-1 px-4 py-3">
-                      <div className="flex justify-center whitespace-nowrap">
-                        User Type
-                        <IconButton
-                          HeroIcon={() => (
-                            <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
-                          )}
-                        />
-                      </div>
-                    </th>
-                    <th className="columns-1 px-4 py-3">
-                      <div className="flex justify-center whitespace-nowrap">
-                        Account Status
-                        <IconButton
-                          HeroIcon={() => (
-                            <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
-                          )}
-                        />
-                      </div>
-                    </th>
-                    {me?.role === UserRole.SystemAdministrator && (
-                      <th className="px-6 py-3">Management</th>
-                    )}
-                  </tr>
-                </thead>
-                <tbody>
-                  {data?.users?.edges?.map((edge) => (
-                    <tr
-                      key={edge.node.id}
-                      className="border-b bg-white text-center"
-                    >
-                      <td className="items-center px-4 py-4">
-                        {/* avatar is not appearing */}
-                        <div className="grid grid-cols-[100px_1fr]">
-                          <div className="flex ">
-                            <Image
-                              className="h-10 w-10 rounded-full"
-                              src="/favicon.ico"
-                              alt="Rounded avatar"
-                              width={100}
-                              height={100}
-                            />
-                            {edge.node.avatar}
-                            <div className="ml-4 text-left">
-                              {edge.node.firstName} {edge.node.lastName}
-                              <br />
-                              <span className="text-gray-500">
-                                {edge.node.email}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-black">
-                        {edge.node.mobileNo}
-                      </td>
-                      <td className="px-6 py-4 text-black">
-                        {edge.node.school?.name ?? 'N/A'}
-                      </td>
-                      <td className="px-6 py-4 text-black">
-                        {userTypeMap[edge.node.role!]}
-                      </td>
-                      <td className="px-6 py-4 text-red-500">
-                        NOT IMPLEMENTED IN GRAPHQL
-                      </td>
-                      <td className="flex justify-center px-6 py-4 text-black">
-                        {/* dropdown code starts here */}
-                        {me?.role === UserRole.SystemAdministrator && (
-                          <DotsMoreOptions
-                            className="h-6 w-6"
-                            aria-hidden="true"
-                            onOptionClick={(value: string) => {
-                              switch (value) {
-                                case 'delete':
-                                  terminateAccount(edge.node.id);
-                                  break;
-                                default:
-                                  updateRole(edge.node.id, value as UserRole);
-                                  break;
-                              }
-                            }}
-                            options={[
-                              {
-                                label: 'Make as Comm Member',
-                                value: UserRole.CommitteeMember,
-                              },
-                              {
-                                label: 'Make as System Admin',
-                                value: UserRole.SystemAdministrator,
-                              },
-                              {
-                                label: 'Make as Volunteer',
-                                value: UserRole.User,
-                              },
-                              {
-                                label: 'Delete User',
-                                value: 'delete',
-                                optionStyle: 'text-center text-red-500',
-                              },
-                            ]}
-                          />
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              {data?.users?.pageInfo?.hasNextPage && (
-                <div className="px-3 py-3 text-center">
-                  <button className="inline-flex">
-                    <IconButton
-                      HeroIcon={() => (
-                        <ChevronDoubleDownIcon className="h-5 w-5 text-brand-main" />
-                      )}
-                    />
-                    <p className="body1 text-brand-main">Load More</p>
-                  </button>
-                </div>
-              )}
+            <div className="relative flex basis-1/3 flex-col">
+              <Select
+                items={[
+                  { label: 'All', value: '' },
+                  { label: 'Volunteer', value: UserRole.User },
+                  {
+                    label: 'Committee Member',
+                    value: UserRole.CommitteeMember,
+                  },
+                  { label: 'Admin', value: UserRole.SystemAdministrator },
+                ]}
+                label={'User Type'}
+                value={volunteerFilter}
+                className="relative w-full"
+                onChange={function (value: string): void {
+                  setVolunteerFilter(value);
+                }}
+              />
             </div>
           </div>
+          {/* start of the user's details table */}
+          <div className="snap-x overflow-x-auto scroll-smooth">
+            {loading && <span>Loading</span>}
+
+            <table className="w-full text-left">
+              <thead className="border-b border-slate-300 py-4 pl-4 text-left">
+                <tr>
+                  {/* need to add the up-down arrow icon */}
+                  <th className="px-4 py-3 xsm:columns-2 md:columns-3">
+                    <div className="flex justify-center whitespace-nowrap">
+                      <p>User Name</p>
+                      <IconButton
+                        HeroIcon={() => (
+                          <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
+                        )}
+                      />
+                    </div>
+                  </th>
+                  <th className=" columns-1 px-4 py-3">
+                    <div className="flex justify-center whitespace-nowrap">
+                      <p>Contact Number</p>
+                      <IconButton
+                        HeroIcon={() => (
+                          <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
+                        )}
+                      />
+                    </div>
+                  </th>
+                  <th className="columns-1 px-4 py-3 ">
+                    <div className="flex justify-center whitespace-nowrap">
+                      <p>School/Work</p>
+                      <IconButton
+                        HeroIcon={() => (
+                          <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
+                        )}
+                      />
+                    </div>
+                  </th>
+                  <th className=" columns-1 px-4 py-3">
+                    <div className="flex justify-center whitespace-nowrap">
+                      User Type
+                      <IconButton
+                        HeroIcon={() => (
+                          <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
+                        )}
+                      />
+                    </div>
+                  </th>
+                  <th className="columns-1 px-4 py-3">
+                    <div className="flex justify-center whitespace-nowrap">
+                      Account Status
+                      <IconButton
+                        HeroIcon={() => (
+                          <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
+                        )}
+                      />
+                    </div>
+                  </th>
+                  {me?.role === UserRole.SystemAdministrator && (
+                    <th className="px-6 py-3">Management</th>
+                  )}
+                </tr>
+              </thead>
+              <tbody>
+                {data?.users?.edges?.map((edge) => (
+                  <tr
+                    key={edge.node.id}
+                    className="border-b bg-white text-center"
+                  >
+                    <td className="items-center px-4 py-4">
+                      {/* avatar is not appearing */}
+                      <div className="grid grid-cols-[100px_1fr]">
+                        <div className="flex ">
+                          <Image
+                            className="h-10 w-10 rounded-full"
+                            src="/favicon.ico"
+                            alt="Rounded avatar"
+                            width={100}
+                            height={100}
+                          />
+                          {edge.node.avatar}
+                          <div className="ml-4 text-left">
+                            {edge.node.firstName} {edge.node.lastName}
+                            <br />
+                            <span className="text-gray-500">
+                              {edge.node.email}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-4 text-black">
+                      {edge.node.mobileNo}
+                    </td>
+                    <td className="px-6 py-4 text-black">
+                      {edge.node.school?.name ?? 'N/A'}
+                    </td>
+                    <td className="px-6 py-4 text-black">
+                      {userTypeMap[edge.node.role!]}
+                    </td>
+                    <td className="px-6 py-4 text-red-500">
+                      NOT IMPLEMENTED IN GRAPHQL
+                    </td>
+                    <td className="flex justify-center px-6 py-4 text-black">
+                      {/* dropdown code starts here */}
+                      {me?.role === UserRole.SystemAdministrator && (
+                        <DotsMoreOptions
+                          className="h-6 w-6"
+                          aria-hidden="true"
+                          onOptionClick={(value: string) => {
+                            switch (value) {
+                              case 'delete':
+                                terminateAccount(edge.node.id);
+                                break;
+                              default:
+                                updateRole(edge.node.id, value as UserRole);
+                                break;
+                            }
+                          }}
+                          options={[
+                            {
+                              label: 'Make as Comm Member',
+                              value: UserRole.CommitteeMember,
+                            },
+                            {
+                              label: 'Make as System Admin',
+                              value: UserRole.SystemAdministrator,
+                            },
+                            {
+                              label: 'Make as Volunteer',
+                              value: UserRole.User,
+                            },
+                            {
+                              label: 'Delete User',
+                              value: 'delete',
+                              optionStyle: 'text-center text-red-500',
+                            },
+                          ]}
+                        />
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {data?.users?.pageInfo?.hasNextPage && (
+              <div className="px-3 py-3 text-center">
+                <button className="inline-flex">
+                  <IconButton
+                    HeroIcon={() => (
+                      <ChevronDoubleDownIcon className="h-5 w-5 text-brand-main" />
+                    )}
+                  />
+                  <p className="body1 text-brand-main">Load More</p>
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-      </NavBar>
+      </div>
       {/* end of body DIV */}
     </AppLayout>
   );

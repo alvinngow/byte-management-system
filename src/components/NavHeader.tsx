@@ -3,21 +3,25 @@ import {
   AcademicCapIcon,
   Bars3Icon,
   BellIcon,
+  CalendarDaysIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   CogIcon,
-  UsersIcon,
+  GlobeAltIcon,
+  UserGroupIcon,
 } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import Image from 'next/image';
-import React, { useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { ComponentType, useMemo, useState } from 'react';
 
+import { UserRole } from '../../gen/graphql/operations';
 import * as Me from '../graphql/frontend/queries/MeQuery';
 import IconButton from './IconButton';
 import ByteLogo from './icons/ByteLogo';
 import NavLink from './NavLink';
 import ProfileMenu from './Profile/ProfileMenu';
-import Select from './Select';
+import Tab from './Tab';
 
 const BACKGROUND_COLORS = [
   'bg-pink-600',
@@ -32,22 +36,51 @@ const BACKGROUND_COLORS = [
 
 interface Links {
   href: string;
-  name: 'Users' | 'Courses';
-  icon: React.ElementType;
+  label: string;
+  icon?: ComponentType<React.SVGProps<SVGSVGElement>>;
 }
+const NavLinks: Links[] = [
+  { href: '/manage/users', label: 'Users', icon: UserGroupIcon },
+  {
+    href: '/manage/course',
+    label: 'Courses',
+    icon: AcademicCapIcon,
+  },
+  {
+    href: '/discover-courses',
+    label: 'Discover Courses',
+    icon: GlobeAltIcon,
+  },
+  {
+    href: '/my-sessions',
+    label: 'My Sessions',
+    icon: CalendarDaysIcon,
+  },
+];
 interface Props extends React.PropsWithChildren {}
 
 const NavHeader: React.FC<Props> = function (props) {
   const { data: meData } = useQuery<Me.Data>(Me.Query);
+  const router = useRouter();
 
-  const NavLinks: Links[] = [
-    { href: '/manage/users', name: 'Users', icon: UsersIcon },
-    { href: '/manage/course', name: 'Courses', icon: AcademicCapIcon },
-  ];
+  const routeName = useMemo(() => {
+    for (const Link of NavLinks) {
+      if (Link.href === router.route) {
+        return Link.label;
+      }
+    }
+  }, [router]);
 
-  const [linkSelected, setLinkSelected] = useState<'Users' | 'Courses'>(
-    'Users'
-  );
+  const [linkSelected, setLinkSelected] = useState(routeName!);
+
+  const RoleBasedNav = useMemo(() => {
+    if (meData?.me?.role !== UserRole.User) {
+      return NavLinks;
+    } else {
+      return NavLinks.slice(2, 4);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [meData]);
 
   const firstName = meData?.me?.firstName;
   const lastName = meData?.me?.lastName;
@@ -75,10 +108,39 @@ const NavHeader: React.FC<Props> = function (props) {
   };
   return (
     <>
-      <header className="absolute sticky top-0 z-20 flex border border-white border-b-gray-300 py-4 xsm:items-end xsm:justify-between xsm:px-3 md:justify-end md:px-6">
-        <NavLink className="md:hidden" href="/">
-          <ByteLogo className="pr-5" width="84px sm:45px" />
-        </NavLink>
+      <header
+        className={classNames(
+          'absolute sticky top-0 z-20 flex border border-white border-b-gray-300 bg-white py-4 xsm:items-end xsm:px-3 md:px-6',
+          {
+            'justify-between': meData?.me?.role === UserRole.User,
+            'justify-between md:justify-end':
+              meData?.me?.role !== UserRole.User,
+          }
+        )}
+      >
+        <div className="flex">
+          <NavLink
+            className={classNames('items-start ', {
+              'md:hidden': meData?.me?.role !== UserRole.User,
+            })}
+            href="/discover-courses"
+          >
+            <ByteLogo className="mb-1 pr-5" width="84px sm:45px" />
+          </NavLink>
+          {meData?.me?.role === UserRole.User && (
+            <div className={'ml-6 xsm:hidden md:flex'}>
+              {RoleBasedNav.map((link, i) => (
+                <Tab
+                  key={'tab' + i}
+                  selectedID={linkSelected}
+                  tabID={link.label}
+                  text={link.label}
+                  href={link.href}
+                ></Tab>
+              ))}
+            </div>
+          )}
+        </div>
         <div className="py-auto flex items-center gap-3">
           <IconButton HeroIcon={(props) => <CogIcon />} />
           <IconButton HeroIcon={(props) => <BellIcon />} />
@@ -132,7 +194,9 @@ const NavHeader: React.FC<Props> = function (props) {
             )}
           </button>
           <IconButton
-            className="md:hidden"
+            className={classNames('', {
+              'md:hidden': meData?.me?.role !== UserRole.User,
+            })}
             HeroIcon={(props) => (
               <Bars3Icon onClick={() => handleClick()} className="md:hidden" />
             )}
@@ -149,47 +213,32 @@ const NavHeader: React.FC<Props> = function (props) {
       {modal && (
         <div className="fixed z-10 block h-screen min-w-full bg-gray-700/50 md:hidden">
           <div className="z-20 rounded-b-lg bg-white p-4">
-            <div className="relative">
-              <Select
-                items={[
-                  { label: 'Volunteer', value: 'user' },
-                  { label: 'Committee Member', value: 'committee_member' },
-                  { label: 'Admin', value: 'system_administrator' },
-                ]}
-                label={'View As'}
-                value={meData?.me?.role ?? 'None'}
-                className="mb-3 w-full"
-                onChange={function (value: string): void {
-                  throw new Error('Function not implemented.');
-                }}
-              />
-            </div>
-
             <ul className="w-full">
-              {NavLinks.map((link, i) => (
+              {RoleBasedNav.map((link, i) => (
                 <li
                   key={'link' + i}
                   className={classNames(
                     {
                       'bg-brand-hover text-brand-main':
-                        linkSelected === link.name,
-                      'text-secondary': linkSelected !== link.name,
+                        linkSelected === link.label,
+                      'text-secondary': linkSelected !== link.label,
                     },
-                    'subtitle1 group mb-0.5 flex w-full cursor-pointer items-center rounded-lg py-3 px-3 hover:bg-brand-hover hover:text-brand-main sm:py-3 sm:px-4'
+                    'subtitle1 group mb-0.5 flex w-full cursor-pointer items-center rounded-lg p-3 hover:bg-brand-hover hover:text-brand-main sm:py-3 sm:px-4'
                   )}
-                  onClick={() => setLinkSelected(link.name)}
+                  onClick={() => setLinkSelected(link.label)}
                 >
-                  <link.icon
-                    className={classNames(
-                      {
-                        'text-brand-main': linkSelected === link.name,
-                        'text-secondary': linkSelected !== link.name,
-                      },
-                      'h-6 w-6 group-hover:text-brand-main'
-                    )}
-                  />
-                  <NavLink className="subtitle1 group pl-4" href={link.href}>
-                    {link.name}
+                  <NavLink href={link.href} className="w-full">
+                    <Tab
+                      selectedID={linkSelected}
+                      tabID={link.label}
+                      text={link.label}
+                      href={link.href}
+                      onClick={() => setLinkSelected(link.label)}
+                      Icon={link.icon}
+                      className="w-full"
+                      nofill
+                      textClass="pl-5 font-bold uppercase"
+                    ></Tab>
                   </NavLink>
                 </li>
               ))}

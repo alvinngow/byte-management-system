@@ -14,7 +14,7 @@ import TabButton from './CourseWizard/components/TabButton';
 import IconButton from './IconButton';
 import Modal from './Modal';
 import Sessions from './Sessions';
-import Tab from './TwoStateTab';
+import Tab from './Tab';
 
 type Tab = 'course_information' | 'sessions';
 interface ManageCourseTabsProps {
