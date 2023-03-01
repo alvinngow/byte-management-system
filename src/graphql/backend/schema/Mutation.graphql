@@ -8,6 +8,7 @@ type Mutation {
   fileUpload(input: FileUploadInput!): FileUploadPayload!
   courseAdd(input: CourseAddInput!): CourseAddPayload!
   courseEdit(input: CourseEditInput!): CourseEditPayload!
+  courseDelete(input: CourseDeleteInput!): CourseDeletePayload!
   sessionAdd(input: SessionAddInput!): SessionAddPayload!
 
   # used by a committee member to report on an attendee's actual attendance

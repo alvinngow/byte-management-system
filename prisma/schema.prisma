@@ -175,9 +175,9 @@ model Course {
 model CourseManager {
   id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   courseId String @db.Uuid
-  course   Course @relation(fields: [courseId], references: [id])
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
   userId   String @db.Uuid
-  user     User   @relation(fields: [userId], references: [id])
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

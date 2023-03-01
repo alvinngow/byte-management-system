@@ -96,3 +96,13 @@ type CourseEditPayload {
 
     course: Course!
 }
+
+input CourseDeleteInput {
+    clientMutationId: String
+    courseId: ID!
+}
+
+type CourseDeletePayload {
+    clientMutationId: String
+    ok: Boolean!
+}
