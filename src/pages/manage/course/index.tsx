@@ -9,32 +9,17 @@ import React from 'react';
 
 import {
   CourseDateFiltering,
-  CourseFiltering,
   CourseSortKey,
-  Maybe,
 } from '../../../../gen/graphql/resolvers';
 import Button from '../../../components/Button';
 import IconButton from '../../../components/IconButton';
 import Input from '../../../components/Input';
-import NavBar from '../../../components/NavBar';
-import NavHeader from '../../../components/NavHeader';
 import NavLink from '../../../components/NavLink';
 import Select, { SelectItem } from '../../../components/Select';
 import SEO from '../../../components/SEO';
 import * as CoursesQuery from '../../../graphql/frontend/queries/CoursesQuery';
 import useDebounce from '../../../hooks/useDebounce';
 import AppLayout from '../../../layouts/AppLayout';
-
-interface sortedCoursesType {
-  [key: string]: any;
-  courseId: string;
-  courseTitle: string;
-  courseLocation: string | undefined;
-  courseRegion: string | undefined;
-  courseTrainer: string;
-  courseStartDate: Maybe<string> | undefined;
-  courseEndDate: Maybe<string> | undefined;
-}
 
 const CoursePage: React.FC = function () {
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -68,28 +53,6 @@ const CoursePage: React.FC = function () {
   });
 
   const courses = data?.courses.edges;
-
-  const Courses = React.useMemo(() => {
-    const emptyArray: sortedCoursesType[] = [];
-    if (courses != null) {
-      courses.map((course) => {
-        const sortedCourse = {
-          courseId: course.node.id,
-          courseTitle: course.node.name,
-          courseLocation: course.node.defaultLocation?.name,
-          courseRegion: course.node.defaultLocation?.cluster?.name,
-          courseTrainer:
-            course.node.courseManagers.edges[0]?.node.user.firstName +
-            ' ' +
-            course.node.courseManagers.edges[0]?.node.user.lastName,
-          courseStartDate: course.node?.firstSessionStartDate,
-          courseEndDate: course.node?.lastSessionEndDate,
-        };
-        emptyArray.push(sortedCourse);
-      });
-      return emptyArray;
-    }
-  }, [courses]);
 
   const handleLoadMoreClick = React.useCallback<React.MouseEventHandler>(() => {
     fetchMore({
@@ -233,30 +196,31 @@ const CoursePage: React.FC = function () {
                 </tr>
               </thead>
               <tbody>
-                {Courses?.map((course) => (
-                  <tr key={course.courseId}>
+                {courses?.map((course) => (
+                  <tr key={course.node.id}>
                     <td className="border-b border-slate-300 py-4 pl-4 text-left">
-                      {course.courseTitle}
+                      {course.node.name}
                     </td>
                     <td className="border-b border-slate-300 py-4 pl-4 text-left">
-                      {course.courseLocation}
+                      {course.node.defaultLocation?.name}
                     </td>
                     <td className="border-b border-slate-300 py-4 pl-4 text-left">
-                      {course.courseRegion}
+                      {course.node.defaultLocation?.cluster?.name}
                     </td>
                     <td className="border-b border-slate-300 py-4 pl-4 text-left">
-                      {course.courseTrainer}
+                      {course.node.courseManagers.edges[0]?.node.user.firstName}{' '}
+                      {course.node.courseManagers.edges[0]?.node.user.lastName}
                     </td>
                     <td className="border-b border-slate-300 py-4 pl-4 text-left">
-                      {course.courseStartDate}
+                      {course.node?.firstSessionStartDate}
                     </td>
                     <td className="border-b border-slate-300 py-4 pl-4 text-left">
-                      {course.courseEndDate}
+                      {course.node?.lastSessionEndDate}
                     </td>
                     <td className="border-b border-slate-300 p-4 text-left">
                       <div className="flex gap-2.5">
                         <NavLink
-                          href={`/manage/course/${course.courseId}`}
+                          href={`/manage/course/${course.node.id}`}
                           className="flex"
                         >
                           <IconButton
