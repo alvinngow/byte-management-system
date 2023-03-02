@@ -1,53 +1,41 @@
 import { useQuery } from '@apollo/client';
+import { DateTime } from 'luxon';
 import { NextPage } from 'next';
 import React from 'react';
 
-import { CourseSortKey } from '../../../gen/graphql/resolvers';
+import {
+  CourseDateFiltering,
+  CourseFiltering,
+} from '../../../gen/graphql/operations';
 import Card from '../../components/Card';
 import Input from '../../components/Input';
 import NavLink from '../../components/NavLink';
 import Select, { SelectItem } from '../../components/Select';
 import SEO from '../../components/SEO';
 import * as CoursesQuery from '../../graphql/frontend/queries/CoursesQuery';
+import useDebounce from '../../hooks/useDebounce';
 import AppLayout from '../../layouts/AppLayout';
 
-interface CoursesType {
-  [key: string]: any;
-  courseId: string;
-  courseTitle: string;
-  courseLocation: string | undefined;
-  courseCoverImage: string;
-  courseStartDate: string;
-}
-
 const DiscoverCoursesPage: NextPage = function () {
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm);
+
+  const variables = React.useMemo<CoursesQuery.Variables>(() => {
+    const filter: CourseFiltering = { searchTerm: debouncedSearchTerm };
+    filter.date = CourseDateFiltering.Upcoming;
+    return {
+      filter,
+    };
+  }, [debouncedSearchTerm]);
+
   const { data } = useQuery<CoursesQuery.Data, CoursesQuery.Variables>(
     CoursesQuery.Query,
     {
-      variables: {
-        sortKey: CourseSortKey.LocationName,
-      },
+      variables,
     }
   );
 
   const courses = data?.courses.edges;
-
-  const Courses = React.useMemo(() => {
-    const emptyArray: CoursesType[] = [];
-    if (courses != null) {
-      courses.map((course) => {
-        const sortedCourse = {
-          courseId: course.node.id,
-          courseTitle: course.node.name,
-          courseLocation: course.node.defaultLocation?.name,
-          courseCoverImage: course.node.coverImage,
-          courseStartDate: course.node.sessions?.edges[0].node.startDate,
-        };
-        emptyArray.push(sortedCourse);
-      });
-      return emptyArray;
-    }
-  }, [courses]);
 
   const FilterByShowcase: React.FC = function () {
     const items = React.useMemo<SelectItem[]>(() => {
@@ -57,20 +45,24 @@ const DiscoverCoursesPage: NextPage = function () {
           value: 'All',
         },
         {
+          label: 'North-East',
+          value: 'North-East',
+        },
+        {
           label: 'North',
           value: 'North',
         },
         {
-          label: 'South',
-          value: 'South',
-        },
-        {
-          label: 'East',
-          value: 'East',
+          label: 'Central',
+          value: 'Central',
         },
         {
           label: 'West',
           value: 'West',
+        },
+        {
+          label: 'East',
+          value: 'East',
         },
       ];
     }, []);
@@ -102,7 +94,14 @@ const DiscoverCoursesPage: NextPage = function () {
         <div className="mx-5 mb-8 flex w-auto flex-col gap-4 sm:mx-auto sm:w-[80vw] md:flex-row">
           <form className="basis-3/4">
             <label htmlFor="default-search"></label>
-            <Input label="Search" placeholder={'eg: Art Course'} />
+            <Input
+              label="Search"
+              placeholder={'eg: Art Course'}
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+            />
           </form>
           <div className="relative basis-1/4">
             <FilterByShowcase />
@@ -110,24 +109,27 @@ const DiscoverCoursesPage: NextPage = function () {
         </div>
 
         <div className="mx-5 mb-8 grid w-auto grid-cols-2 gap-4 sm:mx-auto sm:w-[80vw] md:shrink-0 md:grid-cols-3 lg:grid-cols-4">
-          {Courses?.map((Course) => (
-            <div key={Course.courseId}>
-              <NavLink href={`course/${Course.courseId}`}>
+          {courses?.map((course) => (
+            <div key={course.node.id}>
+              <NavLink href={`course/${course.node.id}`}>
                 <Card
-                  title={Course.courseTitle}
-                  coverImage={Course.courseCoverImage}
+                  title={course.node.name}
+                  coverImage={course.node.coverImage}
                   className="h-full"
                 >
                   <div className="px-4 pb-4">
                     <p className="font-sm text-gray-600">
-                      {Course.courseLocation}
+                      {course.node.defaultLocation?.name}
                     </p>
                     <div className="grid grid-cols-2">
                       <p className="col-span-1 text-left text-xs text-gray-400">
-                        From {Course.courseStartDate}
+                        From{' '}
+                        {DateTime.fromISO(
+                          `${course.node.firstSessionStartDate}`
+                        ).toLocaleString(DateTime.DATE_MED)}
                       </p>
                       <p className="col-span-1 text-right text-xs text-gray-400">
-                        7000 Sessions
+                        {course.node.sessions.totalCount} sessions
                       </p>
                     </div>
                   </div>

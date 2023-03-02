@@ -1,19 +1,39 @@
+import { useQuery } from '@apollo/client';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
-import { Card } from 'flowbite-react';
+import { DateTime } from 'luxon';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import React from 'react';
 
+import { CourseDateFiltering } from '../../gen/graphql/operations';
 import Button from '../../src/components/Button';
 import CustomLink from '../../src/components/Link';
+import Card from '../components/Card';
 import ByteLogo from '../components/icons/ByteLogo';
 import FacebookLogo from '../components/icons/FacebookLogo';
 import InstagramLogo from '../components/icons/InstagramLogo';
+import NavLink from '../components/NavLink';
+import * as CoursesQuery from '../graphql/frontend/queries/CoursesQuery';
 
 const LandingPage: NextPage = function () {
   const today = new Date();
   const year = today.getFullYear();
+
+  const { data } = useQuery<CoursesQuery.Data, CoursesQuery.Variables>(
+    CoursesQuery.Query,
+    {
+      variables: {
+        filter: {
+          date: CourseDateFiltering.Upcoming,
+        },
+      },
+    }
+  );
+
+  const courses = data?.courses.edges;
+
   return (
     <div>
       <Head>
@@ -84,11 +104,35 @@ const LandingPage: NextPage = function () {
         <h2 className="mb-16 text-center">
           <span className="font-bold">Discover Causes</span> (Courses) Near You
         </h2>
-        <div className="block gap-6 md:grid md:grid-cols-4">
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
+        <div className="block gap-6 md:grid md:grid-cols-3">
+          {courses?.map((course) => (
+            <div key={course.node.id}>
+              <NavLink href={`course/${course.node.id}`}>
+                <Card
+                  title={course.node.name}
+                  coverImage={course.node.coverImage}
+                  className="h-full"
+                >
+                  <div className="px-4 pb-4">
+                    <p className="font-sm text-gray-600">
+                      {course.node.defaultLocation?.name}
+                    </p>
+                    <div className="grid grid-cols-2">
+                      <p className="col-span-1 text-left text-xs text-gray-400">
+                        From{' '}
+                        {DateTime.fromISO(
+                          `${course.node.firstSessionStartDate}`
+                        ).toLocaleString(DateTime.DATE_MED)}
+                      </p>
+                      <p className="col-span-1 text-right text-xs text-gray-400">
+                        {course.node.sessions.totalCount} sessions
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+              </NavLink>
+            </div>
+          ))}
         </div>
       </div>
       {/* section */}

@@ -56,28 +56,39 @@ export const coursesResolver: QueryResolvers['courses'] = async (
     }
   }
 
-  let where: CourseWithSessionInfoWhereInput | undefined = undefined;
-
-  if (filter != null) {
-    switch (filter.date) {
-      case CourseDateFiltering.Upcoming: {
-        where = {
-          firstSessionStartDate: {
+  const where: CourseWithSessionInfoWhereInput = {
+    OR:
+      filter?.searchTerm != null
+        ? [
+            {
+              name: {
+                contains: filter.searchTerm,
+                mode: 'insensitive',
+              },
+            },
+            {
+              defaultLocation: {
+                name: {
+                  contains: filter.searchTerm,
+                  mode: 'insensitive',
+                },
+              },
+            },
+          ]
+        : undefined,
+    firstSessionStartDate:
+      filter?.date == CourseDateFiltering.Upcoming
+        ? {
             gte: DateTime.now().toJSDate(),
-          },
-        };
-        break;
-      }
-      case CourseDateFiltering.Past: {
-        where = {
-          lastSessionEndDate: {
+          }
+        : undefined,
+    lastSessionEndDate:
+      filter?.date == CourseDateFiltering.Past
+        ? {
             lt: DateTime.now().toJSDate(),
-          },
-        };
-        break;
-      }
-    }
-  }
+          }
+        : undefined,
+  };
 
   const result = await findManyCursorConnection(
     (args) =>

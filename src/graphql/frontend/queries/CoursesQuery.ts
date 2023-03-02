@@ -45,6 +45,9 @@ export const Query = gql`
               name
             }
           }
+          sessions {
+            totalCount
+          }
           courseManagers {
             edges {
               node {
