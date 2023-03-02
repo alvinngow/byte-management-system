@@ -4,18 +4,23 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from '@heroicons/react/24/outline';
+import { Session, SessionAttendee } from '@prisma/client';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { SessionSortKey } from '../../../gen/graphql/resolvers';
+import {
+  SessionAttendeeEdge,
+  SessionSortKey,
+} from '../../../gen/graphql/resolvers';
 import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';
 import SEO from '../../components/SEO';
 import Spinner from '../../components/Spinner';
 import * as CourseSessionsQuery from '../../graphql/frontend/queries/CourseSessionsQuery';
+import * as MeSessionAttendeesQuery from '../../graphql/frontend/queries/MeSessionAttendeesQuery';
 import AppLayout from '../../layouts/AppLayout';
 
 const first = 10;
@@ -43,6 +48,19 @@ const CourseDetailPage: React.FC = function () {
     skip: id == null,
   });
 
+  const meCourseInfo = useQuery<
+    MeSessionAttendeesQuery.Data,
+    MeSessionAttendeesQuery.Variables
+  >(MeSessionAttendeesQuery.Query);
+  const attendingSessions = meCourseInfo.data?.me.sessionAttendees.edges ?? [];
+  const attendingSessionsIdArr: string[] = [];
+
+  for (const session of attendingSessions) {
+    attendingSessionsIdArr.push(session.node.sessionId);
+  }
+
+  const course = data?.course ?? null;
+
   const handleLoadMoreClick: React.MouseEventHandler = () => {
     const endCursor = data?.course?.sessions?.pageInfo?.endCursor;
 
@@ -64,8 +82,6 @@ const CourseDetailPage: React.FC = function () {
 
     router.push('/404');
   }, [data, error, id, loading, router]);
-
-  const course = data?.course ?? null;
 
   return (
     <>
@@ -205,27 +221,33 @@ const CourseDetailPage: React.FC = function () {
                           )}
                           {course.sessions.edges.map((edge) => (
                             <tr key={edge.cursor}>
-                              <td className="body2 border-b border-slate-300 py-4 pl-4 text-left">
+                              <td className="body2 border-b border-slate-300 p-4 text-left">
                                 {DateTime.fromISO(
                                   edge.node.startDate
                                 ).toLocaleString(DateTime.DATE_MED)}
                               </td>
-                              <td className="body2 border-b border-slate-300 py-4 pl-4 text-left">
+                              <td className="body2 border-b border-slate-300 p-4 text-left">
                                 {DateTime.fromISO(
                                   edge.node.startTime
                                 ).toLocaleString(DateTime.TIME_SIMPLE)}
                               </td>
-                              <td className="body2 border-b border-slate-300 py-4 pl-4 text-left">
+                              <td className="body2 border-b border-slate-300 p-4 text-left">
                                 {DateTime.fromISO(
                                   edge.node.endTime
                                 ).toLocaleString(DateTime.TIME_SIMPLE)}
                               </td>
-                              <td className="body2 border-b border-slate-300 py-4 pl-4 text-left">
+                              <td className="body2 border-b border-slate-300 p-4 text-left">
                                 {edge.node.volunteerSlotAvailableCount ??
                                   'Unlimited'}
                               </td>
-                              <td className="border-b border-slate-300 py-4 pl-4 text-center">
-                                <Button size="sm" label="Apply" disabled />
+                              <td className="border-b border-slate-300 p-4 text-center">
+                                {attendingSessionsIdArr.includes(
+                                  edge.node.id
+                                ) ? (
+                                  <Button size="sm" label="Applied" disabled />
+                                ) : (
+                                  <Button size="sm" label="Apply" />
+                                )}
                               </td>
                             </tr>
                           ))}

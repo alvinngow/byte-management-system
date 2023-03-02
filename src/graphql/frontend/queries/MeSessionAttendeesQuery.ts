@@ -41,6 +41,7 @@ export const Query = gql`
             id
             indicatedAttendance
             actualAttendance
+            sessionId
             session {
               startDate
               endDate
