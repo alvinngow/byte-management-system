@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+import { UserSortKey } from '../../../../gen/graphql/operations';
 import {
   UserConnection,
   UserFiltering,
@@ -12,11 +13,16 @@ export interface Data {
 export interface Variables {
   after?: string;
   filter?: UserFiltering;
+  sortKey?: UserSortKey;
 }
 
 export const Query = gql`
-  query UsersQuery($after: String, $filter: UserFiltering) {
-    users(first: 10, after: $after, filter: $filter) {
+  query UsersQuery(
+    $after: String
+    $filter: UserFiltering
+    $sortKey: UserSortKey
+  ) {
+    users(first: 10, after: $after, filter: $filter, sortKey: $sortKey) {
       edges {
         node {
           id

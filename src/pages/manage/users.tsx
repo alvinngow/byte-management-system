@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import { UserSortKey } from '../../../gen/graphql/operations';
 import { UserFiltering, UserRole } from '../../../gen/graphql/resolvers';
 import DotsMoreOptions from '../../components/DotsMoreOptions';
 import IconButton from '../../components/IconButton';
@@ -35,6 +36,8 @@ const userTypeMap = {
 const UsersPage: NextPage = function (props) {
   const [searchTerm, setSearchTerm] = useState('');
   const [volunteerFilter, setVolunteerFilter] = useState<UserRole | string>('');
+  const [sortKey, setSortKey] = useState<UserSortKey | undefined>(undefined);
+  const [sortDirection, setSortDirection] = useState(false);
 
   const debouncedSearchTerm = useDebounce(searchTerm);
   const { me, loading: meLoading } = useCurrentUser();
@@ -46,8 +49,10 @@ const UsersPage: NextPage = function (props) {
     }
     return {
       filter,
+      sortKey,
+      reverse: sortDirection,
     };
-  }, [debouncedSearchTerm, volunteerFilter]);
+  }, [debouncedSearchTerm, volunteerFilter, sortKey, sortDirection]);
 
   const { data, loading, refetch, fetchMore } = useQuery<
     UsersQuery.Data,
@@ -68,7 +73,7 @@ const UsersPage: NextPage = function (props) {
 
   useEffect(() => {
     refetch();
-  }, [debouncedSearchTerm, volunteerFilter, refetch]);
+  }, [debouncedSearchTerm, volunteerFilter, refetch, sortKey]);
 
   React.useEffect(() => {
     if (me == null) {
@@ -182,7 +187,12 @@ const UsersPage: NextPage = function (props) {
                       <p>User Name</p>
                       <IconButton
                         HeroIcon={() => (
-                          <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
+                          <ArrowsUpDownIcon
+                            className="ml-1 mb-1"
+                            onClick={() => {
+                              setSortKey(UserSortKey.FirstName);
+                            }}
+                          ></ArrowsUpDownIcon>
                         )}
                       />
                     </div>
@@ -192,7 +202,12 @@ const UsersPage: NextPage = function (props) {
                       <p>Contact Number</p>
                       <IconButton
                         HeroIcon={() => (
-                          <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
+                          <ArrowsUpDownIcon
+                            className="ml-1 mb-1"
+                            onClick={() => {
+                              setSortKey(UserSortKey.ContactNumber);
+                            }}
+                          ></ArrowsUpDownIcon>
                         )}
                       />
                     </div>
@@ -202,7 +217,12 @@ const UsersPage: NextPage = function (props) {
                       <p>School/Work</p>
                       <IconButton
                         HeroIcon={() => (
-                          <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
+                          <ArrowsUpDownIcon
+                            className="ml-1 mb-1"
+                            onClick={() => {
+                              setSortKey(UserSortKey.School);
+                            }}
+                          ></ArrowsUpDownIcon>
                         )}
                       />
                     </div>
@@ -212,7 +232,12 @@ const UsersPage: NextPage = function (props) {
                       User Type
                       <IconButton
                         HeroIcon={() => (
-                          <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
+                          <ArrowsUpDownIcon
+                            className="ml-1 mb-1"
+                            onClick={() => {
+                              setSortKey(UserSortKey.UserType);
+                            }}
+                          ></ArrowsUpDownIcon>
                         )}
                       />
                     </div>

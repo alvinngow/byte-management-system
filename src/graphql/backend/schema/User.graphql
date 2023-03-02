@@ -9,6 +9,13 @@ type User {
   role: UserRole
 }
 
+enum UserSortKey{
+  FIRST_NAME
+  CONTACT_NUMBER
+  SCHOOL
+  USER_TYPE
+}
+
 type CurrentUser {
   id: ID!
   email: EmailAddress!
