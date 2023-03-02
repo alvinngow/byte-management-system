@@ -12,6 +12,7 @@ export const Mutation = gql`
   mutation LoginMutation($input: LoginInput!) {
     accountLogin(input: $input) {
       id
+      role
     }
   }
 `;

@@ -2,8 +2,6 @@ import { useMutation, useQuery } from '@apollo/client';
 import {
   ArrowsUpDownIcon,
   ChevronDoubleDownIcon,
-  ChevronDownIcon,
-  EllipsisVerticalIcon,
 } from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
 import Image from 'next/image';
@@ -15,8 +13,6 @@ import { UserFiltering, UserRole } from '../../../gen/graphql/resolvers';
 import DotsMoreOptions from '../../components/DotsMoreOptions';
 import IconButton from '../../components/IconButton';
 import Input from '../../components/Input';
-import NavBar from '../../components/NavBar';
-import NavHeader from '../../components/NavHeader';
 import Select from '../../components/Select';
 import * as AccountRoleUpdate from '../../graphql/frontend/mutations/AccountRoleUpdateMutation';
 import * as AccountTerminate from '../../graphql/frontend/mutations/AccountTerminateMutation';

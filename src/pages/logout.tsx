@@ -20,6 +20,8 @@ const LogoutPage: NextPage = function () {
           clientMutationId: uuidv4(),
         },
       },
+    }).then(() => {
+      router.reload();
     });
 
     router.replace('/');

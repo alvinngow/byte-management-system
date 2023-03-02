@@ -1,11 +1,10 @@
 import { useMutation } from '@apollo/client';
 import { NextPage } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 
+import { CurrentUser, UserRole } from '../../gen/graphql/operations';
 import Button from '../components/Button';
 import ByteLogoIcon from '../components/icons/ByteLogoIcon';
 import Input from '../components/Input';
@@ -28,23 +27,28 @@ const LoginPage: NextPage = function (props) {
 
   const router = useRouter();
 
-  const [login] = useMutation<LoginMutation.Data, LoginMutation.Variables>(
-    LoginMutation.Mutation
-  );
+  const [login] = useMutation<
+    LoginMutation.Data & { accountLogin: CurrentUser },
+    LoginMutation.Variables
+  >(LoginMutation.Mutation);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (input) => {
     try {
       await login({
         variables: {
           input: {
             clientMutationId: uuidv4(),
-            email: data.email,
-            password: data.password,
+            email: input.email,
+            password: input.password,
           },
         },
+      }).then((response) => {
+        if (response.data?.accountLogin.role === UserRole.User) {
+          router.push('/discover-courses');
+        } else {
+          router.push('/manage/users');
+        }
       });
-
-      await router.push('/discover-courses');
     } catch (e) {
       setError('password', {
         type: 'server',
