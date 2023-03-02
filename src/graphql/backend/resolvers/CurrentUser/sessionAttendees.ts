@@ -1,11 +1,14 @@
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
+import { DateTime } from 'luxon';
 
 import {
   CurrentUserResolvers,
+  SessionAttendeeDateFiltering,
   SessionAttendeeSortKey,
 } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 import { Prisma } from '.prisma/client';
+
 import SessionAttendeeWhereInput = Prisma.SessionAttendeeWhereInput;
 import SessionAttendeeOrderByWithRelationInput = Prisma.SessionAttendeeOrderByWithRelationInput;
 import Enumerable = Prisma.Enumerable;
@@ -59,11 +62,32 @@ export const CurrentUser_sessionAttendeesResolver: CurrentUserResolvers['session
           ],
         };
       }
+
       if (filter.indicatedAttendance != null) {
         where.indicatedAttendance = filter.indicatedAttendance;
       }
+
       if (filter.actualAttendance != null) {
         where.actualAttendance = filter.actualAttendance;
+      }
+
+      switch (filter.date) {
+        case SessionAttendeeDateFiltering.Upcoming: {
+          where.session = {
+            startDate: {
+              gte: DateTime.now().toJSDate(),
+            },
+          };
+          break;
+        }
+        case SessionAttendeeDateFiltering.Past: {
+          where.session = {
+            endDate: {
+              lt: DateTime.now().toJSDate(),
+            },
+          };
+          break;
+        }
       }
     }
 
