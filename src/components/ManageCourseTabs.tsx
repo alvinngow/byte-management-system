@@ -85,6 +85,8 @@ const ManageCourseTabs: React.FC<ManageCourseTabsProps> = function (props) {
                 tabID="course_information"
                 onClick={() => setActiveTab('course_information')}
                 href={`./${courseId}`}
+                nofill
+                textClass="pl-2.5"
               />
               <Tab
                 id="sessions"
@@ -98,6 +100,8 @@ const ManageCourseTabs: React.FC<ManageCourseTabsProps> = function (props) {
                     ? () => setActiveTab('sessions')
                     : () => setModalState(true)
                 }
+                nofill
+                textClass="pl-2.5"
               />
             </>
           )}

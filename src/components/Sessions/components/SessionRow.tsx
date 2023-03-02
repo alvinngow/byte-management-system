@@ -40,7 +40,7 @@ const SessionRow: React.FC<Props> = function (props) {
         })}
       >
         {session.volunteerSlotCount || (
-          <Chip scheme={'disabled'}>Unlimited</Chip>
+          <Chip scheme={'disabled'} number="Unlimited"></Chip>
         )}
       </td>
       <td className="py-4 pl-4 text-left xsm:pr-4 md:pr-0">

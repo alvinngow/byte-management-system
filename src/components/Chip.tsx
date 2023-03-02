@@ -17,6 +17,8 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   text?: string;
   number?: string;
   Icon?: ComponentType<React.SVGProps<SVGSVGElement>>;
+  iconSize?: number;
+  override?: boolean;
 }
 
 const Chip: React.ForwardRefRenderFunction<
@@ -27,9 +29,11 @@ const Chip: React.ForwardRefRenderFunction<
     children,
     className,
     scheme,
-    text = 'placeholder',
-    number = '0',
+    text,
+    number,
     Icon,
+    iconSize = 4,
+    override,
     ...otherProps
   } = props;
 
@@ -39,18 +43,19 @@ const Chip: React.ForwardRefRenderFunction<
         <div
           ref={ref}
           className={classNames(
-            'd-flex inline-flex items-center rounded-2xl py-2 px-2.5 text-sm font-light',
+            'd-flex inline-flex items-center overflow-hidden rounded-2xl py-2 px-2.5 text-sm font-light',
             SchemeClassMap[scheme]
           )}
           {...otherProps}
         >
-          {Icon && <Icon className="h-4 w-4" />}
+          {Icon && <Icon className={`h-${iconSize} w-${iconSize}`} />}
           {number}
+          {override && <span>{children}</span>}
         </div>
         <div
           className={classNames('ml-2 inline max-w-[50%] truncate align-[3px]')}
         >
-          {children}
+          {!override && <span>{children}</span>}
           {text}
         </div>
       </div>

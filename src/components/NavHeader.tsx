@@ -40,12 +40,6 @@ interface Links {
   icon?: ComponentType<React.SVGProps<SVGSVGElement>>;
 }
 const NavLinks: Links[] = [
-  { href: '/manage/users', label: 'Users', icon: UserGroupIcon },
-  {
-    href: '/manage/course',
-    label: 'Courses',
-    icon: AcademicCapIcon,
-  },
   {
     href: '/discover-courses',
     label: 'Discover Courses',
@@ -55,6 +49,12 @@ const NavLinks: Links[] = [
     href: '/my-sessions',
     label: 'My Sessions',
     icon: CalendarDaysIcon,
+  },
+  { href: '/manage/users', label: 'Manage Users', icon: UserGroupIcon },
+  {
+    href: '/manage/course',
+    label: 'Manage Courses',
+    icon: AcademicCapIcon,
   },
 ];
 interface Props extends React.PropsWithChildren {}

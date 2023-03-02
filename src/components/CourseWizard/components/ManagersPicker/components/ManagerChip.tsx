@@ -1,8 +1,7 @@
-import { useApolloClient, useFragment_experimental } from '@apollo/client';
-import { XMarkIcon } from '@heroicons/react/24/solid';
+import { useFragment_experimental } from '@apollo/client';
+import { UserCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 
-import { User } from '../../../../../../gen/graphql/resolvers';
 import * as UserFragment from '../../../../../graphql/frontend/fragments/UserFragment';
 import Chip from '../../../../Chip';
 
@@ -27,20 +26,25 @@ const ManagerChip: React.FC<Props> = function (props) {
   return (
     <Chip
       scheme="disabled"
-      className="max-w-fit cursor-pointer"
-      onClick={(e) => {
-        e.stopPropagation();
-        onManagerRemoved(userId);
-      }}
+      className="w-full cursor-pointer"
+      Icon={UserCircleIcon}
+      iconSize={5}
+      override
     >
       {user != null ? (
         <>
-          <span className="mr-2 h-6 w-6 rounded-full bg-gray-400"></span>
-
-          <span>
+          <span className="pl-1 align-top">
             {user.firstName} {user.lastName}
           </span>
-          <XMarkIcon className="h-4 w-4" />
+          <span className="float-right pt-[2px] pl-1">
+            <XMarkIcon
+              onClick={(e) => {
+                e.stopPropagation();
+                onManagerRemoved(userId);
+              }}
+              className="h-4 w-4"
+            />
+          </span>
         </>
       ) : (
         <span>Unknown user</span>
