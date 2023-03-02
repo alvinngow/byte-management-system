@@ -18,10 +18,11 @@ import CourseWizardMachine, {
 
 interface Props {
   courseId?: string;
+  onSuccess?: () => void;
 }
 
 const CourseWizard: React.FC<Props> = function (props) {
-  const { courseId } = props;
+  const { courseId, onSuccess } = props;
 
   const apolloClient = useApolloClient();
 
@@ -186,6 +187,17 @@ const CourseWizard: React.FC<Props> = function (props) {
     [courseAdd, courseEdit, courseId]
   );
 
+  const success = React.useCallback<
+    (
+      context: CourseWizardContext
+    ) => Promise<CourseWizardServiceMap['success']['data']>
+  >(
+    async (context) => {
+      onSuccess?.();
+    },
+    [onSuccess]
+  );
+
   const [state, send] = useMachine(CourseWizardMachine, {
     context: {
       courseId,
@@ -196,6 +208,7 @@ const CourseWizard: React.FC<Props> = function (props) {
       loadCourse,
       uploadFile,
       submit,
+      success,
     },
   });
 

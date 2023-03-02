@@ -139,6 +139,9 @@ export interface CourseWizardServiceMap extends ServiceMap {
   submit: {
     data: CourseAddPayload | CourseEditPayload;
   };
+  success: {
+    data: void;
+  };
 }
 
 const CourseWizardMachine = createMachine<
@@ -342,6 +345,9 @@ const CourseWizardMachine = createMachine<
     },
     submitted: {
       type: 'final',
+      invoke: {
+        src: 'success',
+      },
     },
     error: {
       on: {

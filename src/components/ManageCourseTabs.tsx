@@ -28,6 +28,8 @@ const ManageCourseTabs: React.FC<ManageCourseTabsProps> = function (props) {
   const [modalState, setModalState] = React.useState(false);
   const [navTab, setNavTab] = React.useState(true);
 
+  const router = useRouter();
+
   const handleClick = () => {
     if (navTab) {
       setNavTab(false);
@@ -35,6 +37,11 @@ const ManageCourseTabs: React.FC<ManageCourseTabsProps> = function (props) {
       setNavTab(true);
     }
   };
+
+  const handleWizardSuccess = React.useCallback(() => {
+    router.push('/manage/course');
+  }, [router]);
+
   return (
     <>
       <div className="mb-3 w-full items-center justify-between xsm:inline-flex md:block">
@@ -97,7 +104,10 @@ const ManageCourseTabs: React.FC<ManageCourseTabsProps> = function (props) {
         </div>
         <div className="lg:basis-1/2">
           {activeTab === 'course_information' && (
-            <CourseWizard courseId={courseId ? `${courseId}` : undefined} />
+            <CourseWizard
+              courseId={courseId ? `${courseId}` : undefined}
+              onSuccess={handleWizardSuccess}
+            />
           )}
           {activeTab === 'sessions' && courseId != undefined && (
             <Sessions courseId={`${courseId}`} />
