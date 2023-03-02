@@ -56,39 +56,45 @@ export const coursesResolver: QueryResolvers['courses'] = async (
     }
   }
 
-  const where: CourseWithSessionInfoWhereInput = {
-    OR:
-      filter?.searchTerm != null
-        ? [
-            {
-              name: {
-                contains: filter.searchTerm,
-                mode: 'insensitive',
-              },
+  let where: CourseWithSessionInfoWhereInput | undefined = undefined;
+
+  if (filter != null) {
+    where = {};
+
+    if (filter.searchTerm != null) {
+      where.OR = [
+        {
+          name: {
+            contains: filter.searchTerm,
+            mode: 'insensitive',
+          },
+        },
+        {
+          defaultLocation: {
+            name: {
+              contains: filter.searchTerm,
+              mode: 'insensitive',
             },
-            {
-              defaultLocation: {
-                name: {
-                  contains: filter.searchTerm,
-                  mode: 'insensitive',
-                },
-              },
-            },
-          ]
-        : undefined,
-    firstSessionStartDate:
-      filter?.date == CourseDateFiltering.Upcoming
-        ? {
-            gte: DateTime.now().toJSDate(),
-          }
-        : undefined,
-    lastSessionEndDate:
-      filter?.date == CourseDateFiltering.Past
-        ? {
-            lt: DateTime.now().toJSDate(),
-          }
-        : undefined,
-  };
+          },
+        },
+      ];
+    }
+
+    switch (filter.date) {
+      case CourseDateFiltering.Upcoming: {
+        where.firstSessionStartDate = {
+          gte: DateTime.now().toJSDate(),
+        };
+        break;
+      }
+      case CourseDateFiltering.Past: {
+        where.lastSessionEndDate = {
+          lt: DateTime.now().toJSDate(),
+        };
+        break;
+      }
+    }
+  }
 
   const result = await findManyCursorConnection(
     (args) =>
