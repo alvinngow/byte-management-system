@@ -82,13 +82,13 @@ export const coursesResolver: QueryResolvers['courses'] = async (
 
     switch (filter.date) {
       case CourseDateFiltering.Upcoming: {
-        where.firstSessionStartDate = {
+        where.lastSessionEndDate = {
           gte: DateTime.now().toJSDate(),
         };
         break;
       }
       case CourseDateFiltering.Past: {
-        where.lastSessionEndDate = {
+        where.firstSessionStartDate = {
           lt: DateTime.now().toJSDate(),
         };
         break;
