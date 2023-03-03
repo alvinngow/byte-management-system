@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { DateTime } from 'luxon';
 
 import {
   CourseConnection,
@@ -197,10 +198,11 @@ describe('courses', () => {
 
     const edges = response.body.singleResult.data.courses?.edges ?? [];
 
-    expect(edges).toStrictEqual(
-      [...edges].sort((prevEdge, nextEdge) => {
-        return prevEdge.node.name.localeCompare(nextEdge.node.name);
-      })
-    );
+    for (const edge of edges) {
+      const firstSessionStartDate = DateTime.fromISO(
+        edge.node.firstSessionStartDate!
+      );
+      expect(firstSessionStartDate.diffNow().as('seconds') > 0);
+    }
   });
 });

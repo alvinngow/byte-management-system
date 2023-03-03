@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { DateTime } from 'luxon';
 
+import { Attendance } from '../../gen/graphql/operations';
 import {
   readCourseManagers,
   readCourses,
@@ -165,7 +166,9 @@ export default async function bimsSeed() {
       where: {
         id: course.id,
       },
-      update: {},
+      update: {
+        name: course.name,
+      },
       create: {
         id: course.id,
         name: course.name,
@@ -191,7 +194,9 @@ export default async function bimsSeed() {
       where: {
         id: session.id,
       },
-      update: {},
+      update: {
+        name: session.name,
+      },
       create: {
         id: session.id,
         name: session.name,
@@ -205,7 +210,7 @@ export default async function bimsSeed() {
         startDate: DateTime.fromSQL(session.startDate).toJSDate(),
         endDate: DateTime.fromSQL(session.endDate).toJSDate(),
         courseId: session.courseId,
-        overrideLocationId: session.overrideLocationId,
+        overrideLocationId: session.overrideLocationId || undefined,
       },
     });
 
@@ -234,7 +239,7 @@ export default async function bimsSeed() {
   }
 
   /**
-   * Session Attendees
+   * Session Attendees (pre-seeded)
    */
   const sessionAttendees = await readSessionAttendees();
 
@@ -254,8 +259,67 @@ export default async function bimsSeed() {
         sessionId: sessionsIdMap[sessionAttendee.session_name],
         userId: usersIdMap[sessionAttendee.user_email],
         indicatedAttendance: sessionAttendee.indicatedAttendance,
-        actualAttendance: sessionAttendee.actualAttendance,
+        actualAttendance: sessionAttendee.actualAttendance || null,
       },
     });
+  }
+
+  const sessionIdsNotToGenerate = new Set([
+    '55df8193-1890-4ffd-a8a4-a69573c96a97',
+    'b114df9b-e00f-4abd-bfd4-1fa18947f4f2',
+    'a8544556-3e02-4d02-90be-c228a1ff7762',
+    '97fee544-baf2-4ffb-95c8-e3cf5e59b944',
+    '1bd97075-86e4-4137-b751-52b270e5caa9',
+    '1d974d08-5d7e-477a-8023-531f41225043',
+  ]);
+
+  /**
+   * Session Attendees (generated)
+   */
+  const userIds = Object.values(usersIdMap);
+  const indicatedAttendances = [Attendance.Attend, Attendance.Absent];
+  const actualAttendances = [Attendance.Attend, Attendance.Absent, null];
+
+  for (const sessionId of Object.values(sessionsIdMap)) {
+    if (sessionIdsNotToGenerate.has(sessionId)) {
+      continue;
+    }
+
+    await prisma.sessionAttendee.deleteMany({
+      where: {
+        sessionId,
+      },
+    });
+
+    for (let i = 0; i < userIds.length - 2; i++) {
+      const userId = userIds[Math.floor(Math.random() * userIds.length)];
+      const indicatedAttendance =
+        indicatedAttendances[
+          Math.floor(Math.random() * indicatedAttendances.length)
+        ];
+      const actualAttendance =
+        actualAttendances[Math.floor(Math.random() * actualAttendances.length)];
+
+      try {
+        await prisma.sessionAttendee.upsert({
+          where: {
+            sessionId_userId: {
+              sessionId,
+              userId,
+            },
+          },
+          update: {
+            indicatedAttendance,
+            actualAttendance,
+          },
+          create: {
+            sessionId,
+            userId,
+            indicatedAttendance,
+            actualAttendance,
+          },
+        });
+      } catch (e) {}
+    }
   }
 }
