@@ -6,4 +6,5 @@ type Query {
   locations(first: Int = 10, after: String): LocationConnection!
   courses(first: Int = 10, after: String, filter: CourseFiltering, sortKey: CourseSortKey, reverse: Boolean): CourseConnection!
   course(id: ID!): Course
+  session(id: ID!): Session
 }

@@ -21,7 +21,7 @@ export interface Variables {
 
 export const Query = gql`
   query MeSessionAttendeesQuery(
-    $first: Int = 10
+    $first: Int = 50
     $after: String
     $sortKey: SessionAttendeeSortKey
     $filter: SessionAttendeeFiltering

@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import styles from '../styles/component_styles/Button.module.css';
+import styles from '../../../styles/component_styles/Button.module.css';
 
 interface PropType extends React.HTMLAttributes<HTMLButtonElement> {
   size?: 'xs' | 'sm' | 'md' | 'lg';
@@ -29,7 +29,6 @@ const Button: React.FC<React.PropsWithChildren<PropType>> = (props) => {
     variant = 'primary',
     type = 'button',
     disabled = false,
-    label,
     style,
     className,
     children,
@@ -39,6 +38,7 @@ const Button: React.FC<React.PropsWithChildren<PropType>> = (props) => {
   } = props;
 
   const router = useRouter();
+  const [label, setLabel] = React.useState('Applied');
 
   /**
    * If href is provided, automatically route to that page
@@ -67,6 +67,12 @@ const Button: React.FC<React.PropsWithChildren<PropType>> = (props) => {
       style={style}
       className={`${classes} ${className}`}
       onClick={handleClick}
+      onMouseEnter={() => {
+        setLabel('Unapply');
+      }}
+      onMouseLeave={() => {
+        setLabel('Applied');
+      }}
       {...otherProps}
     >
       {children}

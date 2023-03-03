@@ -43,7 +43,7 @@
 }
 
 .secondary {
-  background:none;
+  background: none;
   transition: 0.5s;
   @apply text-slate-500 border-[1.5px] border-gray-300;
 }
@@ -60,4 +60,8 @@
 
 .danger:hover:enabled {
   @apply bg-red-400;
+}
+
+.disabled {
+  @apply bg-gray-200 text-gray-400;
 }

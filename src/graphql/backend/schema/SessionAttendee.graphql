@@ -57,7 +57,7 @@ input SessionAttendReportInput {
     clientMutationId: String
     sessionId: ID!
     userId: ID!
-    actualAttendance: Attendance!
+    actualAttendance: Attendance
 }
 
 type SessionAttendReportPayload {

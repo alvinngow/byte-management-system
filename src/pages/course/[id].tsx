@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   ArrowsUpDownIcon,
   ChevronLeftIcon,
@@ -10,8 +10,10 @@ import { DateTime } from 'luxon';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
+  Attendance,
   SessionAttendeeEdge,
   SessionSortKey,
 } from '../../../gen/graphql/resolvers';
@@ -19,9 +21,12 @@ import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';
 import SEO from '../../components/SEO';
 import Spinner from '../../components/Spinner';
+import * as SessionAttend from '../../graphql/frontend/mutations/SessionAttendMutation';
+import * as SessionDelete from '../../graphql/frontend/mutations/SessionDeleteMutation';
 import * as CourseSessionsQuery from '../../graphql/frontend/queries/CourseSessionsQuery';
 import * as MeSessionAttendeesQuery from '../../graphql/frontend/queries/MeSessionAttendeesQuery';
 import AppLayout from '../../layouts/AppLayout';
+import SessionButton from './components/SessionButton';
 
 const first = 10;
 
@@ -48,6 +53,11 @@ const CourseDetailPage: React.FC = function () {
     skip: id == null,
   });
 
+  const [updateSession] = useMutation<
+    SessionAttend.Data,
+    SessionAttend.Variables
+  >(SessionAttend.Mutation);
+
   const meCourseInfo = useQuery<
     MeSessionAttendeesQuery.Data,
     MeSessionAttendeesQuery.Variables
@@ -56,7 +66,9 @@ const CourseDetailPage: React.FC = function () {
   const attendingSessionsIdArr: string[] = [];
 
   for (const session of attendingSessions) {
-    attendingSessionsIdArr.push(session.node.sessionId);
+    if (session.node.indicatedAttendance == 'attend') {
+      attendingSessionsIdArr.push(session.node.sessionId);
+    }
   }
 
   const course = data?.course ?? null;
@@ -67,6 +79,21 @@ const CourseDetailPage: React.FC = function () {
     fetchMore({
       variables: {
         after: endCursor,
+      },
+    });
+  };
+
+  const updateIndicatedAttendance = (
+    indicatedAttendance: Attendance,
+    sessionId: string
+  ) => {
+    updateSession({
+      variables: {
+        input: {
+          clientMutationId: uuidv4(),
+          indicatedAttendance,
+          sessionId,
+        },
       },
     });
   };
@@ -244,9 +271,27 @@ const CourseDetailPage: React.FC = function () {
                                 {attendingSessionsIdArr.includes(
                                   edge.node.id
                                 ) ? (
-                                  <Button size="sm" label="Applied" disabled />
+                                  <SessionButton
+                                    size="sm"
+                                    variant="secondary"
+                                    onClick={() => {
+                                      updateIndicatedAttendance(
+                                        Attendance.Absent,
+                                        edge.node.id
+                                      );
+                                    }}
+                                  />
                                 ) : (
-                                  <Button size="sm" label="Apply" />
+                                  <Button
+                                    size="sm"
+                                    label="Apply"
+                                    onClick={() => {
+                                      updateIndicatedAttendance(
+                                        Attendance.Attend,
+                                        edge.node.id
+                                      );
+                                    }}
+                                  />
                                 )}
                               </td>
                             </tr>
