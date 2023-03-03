@@ -44,6 +44,19 @@ export const Query = gql`
         name
         address
       }
+
+      courseManagers {
+        edges {
+          node {
+            user {
+              id
+              firstName
+              lastName
+              email
+            }
+          }
+        }
+      }
       sessions(
         first: $first
         after: $after

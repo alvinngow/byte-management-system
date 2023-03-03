@@ -113,7 +113,7 @@ const CourseDetailPage: React.FC = function () {
   return (
     <>
       <AppLayout>
-        <h6 className="mx-auto my-9 w-[80vw] text-gray-600">
+        <h6 className="text-secondary mx-auto my-9 w-[80vw]">
           <BackButton
             href="/discover-courses"
             text="Back to Discover Classes"
@@ -160,9 +160,9 @@ const CourseDetailPage: React.FC = function () {
                       {
                         'border-b-2 border-brand-main text-brand-main':
                           linkSelected === 'Apply',
-                        'text-gray-500': linkSelected !== 'Apply',
+                        'text-secondary': linkSelected !== 'Apply',
                       },
-                      'cursor-default px-4 py-5 group-hover:text-brand-main'
+                      'cursor-default px-4 py-3 group-hover:text-brand-main'
                     )}
                   >
                     Apply
@@ -173,9 +173,9 @@ const CourseDetailPage: React.FC = function () {
                       {
                         'border-b-2 border-brand-main text-brand-main':
                           linkSelected === 'Description',
-                        'text-gray-500': linkSelected !== 'Description',
+                        'text-secondary': linkSelected !== 'Description',
                       },
-                      'cursor-default px-4 py-5 group-hover:text-brand-main'
+                      'cursor-default px-4 py-3 group-hover:text-brand-main'
                     )}
                   >
                     Description
@@ -186,118 +186,163 @@ const CourseDetailPage: React.FC = function () {
                       {
                         'border-b-2 border-brand-main text-brand-main':
                           linkSelected === 'Volunteer Instructions',
-                        'text-gray-500':
+                        'text-secondary':
                           linkSelected !== 'Volunteer Instructions',
                       },
-                      'cursor-default px-4 py-5 group-hover:text-brand-main'
+                      'cursor-default px-4 py-3 group-hover:text-brand-main'
                     )}
                   >
                     Instructions for volunteers
                   </div>
                 </div>
-                <div className="border-full mb-12 block w-full rounded-lg border bg-white shadow-lg">
+                <div className="border-full mb-5 block w-full rounded-lg border bg-white shadow-lg">
                   {linkSelected === 'Apply' && (
                     <>
-                      <table className="md:w-full">
-                        <thead>
-                          <tr>
-                            <th className="border-b border-slate-300 py-4 pl-4 text-left">
-                              <div className="subtitle2 flex items-center gap-1.5">
-                                <span>Date</span>
-                                <span>
-                                  <ArrowsUpDownIcon
-                                    className={classNames(
-                                      'h-5 w-5 hover:cursor-pointer hover:text-gray-600',
-                                      {
-                                        'text-gray-400': !reverse,
-                                        'text-gray-800': reverse,
-                                      }
-                                    )}
-                                    onClick={() => {
-                                      setReverse((prevState) => !prevState);
-                                    }}
-                                  />
-                                </span>
-                              </div>
-                            </th>
-                            <th className="border-b border-slate-300 py-4 pl-4 text-left">
-                              <div className="subtitle2 flex items-center gap-1.5">
-                                <span>Start Time</span>
-                              </div>
-                            </th>
-                            <th className="border-b border-slate-300 py-4 pl-4 text-left">
-                              <div className="subtitle2 flex items-center gap-1.5">
-                                <span>End Time</span>
-                              </div>
-                            </th>
-                            <th className="border-b border-slate-300 py-4 pl-4 text-left">
-                              <div className="subtitle2 flex items-center gap-1.5">
-                                <span>Available Slots</span>
-                              </div>
-                            </th>
-                            <th className="border-b border-slate-300 py-4 pl-4 text-left" />
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {course.sessions.edges.length === 0 && (
+                      <div className="snap-x overflow-x-auto scroll-smooth">
+                        <table className="sm: w-full md:w-full lg:w-full">
+                          <thead>
                             <tr>
-                              <span className="px-3 text-gray-400">
-                                There are no sessions for this course.
-                              </span>
+                              <th className="whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
+                                <div className="subtitle2 flex items-center gap-1.5">
+                                  <span>Date</span>
+                                  <span>
+                                    <ArrowsUpDownIcon
+                                      className={classNames(
+                                        'hover:text-secondary h-5 w-5 hover:cursor-pointer',
+                                        {
+                                          'text-gray-400': !reverse,
+                                          'text-gray-800': reverse,
+                                        }
+                                      )}
+                                      onClick={() => {
+                                        setReverse((prevState) => !prevState);
+                                      }}
+                                    />
+                                  </span>
+                                </div>
+                              </th>
+                              <th className="whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
+                                <div className="subtitle2 flex items-center gap-1.5">
+                                  <span>Start Time</span>
+                                  <span>
+                                    <ArrowsUpDownIcon
+                                      className={classNames(
+                                        'hover:text-secondary h-5 w-5 hover:cursor-pointer',
+                                        {
+                                          'text-gray-400': !reverse,
+                                          'text-gray-800': reverse,
+                                        }
+                                      )}
+                                      onClick={() => {
+                                        setReverse((prevState) => !prevState);
+                                      }}
+                                    />
+                                  </span>
+                                </div>
+                              </th>
+                              <th className="whitespace-nowrap border-b  border-slate-300 py-4 pl-4 text-left">
+                                <div className="subtitle2 flex items-center gap-1.5">
+                                  <span>End Time</span>
+                                  <span>
+                                    <ArrowsUpDownIcon
+                                      className={classNames(
+                                        'hover:text-secondary h-5 w-5 hover:cursor-pointer',
+                                        {
+                                          'text-gray-400': !reverse,
+                                          'text-gray-800': reverse,
+                                        }
+                                      )}
+                                      onClick={() => {
+                                        setReverse((prevState) => !prevState);
+                                      }}
+                                    />
+                                  </span>
+                                </div>
+                              </th>
+                              <th className="whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
+                                <div className="subtitle2 flex items-center gap-1.5">
+                                  <span>Available Slots</span>
+                                  <span>
+                                    <ArrowsUpDownIcon
+                                      className={classNames(
+                                        'hover:text-secondary h-5 w-5 hover:cursor-pointer',
+                                        {
+                                          'text-gray-400': !reverse,
+                                          'text-gray-800': reverse,
+                                        }
+                                      )}
+                                      onClick={() => {
+                                        setReverse((prevState) => !prevState);
+                                      }}
+                                    />
+                                  </span>
+                                </div>
+                              </th>
+                              <th className="border-b border-slate-300 py-4 pl-4 text-left" />
                             </tr>
-                          )}
-                          {course.sessions.edges.map((edge) => (
-                            <tr key={edge.cursor}>
-                              <td className="body2 border-b border-slate-300 p-4 text-left">
-                                {DateTime.fromISO(
-                                  edge.node.startDate
-                                ).toLocaleString(DateTime.DATE_MED)}
-                              </td>
-                              <td className="body2 border-b border-slate-300 p-4 text-left">
-                                {DateTime.fromISO(
-                                  edge.node.startTime
-                                ).toLocaleString(DateTime.TIME_SIMPLE)}
-                              </td>
-                              <td className="body2 border-b border-slate-300 p-4 text-left">
-                                {DateTime.fromISO(
-                                  edge.node.endTime
-                                ).toLocaleString(DateTime.TIME_SIMPLE)}
-                              </td>
-                              <td className="body2 border-b border-slate-300 p-4 text-left">
-                                {edge.node.volunteerSlotAvailableCount ??
-                                  'Unlimited'}
-                              </td>
-                              <td className="border-b border-slate-300 p-4 text-center">
-                                {attendingSessionsIdArr.includes(
-                                  edge.node.id
-                                ) ? (
-                                  <SessionButton
-                                    size="sm"
-                                    variant="secondary"
-                                    onClick={() => {
-                                      updateIndicatedAttendance(
-                                        Attendance.Absent,
-                                        edge.node.id
-                                      );
-                                    }}
-                                  />
-                                ) : (
-                                  <Button
-                                    size="sm"
-                                    label="Apply"
-                                    onClick={() => {
-                                      updateIndicatedAttendance(
-                                        Attendance.Attend,
-                                        edge.node.id
-                                      );
-                                    }}
-                                  />
-                                )}
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody>
+                            {course.sessions.edges.length === 0 && (
+                              <tr>
+                                {/* <p className="px-3 text-secondary">
+                                  There are no sessions for this course.
+                                </p> */}
+                              </tr>
+                            )}
+                            {course.sessions.edges.map((edge) => (
+                              <tr key={edge.cursor}>
+                                <td className="body2 whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
+                                  {DateTime.fromISO(
+                                    edge.node.startDate
+                                  ).toLocaleString(DateTime.DATE_MED)}
+                                </td>
+                                <td className="body2 whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
+                                  {DateTime.fromISO(
+                                    edge.node.startTime
+                                  ).toLocaleString(DateTime.TIME_SIMPLE)}
+                                </td>
+                                <td className="body2 whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
+                                  {DateTime.fromISO(
+                                    edge.node.endTime
+                                  ).toLocaleString(DateTime.TIME_SIMPLE)}
+                                </td>
+                                <td className="body2 whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
+                                  {edge.node.volunteerSlotAvailableCount ??
+                                    'Unlimited'}
+                                </td>
+                                <td className="whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-center">
+                                  {attendingSessionsIdArr.includes(
+                                    edge.node.id
+                                  ) ? (
+                                    <SessionButton
+                                      className="mr-3"
+                                      size="sm"
+                                      variant="secondary"
+                                      onClick={() => {
+                                        updateIndicatedAttendance(
+                                          Attendance.Absent,
+                                          edge.node.id
+                                        );
+                                      }}
+                                    />
+                                  ) : (
+                                    <Button
+                                      size="sm"
+                                      label="Apply"
+                                      onClick={() => {
+                                        updateIndicatedAttendance(
+                                          Attendance.Attend,
+                                          edge.node.id
+                                        );
+                                      }}
+                                    />
+                                  )}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                       <div className="flex items-center justify-end gap-6 px-3">
                         {course.sessions.pageInfo.hasNextPage && (
                           <button onClick={handleLoadMoreClick}>
@@ -312,32 +357,55 @@ const CourseDetailPage: React.FC = function () {
                       </div>
                     </>
                   )}
-                  {linkSelected === 'Description' && (
-                    <p>{course.description}</p>
-                  )}
-                  {linkSelected === 'Volunteer Instructions' && (
-                    <p>
-                      {course.descriptionPrivate || (
-                        <span className="px-3 text-gray-400">
-                          There are no instructions available.
-                        </span>
-                      )}
-                    </p>
-                  )}
                 </div>
+                {linkSelected === 'Description' && (
+                  <p className="px-4">{course.description}</p>
+                )}
+                {linkSelected === 'Volunteer Instructions' && (
+                  <p className="px-4">
+                    {course.descriptionPrivate ||
+                      'There are no instructions available.'}
+                  </p>
+                )}
               </div>
             </div>
             <div className="w-4/12">
-              <div className="border-full mb-12 block w-full rounded-lg border bg-white p-10 shadow-lg">
-                <div className="subtitle1 mb-2.5 uppercase">location</div>
-                <div className="mb-2.5">{course.defaultLocation?.name}</div>
+              <div className="border-full mb-5 block w-full rounded-lg border bg-white p-10 shadow-lg">
+                <div className="subtitle1 mb-2.5">LOCATION</div>
+                <div className="mb-2.5">INSERT MAP HERE</div>
                 <div className="body1 mb-8">
                   {course.defaultLocation?.address}
                 </div>
-                <div className="subtitle1 mb-2.5 uppercase">
-                  contact details
+                <div className="subtitle1 mb-2.5">TRAINER(S) DETAILS</div>
+                <div className="body1">
+                  <p className="items-center">
+                    <div className="grid grid-cols-[100px_1fr]">
+                      <div className="flex">
+                        <Image
+                          className="h-10 w-10 rounded-full"
+                          src="/favicon.ico"
+                          alt="Rounded avatar"
+                          width={100}
+                          height={100}
+                        />
+                        <div className="ml-4 text-left">
+                          {course.courseManagers.edges.map((edge) => (
+                            <div key={edge.cursor}>
+                              <span>
+                                {edge.node.user.firstName}{' '}
+                                {edge.node.user.lastName}
+                              </span>
+                              <br />
+                              <span className="" key={edge.cursor}>
+                                {edge.node.user.email}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </p>
                 </div>
-                <div className="body1">N/A</div>
               </div>
             </div>
           </div>
