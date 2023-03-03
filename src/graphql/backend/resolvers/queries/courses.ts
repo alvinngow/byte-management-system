@@ -6,7 +6,6 @@ import {
   QueryResolvers,
 } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
-import requireAuthenticated from '../util/requireAuthenticated';
 import { Prisma } from '.prisma/client';
 import CourseWhereInput = Prisma.CourseWhereInput;
 import { DateTime } from 'luxon';
@@ -19,8 +18,6 @@ export const coursesResolver: QueryResolvers['courses'] = async (
   context,
   info
 ) => {
-  await requireAuthenticated(context);
-
   const { first, after, filter, sortKey, reverse } = args;
 
   let orderBy: CourseWithSessionInfoOrderByWithRelationInput | undefined =

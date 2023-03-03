@@ -1,6 +1,5 @@
 import { LocationResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
-import requireAuthenticated from '../util/requireAuthenticated';
 
 export const Location_clusterResolver: LocationResolvers['cluster'] = async (
   root,
@@ -8,8 +7,6 @@ export const Location_clusterResolver: LocationResolvers['cluster'] = async (
   context,
   info
 ) => {
-  await requireAuthenticated(context);
-
   if (root.locationClusterId == null) {
     return null;
   }

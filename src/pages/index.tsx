@@ -9,28 +9,27 @@ import React from 'react';
 
 import { CourseDateFiltering } from '../../gen/graphql/operations';
 import Button from '../../src/components/Button';
-import CustomLink from '../../src/components/Link';
 import Card from '../components/Card';
 import ByteLogo from '../components/icons/ByteLogo';
 import FacebookLogo from '../components/icons/FacebookLogo';
 import InstagramLogo from '../components/icons/InstagramLogo';
 import NavLink from '../components/NavLink';
-import * as CoursesQuery from '../graphql/frontend/queries/CoursesQuery';
+import * as LandingCoursesQuery from '../graphql/frontend/queries/LandingCoursesQuery';
 
 const LandingPage: NextPage = function () {
   const today = new Date();
   const year = today.getFullYear();
 
-  const { data } = useQuery<CoursesQuery.Data, CoursesQuery.Variables>(
-    CoursesQuery.Query,
-    {
-      variables: {
-        filter: {
-          date: CourseDateFiltering.Upcoming,
-        },
+  const { data } = useQuery<
+    LandingCoursesQuery.Data,
+    LandingCoursesQuery.Variables
+  >(LandingCoursesQuery.Query, {
+    variables: {
+      filter: {
+        date: CourseDateFiltering.Upcoming,
       },
-    }
-  );
+    },
+  });
 
   const courses = data?.courses.edges;
 
@@ -123,9 +122,6 @@ const LandingPage: NextPage = function () {
                         {DateTime.fromISO(
                           `${course.node.firstSessionStartDate}`
                         ).toLocaleString(DateTime.DATE_MED)}
-                      </p>
-                      <p className="col-span-1 text-right text-xs text-gray-400">
-                        {course.node.sessions.totalCount} sessions
                       </p>
                     </div>
                   </div>
