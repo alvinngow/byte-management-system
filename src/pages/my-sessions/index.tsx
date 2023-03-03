@@ -15,6 +15,7 @@ import ActualAttendancePill from '../../components/ActualAttendancePill';
 import IconButton from '../../components/IconButton';
 import Input from '../../components/Input';
 import MySessionsOverview from '../../components/MySessionsOverview';
+import NavLink from '../../components/NavLink';
 import Select from '../../components/Select';
 import SEO from '../../components/SEO';
 import Spinner from '../../components/Spinner';
@@ -78,7 +79,9 @@ const TabUpcoming: React.FC<TabUpcomingProps> = function (props) {
               )}
             </td>
             <td className="whitespace-nowrap px-6 py-4 text-blue-500 underline">
-              {edge.node.session.course.name}
+              <NavLink href={`/course/${edge.node.session.course.id}`}>
+                {edge.node.session.course.name}
+              </NavLink>
             </td>
             <td className="whitespace-nowrap px-6 py-4 text-black">
               {edge.node.session.location?.name}
@@ -167,7 +170,9 @@ const TabHistory: React.FC<TabHistoryProps> = function (props) {
               )}
             </td>
             <td className="whitespace-nowrap px-6 py-4 text-blue-500 underline">
-              {edge.node.session.course.name}
+              <NavLink href={`/course/${edge.node.session.course.id}`}>
+                {edge.node.session.course.name}
+              </NavLink>
             </td>
             <td className="whitespace-nowrap px-6 py-4 text-black">
               {edge.node.session.location?.name}
