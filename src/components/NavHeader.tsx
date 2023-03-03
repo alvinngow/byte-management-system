@@ -77,7 +77,7 @@ const NavHeader: React.FC<Props> = function (props) {
     if (meData?.me?.role !== UserRole.User) {
       return NavLinks;
     } else {
-      return NavLinks.slice(2, 4);
+      return NavLinks.slice(0, 2);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [meData]);
