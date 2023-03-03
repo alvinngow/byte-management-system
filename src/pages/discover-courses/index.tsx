@@ -20,13 +20,16 @@ const DiscoverCoursesPage: NextPage = function () {
   const [searchTerm, setSearchTerm] = React.useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
+  const [filterForRegion, setFilterForRegion] = React.useState();
+
   const variables = React.useMemo<CoursesQuery.Variables>(() => {
     const filter: CourseFiltering = { searchTerm: debouncedSearchTerm };
     filter.date = CourseDateFiltering.Upcoming;
+    filter.locationClusterID = filterForRegion;
     return {
       filter,
     };
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, filterForRegion]);
 
   const { data } = useQuery<CoursesQuery.Data, CoursesQuery.Variables>(
     CoursesQuery.Query,
@@ -42,39 +45,40 @@ const DiscoverCoursesPage: NextPage = function () {
       return [
         {
           label: 'All',
-          value: 'All',
         },
         {
           label: 'North-East',
-          value: 'North-East',
+          value: '7f3db8a4-fc16-4071-bd69-88ee60b92ace',
         },
         {
           label: 'North',
-          value: 'North',
+          value: 'd8bf4880-75d8-4443-869a-d9d96c3a5149',
         },
         {
           label: 'Central',
-          value: 'Central',
+          value: '9faa98be-d88f-4a15-8c04-b369033e2510',
         },
         {
           label: 'West',
-          value: 'West',
+          value: '7883dc25-e051-4a1d-a2e9-7fb03d10c516',
         },
         {
           label: 'East',
-          value: 'East',
+          value: 'd025b461-db3c-4b39-89e9-971d37ef8baa',
         },
       ];
     }, []);
 
-    const [value, setValue] = React.useState('All');
+    const value = filterForRegion;
 
     return (
       <Select
         items={items}
         value={value}
         label="Region"
-        onChange={setValue}
+        onChange={(value) => {
+          setFilterForRegion(value);
+        }}
         className="w-full"
       />
     );

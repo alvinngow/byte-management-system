@@ -47,6 +47,7 @@ Represents filtering options for Course
 input CourseFiltering {
     date: CourseDateFiltering
     searchTerm: String
+    locationClusterID: ID
 }
 
 input CourseAddInput {

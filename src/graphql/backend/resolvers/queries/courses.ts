@@ -80,6 +80,14 @@ export const coursesResolver: QueryResolvers['courses'] = async (
       ];
     }
 
+    if (filter.locationClusterID != null) {
+      where.defaultLocation = {
+        locationCluster: {
+          id: filter.locationClusterID,
+        },
+      };
+    }
+
     switch (filter.date) {
       case CourseDateFiltering.Upcoming: {
         where.lastSessionEndDate = {
