@@ -1,22 +1,28 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   ArrowsUpDownIcon,
   ChevronDoubleDownIcon,
   PencilIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
+import { DateTime } from 'luxon';
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
+  Course,
   CourseDateFiltering,
   CourseSortKey,
 } from '../../../../gen/graphql/resolvers';
 import Button from '../../../components/Button';
 import IconButton from '../../../components/IconButton';
 import Input from '../../../components/Input';
+import Modal from '../../../components/Modal';
 import NavLink from '../../../components/NavLink';
 import Select, { SelectItem } from '../../../components/Select';
 import SEO from '../../../components/SEO';
+import Spinner from '../../../components/Spinner';
+import * as CourseDelete from '../../../graphql/frontend/mutations/CourseDeleteMutation';
 import * as CoursesQuery from '../../../graphql/frontend/queries/CoursesQuery';
 import useDebounce from '../../../hooks/useDebounce';
 import AppLayout from '../../../layouts/AppLayout';
@@ -38,7 +44,7 @@ const CoursePage: React.FC = function () {
     CourseDateFiltering.Upcoming | CourseDateFiltering.Past
   >();
 
-  const { data, fetchMore, refetch } = useQuery<
+  const { data, fetchMore } = useQuery<
     CoursesQuery.Data,
     CoursesQuery.Variables
   >(CoursesQuery.Query, {
@@ -53,6 +59,17 @@ const CoursePage: React.FC = function () {
   });
 
   const courses = data?.courses.edges;
+
+  const [
+    courseDelete,
+    { loading: courseDeleteLoading, error: courseDeleteError },
+  ] = useMutation<CourseDelete.Data, CourseDelete.Variables>(
+    CourseDelete.Mutation
+  );
+
+  const [courseToDelete, setCourseToDelete] = React.useState<Course | null>(
+    null
+  );
 
   const handleLoadMoreClick = React.useCallback<React.MouseEventHandler>(() => {
     fetchMore({
@@ -225,12 +242,21 @@ const CoursePage: React.FC = function () {
                         >
                           <IconButton
                             HeroIcon={() => (
-                              <PencilIcon className="ml-1 mb-1" />
+                              <PencilIcon className="ml-1 mb-1" title="Edit" />
                             )}
                           />
                         </NavLink>
                         <IconButton
-                          HeroIcon={() => <TrashIcon className="ml-1 mb-1" />}
+                          HeroIcon={() => (
+                            <TrashIcon
+                              style={{ color: '#6B7280' }}
+                              className="h-6 w-6 hover:cursor-pointer"
+                              title="Delete"
+                              onClick={() => {
+                                setCourseToDelete(course.node);
+                              }}
+                            />
+                          )}
                         />
                       </div>
                     </td>
@@ -252,6 +278,63 @@ const CoursePage: React.FC = function () {
             </div>
           )}
         </div>
+        {courseToDelete != null && (
+          <Modal
+            onClose={() => {
+              setCourseToDelete(null);
+            }}
+          >
+            <div className="flex flex-col gap-y-2 px-3 pb-2">
+              <h3>{courseToDelete.name}</h3>
+              Are you sure you want to delete this course?
+              {courseDeleteLoading ? (
+                <Spinner />
+              ) : (
+                <div className="mt-4 flex items-center justify-end gap-x-2">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => {
+                      setCourseToDelete(null);
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => {
+                      courseDelete({
+                        variables: {
+                          input: {
+                            clientMutationId: uuidv4(),
+                            courseId: courseToDelete.id,
+                          },
+                        },
+                        update: (cache, mutationResult) => {
+                          const normalizedId = cache.identify({
+                            id: courseToDelete.id,
+                            __typename: 'Course',
+                          });
+                          cache.evict({ id: normalizedId });
+                          cache.gc();
+                        },
+                      });
+                      setCourseToDelete(null);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              )}
+              {courseDeleteError != null && (
+                <span className="text-red-400">
+                  {courseDeleteError.message}
+                </span>
+              )}
+            </div>
+          </Modal>
+        )}
       </div>
     </AppLayout>
   );

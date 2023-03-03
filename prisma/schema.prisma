@@ -119,7 +119,7 @@ model Session {
   startDate          DateTime          @db.Date
   endDate            DateTime          @db.Date
   courseId           String            @db.Uuid
-  course             Course            @relation(fields: [courseId], references: [id])
+  course             Course            @relation(fields: [courseId], references: [id], onDelete: Cascade)
   overrideLocationId String?           @db.Uuid
   overrideLocation   Location?         @relation(fields: [overrideLocationId], references: [id])
   sessionAttendees   SessionAttendee[]
