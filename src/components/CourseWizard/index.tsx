@@ -9,8 +9,10 @@ import * as CourseAdd from '../../graphql/frontend/mutations/CourseAddMutation';
 import * as CourseEdit from '../../graphql/frontend/mutations/CourseEditMutation';
 import * as FileUpload from '../../graphql/frontend/mutations/FileUploadMutation';
 import * as CourseQuery from '../../graphql/frontend/queries/CourseQuery';
+import * as LocationClusters from '../../graphql/frontend/queries/LocationClustersQuery';
 import ClassInfo from './components/ClassInfo';
 import createDefaultEmptyCourse from './helpers/createDefaultEmptyCourse';
+import detectRegionFromPostalCode from './helpers/detectRegionFromPostalCode';
 import CourseWizardMachine, {
   CourseWizardContext,
   CourseWizardServiceMap,
@@ -74,6 +76,49 @@ const CourseWizard: React.FC<Props> = function (props) {
       }),
     };
   }, [apolloClient, courseId]);
+
+  const detectLocationCluster = React.useCallback<
+    (
+      context: CourseWizardContext
+    ) => Promise<CourseWizardServiceMap['detectLocationCluster']['data']>
+  >(
+    async (context) => {
+      const postalCodeMatches = context.locationData?.address!.match(/(\d{6})/);
+
+      if (postalCodeMatches == null) {
+        return {
+          clusterId: null,
+        };
+      }
+
+      const detectedRegion = detectRegionFromPostalCode(postalCodeMatches[1]);
+      if (detectedRegion == null) {
+        return {
+          clusterId: null,
+        };
+      }
+
+      const result = await apolloClient.query<
+        LocationClusters.Data,
+        LocationClusters.Variables
+      >({
+        query: LocationClusters.Query,
+      });
+
+      for (const edge of result.data.locationClusters.edges) {
+        if (edge.node.name.toLowerCase() === detectedRegion.toLowerCase()) {
+          return {
+            clusterId: edge.node.id,
+          };
+        }
+      }
+
+      return {
+        clusterId: null,
+      };
+    },
+    [apolloClient]
+  );
 
   const uploadFile = React.useCallback<
     (
@@ -206,6 +251,7 @@ const CourseWizard: React.FC<Props> = function (props) {
     },
     services: {
       loadCourse,
+      detectLocationCluster,
       uploadFile,
       submit,
       success,
