@@ -126,7 +126,9 @@ const SessionRow: React.FC<Props> = function (props) {
                           <td>
                             <AttendanceButton
                               className="h-[40px] justify-center"
-                              userAttendanceState={edge.node.actualAttendance}
+                              userAttendanceState={
+                                edge.node.actualAttendance ?? null
+                              }
                               updateAttendance={(e) =>
                                 handleAttendanceChange(e, edge.node.user.id)
                               }
