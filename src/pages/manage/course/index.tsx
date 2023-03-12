@@ -44,7 +44,7 @@ const CoursePage: React.FC = function () {
     CourseDateFiltering.Upcoming | CourseDateFiltering.Past
   >();
 
-  const { data, fetchMore } = useQuery<
+  const { data, loading, fetchMore } = useQuery<
     CoursesQuery.Data,
     CoursesQuery.Variables
   >(CoursesQuery.Query, {
@@ -267,14 +267,18 @@ const CoursePage: React.FC = function () {
           </div>
           {data?.courses?.pageInfo?.hasNextPage && (
             <div className="px-3 py-3 text-center">
-              <button className="inline-flex">
-                <IconButton
-                  HeroIcon={() => (
-                    <ChevronDoubleDownIcon className="h-5 w-5 text-brand-main" />
-                  )}
-                />
-                <p className="body1 text-brand-main">Load More</p>
-              </button>
+              {loading ? (
+                <Spinner />
+              ) : (
+                <button className="inline-flex" onClick={handleLoadMoreClick}>
+                  <IconButton
+                    HeroIcon={() => (
+                      <ChevronDoubleDownIcon className="h-5 w-5 text-brand-main" />
+                    )}
+                  />
+                  <p className="body1 text-brand-main">Load More</p>
+                </button>
+              )}
             </div>
           )}
         </div>

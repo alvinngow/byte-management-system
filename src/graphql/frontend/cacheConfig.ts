@@ -6,6 +6,31 @@ export const cacheConfig: InMemoryCacheConfig = {
     Query: {
       fields: {
         users: relayStylePagination(),
+        courses: relayStylePagination(),
+        schools: relayStylePagination(),
+        locations: relayStylePagination(),
+        locationClusters: relayStylePagination(),
+      },
+    },
+    Course: {
+      fields: {
+        courseManagers: relayStylePagination(),
+        sessions: relayStylePagination(),
+      },
+    },
+    Session: {
+      fields: {
+        attendees: relayStylePagination(),
+      },
+    },
+    CurrentUser: {
+      fields: {
+        sessionAttendees: relayStylePagination(),
+      },
+    },
+    LocationCluster: {
+      fields: {
+        locations: relayStylePagination(),
       },
     },
   },

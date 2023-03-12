@@ -9,6 +9,7 @@ import {
   Location,
   User,
 } from '../../../../gen/graphql/resolvers';
+import isMachineContextSubmittable from '../helpers/isMachineContextSubmittable';
 
 export type CourseData = Pick<
   Course,
@@ -106,7 +107,7 @@ export type CourseWizardTypeState =
       context: CourseWizardContext;
     }
   | {
-      value: 'idle' | { idle: 'course_details' };
+      value: 'idle' | { idle: 'editing' | 'submittable' | 'autoDetectCluster' };
       context: CourseWizardContext & {
         courseData: CourseData;
       };
@@ -175,12 +176,12 @@ const CourseWizardMachine = createMachine<
               event.data.defaultLocation ?? null,
             locationUnit: (context, event) =>
               event.data.defaultLocation?.unit ?? '',
-            managerUserIds: (context, event) =>
-              new Set(
-                event.data.courseManagers?.edges?.map(
-                  (edge: CourseManagerEdge) => edge.node.user.id
-                ) ?? []
-              ),
+            managerUserIds: (context, event) => {
+              const edges: CourseManagerEdge[] =
+                event.data.courseManagers?.edges ?? [];
+
+              return new Set(edges.map((edge) => edge.node.user.id));
+            },
           }),
         },
         onError: {
@@ -192,120 +193,23 @@ const CourseWizardMachine = createMachine<
       },
     },
     idle: {
-      initial: 'idle',
+      initial: 'editing',
       states: {
-        idle: {
+        editing: {
+          always: {
+            target: 'submittable',
+            cond: (context) => isMachineContextSubmittable(context),
+          },
+        },
+        submittable: {
+          always: {
+            target: 'editing',
+            cond: (context) => !isMachineContextSubmittable(context),
+          },
           on: {
-            SET_COURSE_NAME: {
-              actions: assign({
-                courseData: (context, event) => {
-                  return {
-                    ...context.courseData,
-                    name: event.value,
-                  };
-                },
-              }),
-            },
-            SET_COURSE_SUBTITLE: {
-              actions: assign({
-                courseData: (context, event) => {
-                  return {
-                    ...context.courseData,
-                    subtitle: event.value || null, // Fallback empty string to become null
-                  };
-                },
-              }),
-            },
-            SET_COURSE_DESCRIPTION: {
-              actions: assign({
-                courseData: (context, event) => {
-                  return {
-                    ...context.courseData,
-                    description: event.value,
-                  };
-                },
-              }),
-            },
-            SET_COURSE_DESCRIPTION_PRIVATE: {
-              actions: assign({
-                courseData: (context, event) => {
-                  return {
-                    ...context.courseData,
-                    descriptionPrivate: event.value,
-                  };
-                },
-              }),
-            },
-            COURSE_SET_DEFAULT_START_TIME: {
-              actions: assign({
-                courseData: (context, event) => {
-                  return {
-                    ...context.courseData,
-                    defaultStartTime: event.time,
-                  };
-                },
-              }),
-            },
-            COURSE_SET_DEFAULT_END_TIME: {
-              actions: assign({
-                courseData: (context, event) => {
-                  return {
-                    ...context.courseData,
-                    defaultEndTime: event.time,
-                  };
-                },
-              }),
-            },
-            SET_LOCATION_TEXT: {
-              actions: assign({
-                locationText: (context, event) => event.value,
-              }),
-            },
-            SET_LOCATION_UNIT: {
-              actions: assign({
-                locationUnit: (context, event) => event.unit,
-              }),
-            },
-            SET_LOCATION_CLUSTER_ID: {
-              actions: assign({
-                locationClusterId: (context, event) => event.locationClusterId,
-              }),
-            },
-            SET_COURSE_LOCATION: {
-              target: 'autoDetectCluster',
-              actions: assign({
-                locationData: (context, event) => event.locationData,
-                locationText: (context, event) =>
-                  event.locationData?.address ?? '',
-              }),
-            },
-            ADD_COURSE_MANAGER: {
-              actions: assign({
-                managerUserIds: (context, event) => {
-                  const updatedSet = new Set(context.managerUserIds);
-                  updatedSet.add(event.userId);
-
-                  return updatedSet;
-                },
-              }),
-            },
-            REMOVE_COURSE_MANAGER: {
-              actions: assign({
-                managerUserIds: (context, event) => {
-                  const updatedSet = new Set(context.managerUserIds);
-                  updatedSet.delete(event.userId);
-
-                  return updatedSet;
-                },
-              }),
-            },
-            COVER_SET_FILE: {
-              actions: assign({
-                file: (context, event) => event.file,
-              }),
-            },
             SUBMIT: {
               target: '#CourseWizardMachine.submitting',
+              cond: (context) => isMachineContextSubmittable(context),
             },
           },
         },
@@ -313,7 +217,7 @@ const CourseWizardMachine = createMachine<
           invoke: {
             src: 'detectLocationCluster',
             onDone: {
-              target: 'idle',
+              target: 'submittable',
               actions: assign({
                 locationClusterId: (context, event) =>
                   event.data?.clusterId ?? null,
@@ -321,9 +225,118 @@ const CourseWizardMachine = createMachine<
             },
             onError: {
               // Ignore errors with auto detection
-              target: 'idle',
+              target: 'submittable',
             },
           },
+        },
+      },
+      on: {
+        SET_COURSE_NAME: {
+          actions: assign({
+            courseData: (context, event) => {
+              return {
+                ...context.courseData,
+                name: event.value,
+              };
+            },
+          }),
+        },
+        SET_COURSE_SUBTITLE: {
+          actions: assign({
+            courseData: (context, event) => {
+              return {
+                ...context.courseData,
+                subtitle: event.value || null, // Fallback empty string to become null
+              };
+            },
+          }),
+        },
+        SET_COURSE_DESCRIPTION: {
+          actions: assign({
+            courseData: (context, event) => {
+              return {
+                ...context.courseData,
+                description: event.value,
+              };
+            },
+          }),
+        },
+        SET_COURSE_DESCRIPTION_PRIVATE: {
+          actions: assign({
+            courseData: (context, event) => {
+              return {
+                ...context.courseData,
+                descriptionPrivate: event.value,
+              };
+            },
+          }),
+        },
+        COURSE_SET_DEFAULT_START_TIME: {
+          actions: assign({
+            courseData: (context, event) => {
+              return {
+                ...context.courseData,
+                defaultStartTime: event.time,
+              };
+            },
+          }),
+        },
+        COURSE_SET_DEFAULT_END_TIME: {
+          actions: assign({
+            courseData: (context, event) => {
+              return {
+                ...context.courseData,
+                defaultEndTime: event.time,
+              };
+            },
+          }),
+        },
+        SET_LOCATION_TEXT: {
+          actions: assign({
+            locationText: (context, event) => event.value,
+          }),
+        },
+        SET_LOCATION_UNIT: {
+          actions: assign({
+            locationUnit: (context, event) => event.unit,
+          }),
+        },
+        SET_LOCATION_CLUSTER_ID: {
+          actions: assign({
+            locationClusterId: (context, event) => event.locationClusterId,
+          }),
+        },
+        SET_COURSE_LOCATION: {
+          target: '.autoDetectCluster',
+          actions: assign({
+            locationData: (context, event) => event.locationData,
+            locationText: (context, event) => event.locationData?.address ?? '',
+          }),
+        },
+        ADD_COURSE_MANAGER: {
+          actions: assign({
+            managerUserIds: (context, event) => {
+              const updatedSet = new Set(context.managerUserIds);
+              updatedSet.add(event.userId);
+
+              return updatedSet;
+            },
+          }),
+        },
+        REMOVE_COURSE_MANAGER: {
+          actions: assign({
+            managerUserIds: (context, event) => {
+              const updatedSet = new Set(context.managerUserIds);
+              updatedSet.delete(event.userId);
+
+              return updatedSet;
+            },
+          }),
+        },
+        COVER_SET_FILE: {
+          actions: assign({
+            file: (context, event) => event.file,
+          }),
         },
       },
     },

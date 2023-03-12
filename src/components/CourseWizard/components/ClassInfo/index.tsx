@@ -348,6 +348,9 @@ const ClassInfo: React.FC<Props> = function (props) {
                 send({ type: 'SUBMIT' });
               }}
               label={courseId != undefined ? 'Update' : 'Next'}
+              variant={
+                state.matches({ idle: 'submittable' }) ? 'primary' : 'disabled'
+              }
             />
             <Button size="sm" variant="secondary" href={'./'} label="Cancel" />
           </div>
