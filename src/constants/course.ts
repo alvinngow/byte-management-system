@@ -1,0 +1,2 @@
+export const COURSE_TITLE_MAX_LENGTH = 50;
+export const COURSE_SUBTITLE_MAX_LENGTH = 200;

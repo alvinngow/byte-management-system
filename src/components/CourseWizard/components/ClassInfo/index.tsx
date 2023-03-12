@@ -9,6 +9,10 @@ import {
   TypegenDisabled,
 } from 'xstate';
 
+import {
+  COURSE_SUBTITLE_MAX_LENGTH,
+  COURSE_TITLE_MAX_LENGTH,
+} from '../../../../constants/course';
 import Button from '../../../Button';
 import Input from '../../../Input';
 import NavLink from '../../../NavLink';
@@ -228,12 +232,14 @@ const ClassInfo: React.FC<Props> = function (props) {
             onChange={handleTitleChange}
             label="Title"
             placeholder="Live Coding Masterclass: Beginners To Advanced"
+            maxLength={COURSE_TITLE_MAX_LENGTH}
           />
           <Input
             value={state.context.courseData.subtitle ?? undefined}
             label="Subtitle"
             onChange={handleSubtitleChange}
             placeholder="Short description about the course"
+            maxLength={COURSE_SUBTITLE_MAX_LENGTH}
           />
           <Input
             value={state.context.courseData.description}

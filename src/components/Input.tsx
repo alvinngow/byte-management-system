@@ -57,7 +57,6 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, PropType> =
         <label className={`${styles['input-label']}`} htmlFor={id}>
           {label}
         </label>
-
         <div className={`${styles['input-box']} relative flex w-full`}>
           {prefixElement && (
             <span className={`${styles['input']} focus:outline-none`}>
@@ -98,6 +97,16 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, PropType> =
           </div>
         </div>
         <div className={messageClass}>{message}</div>
+        {props.maxLength != null && (
+          <div
+            className={classNames('text-right text-xs text-gray-400', {
+              'text-gray-900': inputState.length === props.maxLength,
+            })}
+          >
+            {inputState.length !== 0 ? `${inputState.length}/` : 'max. '}
+            {props.maxLength} characters
+          </div>
+        )}
       </div>
     );
   };
