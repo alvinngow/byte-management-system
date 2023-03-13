@@ -40,14 +40,19 @@ describe('courseDelete', () => {
         defaultStartTime: DateTime.fromISO('19:00:00').toJSDate(),
         defaultEndTime: DateTime.fromISO('21:30:00').toJSDate(),
         defaultLocation: {
-          create: {
-            name: 'ABC Building',
-            description: '',
-            address: '123 ABC Street',
-            lat: 1,
-            lng: 103,
-            unit: '#01-01',
-            locationClusterId: 'd8bf4880-75d8-4443-869a-d9d96c3a5149',
+          connectOrCreate: {
+            where: {
+              name: 'ABC Building',
+            },
+            create: {
+              name: 'ABC Building',
+              description: '',
+              address: '123 ABC Street',
+              lat: 1,
+              lng: 103,
+              unit: '#01-01',
+              locationClusterId: 'd8bf4880-75d8-4443-869a-d9d96c3a5149',
+            },
           },
         },
       },

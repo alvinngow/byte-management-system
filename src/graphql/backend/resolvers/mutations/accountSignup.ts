@@ -41,6 +41,7 @@ export const accountSignupResolver: MutationResolvers['accountSignup'] = async (
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === 'P2002') {
+        console.error(e);
         throw new GraphQLError('Email already in use', {
           extensions: {
             code: 'BAD_REQUEST',

@@ -54,7 +54,7 @@ describe('accountTerminate', () => {
             mobileNo: '91234567',
             firstName: 'Test',
             lastName: 'User',
-            school: 'Test School',
+            school: `Test School-${uuidv4()}`,
             password: 'abcdef',
           },
         },

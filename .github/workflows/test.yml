@@ -54,7 +54,7 @@ jobs:
           AWS_S3_REGION: auto
           AWS_S3_ENDPOINT: http://localhost:9000
           AWS_S3_BUCKET: bims-files
-          NODE_ENV: "production"
+          NODE_ENV: "test"
       - name: Install Playwright Browsers
         run: yarn playwright install --with-deps
       - name: Run Playwright tests
@@ -65,7 +65,7 @@ jobs:
           AWS_S3_REGION: auto
           AWS_S3_ENDPOINT: http://localhost:9000
           AWS_S3_BUCKET: bims-files
-          NODE_ENV: "production"
+          NODE_ENV: "test"
           HOME: /root # workaround https://github.com/microsoft/playwright/issues/6500
       - uses: actions/upload-artifact@v3
         if: always()
