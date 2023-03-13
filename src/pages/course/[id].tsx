@@ -15,6 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   Attendance,
   SessionAttendeeEdge,
+  SessionDateFiltering,
   SessionSortKey,
 } from '../../../gen/graphql/resolvers';
 import BackButton from '../../components/BackButton';
@@ -49,6 +50,9 @@ const CourseDetailPage: React.FC = function () {
       reverse,
       sortKey: SessionSortKey.Start,
       first,
+      filter: {
+        date: SessionDateFiltering.Upcoming,
+      },
     },
     skip: id == null,
   });
