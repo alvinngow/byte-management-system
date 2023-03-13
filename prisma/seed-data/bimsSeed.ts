@@ -124,8 +124,16 @@ export default async function bimsSeed() {
       where: {
         id: location.id,
       },
-      update: location,
-      create: location,
+      update: {
+        ...location,
+        lat: parseFloat(location.lat),
+        lng: parseFloat(location.lng),
+      },
+      create: {
+        ...location,
+        lat: parseFloat(location.lat),
+        lng: parseFloat(location.lng),
+      },
     });
 
     locationsIdMap[createdLocation.name] = createdLocation.id;

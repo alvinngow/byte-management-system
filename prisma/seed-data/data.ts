@@ -55,6 +55,8 @@ interface BIMSSeedLocation {
   address: string;
   description: string;
   unit: string;
+  lat: string;
+  lng: string;
   locationClusterId: string;
 }
 
