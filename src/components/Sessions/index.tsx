@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
-import React from 'react';
+import React, { useEffect } from 'react';
 
+import { SessionDateFiltering } from '../../../gen/graphql/operations';
 import { Session } from '../../../gen/graphql/resolvers';
 import * as CourseSessions from '../../graphql/frontend/queries/CourseSessionsQuery';
 import Button from '../Button';
@@ -20,20 +21,30 @@ const Sessions: React.FC<Props> = function (props) {
   const { courseId } = props;
 
   const [showModal, setShowModal] = React.useState(false);
+  const [sessionDateFilter, setSessionDateFilter] = React.useState<
+    SessionDateFiltering | undefined
+  >(SessionDateFiltering.Upcoming);
   const [editModalSession, setEditModalSession] =
     React.useState<Session | null>(null);
 
   const [deleteModalSession, setDeleteModalSession] =
     React.useState<Session | null>(null);
 
-  const { data, loading, error } = useQuery<
+  const { data, loading, error, refetch } = useQuery<
     CourseSessions.Data,
     CourseSessions.Variables
   >(CourseSessions.Query, {
     variables: {
       id: courseId,
+      filter: {
+        date: sessionDateFilter,
+      },
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, [sessionDateFilter, refetch]);
 
   const sessionEdges = React.useMemo(
     () => data?.course?.sessions?.edges ?? [],
@@ -68,35 +79,37 @@ const Sessions: React.FC<Props> = function (props) {
           />
         )}
       </div>
-      {sessionEdges.length === 0 ? (
-        <div className="m-auto flex flex-col">
-          <div className="m-auto mt-10">
-            <SessionsEmptyStateIcon />
-          </div>
-          <p className="my-2.5 text-center">
-            This class doesn&rsquo;t have any time slots.
-          </p>
-          <p className="mb-5 text-center text-gray-400">
-            Add time slot(s) to this class by clicking on the top right button.
-          </p>
+      <div className="w-36 xsm:w-full md:w-auto">
+        <div className="relative md:w-1/2">
+          <Select
+            className="w-full"
+            items={[
+              { label: 'All', value: undefined },
+              {
+                label: 'Upcoming sessions',
+                value: SessionDateFiltering.Upcoming,
+              },
+              { label: 'Past sessions', value: SessionDateFiltering.Past },
+            ]}
+            label={'Show'}
+            value={sessionDateFilter}
+            onChange={function (value: SessionDateFiltering | undefined): void {
+              setSessionDateFilter(value);
+            }}
+          />
         </div>
-      ) : (
-        <div className="w-36 xsm:w-full md:w-auto">
-          <div className="relative md:w-1/2">
-            <Select
-              className="w-full"
-              items={[
-                { label: 'All', value: 'all' },
-                { label: 'Upcoming sessions', value: 'upcoming-sessions' },
-                { label: 'Past sessions', value: 'past-sessions' },
-              ]}
-              label={'Show'}
-              value={'upcoming-sessions'}
-              onChange={function (value: string): void {
-                throw new Error('Function not implemented.');
-              }}
-            />
+        {sessionEdges.length === 0 ? (
+          <div className="m-auto flex flex-col">
+            <div className="m-auto mt-10">
+              <SessionsEmptyStateIcon />
+            </div>
+            <p className="my-2.5 text-center">There are no time slots.</p>
+            <p className="mb-5 text-center text-gray-400">
+              Add time slot(s) to this class by clicking on the top right
+              button.
+            </p>
           </div>
+        ) : (
           <div className="snap-x overflow-x-auto scroll-smooth">
             <table className="my-5 w-full shadow-sm">
               <thead>
@@ -125,8 +138,8 @@ const Sessions: React.FC<Props> = function (props) {
               </tbody>
             </table>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
