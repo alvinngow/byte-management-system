@@ -1,29 +1,23 @@
 import { useMutation, useQuery } from '@apollo/client';
-import {
-  ArrowsUpDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from '@heroicons/react/24/outline';
-import { Session, SessionAttendee } from '@prisma/client';
+import { ArrowsUpDownIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
   Attendance,
-  SessionAttendeeEdge,
   SessionDateFiltering,
   SessionSortKey,
 } from '../../../gen/graphql/resolvers';
 import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';
+import RichTextEditor from '../../components/RichTextEditor';
 import SEO from '../../components/SEO';
 import Spinner from '../../components/Spinner';
 import * as SessionAttend from '../../graphql/frontend/mutations/SessionAttendMutation';
-import * as SessionDelete from '../../graphql/frontend/mutations/SessionDeleteMutation';
 import * as CourseSessionsQuery from '../../graphql/frontend/queries/CourseSessionsQuery';
 import * as MeSessionAttendeesQuery from '../../graphql/frontend/queries/MeSessionAttendeesQuery';
 import AppLayout from '../../layouts/AppLayout';
@@ -366,13 +360,23 @@ const CourseDetailPage: React.FC = function () {
                     )}
                   </div>
                   {linkSelected === 'Description' && (
-                    <p className="px-4">{course.description}</p>
+                    <RichTextEditor
+                      className="px-4"
+                      value={course.description}
+                      toolbarDisabled
+                      readonly
+                    />
                   )}
                   {linkSelected === 'Volunteer Instructions' && (
-                    <p className="px-4">
-                      {course.descriptionPrivate ||
-                        'There are no instructions available.'}
-                    </p>
+                    <RichTextEditor
+                      className="mb-4 px-4"
+                      value={
+                        course.descriptionPrivate ||
+                        'There are no instructions available.'
+                      }
+                      toolbarDisabled
+                      readonly
+                    />
                   )}
                 </div>
               </div>

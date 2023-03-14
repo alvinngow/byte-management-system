@@ -15,7 +15,7 @@ import {
 } from '../../../../constants/course';
 import Button from '../../../Button';
 import Input from '../../../Input';
-import NavLink from '../../../NavLink';
+import RichTextEditor from '../../../RichTextEditor';
 import Spinner from '../../../Spinner';
 import {
   CourseData,
@@ -79,25 +79,21 @@ const ClassInfo: React.FC<Props> = function (props) {
     [send]
   );
 
-  const handleDescriptionChange = React.useCallback<
-    React.ChangeEventHandler<HTMLInputElement>
-  >(
-    (e) => {
+  const handleDescriptionChange = React.useCallback(
+    (value: string) => {
       send({
         type: 'SET_COURSE_DESCRIPTION',
-        value: e.target.value,
+        value,
       });
     },
     [send]
   );
 
-  const handleDescriptionPrivateChange = React.useCallback<
-    React.ChangeEventHandler<HTMLInputElement>
-  >(
-    (e) => {
+  const handleDescriptionPrivateChange = React.useCallback(
+    (value: string) => {
       send({
         type: 'SET_COURSE_DESCRIPTION_PRIVATE',
-        value: e.target.value,
+        value,
       });
     },
     [send]
@@ -241,13 +237,13 @@ const ClassInfo: React.FC<Props> = function (props) {
             placeholder="Short description about the course"
             maxLength={COURSE_SUBTITLE_MAX_LENGTH}
           />
-          <Input
+          <RichTextEditor
             value={state.context.courseData.description}
             label="Description"
             onChange={handleDescriptionChange}
             placeholder="Course modules, class size, attire required etc."
           />
-          <Input
+          <RichTextEditor
             value={state.context.courseData.descriptionPrivate ?? undefined}
             label="Instructions (only visible to volunteers)"
             onChange={handleDescriptionPrivateChange}
