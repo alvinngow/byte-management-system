@@ -51,6 +51,15 @@ export const coursesResolver: QueryResolvers['courses'] = async (
       };
       break;
     }
+    case CourseSortKey.Region: {
+      orderBy = {
+        defaultLocation: {
+          locationCluster: {
+            name: reverse ? 'desc' : 'asc',
+          },
+        },
+      };
+    }
   }
 
   let where: CourseWithSessionInfoWhereInput | undefined = undefined;

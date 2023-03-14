@@ -6,7 +6,7 @@ import {
   TrashIcon,
 } from '@heroicons/react/24/outline';
 import { DateTime } from 'luxon';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -36,6 +36,7 @@ const CoursePage: React.FC = function () {
     | CourseSortKey.LocationName
     | CourseSortKey.StartDate
     | CourseSortKey.EndDate
+    | CourseSortKey.Region
   >();
 
   const [sortDirection, setSortDirection] = React.useState(false);
@@ -44,7 +45,7 @@ const CoursePage: React.FC = function () {
     CourseDateFiltering.Upcoming | CourseDateFiltering.Past
   >();
 
-  const { data, loading, fetchMore } = useQuery<
+  const { data, loading, fetchMore, refetch } = useQuery<
     CoursesQuery.Data,
     CoursesQuery.Variables
   >(CoursesQuery.Query, {
@@ -57,6 +58,10 @@ const CoursePage: React.FC = function () {
       reverse: sortDirection,
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, [sortKeyForCourse, sortDirection, refetch]);
 
   const courses = data?.courses.edges;
 
@@ -172,7 +177,20 @@ const CoursePage: React.FC = function () {
                     </div>
                   </th>
                   <th className="border-b border-slate-300 py-4 pl-4 text-left">
-                    Region
+                    <div className=" flex items-center gap-1.5">
+                      <span>Region</span>
+                      <IconButton
+                        HeroIcon={() => (
+                          <ArrowsUpDownIcon
+                            className="ml-1 mb-1"
+                            onClick={() => {
+                              setSortKeyForCourse(CourseSortKey.Region);
+                              setSortDirection((prevState) => !prevState);
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
                   </th>
                   <th className="border-b border-slate-300 py-4 pl-4 text-left">
                     Trainer(s)
