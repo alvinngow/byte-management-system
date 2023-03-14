@@ -89,13 +89,13 @@ const DiscoverCoursesPage: NextPage = function () {
       <SEO title="Discover Courses" />
 
       <div>
-        <div className="mx-5 mt-6 mb-11 w-auto sm:mx-auto sm:w-[80vw]">
+        <div className="mt-6 mb-11">
           <h3 className="mb-11 mt-6">
             <span className="font-bold">Discover Causes (Courses)</span>
             &nbsp;That Matter To You
           </h3>
         </div>
-        <div className="mx-5 mb-8 flex w-auto flex-col gap-4 sm:mx-auto sm:w-[80vw] md:flex-row">
+        <div className="mb-8 flex flex-col gap-4 md:flex-row">
           <form className="basis-3/4">
             <label htmlFor="default-search"></label>
             <Input
@@ -112,7 +112,7 @@ const DiscoverCoursesPage: NextPage = function () {
           </div>
         </div>
 
-        <div className="mx-5 mb-8 grid w-auto grid-cols-2 gap-4 sm:mx-auto sm:w-[80vw] md:shrink-0 md:grid-cols-3 lg:grid-cols-4">
+        <div className="mb-8 grid grid-cols-2 gap-4 md:shrink-0 md:grid-cols-3 lg:grid-cols-4">
           {courses?.map((course) => (
             <div key={course.node.id}>
               <NavLink href={`course/${course.node.id}`}>

@@ -138,7 +138,7 @@ const UsersPage: NextPage = function (props) {
   return (
     <AppLayout>
       {/* start of body DIV*/}
-      <div className="mx-5 mb-12 flex w-auto flex-col justify-between sm:mx-auto sm:w-11/12 md:w-4/5">
+      <div className="mb-12">
         <h3 className="my-6">Users</h3>
         {/* start of table */}
         <div className="border-full rounded-lg border shadow-lg">

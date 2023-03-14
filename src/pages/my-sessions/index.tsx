@@ -270,7 +270,7 @@ const MySessionsPage: React.FC = function () {
   return (
     <AppLayout>
       <SEO title="My Sessions" />
-      <div className="mx-5 mt-6 mb-11 w-auto sm:mx-auto sm:w-[80vw]">
+      <div className="mt-6 mb-11">
         <h6>Overview</h6>
         <div className="sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
           <MySessionsOverview />
