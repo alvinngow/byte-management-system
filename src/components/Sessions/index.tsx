@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import React, { useEffect } from 'react';
 
 import { SessionDateFiltering } from '../../../gen/graphql/operations';
-import { Session } from '../../../gen/graphql/resolvers';
+import { Session, SessionSortKey } from '../../../gen/graphql/resolvers';
 import * as CourseSessions from '../../graphql/frontend/queries/CourseSessionsQuery';
 import Button from '../Button';
 import Select from '../Select';
@@ -21,14 +21,16 @@ const Sessions: React.FC<Props> = function (props) {
   const { courseId } = props;
 
   const [showModal, setShowModal] = React.useState(false);
-  const [sessionDateFilter, setSessionDateFilter] = React.useState<
-    SessionDateFiltering | undefined
-  >(SessionDateFiltering.Upcoming);
+
   const [editModalSession, setEditModalSession] =
     React.useState<Session | null>(null);
 
   const [deleteModalSession, setDeleteModalSession] =
     React.useState<Session | null>(null);
+
+  const [sessionDateFiltering, setSessionDateFiltering] = React.useState<
+    SessionDateFiltering | undefined
+  >(undefined);
 
   const { data, loading, error, refetch } = useQuery<
     CourseSessions.Data,
@@ -37,14 +39,15 @@ const Sessions: React.FC<Props> = function (props) {
     variables: {
       id: courseId,
       filter: {
-        date: sessionDateFilter,
+        date: sessionDateFiltering,
       },
+      sortKey: SessionSortKey.Start,
     },
   });
 
   useEffect(() => {
     refetch();
-  }, [sessionDateFilter, refetch]);
+  }, [sessionDateFiltering, refetch]);
 
   const sessionEdges = React.useMemo(
     () => data?.course?.sessions?.edges ?? [],
@@ -92,10 +95,8 @@ const Sessions: React.FC<Props> = function (props) {
               { label: 'Past sessions', value: SessionDateFiltering.Past },
             ]}
             label={'Show'}
-            value={sessionDateFilter}
-            onChange={function (value: SessionDateFiltering | undefined): void {
-              setSessionDateFilter(value);
-            }}
+            value={sessionDateFiltering}
+            onChange={setSessionDateFiltering}
           />
         </div>
         {sessionEdges.length === 0 ? (
@@ -103,10 +104,11 @@ const Sessions: React.FC<Props> = function (props) {
             <div className="m-auto mt-10">
               <SessionsEmptyStateIcon />
             </div>
-            <p className="my-2.5 text-center">There are no time slots.</p>
+            <p className="my-2.5 text-center">
+              There are no sessions to display.
+            </p>
             <p className="mb-5 text-center text-gray-400">
-              Add time slot(s) to this class by clicking on the top right
-              button.
+              Add a session by clicking on the &ldquo;ADD SESSION&rdquo; button.
             </p>
           </div>
         ) : (
