@@ -108,108 +108,114 @@ const NavHeader: React.FC<Props> = function (props) {
   };
   return (
     <>
-      <header
-        className={classNames(
-          'absolute sticky top-0 z-20 flex border border-white border-b-gray-300 bg-white py-4 xsm:items-end xsm:px-3 md:px-6',
-          {
-            'justify-between': meData?.me?.role === UserRole.User,
-            'justify-between md:justify-end':
-              meData?.me?.role !== UserRole.User,
-          }
-        )}
-      >
-        <div className="flex">
-          <NavLink
-            className={classNames('items-start ', {
-              'md:hidden': meData?.me?.role !== UserRole.User,
-            })}
-            href="/discover-courses"
-          >
-            <ByteLogo className="mb-1 pr-5" width="84px sm:45px" />
-          </NavLink>
-          {meData?.me?.role === UserRole.User && (
-            <div className={'ml-6 xsm:hidden md:flex'}>
-              {RoleBasedNav.map((link, i) => (
-                <Tab
-                  key={'tab' + i}
-                  selectedID={linkSelected}
-                  tabID={link.label}
-                  text={link.label}
-                  href={link.href}
-                ></Tab>
-              ))}
-            </div>
+      <div className="border border-white border-b-gray-300">
+        <header
+          className={classNames(
+            'absolute sticky top-0 z-20 flex bg-white py-4 xsm:items-end xsm:px-3 md:px-6',
+            {
+              'justify-between xxl:m-auto xxl:w-4/5 xxl:px-0':
+                meData?.me?.role === UserRole.User,
+              'justify-between md:justify-end':
+                meData?.me?.role !== UserRole.User,
+            }
           )}
-        </div>
-        <div className="py-auto flex items-center gap-3">
-          <IconButton HeroIcon={(props) => <CogIcon />} />
-          <IconButton HeroIcon={(props) => <BellIcon />} />
-          <button
-            className="relative flex items-center gap-2.5 rounded-xl p-1 hover:bg-brand-hover"
-            onClick={() => setIsOpen(true)}
-          >
-            <span
-              className={classNames(
-                'flex h-10 w-10 items-center justify-center rounded-full',
-                randomBgClass
-              )}
+        >
+          <div className="flex">
+            <NavLink
+              className={classNames('items-start ', {
+                'md:hidden': meData?.me?.role !== UserRole.User,
+              })}
+              href="/discover-courses"
             >
-              {avatarUrl ? (
-                <Image
-                  className="grow object-cover"
-                  src={avatarUrl}
-                  alt="profile placeholder"
-                  width={24}
-                  height={24}
+              <ByteLogo className="mb-1 pr-5" width="84px sm:45px" />
+            </NavLink>
+            {meData?.me?.role === UserRole.User && (
+              <div className={'ml-6 xsm:hidden md:flex'}>
+                {RoleBasedNav.map((link, i) => (
+                  <Tab
+                    key={'tab' + i}
+                    selectedID={linkSelected}
+                    tabID={link.label}
+                    text={link.label}
+                    href={link.href}
+                  ></Tab>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="py-auto flex items-center gap-3">
+            <IconButton HeroIcon={(props) => <CogIcon />} />
+            <IconButton HeroIcon={(props) => <BellIcon />} />
+            <button
+              className="relative flex items-center gap-2.5 rounded-xl p-1 hover:bg-brand-hover"
+              onClick={() => setIsOpen(true)}
+            >
+              <span
+                className={classNames(
+                  'flex h-10 w-10 items-center justify-center rounded-full',
+                  randomBgClass
+                )}
+              >
+                {avatarUrl ? (
+                  <Image
+                    className="grow object-cover"
+                    src={avatarUrl}
+                    alt="profile placeholder"
+                    width={24}
+                    height={24}
+                  />
+                ) : (
+                  <span className="avatarLetter grow self-center text-center text-white">
+                    {firstName?.[0]}
+                    {lastName?.[0]}
+                  </span>
+                )}
+              </span>
+              <p className="xsm:flex xsm:hidden md:block">
+                {firstName} {lastName}
+              </p>
+              <div className="xsm:flex xsm:hidden md:block">
+                {isOpen ? (
+                  <ChevronUpIcon
+                    style={{ color: '#6B7280' }}
+                    className="h-6 w-6 pt-1"
+                  />
+                ) : (
+                  <ChevronDownIcon
+                    style={{ color: '#6B7280' }}
+                    className="h-6 w-6 pt-1"
+                  />
+                )}
+              </div>
+              {isOpen && (
+                <ProfileMenu
+                  className="absolute top-14 items-start xsm:right-0 xsm:w-max md:left-0 md:w-full"
+                  data={meData}
+                  focused={false}
                 />
-              ) : (
-                <span className="avatarLetter grow self-center text-center text-white">
-                  {firstName?.[0]}
-                  {lastName?.[0]}
-                </span>
               )}
-            </span>
-            <p className="xsm:flex xsm:hidden md:block">
-              {firstName} {lastName}
-            </p>
-            <div className="xsm:flex xsm:hidden md:block">
-              {isOpen ? (
-                <ChevronUpIcon
-                  style={{ color: '#6B7280' }}
-                  className="h-6 w-6 pt-1"
-                />
-              ) : (
-                <ChevronDownIcon
-                  style={{ color: '#6B7280' }}
-                  className="h-6 w-6 pt-1"
+            </button>
+            <IconButton
+              className={classNames('', {
+                'md:hidden': meData?.me?.role !== UserRole.User,
+              })}
+              HeroIcon={(props) => (
+                <Bars3Icon
+                  onClick={() => handleClick()}
+                  className="md:hidden"
                 />
               )}
-            </div>
+            />
+
             {isOpen && (
-              <ProfileMenu
-                className="absolute top-14 items-start xsm:right-0 xsm:w-max md:left-0 md:w-full"
-                data={meData}
-                focused={false}
+              <div
+                className="fixed top-0 left-0 right-0 bottom-0 h-screen w-screen"
+                onClick={handleBackdropClick}
               />
             )}
-          </button>
-          <IconButton
-            className={classNames('', {
-              'md:hidden': meData?.me?.role !== UserRole.User,
-            })}
-            HeroIcon={(props) => (
-              <Bars3Icon onClick={() => handleClick()} className="md:hidden" />
-            )}
-          />
-
-          {isOpen && (
-            <div
-              className="fixed top-0 left-0 right-0 bottom-0 h-screen w-screen"
-              onClick={handleBackdropClick}
-            />
-          )}
-        </div>
-      </header>
+          </div>
+        </header>
+      </div>
       {modal && (
         <div className="fixed z-10 block h-screen min-w-full bg-gray-700/50 md:hidden">
           <div className="z-20 rounded-b-lg bg-white p-4">
