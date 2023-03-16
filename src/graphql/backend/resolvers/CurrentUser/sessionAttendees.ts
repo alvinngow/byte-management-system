@@ -140,6 +140,16 @@ export const CurrentUser_sessionAttendeesResolver: CurrentUserResolvers['session
         ];
         break;
       }
+      case SessionAttendeeSortKey.FirstName: {
+        orderBy = [
+          {
+            user: {
+              firstName: reverse ? 'desc' : 'asc',
+            },
+          },
+        ];
+        break;
+      }
     }
 
     const result = await findManyCursorConnection(

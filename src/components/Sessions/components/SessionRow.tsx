@@ -16,7 +16,10 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Attendance } from '../../../../gen/graphql/operations';
-import { Session } from '../../../../gen/graphql/resolvers';
+import {
+  Session,
+  SessionAttendeeSortKey,
+} from '../../../../gen/graphql/resolvers';
 import * as SessionAttendReport from '../../../graphql/frontend/mutations/SessionAttendReportMutation';
 import * as SessionAttendee from '../../../graphql/frontend/queries/SessionAttendeesQuery';
 import AttendanceButton from '../../AttendanceButton';
@@ -37,14 +40,29 @@ const SessionRow: React.FC<Props> = function (props) {
     SessionAttendReport.Variables
   >(SessionAttendReport.Mutation);
 
-  const { data, loading, error } = useQuery<
+  const [sessionAttendeesSortKey, setSessionAttendeesSortKey] = React.useState<
+    SessionAttendeeSortKey | undefined
+  >(undefined);
+  const [reverse, setReverse] = React.useState(false);
+
+  const variables = React.useMemo<SessionAttendee.Variables>(() => {
+    return {
+      id: session.id,
+      sortKey: sessionAttendeesSortKey,
+      reverse,
+    };
+  }, [reverse, session.id, sessionAttendeesSortKey]);
+
+  const { data, loading, error, refetch } = useQuery<
     SessionAttendee.Data,
     SessionAttendee.Variables
   >(SessionAttendee.Query, {
-    variables: {
-      id: session.id,
-    },
+    variables,
   });
+
+  React.useEffect(() => {
+    refetch();
+  }, [refetch, variables]);
 
   const handleAttendanceChange = (
     attendanceState: Attendance | null,
@@ -89,12 +107,24 @@ const SessionRow: React.FC<Props> = function (props) {
                     <thead className="subtitle2">
                       {/* need to add the up-down arrow icon */}
                       <th className="whitespace-nowrap px-6 py-4">
-                        Name{' '}
-                        <IconButton
-                          HeroIcon={(props) => (
-                            <ArrowsUpDownIcon className="h-5 w-5" />
-                          )}
-                        />
+                        <div className="flex items-center gap-x-2">
+                          Name{' '}
+                          <div
+                            className="inline"
+                            onClick={() => {
+                              setSessionAttendeesSortKey(
+                                SessionAttendeeSortKey.FirstName
+                              );
+                              setReverse((prevState) => !prevState);
+                            }}
+                          >
+                            <IconButton
+                              HeroIcon={(props) => (
+                                <ArrowsUpDownIcon className="h-5 w-5" />
+                              )}
+                            />
+                          </div>
+                        </div>
                       </th>
                       <th className="whitespace-nowrap px-6 py-4">
                         Mark Attendance

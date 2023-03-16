@@ -4,6 +4,8 @@ import {
   Session,
   SessionAttendee,
   SessionAttendeeConnection,
+  SessionAttendeeFiltering,
+  SessionAttendeeSortKey,
   SessionConnection,
 } from '../../../../gen/graphql/resolvers';
 export interface Data {
@@ -12,12 +14,30 @@ export interface Data {
 
 export interface Variables {
   id: string;
+  first?: number;
+  after?: string;
+  filter?: SessionAttendeeFiltering;
+  sortKey?: SessionAttendeeSortKey;
+  reverse?: boolean;
 }
 
 export const Query = gql`
-  query SessionAttendeesQuery($id: ID!) {
+  query SessionAttendeesQuery(
+    $id: ID!
+    $first: Int
+    $after: String
+    $filter: SessionAttendeeFiltering
+    $sortKey: SessionAttendeeSortKey
+    $reverse: Boolean
+  ) {
     session(id: $id) {
-      attendees {
+      attendees(
+        first: $first
+        after: $after
+        filter: $filter
+        sortKey: $sortKey
+        reverse: $reverse
+      ) {
         edges {
           node {
             user {

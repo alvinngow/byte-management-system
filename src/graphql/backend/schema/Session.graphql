@@ -14,7 +14,7 @@ type Session {
 
     location: Location
 
-    attendees(first: Int = 10, after: String): SessionAttendeeConnection!
+    attendees(first: Int = 10, after: String, filter: SessionAttendeeFiltering, sortKey: SessionAttendeeSortKey, reverse: Boolean): SessionAttendeeConnection!
 }
 
 type SessionEdge {

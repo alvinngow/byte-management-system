@@ -25,6 +25,7 @@ Represents sorting options for SessionAttendee
 enum SessionAttendeeSortKey {
     SESSION_START
     SESSION_END
+    FIRST_NAME
 }
 
 enum SessionAttendeeDateFiltering {
