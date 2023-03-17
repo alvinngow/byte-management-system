@@ -106,7 +106,7 @@ const DiscoverCoursesPage: NextPage = function () {
           </div>
         </div>
         <div className="mb-8 flex flex-col gap-4 md:flex-row">
-          <form className="basis-3/4">
+          <div className="basis-3/4">
             <label htmlFor="default-search"></label>
             <Input
               label="Search"
@@ -116,7 +116,7 @@ const DiscoverCoursesPage: NextPage = function () {
                 setSearchTerm(e.target.value);
               }}
             />
-          </form>
+          </div>
           <div className="relative basis-1/4">
             <FilterByShowcase
               value={filterForRegion}
