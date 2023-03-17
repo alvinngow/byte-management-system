@@ -17,6 +17,7 @@ interface PropType extends React.HTMLAttributes<HTMLButtonElement> {
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   label?: string;
+  isApplyBtn?: boolean;
   /**
    * Optional client-side page link.
    */
@@ -35,6 +36,7 @@ const Button: React.FC<React.PropsWithChildren<PropType>> = (props) => {
     children,
     onClick,
     href,
+    isApplyBtn,
     ...otherProps
   } = props;
 
@@ -59,6 +61,7 @@ const Button: React.FC<React.PropsWithChildren<PropType>> = (props) => {
     [styles.btn]: true,
     [styles[variant]]: true,
     [styles[`btn-${size}`]]: true,
+    [styles[`btn-apply`]]: isApplyBtn,
   });
   return (
     <button

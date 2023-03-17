@@ -81,20 +81,20 @@ const CourseDetailPage: React.FC = function () {
     });
   };
 
-  const updateIndicatedAttendance = (
-    indicatedAttendance: Attendance,
-    sessionId: string
-  ) => {
-    updateSession({
-      variables: {
-        input: {
-          clientMutationId: uuidv4(),
-          indicatedAttendance,
-          sessionId,
+  const updateIndicatedAttendance = React.useCallback(
+    (indicatedAttendance: Attendance, sessionId: string) => {
+      updateSession({
+        variables: {
+          input: {
+            clientMutationId: uuidv4(),
+            indicatedAttendance,
+            sessionId,
+          },
         },
-      },
-    });
-  };
+      });
+    },
+    [updateSession]
+  );
 
   React.useEffect(() => {
     if (id == null || loading) {
@@ -313,8 +313,8 @@ const CourseDetailPage: React.FC = function () {
                                     edge.node.id
                                   ) ? (
                                     <SessionButton
-                                      className="mr-3"
                                       size="sm"
+                                      isApplyBtn={true}
                                       variant="secondary"
                                       onClick={() => {
                                         updateIndicatedAttendance(
@@ -326,6 +326,7 @@ const CourseDetailPage: React.FC = function () {
                                   ) : (
                                     <Button
                                       size="sm"
+                                      isApplyBtn={true}
                                       label="Apply"
                                       onClick={() => {
                                         updateIndicatedAttendance(
