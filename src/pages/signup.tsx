@@ -57,7 +57,7 @@ const SignupPage: NextPage = function (props) {
     <PlainLayout>
       <div className="flex h-screen w-full flex-col items-center justify-center">
         <form
-          className="flex flex-col xsm:w-full xsm:w-4/5 md:w-3/4 md:px-0 xl:w-1/2"
+          className="flex flex-col xsm:w-4/5 md:w-3/4 md:px-0 xl:w-1/2"
           onSubmit={handleSubmit(onSubmit)}
         >
           <h3 className="mb-3">Create an account</h3>
@@ -136,7 +136,7 @@ const SignupPage: NextPage = function (props) {
 
             <Input
               type="text"
-              label="School/ Work"
+              label="Name of School/Company"
               showMessage={errors.school ? true : false}
               message={
                 errors.school ? (
@@ -150,7 +150,7 @@ const SignupPage: NextPage = function (props) {
 
             <Input
               type="number"
-              placeholder="9123 4567"
+              placeholder="91234567"
               label="Mobile Number"
               autoComplete="tel-local"
               showMessage={errors.mobileNo ? true : false}
