@@ -317,6 +317,25 @@ const CourseDetailPage: React.FC = function () {
                                       isApplyBtn={true}
                                       variant="secondary"
                                       onClick={() => {
+                                        const startDate = DateTime.fromISO(
+                                          edge.node.startDate
+                                        ).toLocaleString(DateTime.DATE_MED);
+
+                                        const startTime = DateTime.fromISO(
+                                          edge.node.startTime
+                                        ).toLocaleString(DateTime.TIME_SIMPLE);
+
+                                        const endTime = DateTime.fromISO(
+                                          edge.node.endTime
+                                        ).toLocaleString(DateTime.TIME_SIMPLE);
+
+                                        if (
+                                          !window.confirm(
+                                            `Are you sure you want to unapply for "${course.name}" on ${startDate} between ${startTime} and ${endTime}?`
+                                          )
+                                        ) {
+                                          return;
+                                        }
                                         updateIndicatedAttendance(
                                           Attendance.Absent,
                                           edge.node.id
@@ -329,6 +348,26 @@ const CourseDetailPage: React.FC = function () {
                                       isApplyBtn={true}
                                       label="Apply"
                                       onClick={() => {
+                                        const startDate = DateTime.fromISO(
+                                          edge.node.startDate
+                                        ).toLocaleString(DateTime.DATE_MED);
+
+                                        const startTime = DateTime.fromISO(
+                                          edge.node.startTime
+                                        ).toLocaleString(DateTime.TIME_SIMPLE);
+
+                                        const endTime = DateTime.fromISO(
+                                          edge.node.endTime
+                                        ).toLocaleString(DateTime.TIME_SIMPLE);
+
+                                        if (
+                                          !window.confirm(
+                                            `Are you sure you want to apply for "${course.name}" on ${startDate} between ${startTime} and ${endTime}?`
+                                          )
+                                        ) {
+                                          return;
+                                        }
+
                                         updateIndicatedAttendance(
                                           Attendance.Attend,
                                           edge.node.id
