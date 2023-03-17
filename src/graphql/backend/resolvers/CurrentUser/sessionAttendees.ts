@@ -25,42 +25,44 @@ export const CurrentUser_sessionAttendeesResolver: CurrentUserResolvers['session
 
     if (filter != null) {
       if (filter.searchText != null) {
-        where.session = {
-          OR: [
-            {
+        if (where.session == null) {
+          where.session = {};
+        }
+
+        where.session.OR = [
+          {
+            name: {
+              contains: filter.searchText,
+              mode: 'insensitive',
+            },
+          },
+          {
+            overrideLocation: {
               name: {
                 contains: filter.searchText,
                 mode: 'insensitive',
               },
             },
-            {
-              overrideLocation: {
+          },
+          {
+            course: {
+              name: {
+                contains: filter.searchText,
+                mode: 'insensitive',
+              },
+            },
+          },
+          {
+            course: {
+              defaultLocation: {
                 name: {
                   contains: filter.searchText,
                   mode: 'insensitive',
                 },
               },
             },
-            {
-              course: {
-                name: {
-                  contains: filter.searchText,
-                  mode: 'insensitive',
-                },
-              },
-            },
-            {
-              course: {
-                defaultLocation: {
-                  name: {
-                    contains: filter.searchText,
-                    mode: 'insensitive',
-                  },
-                },
-              },
-            },
-          ],
-        };
+          },
+        ];
       }
 
       if (filter.indicatedAttendance != null) {
@@ -73,18 +75,22 @@ export const CurrentUser_sessionAttendeesResolver: CurrentUserResolvers['session
 
       switch (filter.date) {
         case SessionAttendeeDateFiltering.Upcoming: {
-          where.session = {
-            startDate: {
-              gte: DateTime.now().toJSDate(),
-            },
+          if (where.session == null) {
+            where.session = {};
+          }
+
+          where.session.startDate = {
+            gte: DateTime.now().toJSDate(),
           };
           break;
         }
         case SessionAttendeeDateFiltering.Past: {
-          where.session = {
-            endDate: {
-              lt: DateTime.now().toJSDate(),
-            },
+          if (where.session == null) {
+            where.session = {};
+          }
+
+          where.session.endDate = {
+            lt: DateTime.now().toJSDate(),
           };
           break;
         }
