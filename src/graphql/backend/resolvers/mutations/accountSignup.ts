@@ -35,7 +35,6 @@ export const accountSignupResolver: MutationResolvers['accountSignup'] = async (
           },
         },
         mobileNo,
-        avatar: '',
       },
     });
   } catch (e) {

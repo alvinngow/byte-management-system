@@ -7,7 +7,7 @@ const User_avatarResolver: UserResolvers['avatar'] = async (
   context,
   info
 ) => {
-  if (root.avatar == null) {
+  if (root.avatar == null || root.avatar.length === 0) {
     return null;
   }
 
