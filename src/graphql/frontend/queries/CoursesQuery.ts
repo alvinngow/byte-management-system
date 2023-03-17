@@ -4,10 +4,12 @@ import {
   CourseConnection,
   CourseFiltering,
   CourseSortKey,
+  LocationClusterConnection,
 } from '../../../../gen/graphql/resolvers';
 
 export interface Data {
   courses: CourseConnection;
+  locationClusters: LocationClusterConnection;
 }
 
 export interface Variables {
@@ -64,6 +66,16 @@ export const Query = gql`
       pageInfo {
         endCursor
         hasNextPage
+      }
+    }
+
+    locationClusters(first: 20) {
+      edges {
+        node {
+          id
+          name
+        }
+        cursor
       }
     }
   }
