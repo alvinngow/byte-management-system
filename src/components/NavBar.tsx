@@ -56,6 +56,10 @@ const NavBar: React.FC<Props> = function (props) {
 
   const [linkSelected, setLinkSelected] = useState(routeName!);
 
+  if (meLoading) {
+    return children;
+  }
+
   return (
     <>
       {me?.role !== UserRole.User && (
