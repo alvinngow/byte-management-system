@@ -23,6 +23,7 @@ import {
 import * as SessionAttendReport from '../../../graphql/frontend/mutations/SessionAttendReportMutation';
 import * as SessionAttendee from '../../../graphql/frontend/queries/SessionAttendeesQuery';
 import AttendanceButton from '../../AttendanceButton';
+import Button from '../../Button';
 import Chip from '../../Chip';
 import IconButton from '../../IconButton';
 import Modal from '../../Modal';
@@ -89,8 +90,8 @@ const SessionRow: React.FC<Props> = function (props) {
   };
 
   return (
-    <tr className="border border-x-0 border-y-gray-200">
-      <td className="py-4 pl-4 text-left xsm:whitespace-nowrap md:whitespace-normal">
+    <tr className="border border-x-0 border-y-gray-100">
+      <td className="py-4 px-4 text-left xsm:whitespace-nowrap md:whitespace-normal">
         {DateTime.fromISO(session.startDate).toLocaleString(DateTime.DATE_MED)}
         {attendanceModal ? (
           <Modal
@@ -98,15 +99,14 @@ const SessionRow: React.FC<Props> = function (props) {
             modalTitle="Mark Attendance"
             minHeight={150}
             minWidth={150}
+            className="mx-[20px]"
           >
-            <div className="mb-10 flex flex-col pt-2">
-              <div className="ml-4 mr-4 mt-5 mb-5 flex">
-                {/* start of the table */}
-                <div className="snap-x overflow-x-auto scroll-smooth">
-                  <table className="text-secondary w-full text-left">
-                    <thead className="subtitle2">
-                      {/* need to add the up-down arrow icon */}
-                      <th className="whitespace-nowrap px-6 py-4">
+            <div className="mb-10 flex flex-col px-5 pt-2">
+              <div className="mt-5 mb-5 flex">
+                <div className="snap-y overflow-y-auto scroll-smooth rounded-lg border-[1px] border-gray-100 text-left drop-shadow-sm xsm:h-[360px]">
+                  <table className="text-secondary w-full">
+                    <thead className="subtitle2 sticky -top-1 border-b bg-white">
+                      <th className="pl-4 xsm:whitespace-nowrap">
                         <div className="flex items-center gap-x-2">
                           Name{' '}
                           <div
@@ -134,10 +134,10 @@ const SessionRow: React.FC<Props> = function (props) {
                       {data?.session.attendees.edges.map((edge) => (
                         <tr key={edge.cursor} className="border-b bg-white">
                           <td>
-                            <div className="grid grid-cols-[30%_70%]">
-                              <div className="p-2">
+                            <div className="my-2 grid grid-cols-[30%_70%]">
+                              <div className="mr-0.5 p-2">
                                 <Image
-                                  className="h-10 w-10 rounded-full"
+                                  className="h-8 w-8 rounded-full"
                                   src="/favicon.ico"
                                   alt="Rounded avatar"
                                   width={100}
@@ -155,7 +155,7 @@ const SessionRow: React.FC<Props> = function (props) {
                           </td>
                           <td>
                             <AttendanceButton
-                              className="h-[40px] justify-center"
+                              className="h-[34px] justify-center gap-2"
                               userAttendanceState={
                                 edge.node.actualAttendance ?? null
                               }
@@ -166,8 +166,20 @@ const SessionRow: React.FC<Props> = function (props) {
                           </td>
                         </tr>
                       ))}
+                      <div className="shadow-inner"></div>
                     </tbody>
                   </table>
+                </div>
+              </div>
+              <div className="mx-auto">
+                <div>
+                  <Button
+                    className=""
+                    variant={'primary'}
+                    onClick={() => setAttendanceModal(false)}
+                  >
+                    Done
+                  </Button>
                 </div>
               </div>
             </div>
