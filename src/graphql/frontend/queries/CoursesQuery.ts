@@ -58,6 +58,7 @@ export const Query = gql`
                 user {
                   firstName
                   lastName
+                  avatar
                 }
               }
             }

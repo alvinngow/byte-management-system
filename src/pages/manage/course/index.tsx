@@ -5,8 +5,10 @@ import {
   PencilIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
+import classNames from 'classnames';
 import { DateTime } from 'luxon';
-import React, { useEffect } from 'react';
+import Image from 'next/image';
+import React, { useEffect, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -26,6 +28,17 @@ import * as CourseDelete from '../../../graphql/frontend/mutations/CourseDeleteM
 import * as CoursesQuery from '../../../graphql/frontend/queries/CoursesQuery';
 import useDebounce from '../../../hooks/useDebounce';
 import AppLayout from '../../../layouts/AppLayout';
+
+const BACKGROUND_COLORS = [
+  'bg-pink-600',
+  'bg-sky-600',
+  'bg-lime-500',
+  'bg-emerald-500',
+  'bg-amber-500',
+  'bg-violet-500',
+  'bg-red-500',
+  'bg-indigo-500',
+];
 
 const CoursePage: React.FC = function () {
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -242,8 +255,57 @@ const CoursePage: React.FC = function () {
                     {course.node.defaultLocation?.cluster?.name}
                   </td>
                   <td className="border-b border-slate-300 py-4 pl-4 text-left">
-                    {course.node.courseManagers.edges[0]?.node.user.firstName}{' '}
-                    {course.node.courseManagers.edges[0]?.node.user.lastName}
+                    <div className="relative flex items-center">
+                      {course.node.courseManagers.edges.map(
+                        (courseManager, i) => {
+                          return i < 3 ? (
+                            <span
+                              key={courseManager.cursor}
+                              className={classNames(
+                                'absolute flex h-10 w-10 items-center justify-center rounded-full',
+                                BACKGROUND_COLORS[
+                                  Math.floor(
+                                    Math.random() * BACKGROUND_COLORS.length
+                                  )
+                                ]
+                              )}
+                              style={{ left: i * 20, zIndex: 3 - i }}
+                            >
+                              {courseManager.node.user.avatar ? (
+                                <Image
+                                  className="grow object-cover"
+                                  src={courseManager.node.user.avatar}
+                                  alt="profile placeholder"
+                                  width={24}
+                                  height={24}
+                                />
+                              ) : (
+                                <span
+                                  className="avatarLetter grow self-center text-center text-white"
+                                  title={
+                                    courseManager.node.user.firstName +
+                                    ' ' +
+                                    courseManager.node.user.lastName
+                                  }
+                                >
+                                  {courseManager.node.user.firstName?.[0]}
+                                  {courseManager.node.user.lastName?.[0]}
+                                </span>
+                              )}
+                            </span>
+                          ) : (
+                            ''
+                          );
+                        }
+                      )}
+                      {course.node.courseManagers.edges.length > 3 ? (
+                        <p style={{ position: 'absolute', right: '-10px' }}>
+                          +{course.node.courseManagers.edges.length - 3}
+                        </p>
+                      ) : (
+                        ''
+                      )}
+                    </div>
                   </td>
                   <td className="border-b border-slate-300 py-4 pl-4 text-left">
                     {course.node?.firstSessionStartDate}
