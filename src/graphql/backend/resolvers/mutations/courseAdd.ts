@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+import slugify from 'slugify';
 
 import {
   MutationResolvers,
@@ -44,6 +45,7 @@ export const courseAddResolver: MutationResolvers['courseAdd'] = async (
       descriptionPrivate: courseDescriptionPrivate ?? undefined,
       subtitle: courseSubtitle,
       coverImage: courseCoverFilename,
+      slug: slugify(courseName, { lower: true }),
       defaultStartTime: DateTime.fromJSDate(
         courseDefaultStartTime as unknown as Date
       ).toJSDate(),

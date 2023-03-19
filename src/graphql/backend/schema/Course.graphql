@@ -1,6 +1,7 @@
 type Course {
     id: ID!
     name: String!
+    slug: String!
     subtitle: String
     description: String!
     descriptionPrivate: String

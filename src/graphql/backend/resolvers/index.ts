@@ -28,6 +28,7 @@ import { sessionAttendReportResolver } from './mutations/sessionAttendReport';
 import { sessionDeleteResolver } from './mutations/sessionDelete';
 import { sessionEditResolver } from './mutations/sessionEdit';
 import { courseResolver } from './queries/course';
+import { courseBySlugResolver } from './queries/courseBySlug';
 import { coursesResolver } from './queries/courses';
 import { locationClustersResolver } from './queries/locationClusters';
 import { locationsResolver } from './queries/locations';
@@ -58,6 +59,7 @@ const resolvers: Resolvers = {
     courses: coursesResolver,
     course: courseResolver,
     session: sessionResolver,
+    courseBySlug: courseBySlugResolver,
   },
   Mutation: {
     accountLogin: accountLoginResolver,

@@ -19,6 +19,7 @@ export const Query = gql`
     course(id: $id) {
       id
       name
+      slug
       subtitle
       description
       descriptionPrivate

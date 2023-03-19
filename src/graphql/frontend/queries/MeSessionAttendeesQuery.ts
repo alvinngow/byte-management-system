@@ -56,6 +56,7 @@ export const Query = gql`
               course {
                 id
                 name
+                slug
               }
             }
           }

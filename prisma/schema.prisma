@@ -140,6 +140,7 @@ view CourseWithSessionInfo {
   id                    String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name                  String
   subtitle              String?
+  slug                  String    @unique @default(dbgenerated("gen_random_uuid()"))
   description           String
   descriptionPrivate    String    @default("")
   defaultStartTime      DateTime  @db.Timetz(2)
@@ -158,6 +159,7 @@ model Course {
   id                 String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name               String
   subtitle           String?
+  slug               String          @unique @default(dbgenerated("gen_random_uuid()"))
   description        String
   descriptionPrivate String          @default("")
   defaultStartTime   DateTime        @db.Timetz(2)

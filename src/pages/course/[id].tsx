@@ -18,7 +18,7 @@ import RichTextEditor from '../../components/RichTextEditor';
 import SEO from '../../components/SEO';
 import Spinner from '../../components/Spinner';
 import * as SessionAttend from '../../graphql/frontend/mutations/SessionAttendMutation';
-import * as CourseSessionsQuery from '../../graphql/frontend/queries/CourseSessionsQuery';
+import * as CourseSlugSessionsQuery from '../../graphql/frontend/queries/CourseSlugSessionsQuery';
 import * as MeSessionAttendeesQuery from '../../graphql/frontend/queries/MeSessionAttendeesQuery';
 import AppLayout from '../../layouts/AppLayout';
 import SessionButton from './components/SessionButton';
@@ -36,11 +36,11 @@ const CourseDetailPage: React.FC = function () {
   >('Apply');
 
   const { data, loading, error, fetchMore } = useQuery<
-    CourseSessionsQuery.Data,
-    CourseSessionsQuery.Variables
-  >(CourseSessionsQuery.Query, {
+    CourseSlugSessionsQuery.Data,
+    CourseSlugSessionsQuery.Variables
+  >(CourseSlugSessionsQuery.Query, {
     variables: {
-      id: id as string,
+      slug: id as string,
       reverse,
       sortKey: SessionSortKey.Start,
       first,

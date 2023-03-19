@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { DateTime } from 'luxon';
+import slugify from 'slugify';
 
 import { Attendance } from '../../gen/graphql/operations';
 import {
@@ -176,11 +177,13 @@ export default async function bimsSeed() {
       },
       update: {
         name: course.name,
+        slug: slugify(course.name, { lower: true }),
       },
       create: {
         id: course.id,
         name: course.name,
         description: course.description,
+        slug: slugify(course.name, { lower: true }),
         defaultStartTime: DateTime.fromSQL(course.defaultStartTime).toJSDate(),
         defaultEndTime: DateTime.fromSQL(course.defaultEndTime).toJSDate(),
         defaultLocationId: course.defaultLocationId,

@@ -78,7 +78,7 @@ const TabUpcoming: React.FC<TabUpcomingProps> = function (props) {
               )}
             </td>
             <td className="whitespace-nowrap px-6 py-4 text-blue-500 underline">
-              <NavLink href={`/course/${edge.node.session.course.id}`}>
+              <NavLink href={`/course/${edge.node.session.course.slug}`}>
                 {edge.node.session.course.name}
               </NavLink>
             </td>

@@ -37,6 +37,7 @@ export const Query = gql`
         node {
           id
           name
+          slug
           description
           coverImage
           firstSessionStartDate

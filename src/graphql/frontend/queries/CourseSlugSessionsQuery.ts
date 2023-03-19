@@ -11,7 +11,7 @@ export interface Data {
 }
 
 export interface Variables {
-  id: string;
+  slug: string;
   first?: number;
   after?: string;
   filter?: SessionFiltering;
@@ -21,14 +21,14 @@ export interface Variables {
 
 export const Query = gql`
   query CourseSessionsQuery(
-    $id: ID!
+    $slug: String!
     $first: Int = 10
     $after: String
     $filter: SessionFiltering
     $sortKey: SessionSortKey
     $reverse: Boolean
   ) {
-    course(id: $id) {
+    course: courseBySlug(slug: $slug) {
       id
       name
       slug
