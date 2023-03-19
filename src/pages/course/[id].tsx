@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { ArrowsUpDownIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -22,6 +23,10 @@ import * as CourseSlugSessionsQuery from '../../graphql/frontend/queries/CourseS
 import * as MeSessionAttendeesQuery from '../../graphql/frontend/queries/MeSessionAttendeesQuery';
 import AppLayout from '../../layouts/AppLayout';
 import SessionButton from './components/SessionButton';
+
+const Map = dynamic(() => import('../../components/Map'), {
+  ssr: false,
+});
 
 const first = 10;
 
@@ -420,7 +425,13 @@ const CourseDetailPage: React.FC = function () {
             <div className="basis-1/3">
               <div className="border-full mb-5 block w-full rounded-lg border bg-white p-10 shadow-lg">
                 <div className="subtitle1 mb-2.5">LOCATION</div>
-                <div className="mb-2.5">INSERT MAP HERE</div>
+                <div className="mb-2.5 h-56 w-56">
+                  <Map
+                    lat={course!.defaultLocation!.lat}
+                    lng={course!.defaultLocation!.lng}
+                    name={course.defaultLocation!.name}
+                  />
+                </div>
                 <div className="body1 mb-8">
                   {course.defaultLocation?.address}
                 </div>

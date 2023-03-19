@@ -4,6 +4,7 @@ import {
   TvIcon,
 } from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
@@ -17,6 +18,10 @@ import Select, { SelectItem } from '../components/Select';
 import Switch from '../components/Switch';
 import Tab from '../components/Tab';
 import AppLayout from '../layouts/AppLayout';
+
+const Map = dynamic(() => import('../components/Map'), {
+  ssr: false,
+});
 
 const SelectShowcase: React.FC = function () {
   const items = React.useMemo<SelectItem[]>(() => {
@@ -100,6 +105,9 @@ const Components: NextPage = function (props) {
         </div>
         <Switch />
         <IconButton HeroIcon={(props) => <TvIcon />}></IconButton>
+      </div>
+      <div className="h-80 w-80">
+        <Map lat={1.29027} lng={103.851959} name={'Singapore'} />
       </div>
     </AppLayout>
   );
