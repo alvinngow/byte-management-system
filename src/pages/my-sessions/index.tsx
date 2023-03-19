@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   Attendance,
@@ -37,6 +38,7 @@ const MySessionsPage: React.FC = function () {
             actualAttendance: reducerState.filterActualAttendance,
             date: SessionAttendeeDateFiltering.Upcoming,
             searchText: searchTermDebounced || undefined,
+            indicatedAttendance: Attendance.Attend,
           },
           sortKey: SessionAttendeeSortKey.SessionStart,
           reverse: reducerState.reverse,

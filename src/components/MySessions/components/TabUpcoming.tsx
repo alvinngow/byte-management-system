@@ -10,6 +10,7 @@ import {
   SessionAttendeeConnection,
 } from '../../../../gen/graphql/resolvers';
 import * as SessionAttend from '../../../graphql/frontend/mutations/SessionAttendMutation';
+import SessionButton from '../../../pages/course/components/SessionButton';
 import IconButton from '../../IconButton';
 import NavLink from '../../NavLink';
 
@@ -27,6 +28,20 @@ const TabUpcoming: React.FC<TabUpcomingProps> = function (props) {
     SessionAttend.Variables
   >(SessionAttend.Mutation);
 
+  const updateIndicatedAttendance = React.useCallback(
+    (indicatedAttendance: Attendance, sessionId: string) => {
+      sessionAttend({
+        variables: {
+          input: {
+            clientMutationId: uuidv4(),
+            indicatedAttendance,
+            sessionId,
+          },
+        },
+      });
+    },
+    [sessionAttend]
+  );
   return (
     <table className="text-secondary w-full text-left">
       <thead className="subtitle2">
@@ -86,28 +101,35 @@ const TabUpcoming: React.FC<TabUpcomingProps> = function (props) {
               {edge.node.session.location?.name}
             </td>
             <td className="whitespace-nowrap px-6 py-4 text-black">
-              <IconButton
-                HeroIcon={() => (
-                  <XMarkIcon
-                    onClick={() => {
-                      if (
-                        !window.confirm('Are you sure you are not attending?')
-                      ) {
-                        return;
-                      }
+              <SessionButton
+                size="sm"
+                isApplyBtn={true}
+                variant="secondary"
+                onClick={() => {
+                  const startDate = DateTime.fromISO(
+                    edge.node.session.startDate
+                  ).toLocaleString(DateTime.DATE_MED);
 
-                      sessionAttend({
-                        variables: {
-                          input: {
-                            clientMutationId: uuidv4(),
-                            sessionId: edge.node.id,
-                            indicatedAttendance: Attendance.Absent,
-                          },
-                        },
-                      });
-                    }}
-                  />
-                )}
+                  const startTime = DateTime.fromISO(
+                    edge.node.session.startTime
+                  ).toLocaleString(DateTime.TIME_SIMPLE);
+
+                  const endTime = DateTime.fromISO(
+                    edge.node.session.endTime
+                  ).toLocaleString(DateTime.TIME_SIMPLE);
+
+                  if (
+                    !window.confirm(
+                      `Are you sure you want to unapply for "${edge.node.session.course.name}" on ${startDate} between ${startTime} and ${endTime}?`
+                    )
+                  ) {
+                    return;
+                  }
+                  updateIndicatedAttendance(
+                    Attendance.Absent,
+                    edge.node.sessionId
+                  );
+                }}
               />
             </td>
           </tr>
