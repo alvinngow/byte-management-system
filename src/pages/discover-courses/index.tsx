@@ -145,7 +145,7 @@ const DiscoverCoursesPage: NextPage = function () {
         <div className="mb-8 grid grid-cols-2 gap-4 md:shrink-0 md:grid-cols-3 lg:grid-cols-4">
           {courses?.map((course) => (
             <div key={course.node.id}>
-              <NavLink href={`course/${course.node.slug}`}>
+              <NavLink href={`/course/${course.node.slug}`}>
                 <Card
                   title={course.node.name}
                   coverImage={course.node.coverImage}

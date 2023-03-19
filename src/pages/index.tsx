@@ -106,7 +106,7 @@ const LandingPage: NextPage = function () {
         <div className="block gap-6 md:grid md:grid-cols-3">
           {courses?.map((course) => (
             <div key={course.node.id}>
-              <NavLink href={`course/${course.node.id}`}>
+              <NavLink href={`/course/${course.node.slug}`}>
                 <Card
                   title={course.node.name}
                   coverImage={course.node.coverImage}
