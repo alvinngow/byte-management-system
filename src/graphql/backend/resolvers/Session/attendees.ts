@@ -5,6 +5,7 @@ import {
   SessionAttendeeDateFiltering,
   SessionAttendeeSortKey,
   SessionResolvers,
+  UserRole,
 } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 import requireAuthenticated from '../util/requireAuthenticated';
@@ -22,11 +23,18 @@ export const Session_attendeesResolver: SessionResolvers['attendees'] = async (
 ) => {
   await requireAuthenticated(context);
 
+  const currentUserId = context.getCurrentUserId()!;
+  const currentUserRole = await context.getCurrentUserRole()!;
+
   const { first, after, filter, sortKey, reverse } = args;
 
   const where: SessionAttendeeWhereInput = {
     sessionId: root.id,
   };
+
+  if (currentUserRole === UserRole.User) {
+    where.userId = currentUserId;
+  }
 
   if (filter != null) {
     if (filter.searchText != null) {

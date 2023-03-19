@@ -76,6 +76,15 @@ export const Query = gql`
             endTime
             volunteerSlotAvailableCount
             volunteerSlotCount
+            attendees {
+              edges {
+                node {
+                  id
+                  indicatedAttendance
+                }
+                cursor
+              }
+            }
           }
           cursor
         }

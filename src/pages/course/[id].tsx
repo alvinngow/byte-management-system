@@ -20,7 +20,6 @@ import SEO from '../../components/SEO';
 import Spinner from '../../components/Spinner';
 import * as SessionAttend from '../../graphql/frontend/mutations/SessionAttendMutation';
 import * as CourseSlugSessionsQuery from '../../graphql/frontend/queries/CourseSlugSessionsQuery';
-import * as MeSessionAttendeesQuery from '../../graphql/frontend/queries/MeSessionAttendeesQuery';
 import AppLayout from '../../layouts/AppLayout';
 import SessionButton from './components/SessionButton';
 
@@ -60,19 +59,6 @@ const CourseDetailPage: React.FC = function () {
     SessionAttend.Data,
     SessionAttend.Variables
   >(SessionAttend.Mutation);
-
-  const meCourseInfo = useQuery<
-    MeSessionAttendeesQuery.Data,
-    MeSessionAttendeesQuery.Variables
-  >(MeSessionAttendeesQuery.Query);
-  const attendingSessions = meCourseInfo.data?.me.sessionAttendees.edges ?? [];
-  const attendingSessionsIdArr: string[] = [];
-
-  for (const session of attendingSessions) {
-    if (session.node.indicatedAttendance == 'attend') {
-      attendingSessionsIdArr.push(session.node.sessionId);
-    }
-  }
 
   const course = data?.course ?? null;
 
@@ -314,8 +300,10 @@ const CourseDetailPage: React.FC = function () {
                                     'Unlimited'}
                                 </td>
                                 <td className="whitespace-nowrap border-b border-slate-300 py-4 px-4 text-center">
-                                  {attendingSessionsIdArr.includes(
-                                    edge.node.id
+                                  {edge.node.attendees.edges.some(
+                                    (edge) =>
+                                      edge.node.indicatedAttendance ===
+                                      Attendance.Attend
                                   ) ? (
                                     <SessionButton
                                       size="sm"
