@@ -25,11 +25,20 @@ interface Props
   items: SelectItem[];
   label: string;
   value: any;
+  placeholder?: string;
   onChange: (value: any) => void;
 }
 
 const Select: React.FC<Props> = function (props) {
-  const { items, value, label, className, onChange, ...otherProps } = props;
+  const {
+    items,
+    value,
+    label,
+    className,
+    placeholder = 'No Filter Selected',
+    onChange,
+    ...otherProps
+  } = props;
 
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -113,7 +122,7 @@ const Select: React.FC<Props> = function (props) {
                 'text-gray-500': selectedItem == null,
               })}
             >
-              {selectedItem?.label ?? 'No Filter Selected'}
+              {selectedItem?.label ?? placeholder}
             </span>
             {isOpen ? (
               <ChevronUpIcon className="h-4 w-4" />

@@ -162,6 +162,7 @@ const MySessionsPage: React.FC = function () {
                   <div className="relative flex grow">
                     <Select
                       className="grow"
+                      placeholder="None"
                       items={[
                         {
                           label: 'None',
