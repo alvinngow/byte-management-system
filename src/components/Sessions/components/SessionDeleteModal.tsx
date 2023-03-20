@@ -75,7 +75,7 @@ const SessionDeleteModal: React.FC<Props> = function (props) {
               <Button onClick={onClose} variant="secondary">
                 Cancel
               </Button>
-              <Button onClick={handleDeleteClick} href="" variant="danger">
+              <Button onClick={handleDeleteClick} variant="danger">
                 Delete
               </Button>
             </>
