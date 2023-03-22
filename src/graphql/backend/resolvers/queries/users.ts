@@ -67,6 +67,20 @@ export const usersResolver: QueryResolvers['users'] = async (
                 mode: 'insensitive',
               },
             },
+            {
+              email: {
+                contains: filter.searchTerm,
+                mode: 'insensitive',
+              },
+            },
+            {
+              school: {
+                name: {
+                  contains: filter.searchTerm,
+                  mode: 'insensitive',
+                },
+              },
+            },
           ]
         : undefined,
     role:
