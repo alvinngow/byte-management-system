@@ -1,12 +1,25 @@
 import { useMutation, useQuery } from '@apollo/client';
 import axios from 'axios';
-import React from 'react';
+import classNames from 'classnames';
+import Image from 'next/image';
+import React, { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import * as AccountAvatarUpdate from '../graphql/frontend/mutations/AccountAvatarUpdateMutation';
 import * as FileUpload from '../graphql/frontend/mutations/FileUploadMutation';
 import * as Me from '../graphql/frontend/queries/MeQuery';
 import Button from './Button';
+
+const BACKGROUND_COLORS = [
+  'bg-pink-600',
+  'bg-sky-600',
+  'bg-lime-500',
+  'bg-emerald-500',
+  'bg-amber-500',
+  'bg-violet-500',
+  'bg-red-500',
+  'bg-indigo-500',
+];
 
 const AvatarConfigurator: React.FC = function () {
   const { data: meData } = useQuery<Me.Data>(Me.Query);
@@ -15,6 +28,11 @@ const AvatarConfigurator: React.FC = function () {
     AccountAvatarUpdate.Data,
     AccountAvatarUpdate.Variables
   >(AccountAvatarUpdate.Mutation);
+
+  const firstName = meData?.me?.firstName;
+  const lastName = meData?.me?.lastName;
+  const avatarUrl = meData?.me?.avatar;
+  const inputElement = React.useRef<HTMLInputElement>(null);
 
   const [fileUpload] = useMutation<FileUpload.Data, FileUpload.Variables>(
     FileUpload.Mutation
@@ -25,6 +43,12 @@ const AvatarConfigurator: React.FC = function () {
   const [uploadedAvatar, setUploadedAvatar] = React.useState<string | null>(
     null
   );
+
+  const randomBgClass = useMemo(() => {
+    return BACKGROUND_COLORS[
+      Math.floor(Math.random() * BACKGROUND_COLORS.length)
+    ];
+  }, []);
 
   const handleUploadClick = React.useCallback<React.MouseEventHandler>(() => {
     async function run() {
@@ -73,18 +97,71 @@ const AvatarConfigurator: React.FC = function () {
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setFile(e.target.files?.[0] ?? null);
+    if (e!.currentTarget!.files![0]) {
+      const objectUrl = URL.createObjectURL(e!.currentTarget!.files![0]);
+      setUploadedAvatar(objectUrl!);
+    } else {
+      setUploadedAvatar(null);
+    }
   };
 
   return (
-    <details open>
-      <summary>Avatar</summary>
-      <input type="file" multiple={false} onChange={handleInputChange} />
-
-      <Button onClick={handleUploadClick}>Upload</Button>
-      <Button onClick={handleRemoveClick} disabled={meData?.me?.avatar == null}>
-        Remove
-      </Button>
-    </details>
+    <>
+      <button className="elative flex items-center gap-2.5 rounded-xl p-1">
+        <input
+          type="file"
+          multiple={false}
+          onChange={handleInputChange}
+          className="hidden"
+          ref={inputElement}
+        />
+        <span
+          className={classNames(
+            'flex h-10 w-10 items-center justify-center rounded-full',
+            randomBgClass
+          )}
+          onClick={() => inputElement.current?.click()}
+        >
+          {avatarUrl ? (
+            <Image
+              className="grow self-center object-cover"
+              src={avatarUrl}
+              alt="profile placeholder"
+              width={24}
+              height={24}
+            />
+          ) : uploadedAvatar ? (
+            <Image
+              className="grow self-center object-cover"
+              src={uploadedAvatar}
+              alt="profile placeholder"
+              width={24}
+              height={24}
+            />
+          ) : (
+            <span className="avatarLetter grow self-center text-center text-white">
+              {firstName?.[0]}
+              {lastName?.[0]}
+            </span>
+          )}
+        </span>
+        <span
+          onClick={() => inputElement.current?.click()}
+          className="pl-2 text-blue-500"
+        >
+          Add Profile Picture
+        </span>
+      </button>
+      <span className="hidden">
+        <Button onClick={handleUploadClick}>Upload</Button>
+        <Button
+          onClick={handleRemoveClick}
+          disabled={meData?.me?.avatar == null}
+        >
+          Remove
+        </Button>
+      </span>
+    </>
   );
 };
 

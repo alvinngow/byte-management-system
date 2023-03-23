@@ -106,6 +106,7 @@ const NavHeader: React.FC<Props> = function (props) {
     setIsOpen(false);
     setModal(false);
   };
+
   return (
     <>
       <div className="border border-white border-b-gray-300">
@@ -144,8 +145,24 @@ const NavHeader: React.FC<Props> = function (props) {
             )}
           </div>
           <div className="py-auto flex items-center gap-3">
-            <IconButton HeroIcon={(props) => <CogIcon />} />
-            <IconButton HeroIcon={(props) => <BellIcon />} />
+            <NavLink
+              className="pt-2"
+              href={{
+                pathname: '/settings',
+                query: { s: 'Profile' },
+              }}
+            >
+              <IconButton HeroIcon={(props) => <CogIcon />} />
+            </NavLink>
+            <NavLink
+              className="pt-2"
+              href={{
+                pathname: '/settings',
+                query: { s: 'Notifications' },
+              }}
+            >
+              <IconButton HeroIcon={(props) => <BellIcon />} />
+            </NavLink>
             <button
               className="relative flex items-center gap-2.5 rounded-xl p-1 hover:bg-brand-hover"
               onClick={() => setIsOpen(true)}

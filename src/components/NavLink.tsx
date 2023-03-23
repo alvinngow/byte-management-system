@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import React from 'react';
+import { UrlObject } from 'url';
 
 interface Props extends React.PropsWithChildren {
   className?: string;
-  href: string;
+  href: string | UrlObject;
   onClick?: React.MouseEventHandler;
 }
 
