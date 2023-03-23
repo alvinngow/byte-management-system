@@ -47,14 +47,12 @@ const Card: React.FC<React.PropsWithChildren<CardProps>> = (props) => {
       router.push(linkTo);
     }
   }
-  const baseCardClass = classNames(
-    className,
-    'grid grid-flow-row grid-rows-3',
-    { 'cursor-pointer': linkTo }
-  );
+  const baseCardClass = classNames(className, 'grid', {
+    'cursor-pointer': linkTo,
+  });
   return (
     <BaseCard className={baseCardClass} onClick={clickHandler}>
-      <div className="relative row-span-2 flex justify-center">
+      <div className="relative flex xsm:h-28 lg:h-36">
         <Image
           className="rounded-t-lg"
           src={coverImage}

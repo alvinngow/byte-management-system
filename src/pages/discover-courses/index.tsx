@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { CalendarIcon, MapIcon, MapPinIcon } from '@heroicons/react/24/outline';
 import { DateTime } from 'luxon';
 import { NextPage } from 'next';
 import Image from 'next/image';
@@ -10,6 +11,7 @@ import {
 } from '../../../gen/graphql/operations';
 import { LocationClusterEdge } from '../../../gen/graphql/resolvers';
 import Card from '../../components/Card';
+import IconButton from '../../components/IconButton';
 import Input from '../../components/Input';
 import NavLink from '../../components/NavLink';
 import Select, { SelectItem } from '../../components/Select';
@@ -142,7 +144,7 @@ const DiscoverCoursesPage: NextPage = function () {
           </div>
         )}
 
-        <div className="mb-8 grid grid-cols-2 gap-4 md:shrink-0 md:grid-cols-3 lg:grid-cols-4">
+        <div className="mb-8 grid gap-4 xsm:grid-cols-2 md:shrink-0 lg:grid-cols-3 xl:grid-cols-4">
           {courses?.map((course) => (
             <div key={course.node.id}>
               <NavLink href={`/course/${course.node.slug}`}>
@@ -152,19 +154,33 @@ const DiscoverCoursesPage: NextPage = function () {
                   className="h-full"
                 >
                   <div className="px-4 pb-4">
-                    <p className="font-sm text-gray-600">
-                      {course.node.defaultLocation?.name}
-                    </p>
-                    <div className="grid grid-cols-2">
-                      <p className="col-span-1 text-left text-xs text-gray-400">
-                        From{' '}
+                    <div className="grid items-center xsm:grid-flow-row xl:grid-cols-4">
+                      <div className="subtitle2 mt-2 flex gap-x-1 text-left xsm:row-span-1 xl:col-span-2">
+                        <IconButton
+                          HeroIcon={() => (
+                            <CalendarIcon className="h-6 w-6 text-black" />
+                          )}
+                        />
                         {DateTime.fromISO(
                           `${course.node.firstSessionStartDate}`
                         ).toLocaleString(DateTime.DATE_MED)}
-                      </p>
-                      <p className="col-span-1 text-right text-xs text-gray-400">
-                        {course.node.sessions.totalCount} sessions
-                      </p>
+                      </div>
+                      <div className="text-secondary subtitle2 mt-2 ml-auto xsm:row-span-1 xsm:ml-7 xsm:mt-0 xl:col-span-2 xl:text-end">
+                        {course.node.sessions.totalCount} session(s)
+                      </div>
+                    </div>
+                    <div className="grid items-center xsm:mt-1 xsm:grid-flow-row xl:grid-cols-4">
+                      <div className="subtitle2 flex gap-x-1 xsm:row-span-1 xl:col-span-3">
+                        <IconButton
+                          HeroIcon={() => (
+                            <MapPinIcon className="h-6 w-6 text-black" />
+                          )}
+                        />
+                        {course.node.defaultLocation?.name}
+                      </div>
+                      <div className="text-secondary subtitle2 mt-2 ml-auto xsm:row-span-1 xsm:mt-0 xsm:ml-7 xl:col-span-1 xl:text-end">
+                        {course.node.defaultLocation?.cluster?.name}
+                      </div>
                     </div>
                   </div>
                 </Card>
