@@ -27,6 +27,7 @@ import Button from '../../Button';
 import Chip from '../../Chip';
 import IconButton from '../../IconButton';
 import Modal from '../../Modal';
+import NoResults from '../../NoResults';
 
 interface Props {
   session: Session;
@@ -131,6 +132,13 @@ const SessionRow: React.FC<Props> = function (props) {
                       </th>
                     </thead>
                     <tbody>
+                      <tr>
+                        <td colSpan={2}>
+                          {data?.session?.attendees?.edges?.length === 0 && (
+                            <NoResults />
+                          )}
+                        </td>
+                      </tr>
                       {data?.session.attendees.edges.map((edge) => (
                         <tr key={edge.cursor} className="border-b bg-white">
                           <td>
