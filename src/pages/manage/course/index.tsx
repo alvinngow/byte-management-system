@@ -21,6 +21,7 @@ import IconButton from '../../../components/IconButton';
 import Input from '../../../components/Input';
 import Modal from '../../../components/Modal';
 import NavLink from '../../../components/NavLink';
+import NoResults from '../../../components/NoResults';
 import Select, { SelectItem } from '../../../components/Select';
 import SEO from '../../../components/SEO';
 import Spinner from '../../../components/Spinner';
@@ -74,7 +75,7 @@ const CoursePage: React.FC = function () {
 
   useEffect(() => {
     refetch();
-  }, [sortKeyForCourse, sortDirection, refetch]);
+  }, [debouncedSearchTerm, sortKeyForCourse, sortDirection, refetch]);
 
   const courses = data?.courses.edges;
 
@@ -243,6 +244,11 @@ const CoursePage: React.FC = function () {
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td colSpan={7}>
+                  {courses?.length === 0 && <NoResults></NoResults>}
+                </td>
+              </tr>
               {courses?.map((course) => (
                 <tr key={course.node.id}>
                   <td className="border-b border-slate-300 py-4 pl-4 text-left">
