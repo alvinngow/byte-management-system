@@ -14,6 +14,7 @@ import { UserFiltering, UserRole } from '../../../gen/graphql/resolvers';
 import DotsMoreOptions from '../../components/DotsMoreOptions';
 import IconButton from '../../components/IconButton';
 import Input from '../../components/Input';
+import NoResults from '../../components/NoResults';
 import Select from '../../components/Select';
 import * as AccountRoleUpdate from '../../graphql/frontend/mutations/AccountRoleUpdateMutation';
 import * as AccountTerminate from '../../graphql/frontend/mutations/AccountTerminateMutation';
@@ -258,6 +259,11 @@ const UsersPage: NextPage = function (props) {
                 </tr>
               </thead>
               <tbody>
+                <tr>
+                  <td colSpan={6}>
+                    {data?.users?.edges?.length === 0 && <NoResults />}
+                  </td>
+                </tr>
                 {data?.users?.edges?.map((edge) => (
                   <tr
                     key={edge.node.id}
