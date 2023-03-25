@@ -3,6 +3,7 @@ import {
   ArrowsUpDownIcon,
   ChevronDoubleDownIcon,
   PencilIcon,
+  PlusIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
@@ -135,14 +136,20 @@ const CoursePage: React.FC = function () {
 
       <div className="my-6 flex justify-between">
         <h3>Courses</h3>
-        <Button label="+ ADD CLASS" href={`/manage/course/add`} />
+        <Button
+          label="ADD COURSE"
+          className="align-center flex"
+          href={`/manage/course/add`}
+        >
+          <PlusIcon className="my-auto mr-2 w-5 w-5" />
+        </Button>
       </div>
       <div className="border-full mb-12 block w-full rounded-lg border bg-white shadow-lg">
         <div className="flex flex-col gap-4 p-4 lg:flex-row">
           <div className="flex basis-2/3 flex-col">
             <Input
               label="Search"
-              placeholder="Title, location .."
+              placeholder="Title, location ..."
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
@@ -214,7 +221,7 @@ const CoursePage: React.FC = function () {
                     <IconButton
                       HeroIcon={() => (
                         <ArrowsUpDownIcon
-                          className="ml-1 mb-1"
+                          className="ml-1 mb-1 h-5 w-5"
                           onClick={() => {
                             setSortKeyForCourse(CourseSortKey.StartDate);
                             setSortDirection((prevState) => !prevState);
@@ -230,7 +237,7 @@ const CoursePage: React.FC = function () {
                     <IconButton
                       HeroIcon={() => (
                         <ArrowsUpDownIcon
-                          className="ml-1 mb-1"
+                          className="ml-1 mb-1 h-5 w-5"
                           onClick={() => {
                             setSortKeyForCourse(CourseSortKey.EndDate);
                             setSortDirection((prevState) => !prevState);
@@ -327,15 +334,17 @@ const CoursePage: React.FC = function () {
                       >
                         <IconButton
                           HeroIcon={() => (
-                            <PencilIcon className="ml-1 mb-1" title="Edit" />
+                            <PencilIcon
+                              className="ml-1 mb-1 h-6 w-6"
+                              title="Edit"
+                            />
                           )}
                         />
                       </NavLink>
                       <IconButton
                         HeroIcon={() => (
                           <TrashIcon
-                            style={{ color: '#6B7280' }}
-                            className="h-6 w-6 hover:cursor-pointer"
+                            className="h-6 w-6"
                             title="Delete"
                             onClick={() => {
                               setCourseToDelete(course.node);
