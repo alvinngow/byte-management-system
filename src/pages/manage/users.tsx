@@ -37,8 +37,10 @@ const userTypeMap = {
 const UsersPage: NextPage = function (props) {
   const [searchTerm, setSearchTerm] = useState('');
   const [volunteerFilter, setVolunteerFilter] = useState<UserRole | string>('');
-  const [sortKey, setSortKey] = useState<UserSortKey | undefined>(undefined);
-  const [sortDirection, setSortDirection] = useState(false);
+  const [userSortKey, setUserSortKey] = useState<UserSortKey | undefined>(
+    undefined
+  );
+  const [reverse, setReverse] = useState(false);
 
   const debouncedSearchTerm = useDebounce(searchTerm);
   const { me, loading: meLoading } = useCurrentUser();
@@ -50,10 +52,10 @@ const UsersPage: NextPage = function (props) {
     }
     return {
       filter,
-      sortKey,
-      reverse: sortDirection,
+      sortKey: userSortKey,
+      reverse,
     };
-  }, [debouncedSearchTerm, volunteerFilter, sortKey, sortDirection]);
+  }, [debouncedSearchTerm, volunteerFilter, userSortKey, reverse]);
 
   const { data, loading, refetch, fetchMore } = useQuery<
     UsersQuery.Data,
@@ -74,7 +76,7 @@ const UsersPage: NextPage = function (props) {
 
   useEffect(() => {
     refetch();
-  }, [debouncedSearchTerm, volunteerFilter, refetch, sortKey]);
+  }, [debouncedSearchTerm, volunteerFilter, refetch, variables]);
 
   React.useEffect(() => {
     if (me == null) {
@@ -138,12 +140,9 @@ const UsersPage: NextPage = function (props) {
 
   return (
     <AppLayout>
-      {/* start of body DIV*/}
       <div className="mb-12">
         <h3 className="my-6">Users</h3>
-        {/* start of table */}
         <div className="border-full rounded-lg border shadow-lg">
-          {/* search bar */}
           <div className="flex flex-col gap-4 pl-5 pr-5 pt-6 pb-6 md:flex-row lg:flex-row">
             <div className="sm:w-full md:w-3/4 lg:w-3/4">
               <Input
@@ -175,14 +174,12 @@ const UsersPage: NextPage = function (props) {
               />
             </div>
           </div>
-          {/* start of the user's details table */}
           <div className="snap-x overflow-x-auto scroll-smooth">
             {loading && <span>Loading</span>}
 
             <table className="w-full text-left">
               <thead className="border-b border-slate-300 py-4 pl-4 text-left">
                 <tr>
-                  {/* need to add the up-down arrow icon */}
                   <th className="px-4 py-3 xsm:columns-2 md:columns-3">
                     <div className="flex justify-center whitespace-nowrap">
                       <p>User Name</p>
@@ -191,9 +188,10 @@ const UsersPage: NextPage = function (props) {
                           <ArrowsUpDownIcon
                             className="ml-1 mb-1"
                             onClick={() => {
-                              setSortKey(UserSortKey.FirstName);
+                              setUserSortKey(UserSortKey.FirstName);
+                              setReverse((prevState) => !prevState);
                             }}
-                          ></ArrowsUpDownIcon>
+                          />
                         )}
                       />
                     </div>
@@ -206,9 +204,10 @@ const UsersPage: NextPage = function (props) {
                           <ArrowsUpDownIcon
                             className="ml-1 mb-1"
                             onClick={() => {
-                              setSortKey(UserSortKey.ContactNumber);
+                              setUserSortKey(UserSortKey.ContactNumber);
+                              setReverse((prevState) => !prevState);
                             }}
-                          ></ArrowsUpDownIcon>
+                          />
                         )}
                       />
                     </div>
@@ -221,9 +220,10 @@ const UsersPage: NextPage = function (props) {
                           <ArrowsUpDownIcon
                             className="ml-1 mb-1"
                             onClick={() => {
-                              setSortKey(UserSortKey.School);
+                              setUserSortKey(UserSortKey.School);
+                              setReverse((prevState) => !prevState);
                             }}
-                          ></ArrowsUpDownIcon>
+                          />
                         )}
                       />
                     </div>
@@ -236,9 +236,10 @@ const UsersPage: NextPage = function (props) {
                           <ArrowsUpDownIcon
                             className="ml-1 mb-1"
                             onClick={() => {
-                              setSortKey(UserSortKey.UserType);
+                              setUserSortKey(UserSortKey.UserType);
+                              setReverse((prevState) => !prevState);
                             }}
-                          ></ArrowsUpDownIcon>
+                          />
                         )}
                       />
                     </div>
@@ -248,13 +249,13 @@ const UsersPage: NextPage = function (props) {
                       Account Status
                       <IconButton
                         HeroIcon={() => (
-                          <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
+                          <ArrowsUpDownIcon className="ml-1 mb-1" />
                         )}
                       />
                     </div>
                   </th>
                   {me?.role === UserRole.SystemAdministrator && (
-                    <th className="px-6 py-3">Management</th>
+                    <th className="px-6 py-3"></th>
                   )}
                 </tr>
               </thead>
@@ -270,7 +271,6 @@ const UsersPage: NextPage = function (props) {
                     className="border-b bg-white text-center"
                   >
                     <td className="items-center px-4 py-4">
-                      {/* avatar is not appearing */}
                       <div className="grid grid-cols-[100px_1fr]">
                         <div className="flex ">
                           <Image
@@ -304,40 +304,43 @@ const UsersPage: NextPage = function (props) {
                       NOT IMPLEMENTED IN GRAPHQL
                     </td>
                     <td className="flex justify-center px-6 py-4 text-black">
-                      {/* dropdown code starts here */}
                       {me?.role === UserRole.SystemAdministrator && (
-                        <DotsMoreOptions
-                          className="h-6 w-6"
-                          aria-hidden="true"
-                          onOptionClick={(value: string) => {
-                            switch (value) {
-                              case 'delete':
-                                terminateAccount(edge.node.id);
-                                break;
-                              default:
-                                updateRole(edge.node.id, value as UserRole);
-                                break;
-                            }
-                          }}
-                          options={[
-                            {
-                              label: 'Make as Comm Member',
-                              value: UserRole.CommitteeMember,
-                            },
-                            {
-                              label: 'Make as System Admin',
-                              value: UserRole.SystemAdministrator,
-                            },
-                            {
-                              label: 'Make as Volunteer',
-                              value: UserRole.User,
-                            },
-                            {
-                              label: 'Delete User',
-                              value: 'delete',
-                              optionStyle: 'text-center text-red-500',
-                            },
-                          ]}
+                        <IconButton
+                          HeroIcon={() => (
+                            <DotsMoreOptions
+                              className="h-6 w-6"
+                              aria-hidden="true"
+                              onOptionClick={(value: string) => {
+                                switch (value) {
+                                  case 'delete':
+                                    terminateAccount(edge.node.id);
+                                    break;
+                                  default:
+                                    updateRole(edge.node.id, value as UserRole);
+                                    break;
+                                }
+                              }}
+                              options={[
+                                {
+                                  label: 'Make as Comm Member',
+                                  value: UserRole.CommitteeMember,
+                                },
+                                {
+                                  label: 'Make as System Admin',
+                                  value: UserRole.SystemAdministrator,
+                                },
+                                {
+                                  label: 'Make as Volunteer',
+                                  value: UserRole.User,
+                                },
+                                {
+                                  label: 'Delete User',
+                                  value: 'delete',
+                                  optionStyle: 'text-center text-red-500',
+                                },
+                              ]}
+                            />
+                          )}
                         />
                       )}
                     </td>
@@ -345,7 +348,6 @@ const UsersPage: NextPage = function (props) {
                 ))}
               </tbody>
             </table>
-
             {data?.users?.pageInfo?.hasNextPage && (
               <div className="px-3 py-3 text-center">
                 <button className="inline-flex">
@@ -361,7 +363,6 @@ const UsersPage: NextPage = function (props) {
           </div>
         </div>
       </div>
-      {/* end of body DIV */}
     </AppLayout>
   );
 };

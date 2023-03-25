@@ -14,6 +14,7 @@ export interface Variables {
   after?: string;
   filter?: UserFiltering;
   sortKey?: UserSortKey;
+  reverse?: boolean;
 }
 
 export const Query = gql`
@@ -21,8 +22,15 @@ export const Query = gql`
     $after: String
     $filter: UserFiltering
     $sortKey: UserSortKey
+    $reverse: Boolean
   ) {
-    users(first: 10, after: $after, filter: $filter, sortKey: $sortKey) {
+    users(
+      first: 10
+      after: $after
+      filter: $filter
+      sortKey: $sortKey
+      reverse: $reverse
+    ) {
       edges {
         node {
           id
