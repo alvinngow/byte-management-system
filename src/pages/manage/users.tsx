@@ -29,7 +29,7 @@ const ALLOWED_ROLES = new Set([
 ]);
 
 const userTypeMap = {
-  [UserRole.User]: 'User',
+  [UserRole.User]: 'Volunteer',
   [UserRole.SystemAdministrator]: 'System Administrator',
   [UserRole.CommitteeMember]: 'Committee Member',
 };
