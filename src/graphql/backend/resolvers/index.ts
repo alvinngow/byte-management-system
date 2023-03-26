@@ -40,6 +40,7 @@ import { Session_attendeesResolver } from './Session/attendees';
 import { Session_courseResolver } from './Session/course';
 import { Session_endTimeResolver } from './Session/endTime';
 import { Session_locationResolver } from './Session/location';
+import { Session_selfAttendeeResolver } from './Session/selfAttendee';
 import { Session_startTimeResolver } from './Session/startTime';
 import { Session_volunteerSlotAvailableCountResolver } from './Session/volunteerSlotAvailableCount';
 import { SessionAttendee_sessionResolver } from './SessionAttendee/session';
@@ -113,6 +114,7 @@ const resolvers: Resolvers = {
     endTime: Session_endTimeResolver,
     location: Session_locationResolver,
     volunteerSlotAvailableCount: Session_volunteerSlotAvailableCountResolver,
+    selfAttendee: Session_selfAttendeeResolver,
   },
   SessionAttendee: {
     user: SessionAttendee_userResolver,

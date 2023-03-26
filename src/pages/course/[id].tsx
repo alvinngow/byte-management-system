@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { ArrowsUpDownIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
+import produce from 'immer';
 import { DateTime } from 'luxon';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -39,11 +40,8 @@ const CourseDetailPage: React.FC = function () {
     'Apply' | 'Description' | 'Volunteer Instructions'
   >('Apply');
 
-  const { data, loading, error, fetchMore } = useQuery<
-    CourseSlugSessionsQuery.Data,
-    CourseSlugSessionsQuery.Variables
-  >(CourseSlugSessionsQuery.Query, {
-    variables: {
+  const variables = React.useMemo<CourseSlugSessionsQuery.Variables>(() => {
+    return {
       slug: id as string,
       reverse,
       sortKey: SessionSortKey.Start,
@@ -51,7 +49,14 @@ const CourseDetailPage: React.FC = function () {
       filter: {
         date: SessionDateFiltering.Upcoming,
       },
-    },
+    };
+  }, [id, reverse]);
+
+  const { data, loading, error, fetchMore } = useQuery<
+    CourseSlugSessionsQuery.Data,
+    CourseSlugSessionsQuery.Variables
+  >(CourseSlugSessionsQuery.Query, {
+    variables,
     skip: id == null,
   });
 
@@ -82,9 +87,48 @@ const CourseDetailPage: React.FC = function () {
             sessionId,
           },
         },
+        update: (cache, mutationResult) => {
+          if (mutationResult.data == null) {
+            return;
+          }
+
+          const queryData = cache.readQuery<
+            CourseSlugSessionsQuery.Data,
+            CourseSlugSessionsQuery.Variables
+          >({
+            query: CourseSlugSessionsQuery.Query,
+            variables,
+          });
+
+          if (queryData == null) {
+            return;
+          }
+
+          const queryDataUpdated = produce(queryData, (draft) => {
+            const sessionEdge = draft.course.sessions.edges.find(
+              (edge) => edge.node.id === sessionId
+            );
+
+            if (sessionEdge == null) {
+              return;
+            }
+
+            sessionEdge.node.selfAttendee =
+              mutationResult.data?.sessionAttend.sessionAttendee;
+          });
+
+          cache.writeQuery<
+            CourseSlugSessionsQuery.Data,
+            CourseSlugSessionsQuery.Variables
+          >({
+            query: CourseSlugSessionsQuery.Query,
+            variables,
+            data: queryDataUpdated,
+          });
+        },
       });
     },
-    [updateSession]
+    [updateSession, variables]
   );
 
   React.useEffect(() => {
@@ -300,11 +344,9 @@ const CourseDetailPage: React.FC = function () {
                                     'Unlimited'}
                                 </td>
                                 <td className="whitespace-nowrap border-b border-slate-300 py-4 px-4 text-center">
-                                  {edge.node.attendees.edges.some(
-                                    (edge) =>
-                                      edge.node.indicatedAttendance ===
-                                      Attendance.Attend
-                                  ) ? (
+                                  {edge.node.selfAttendee
+                                    ?.indicatedAttendance ===
+                                  Attendance.Attend ? (
                                     <SessionButton
                                       size="sm"
                                       isApplyBtn={true}

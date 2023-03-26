@@ -8,12 +8,12 @@ import {
   UserRole,
 } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
-import requireAuthenticated from '../util/requireAuthenticated';
 import { Prisma } from '.prisma/client';
 
 import SessionAttendeeWhereInput = Prisma.SessionAttendeeWhereInput;
 import SessionAttendeeOrderByWithRelationInput = Prisma.SessionAttendeeOrderByWithRelationInput;
 import Enumerable = Prisma.Enumerable;
+import requireCurrentUserRole from '../util/requireCurrentUserRole';
 
 export const Session_attendeesResolver: SessionResolvers['attendees'] = async (
   root,
@@ -21,20 +21,17 @@ export const Session_attendeesResolver: SessionResolvers['attendees'] = async (
   context,
   info
 ) => {
-  await requireAuthenticated(context);
-
-  const currentUserId = context.getCurrentUserId()!;
-  const currentUserRole = await context.getCurrentUserRole()!;
+  await requireCurrentUserRole(
+    context,
+    UserRole.CommitteeMember,
+    UserRole.SystemAdministrator
+  );
 
   const { first, after, filter, sortKey, reverse } = args;
 
   const where: SessionAttendeeWhereInput = {
     sessionId: root.id,
   };
-
-  if (currentUserRole === UserRole.User) {
-    where.userId = currentUserId;
-  }
 
   if (filter != null) {
     if (filter.searchText != null) {

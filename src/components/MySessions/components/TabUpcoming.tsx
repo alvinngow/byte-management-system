@@ -10,8 +10,8 @@ import {
   SessionAttendeeConnection,
 } from '../../../../gen/graphql/resolvers';
 import * as SessionAttend from '../../../graphql/frontend/mutations/SessionAttendMutation';
+import * as MeSessions from '../../../graphql/frontend/queries/MeSessionAttendeesQuery';
 import SessionButton from '../../../pages/course/components/SessionButton';
-import IconButton from '../../IconButton';
 import NavLink from '../../NavLink';
 
 interface TabUpcomingProps {
@@ -38,6 +38,7 @@ const TabUpcoming: React.FC<TabUpcomingProps> = function (props) {
             sessionId,
           },
         },
+        refetchQueries: [MeSessions.Query],
       });
     },
     [sessionAttend]
