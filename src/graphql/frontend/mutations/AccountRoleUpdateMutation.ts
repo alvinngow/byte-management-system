@@ -20,6 +20,8 @@ export const Mutation = gql`
       user {
         id
         role
+        email
+        mobileNo
       }
     }
   }

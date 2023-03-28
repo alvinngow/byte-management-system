@@ -35,6 +35,7 @@ import { locationsResolver } from './queries/locations';
 import { meResolver } from './queries/me';
 import { schoolsResolver } from './queries/schools';
 import { sessionResolver } from './queries/session';
+import { userResolver } from './queries/user';
 import { usersResolver } from './queries/users';
 import { Session_attendeesResolver } from './Session/attendees';
 import { Session_courseResolver } from './Session/course';
@@ -61,6 +62,7 @@ const resolvers: Resolvers = {
     course: courseResolver,
     session: sessionResolver,
     courseBySlug: courseBySlugResolver,
+    user: userResolver,
   },
   Mutation: {
     accountLogin: accountLoginResolver,
