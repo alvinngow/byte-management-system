@@ -8,6 +8,7 @@ type User {
   school: School
   role: UserRole
   verified_at:DateTime
+  approved_at:DateTime
 }
 
 enum UserSortKey{
