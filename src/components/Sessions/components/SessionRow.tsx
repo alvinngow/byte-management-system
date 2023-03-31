@@ -1,5 +1,3 @@
-import 'react-tooltip/dist/react-tooltip.css';
-
 import { useMutation, useQuery } from '@apollo/client';
 import {
   ClipboardDocumentCheckIcon,
@@ -10,7 +8,6 @@ import classNames from 'classnames';
 import { DateTime } from 'luxon';
 import Image from 'next/image';
 import React from 'react';
-import { Tooltip } from 'react-tooltip';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Attendance } from '../../../../gen/graphql/operations';
@@ -231,19 +228,6 @@ const SessionRow: React.FC<Props> = function (props) {
               )}
             />
           </a>
-          <Tooltip
-            anchorSelect="#markattendance-button"
-            place="right"
-            style={{
-              whiteSpace: 'normal',
-              padding: '8px 12px',
-              borderRadius: '10px',
-              background: 'rgb(75 85 99)',
-              position: 'absolute',
-            }}
-          >
-            Mark Attendance
-          </Tooltip>
         </div>
       </td>
     </tr>

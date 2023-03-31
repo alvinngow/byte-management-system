@@ -1,9 +1,6 @@
-import 'react-tooltip/dist/react-tooltip.css';
-
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import React from 'react';
-import { Tooltip } from 'react-tooltip';
 
 import { Attendance } from '../../gen/graphql/resolvers';
 import IconButton from './IconButton';
@@ -25,20 +22,6 @@ const textMap: Record<Attendance, JSX.Element | string> = {
           )}
         />
       </a>
-      <Tooltip
-        anchorSelect="#warning-message"
-        place="right"
-        style={{
-          width: '160px',
-          whiteSpace: 'normal',
-          padding: '15px 16px',
-          borderRadius: '10px',
-          background: 'rgb(75 85 99)',
-        }}
-      >
-        If you can&#39;t make it to the class, please kindly cancel your session
-        in advance.
-      </Tooltip>
     </>
   ),
 };
