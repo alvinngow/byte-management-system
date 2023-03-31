@@ -1,4 +1,4 @@
-import { ArrowUpIcon } from '@heroicons/react/24/outline';
+import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { DateTime, Duration } from 'luxon';
 import React from 'react';
@@ -53,7 +53,7 @@ const ClassOverviewCard: React.FC<Props> = function (props) {
                 className="text-secondary caption ml-5 whitespace-nowrap"
                 text=""
                 number={change.toString()}
-                Icon={ArrowUpIcon}
+                Icon={change > 0 ? ArrowUpIcon : ArrowDownIcon}
               />
             </div>
           )}

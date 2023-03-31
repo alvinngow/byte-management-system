@@ -14,6 +14,7 @@ async function computeCoursesUpcoming(
   const value = await prisma.sessionAttendee.count({
     where: {
       userId: currentUserId,
+      indicatedAttendance: Attendance.Attend,
       session: {
         startDate: {
           gte: DateTime.now().toJSDate(),

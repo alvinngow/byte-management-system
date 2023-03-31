@@ -11,6 +11,7 @@ import {
 } from '../../../../gen/graphql/resolvers';
 import * as SessionAttend from '../../../graphql/frontend/mutations/SessionAttendMutation';
 import * as MeSessions from '../../../graphql/frontend/queries/MeSessionAttendeesQuery';
+import * as MeSessionOverview from '../../../graphql/frontend/queries/MeSessionOverviewQuery';
 import SessionButton from '../../../pages/course/components/SessionButton';
 import NavLink from '../../NavLink';
 
@@ -38,7 +39,7 @@ const TabUpcoming: React.FC<TabUpcomingProps> = function (props) {
             sessionId,
           },
         },
-        refetchQueries: [MeSessions.Query],
+        refetchQueries: [MeSessions.Query, MeSessionOverview.Query],
       });
     },
     [sessionAttend]

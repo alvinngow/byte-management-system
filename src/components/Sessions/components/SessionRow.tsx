@@ -19,6 +19,7 @@ import {
   SessionAttendeeSortKey,
 } from '../../../../gen/graphql/resolvers';
 import * as SessionAttendReport from '../../../graphql/frontend/mutations/SessionAttendReportMutation';
+import * as SessionOverview from '../../../graphql/frontend/queries/MeSessionOverviewQuery';
 import * as SessionAttendee from '../../../graphql/frontend/queries/SessionAttendeesQuery';
 import AttendanceButton from '../../AttendanceButton';
 import Button from '../../Button';
@@ -84,6 +85,7 @@ const SessionRow: React.FC<Props> = function (props) {
             id: session.id,
           },
         },
+        SessionOverview.Query,
       ],
     });
   };

@@ -27,8 +27,11 @@ const TextMap: Record<CurrentUserOverviewType, string> = {
 };
 
 const MySessionsOverview: React.FC = function () {
-  const { data, loading } = useQuery<MeSessionOverview.Data>(
-    MeSessionOverview.Query
+  const { data, loading, refetch } = useQuery<MeSessionOverview.Data>(
+    MeSessionOverview.Query,
+    {
+      fetchPolicy: 'cache-and-network',
+    }
   );
 
   return (
