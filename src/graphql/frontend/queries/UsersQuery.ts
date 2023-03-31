@@ -43,6 +43,7 @@ export const Query = gql`
             name
           }
           role
+          verified_at
         }
       }
       pageInfo {

@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { UserEdge, UserSortKey } from '../../../../gen/graphql/operations';
 import { UserFiltering, UserRole } from '../../../../gen/graphql/resolvers';
+import Chip from '../../../components/Chip';
 import DotsMoreOptions from '../../../components/DotsMoreOptions';
 import IconButton from '../../../components/IconButton';
 import Input from '../../../components/Input';
@@ -303,7 +304,11 @@ const UsersPage: NextPage = function (props) {
                       {userTypeMap[edge.node.role!]}
                     </td>
                     <td className="px-6 py-4 text-red-500">
-                      NOT IMPLEMENTED IN GRAPHQL
+                      {edge.node.verified_at ? (
+                        <Chip scheme="success" text={'Verified'} />
+                      ) : (
+                        <Chip scheme="disabled" number={'Pending'} />
+                      )}
                     </td>
                     <td className="flex justify-center px-6 py-4 text-black">
                       {/* dropdown code starts here */}
