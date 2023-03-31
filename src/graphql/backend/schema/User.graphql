@@ -7,6 +7,7 @@ type User {
   avatar: String
   school: School
   role: UserRole
+  verified_at:DateTime
 }
 
 enum UserSortKey{

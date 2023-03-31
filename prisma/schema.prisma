@@ -28,8 +28,10 @@ model User {
   courseManagers               CourseManager[]
   sessionAttendees             SessionAttendee[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  verified_at       DateTime?
+  EmailVerification EmailVerification[]
 }
 
 model School {
@@ -202,4 +204,11 @@ model SessionAttendee {
   updatedAt DateTime @updatedAt
 
   @@unique([sessionId, userId])
+}
+
+model EmailVerification {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
 }
