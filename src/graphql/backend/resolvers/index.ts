@@ -27,6 +27,7 @@ import { sessionAttendResolver } from './mutations/sessionAttend';
 import { sessionAttendReportResolver } from './mutations/sessionAttendReport';
 import { sessionDeleteResolver } from './mutations/sessionDelete';
 import { sessionEditResolver } from './mutations/sessionEdit';
+import { userEditResolver } from './mutations/userEdit';
 import { courseResolver } from './queries/course';
 import { courseBySlugResolver } from './queries/courseBySlug';
 import { coursesResolver } from './queries/courses';
@@ -74,6 +75,7 @@ const resolvers: Resolvers = {
     fileUpload: fileUploadResolver,
     courseAdd: courseAddResolver,
     courseEdit: courseEditResolver,
+    userEdit: userEditResolver,
     courseDelete: courseDeleteResolver,
     sessionAdd: sessionAddResolver,
     sessionAttendReport: sessionAttendReportResolver,

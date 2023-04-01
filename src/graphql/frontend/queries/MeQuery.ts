@@ -17,6 +17,7 @@ export const Query = gql`
       mobileNo
       school {
         id
+        name
       }
       role
       createdAt

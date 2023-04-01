@@ -2,8 +2,9 @@ import { useMutation, useQuery } from '@apollo/client';
 import axios from 'axios';
 import classNames from 'classnames';
 import Image from 'next/image';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { nullEvent } from 'xstate/lib/actionTypes';
 
 import * as AccountAvatarUpdate from '../graphql/frontend/mutations/AccountAvatarUpdateMutation';
 import * as FileUpload from '../graphql/frontend/mutations/FileUploadMutation';
@@ -21,7 +22,12 @@ const BACKGROUND_COLORS = [
   'bg-indigo-500',
 ];
 
-const AvatarConfigurator: React.FC = function () {
+interface Prop {
+  submitType?: string | null;
+}
+
+const AvatarConfigurator: React.FC<Prop> = function (prop) {
+  const { submitType } = prop;
   const { data: meData } = useQuery<Me.Data>(Me.Query);
 
   const [accountAvatarUpdate] = useMutation<
@@ -50,7 +56,7 @@ const AvatarConfigurator: React.FC = function () {
     ];
   }, []);
 
-  const handleUploadClick = React.useCallback<React.MouseEventHandler>(() => {
+  const handleUploadClick = React.useCallback(() => {
     async function run() {
       if (file == null) {
         return;
@@ -105,6 +111,12 @@ const AvatarConfigurator: React.FC = function () {
     }
   };
 
+  useEffect(() => {
+    if (submitType === 'submit') {
+      handleUploadClick();
+    }
+  }, [submitType, handleUploadClick]);
+
   return (
     <>
       <button className="elative flex items-center gap-2.5 rounded-xl p-1">
@@ -151,9 +163,13 @@ const AvatarConfigurator: React.FC = function () {
         >
           Add Profile Picture
         </span>
+        {meData?.me?.avatar != null && (
+          <span onClick={handleRemoveClick} className="pl-2 text-blue-500">
+            Remove Picture
+          </span>
+        )}
       </button>
       <span className="hidden">
-        <Button onClick={handleUploadClick}>Upload</Button>
         <Button
           onClick={handleRemoveClick}
           disabled={meData?.me?.avatar == null}

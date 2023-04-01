@@ -62,3 +62,18 @@ input UserFiltering {
   role: [UserRole!]
   searchTerm: String
 }
+
+input UserEditInput {
+  clientMutationId: String
+  id: ID!
+  email: String!
+  firstName: String!
+  lastName: String!
+  mobileNo: String!
+  schoolName: String
+}
+
+type UserEditPayload {
+  clientMutationId: String
+  User: User
+}

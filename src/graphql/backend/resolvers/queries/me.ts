@@ -15,14 +15,15 @@ export const meResolver: QueryResolvers['me'] = async (
     throw new Error('unauthorised');
   }
 
-  const parsedResolveInfo = parseResolveInfo(info);
-  const currentUserFields = parsedResolveInfo?.fieldsByTypeName?.CurrentUser;
-  const hasSchoolField =
-    currentUserFields != null && 'school' in currentUserFields;
+  const school = await prisma.school.findFirst({
+    where: {
+      User: { some: { id: currentUserId } },
+    },
+  });
 
   const currentUser = await prisma.user.findFirst({
     include: {
-      school: hasSchoolField,
+      ...(school ? { school: true } : {}),
     },
     where: {
       id: currentUserId,

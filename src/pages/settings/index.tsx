@@ -1,6 +1,6 @@
 import { BellIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 import BackButton from '../../components/BackButton';
