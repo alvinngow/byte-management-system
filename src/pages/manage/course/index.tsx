@@ -163,14 +163,14 @@ const CoursePage: React.FC = function () {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr>
-                <th className="border-b border-slate-300 py-4 pl-4 text-left">
+              <tr className="border-b border-slate-300 py-4 pl-4 text-left">
+                <th className="whitespace-nowrap px-6 py-3">
                   <div className="flex items-center gap-1.5">
-                    <span>Title</span>
+                    Title
                     <IconButton
                       HeroIcon={() => (
                         <ArrowsUpDownIcon
-                          className="ml-1 mb-1"
+                          className="mt-1 h-5 w-5"
                           onClick={() => {
                             setSortKeyForCourse(CourseSortKey.Name);
                             setSortDirection((prevState) => !prevState);
@@ -180,13 +180,13 @@ const CoursePage: React.FC = function () {
                     />
                   </div>
                 </th>
-                <th className="border-b border-slate-300 py-4 pl-4 text-left">
+                <th className="whitespace-nowrap px-6 py-3">
                   <div className="flex items-center gap-1.5">
-                    <span>Location</span>
+                    Location
                     <IconButton
                       HeroIcon={() => (
                         <ArrowsUpDownIcon
-                          className="ml-1 mb-1"
+                          className="mt-1 h-5 w-5"
                           onClick={() => {
                             setSortKeyForCourse(CourseSortKey.LocationName);
                             setSortDirection((prevState) => !prevState);
@@ -196,13 +196,13 @@ const CoursePage: React.FC = function () {
                     />
                   </div>
                 </th>
-                <th className="border-b border-slate-300 py-4 pl-4 text-left">
-                  <div className=" flex items-center gap-1.5">
+                <th className="whitespace-nowrap px-6 py-3">
+                  <div className="flex items-center gap-1.5">
                     <span>Region</span>
                     <IconButton
                       HeroIcon={() => (
                         <ArrowsUpDownIcon
-                          className="ml-1 mb-1"
+                          className="mt-1 h-5 w-5"
                           onClick={() => {
                             setSortKeyForCourse(CourseSortKey.Region);
                             setSortDirection((prevState) => !prevState);
@@ -212,16 +212,14 @@ const CoursePage: React.FC = function () {
                     />
                   </div>
                 </th>
-                <th className="border-b border-slate-300 py-4 pl-4 text-left">
-                  Trainer(s)
-                </th>
-                <th className="border-b border-slate-300 py-4 pl-4 text-left">
+                <th className="whitespace-nowrap px-6 py-3">Trainer(s)</th>
+                <th className="whitespace-nowrap px-6 py-3">
                   <div className="flex items-center gap-1.5">
-                    <span>Start Date</span>
+                    Start Date
                     <IconButton
                       HeroIcon={() => (
                         <ArrowsUpDownIcon
-                          className="ml-1 mb-1 h-5 w-5"
+                          className="mt-1 mb-1 h-5 w-5"
                           onClick={() => {
                             setSortKeyForCourse(CourseSortKey.StartDate);
                             setSortDirection((prevState) => !prevState);
@@ -231,13 +229,13 @@ const CoursePage: React.FC = function () {
                     />
                   </div>
                 </th>
-                <th className="border-b border-slate-300 py-4 pl-4 text-left">
+                <th className="whitespace-nowrap px-6 py-3">
                   <div className="flex items-center gap-1.5">
-                    <span>End Date</span>
+                    End Date
                     <IconButton
                       HeroIcon={() => (
                         <ArrowsUpDownIcon
-                          className="ml-1 mb-1 h-5 w-5"
+                          className="mt-1 mb-1 h-5 w-5"
                           onClick={() => {
                             setSortKeyForCourse(CourseSortKey.EndDate);
                             setSortDirection((prevState) => !prevState);
@@ -247,7 +245,7 @@ const CoursePage: React.FC = function () {
                     />
                   </div>
                 </th>
-                <th className="border-b border-slate-300 py-4 pl-4 text-left" />
+                <th className="whitespace-nowrap px-6 py-3" />
               </tr>
             </thead>
             <tbody>
@@ -258,16 +256,16 @@ const CoursePage: React.FC = function () {
               </tr>
               {courses?.map((course) => (
                 <tr key={course.node.id}>
-                  <td className="border-b border-slate-300 py-4 pl-4 text-left">
+                  <td className="whitespace-nowrap border-b border-slate-300 py-4 pl-6 text-left">
                     {course.node.name}
                   </td>
-                  <td className="border-b border-slate-300 py-4 pl-4 text-left">
+                  <td className="whitespace-nowrap border-b border-slate-300 py-4 pl-6 text-left">
                     {course.node.defaultLocation?.name}
                   </td>
-                  <td className="border-b border-slate-300 py-4 pl-4 text-left">
+                  <td className="whitespace-nowrap border-b border-slate-300 py-4 pl-6 text-left">
                     {course.node.defaultLocation?.cluster?.name}
                   </td>
-                  <td className="border-b border-slate-300 py-4 pl-4 text-left">
+                  <td className="whitespace-nowrap border-b border-slate-300 py-4 pl-6 text-left">
                     <div className="relative flex items-center">
                       {course.node.courseManagers.edges.map(
                         (courseManager, i) => {
@@ -320,13 +318,13 @@ const CoursePage: React.FC = function () {
                       )}
                     </div>
                   </td>
-                  <td className="border-b border-slate-300 py-4 pl-4 text-left">
+                  <td className="whitespace-nowrap border-b border-slate-300 py-4 pl-6 text-left">
                     {course.node?.firstSessionStartDate}
                   </td>
-                  <td className="border-b border-slate-300 py-4 pl-4 text-left">
+                  <td className="whitespace-nowrap border-b border-slate-300 py-4 pl-6 text-left">
                     {course.node?.lastSessionEndDate}
                   </td>
-                  <td className="border-b border-slate-300 p-4 text-left">
+                  <td className="whitespace-nowrap border-b border-slate-300 p-6 text-left">
                     <div className="flex gap-2.5">
                       <NavLink
                         href={`/manage/course/${course.node.id}`}
