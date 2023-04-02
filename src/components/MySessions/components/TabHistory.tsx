@@ -5,6 +5,7 @@ import React from 'react';
 
 import { SessionAttendeeConnection } from '../../../../gen/graphql/resolvers';
 import ActualAttendancePill from '../../ActualAttendancePill';
+import IconButton from '../../IconButton';
 import NavLink from '../../NavLink';
 
 interface TabHistoryProps {
@@ -17,25 +18,25 @@ const TabHistory: React.FC<TabHistoryProps> = function (props) {
   const { sessionAttendeeConnection, reverse, handleReverseToggle } = props;
 
   return (
-    <table className="text-secondary w-full text-left">
-      <thead className="subtitle2 text-secondary">
-        <th className="whitespace-nowrap px-6 py-3">
+    <table className="subtitle2 w-full text-left">
+      <thead className="subtitle2">
+        <th className="flex items-center gap-1.5 whitespace-nowrap px-6 py-3">
           Date
-          <button
-            className="ml-auto hover:cursor-pointer"
-            onClick={handleReverseToggle}
-          >
-            <ArrowsUpDownIcon
-              className={classNames('h-5 w-5', {
-                'text-secondary': reverse,
-              })}
-            />
-          </button>
+          <IconButton
+            HeroIcon={(props) => (
+              <ArrowsUpDownIcon
+                onClick={handleReverseToggle}
+                className={classNames('h-5 w-5', {
+                  'text-secondary': reverse,
+                })}
+              />
+            )}
+          />
         </th>
-        <th className="whitespace-nowrap px-6 py-3">Start Time </th>
-        <th className="whitespace-nowrap px-6 py-3">End Time </th>
-        <th className="whitespace-nowrap px-6 py-3">Course Title </th>
-        <th className="whitespace-nowrap px-6 py-3">Location </th>
+        <th className="whitespace-nowrap px-6 py-3">Start Time</th>
+        <th className="whitespace-nowrap px-6 py-3">End Time</th>
+        <th className="whitespace-nowrap px-6 py-3">Course Title</th>
+        <th className="whitespace-nowrap px-6 py-3">Location</th>
         <th className="whitespace-nowrap px-6 py-3 text-center">
           Attendance Status
         </th>

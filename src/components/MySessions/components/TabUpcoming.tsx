@@ -13,6 +13,7 @@ import * as SessionAttend from '../../../graphql/frontend/mutations/SessionAtten
 import * as MeSessions from '../../../graphql/frontend/queries/MeSessionAttendeesQuery';
 import * as MeSessionOverview from '../../../graphql/frontend/queries/MeSessionOverviewQuery';
 import SessionButton from '../../../pages/course/components/SessionButton';
+import IconButton from '../../IconButton';
 import NavLink from '../../NavLink';
 
 interface TabUpcomingProps {
@@ -45,20 +46,20 @@ const TabUpcoming: React.FC<TabUpcomingProps> = function (props) {
     [sessionAttend]
   );
   return (
-    <table className="text-secondary w-full text-left">
+    <table className="subtitle2 w-full text-left">
       <thead className="subtitle2">
-        <th className="whitespace-nowrap px-6 py-3">
+        <th className="flex items-center gap-1.5 whitespace-nowrap px-6 py-3">
           Date
-          <button
-            className="ml-auto hover:cursor-pointer"
-            onClick={handleReverseToggle}
-          >
-            <ArrowsUpDownIcon
-              className={classNames('h-5 w-5', {
-                'text-secondary': reverse,
-              })}
-            />
-          </button>
+          <IconButton
+            HeroIcon={(props) => (
+              <ArrowsUpDownIcon
+                onClick={handleReverseToggle}
+                className={classNames('h-5 w-5', {
+                  'text-secondary': reverse,
+                })}
+              />
+            )}
+          />
         </th>
         <th className="whitespace-nowrap px-6 py-3">Start Time </th>
         <th className="whitespace-nowrap px-6 py-3">End Time </th>
