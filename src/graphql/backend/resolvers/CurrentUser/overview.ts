@@ -8,7 +8,7 @@ import {
 } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 
-async function computeCoursesUpcoming(
+async function computeSessionsUpcoming(
   currentUserId: string
 ): Promise<CurrentUserOverview> {
   const value = await prisma.sessionAttendee.count({
@@ -24,13 +24,13 @@ async function computeCoursesUpcoming(
   });
 
   return {
-    type: CurrentUserOverviewType.CoursesUpcoming,
+    type: CurrentUserOverviewType.SessionsUpcoming,
     value,
     change: null,
   };
 }
 
-async function computeCoursesAttended(
+async function computeSessionsAttended(
   currentUserId: string
 ): Promise<CurrentUserOverview> {
   const countLastWeek = await prisma.sessionAttendee.count({
@@ -58,7 +58,7 @@ async function computeCoursesAttended(
   });
 
   return {
-    type: CurrentUserOverviewType.CoursesAttended,
+    type: CurrentUserOverviewType.SessionsAttended,
     value: await prisma.sessionAttendee.count({
       where: {
         userId: currentUserId,
@@ -140,13 +140,13 @@ async function computeHoursAccumulated(
 export const CurrentUser_overviewResolver: CurrentUserResolvers['overview'] =
   async (root, args, context, info) => {
     const results: CurrentUserOverview[] = [
-      await computeCoursesUpcoming(root.id),
-      await computeCoursesAttended(root.id),
+      await computeSessionsUpcoming(root.id),
+      await computeSessionsAttended(root.id),
       await computeHoursAccumulated(root.id),
 
       // TODO: Implement
       {
-        type: CurrentUserOverviewType.CoursesCancelled,
+        type: CurrentUserOverviewType.SessionsCancelled,
         value: 0,
         change: null,
       },

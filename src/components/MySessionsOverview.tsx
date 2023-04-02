@@ -7,23 +7,23 @@ import ClassOverviewCard from './ClassOverviewCard';
 import CrossPresentationChartLineIcon from './icons/CrossPresentationChartLineIcon';
 import HoursAccumulatedIcon from './icons/HoursAccumulatedIcon';
 import TickPresentationChartLineIcon from './icons/TickPresentationChartLineIcon';
-import UpcomingCoursesIcon from './icons/UpcomingCoursesIcon';
+import UpcomingSessionsIcon from './icons/UpcomingSessionsIcon';
 import Spinner from './Spinner';
 
 const IconMap: Record<CurrentUserOverviewType, React.ReactNode> = {
-  [CurrentUserOverviewType.CoursesUpcoming]: <UpcomingCoursesIcon />,
-  [CurrentUserOverviewType.CoursesAttended]: <TickPresentationChartLineIcon />,
+  [CurrentUserOverviewType.SessionsUpcoming]: <UpcomingSessionsIcon />,
+  [CurrentUserOverviewType.SessionsAttended]: <TickPresentationChartLineIcon />,
   [CurrentUserOverviewType.HoursAccumulated]: <HoursAccumulatedIcon />,
-  [CurrentUserOverviewType.CoursesCancelled]: (
+  [CurrentUserOverviewType.SessionsCancelled]: (
     <CrossPresentationChartLineIcon />
   ),
 };
 
 const TextMap: Record<CurrentUserOverviewType, string> = {
-  [CurrentUserOverviewType.CoursesUpcoming]: 'Upcoming Courses',
-  [CurrentUserOverviewType.CoursesAttended]: 'Attended Courses',
+  [CurrentUserOverviewType.SessionsUpcoming]: 'Upcoming Sessions',
+  [CurrentUserOverviewType.SessionsAttended]: 'Attended Sessions',
   [CurrentUserOverviewType.HoursAccumulated]: 'Hours Accumulated',
-  [CurrentUserOverviewType.CoursesCancelled]: 'Cancelled Courses (beta)',
+  [CurrentUserOverviewType.SessionsCancelled]: 'Cancelled Sessions (beta)',
 };
 
 const MySessionsOverview: React.FC = function () {

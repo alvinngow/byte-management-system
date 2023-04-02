@@ -7,7 +7,7 @@ interface IconProps extends React.PropsWithChildren {
   height?: string;
 }
 
-const UpcomingCoursesIcon: React.FC<IconProps> = function (props) {
+const UpcomingSessionsIcon: React.FC<IconProps> = function (props) {
   const {
     children,
     className,
@@ -34,4 +34,4 @@ const UpcomingCoursesIcon: React.FC<IconProps> = function (props) {
     </svg>
   );
 };
-export default UpcomingCoursesIcon;
+export default UpcomingSessionsIcon;
