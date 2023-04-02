@@ -24,6 +24,7 @@ import Chip from '../../Chip';
 import IconButton from '../../IconButton';
 import Modal from '../../Modal';
 import NoResults from '../../NoResults';
+import ToolTip from '../../ToolTip';
 
 interface Props {
   session: Session;
@@ -217,7 +218,7 @@ const SessionRow: React.FC<Props> = function (props) {
           <IconButton
             HeroIcon={() => <PencilIcon onClick={() => onEditClick(session)} />}
           />
-          <a id="markattendance-button">
+          <ToolTip toolTipText="Mark Attendance">
             <IconButton
               HeroIcon={() => (
                 <ClipboardDocumentCheckIcon
@@ -227,7 +228,7 @@ const SessionRow: React.FC<Props> = function (props) {
                 />
               )}
             />
-          </a>
+          </ToolTip>
         </div>
       </td>
     </tr>

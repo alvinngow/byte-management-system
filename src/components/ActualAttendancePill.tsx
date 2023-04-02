@@ -4,6 +4,7 @@ import React from 'react';
 
 import { Attendance } from '../../gen/graphql/resolvers';
 import IconButton from './IconButton';
+import ToolTip from './ToolTip';
 
 const classNameMap: Record<Attendance, string> = {
   [Attendance.Attend]: 'bg-blue-100 text-brand-main',
@@ -13,16 +14,17 @@ const classNameMap: Record<Attendance, string> = {
 const textMap: Record<Attendance, JSX.Element | string> = {
   [Attendance.Attend]: 'Attended',
   [Attendance.Absent]: (
-    <>
-      <a id="warning-message" className="flex">
-        Absent
-        <IconButton
-          HeroIcon={() => (
-            <InformationCircleIcon className="ml-1 mb-1 bg-amber-50 text-amber-500" />
-          )}
-        />
-      </a>
-    </>
+    <ToolTip
+      buttonText="Absent"
+      toolTipText="If you can&#39;t make it to the class, please kindly cancel your
+            session in advance."
+    >
+      <IconButton
+        HeroIcon={() => (
+          <InformationCircleIcon className="ml-1 mb-1 bg-amber-50 text-amber-500" />
+        )}
+      />
+    </ToolTip>
   ),
 };
 
