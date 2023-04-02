@@ -9,13 +9,18 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { UserEdge, UserSortKey } from '../../../../gen/graphql/operations';
+import {
+  AccountApprovalUpdateInput,
+  UserEdge,
+  UserSortKey,
+} from '../../../../gen/graphql/operations';
 import { UserFiltering, UserRole } from '../../../../gen/graphql/resolvers';
 import Chip from '../../../components/Chip';
 import DotsMoreOptions from '../../../components/DotsMoreOptions';
 import IconButton from '../../../components/IconButton';
 import Input from '../../../components/Input';
 import Select from '../../../components/Select';
+import * as AccountApprovalUpdate from '../../../graphql/frontend/mutations/AccountApprovalUpdateMutation';
 import * as AccountRoleUpdate from '../../../graphql/frontend/mutations/AccountRoleUpdateMutation';
 import * as AccountTerminate from '../../../graphql/frontend/mutations/AccountTerminateMutation';
 import * as UsersQuery from '../../../graphql/frontend/queries/UsersQuery';
@@ -75,6 +80,11 @@ const UsersPage: NextPage = function (props) {
     AccountTerminate.Variables
   >(AccountTerminate.Mutation);
 
+  const [accountApprovalUpdate] = useMutation<
+    AccountApprovalUpdate.Data,
+    AccountApprovalUpdate.Variables
+  >(AccountApprovalUpdate.Mutation);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -114,6 +124,20 @@ const UsersPage: NextPage = function (props) {
     [accountRoleUpdate]
   );
 
+  const approveAccount = React.useCallback(
+    (userId: string) => {
+      accountApprovalUpdate({
+        variables: {
+          input: {
+            clientMutationId: uuidv4(),
+            userId,
+          },
+        },
+      });
+    },
+    [accountApprovalUpdate]
+  );
+
   const terminateAccount = React.useCallback(
     (userId: string) => {
       accountTerminate({
@@ -140,6 +164,50 @@ const UsersPage: NextPage = function (props) {
   if (meLoading) {
     return null;
   }
+
+  const dotsOptions = [
+    {
+      label: 'Make as Comm Member',
+      value: UserRole.CommitteeMember,
+    },
+    {
+      label: 'Make as System Admin',
+      value: UserRole.SystemAdministrator,
+    },
+    {
+      label: 'Make as Volunteer',
+      value: UserRole.User,
+    },
+    {
+      label: 'Delete User',
+      value: 'delete',
+      optionStyle: '!text-red-500',
+    },
+  ];
+
+  const dotsOptionsWithApprove = [
+    {
+      label: 'Approve User',
+      value: 'approve',
+    },
+    {
+      label: 'Make as Comm Member',
+      value: UserRole.CommitteeMember,
+    },
+    {
+      label: 'Make as System Admin',
+      value: UserRole.SystemAdministrator,
+    },
+    {
+      label: 'Make as Volunteer',
+      value: UserRole.User,
+    },
+    {
+      label: 'Delete User',
+      value: 'delete',
+      optionStyle: '!text-red-500',
+    },
+  ];
 
   return (
     <AppLayout>
@@ -304,8 +372,10 @@ const UsersPage: NextPage = function (props) {
                       {userTypeMap[edge.node.role!]}
                     </td>
                     <td className="px-6 py-4 text-red-500">
-                      {edge.node.verified_at ? (
-                        <Chip scheme="success" text={'Verified'} />
+                      {edge.node.approved_at ? (
+                        <Chip scheme="success" number={'Approved'} />
+                      ) : edge.node.verified_at ? (
+                        <Chip scheme="success" number={'Verified'} />
                       ) : (
                         <Chip scheme="disabled" number={'Pending'} />
                       )}
@@ -321,30 +391,19 @@ const UsersPage: NextPage = function (props) {
                               case 'delete':
                                 terminateAccount(edge.node.id);
                                 break;
+                              case 'approve':
+                                approveAccount(edge.node.id);
+                                break;
                               default:
                                 updateRole(edge.node.id, value as UserRole);
                                 break;
                             }
                           }}
-                          options={[
-                            {
-                              label: 'Make as Comm Member',
-                              value: UserRole.CommitteeMember,
-                            },
-                            {
-                              label: 'Make as System Admin',
-                              value: UserRole.SystemAdministrator,
-                            },
-                            {
-                              label: 'Make as Volunteer',
-                              value: UserRole.User,
-                            },
-                            {
-                              label: 'Delete User',
-                              value: 'delete',
-                              optionStyle: 'text-center text-red-500',
-                            },
-                          ]}
+                          options={
+                            edge.node.verified_at
+                              ? dotsOptionsWithApprove
+                              : dotsOptions
+                          }
                         />
                       )}
                     </td>

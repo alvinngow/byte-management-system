@@ -77,3 +77,12 @@ type UserEditPayload {
   clientMutationId: String
   User: User
 }
+input AccountApprovalUpdateInput{
+  clientMutationId: String
+  userId: ID!
+}
+
+type AccountApprovalUpdatePayload{
+    clientMutationId: String
+    user: User
+}

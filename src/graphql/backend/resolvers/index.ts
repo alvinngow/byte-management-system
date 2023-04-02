@@ -12,6 +12,7 @@ import { CurrentUser_roleResolver } from './CurrentUser/role';
 import { CurrentUser_sessionAttendeesResolver } from './CurrentUser/sessionAttendees';
 import { Location_clusterResolver } from './Location/cluster';
 import { LocationCluster_locationsResolver } from './LocationCluster/locations';
+import { accountApprovalUpdateResolver } from './mutations/accountApprovalUpdate';
 import accountAvatarUpdateResolver from './mutations/accountAvatarUpdate';
 import { accountLoginResolver } from './mutations/accountLogin';
 import { accountLogoutResolver } from './mutations/accountLogout';
@@ -72,6 +73,7 @@ const resolvers: Resolvers = {
     accountRoleUpdate: accountRoleUpdateResolver,
     accountTerminate: accountTerminateResolver,
     accountAvatarUpdate: accountAvatarUpdateResolver,
+    accountApprovalUpdate: accountApprovalUpdateResolver,
     fileUpload: fileUploadResolver,
     courseAdd: courseAddResolver,
     courseEdit: courseEditResolver,

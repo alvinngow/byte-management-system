@@ -44,6 +44,7 @@ export const Query = gql`
           }
           role
           verified_at
+          approved_at
         }
       }
       pageInfo {
