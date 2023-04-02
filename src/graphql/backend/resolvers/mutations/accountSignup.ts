@@ -4,6 +4,8 @@ import { GraphQLError } from 'graphql';
 
 import { MutationResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
+import sendEmail from '../../../../email/sendEmail';
+import { welcome } from '../../../../email/templates/welcome';
 
 export const accountSignupResolver: MutationResolvers['accountSignup'] = async (
   root,
@@ -53,6 +55,18 @@ export const accountSignupResolver: MutationResolvers['accountSignup'] = async (
   }
 
   await context.setupSession(user);
+
+  /**
+   * TODO: Generate email verification link
+   */
+
+  sendEmail(
+    welcome({
+      from: process.env.EMAIL_FROM!,
+      to: `${user.firstName} ${user.lastName} <${user.email}>`,
+      firstName: user.firstName,
+    })
+  );
 
   return user;
 };
