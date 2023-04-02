@@ -94,7 +94,7 @@ const RichTextEditor: React.FC<Props> = function (props) {
         })}
       >
         <LexicalComposer initialConfig={initialConfig}>
-          <div className="mt-2 rounded-t-lg border-b border-gray-400 bg-gray-100 px-3">
+          <div className="mt-2 rounded-t-lg bg-gray-100 px-3">
             <ToolbarPlugin disabled={toolbarDisabled ?? false} />
           </div>
           <ReadonlyPlugin readonly={readonly ?? false} />

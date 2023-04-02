@@ -19,6 +19,7 @@ import Button from '../../components/Button';
 import RichTextEditor from '../../components/RichTextEditor';
 import SEO from '../../components/SEO';
 import Spinner from '../../components/Spinner';
+import Tab from '../../components/Tab';
 import * as SessionAttend from '../../graphql/frontend/mutations/SessionAttendMutation';
 import * as CourseSlugSessionsQuery from '../../graphql/frontend/queries/CourseSlugSessionsQuery';
 import AppLayout from '../../layouts/AppLayout';
@@ -187,45 +188,30 @@ const CourseDetailPage: React.FC = function () {
               <div className="subtitle1 mb-5">{course.subtitle}</div>
               <div>
                 <div className="flex gap-4">
-                  <div
+                  <Tab
                     onClick={() => setLinkSelected('Apply')}
-                    className={classNames(
-                      {
-                        'border-b-2 border-brand-main text-brand-main':
-                          linkSelected === 'Apply',
-                        'text-secondary': linkSelected !== 'Apply',
-                      },
-                      'cursor-default px-4 py-3 group-hover:text-brand-main'
-                    )}
-                  >
-                    Apply
-                  </div>
-                  <div
+                    selectedID={linkSelected}
+                    tabID="Apply"
+                    text="APPLY"
+                    href="#"
+                    underline={true}
+                  />
+                  <Tab
                     onClick={() => setLinkSelected('Description')}
-                    className={classNames(
-                      {
-                        'border-b-2 border-brand-main text-brand-main':
-                          linkSelected === 'Description',
-                        'text-secondary': linkSelected !== 'Description',
-                      },
-                      'cursor-default px-4 py-3 group-hover:text-brand-main'
-                    )}
-                  >
-                    Description
-                  </div>
-                  <div
+                    selectedID={linkSelected}
+                    tabID="Description"
+                    text="DESCRIPTION"
+                    href="#"
+                    underline={true}
+                  />
+                  <Tab
                     onClick={() => setLinkSelected('Instructions')}
-                    className={classNames(
-                      {
-                        'border-b-2 border-brand-main text-brand-main':
-                          linkSelected === 'Instructions',
-                        'text-secondary': linkSelected !== 'Instructions',
-                      },
-                      'cursor-default px-4 py-3 group-hover:text-brand-main'
-                    )}
-                  >
-                    Instructions
-                  </div>
+                    selectedID={linkSelected}
+                    tabID="Instructions"
+                    text="INSTRUCTIONS"
+                    href="#"
+                    underline={true}
+                  />
                 </div>
                 <div className="border-full mb-5 block w-full rounded-lg border bg-white shadow-lg">
                   {linkSelected === 'Apply' && (
@@ -314,13 +300,6 @@ const CourseDetailPage: React.FC = function () {
                             </tr>
                           </thead>
                           <tbody>
-                            {course.sessions.edges.length === 0 && (
-                              <tr>
-                                {/* <p className="px-3 text-secondary">
-                                  There are no sessions for this course.
-                                </p> */}
-                              </tr>
-                            )}
                             {course.sessions.edges.map((edge) => (
                               <tr key={edge.cursor}>
                                 <td className="body2 whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">

@@ -37,11 +37,11 @@ const Tab: React.FC<PropsWithChildren<Prop>> = (
 
   return (
     <>
-      <div className={'flex ' + className}>
+      <div className={'flex' + className}>
         <NavLink
           href={href}
           onClick={onClick}
-          className="group w-full font-semibold"
+          className="group w-full font-semibold hover:cursor-pointer"
         >
           <p
             className={classNames(
