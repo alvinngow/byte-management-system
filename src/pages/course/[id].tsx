@@ -37,7 +37,7 @@ const CourseDetailPage: React.FC = function () {
   const [reverse, setReverse] = React.useState(false);
 
   const [linkSelected, setLinkSelected] = React.useState<
-    'Apply' | 'Description' | 'Volunteer Instructions'
+    'Apply' | 'Description' | 'Instructions'
   >('Apply');
 
   const variables = React.useMemo<CourseSlugSessionsQuery.Variables>(() => {
@@ -145,11 +145,11 @@ const CourseDetailPage: React.FC = function () {
 
   return (
     <AppLayout>
-      <div className="mb-12 flex flex-col justify-between">
-        <h6 className="text-secondary my-9">
+      <div className="mb-12 flex flex-col justify-between ">
+        <h6 className="body1 my-9">
           <BackButton
+            text="Back to Discover Courses"
             href="/discover-courses"
-            text="Back to Discover Classes"
           />
         </h6>
         <div className="relative mx-auto mb-9 h-[30vh] w-full">
@@ -214,18 +214,17 @@ const CourseDetailPage: React.FC = function () {
                     Description
                   </div>
                   <div
-                    onClick={() => setLinkSelected('Volunteer Instructions')}
+                    onClick={() => setLinkSelected('Instructions')}
                     className={classNames(
                       {
                         'border-b-2 border-brand-main text-brand-main':
-                          linkSelected === 'Volunteer Instructions',
-                        'text-secondary':
-                          linkSelected !== 'Volunteer Instructions',
+                          linkSelected === 'Instructions',
+                        'text-secondary': linkSelected !== 'Instructions',
                       },
                       'cursor-default px-4 py-3 group-hover:text-brand-main'
                     )}
                   >
-                    Instructions for volunteers
+                    Instructions
                   </div>
                 </div>
                 <div className="border-full mb-5 block w-full rounded-lg border bg-white shadow-lg">
@@ -439,7 +438,7 @@ const CourseDetailPage: React.FC = function () {
                     readonly
                   />
                 )}
-                {linkSelected === 'Volunteer Instructions' && (
+                {linkSelected === 'Instructions' && (
                   <RichTextEditor
                     className="mb-4 px-4"
                     value={
