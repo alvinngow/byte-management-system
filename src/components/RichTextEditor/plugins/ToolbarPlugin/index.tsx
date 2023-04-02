@@ -18,6 +18,7 @@ import {
 } from '@lexical/rich-text';
 import { $wrapNodes } from '@lexical/selection';
 import { $getNearestNodeOfType } from '@lexical/utils';
+import classNames from 'classnames';
 import {
   $createParagraphNode,
   $getSelection,
@@ -26,6 +27,7 @@ import {
   FORMAT_TEXT_COMMAND,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
+import Image from 'next/image';
 import React from 'react';
 
 import Select from '../../../Select';
@@ -214,21 +216,25 @@ const ToolbarPlugin: React.FC<Props> = function (props) {
 
   return (
     <div className="flex items-center gap-x-1">
-      <div className="relative">
+      <div className="relative flex">
+        <Image
+          src={'/TeeTee.svg'}
+          width={35}
+          height={35}
+          alt="TT"
+          className="border-b-2 border-gray-400 pr-2"
+        />
         <Select
-          className="w-32"
-          label="Format"
+          className="inline w-32 border-b-2 border-gray-400"
+          label=""
           value={blockType}
+          placeholder="Paragraph"
           items={[
             /**
              * HACK to handle the initial `blockType` of an empty box
              */
             {
-              label: 'Normal',
-              value: 'root',
-            },
-            {
-              label: 'Normal',
+              label: 'Paragraph',
               value: 'paragraph',
             },
             {
@@ -264,7 +270,7 @@ const ToolbarPlugin: React.FC<Props> = function (props) {
         onClick={() => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
         }}
-        className="h-6 w-6"
+        className={'h-6 w-6'}
       >
         <span className="font-bold">B</span>
       </FormatButton>

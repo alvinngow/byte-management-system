@@ -13,9 +13,9 @@ const FormatButton: React.FC<Props> = function (props) {
   return (
     <div
       className={classNames(
-        'flex items-center justify-center overflow-hidden hover:cursor-pointer hover:bg-gray-300',
+        'flex items-center justify-center overflow-hidden hover:cursor-pointer hover:rounded-lg hover:bg-gray-300',
         {
-          'bg-gray-100': isActive,
+          'rounded bg-gray-400': isActive,
         },
         className
       )}
