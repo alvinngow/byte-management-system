@@ -7,7 +7,6 @@ import {
   SessionSortKey,
 } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
-import requireAuthenticated from '../util/requireAuthenticated';
 import { Prisma } from '.prisma/client';
 import SessionOrderByWithAggregationInput = Prisma.SessionOrderByWithAggregationInput;
 import SessionWhereInput = Prisma.SessionWhereInput;
@@ -18,8 +17,6 @@ export const Course_sessionsResolver: CourseResolvers['sessions'] = async (
   context,
   info
 ) => {
-  await requireAuthenticated(context);
-
   const { first, after, sortKey, filter, reverse } = args;
 
   let orderBy: SessionOrderByWithAggregationInput | undefined = undefined;

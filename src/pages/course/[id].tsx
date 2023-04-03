@@ -22,6 +22,9 @@ import Spinner from '../../components/Spinner';
 import Tab from '../../components/Tab';
 import * as SessionAttend from '../../graphql/frontend/mutations/SessionAttendMutation';
 import * as CourseSlugSessionsQuery from '../../graphql/frontend/queries/CourseSlugSessionsQuery';
+import * as GuestCourseSessionsQuery from '../../graphql/frontend/queries/GuestCourseSlugSessionsQuery';
+import * as MeSessionAttendeesQuery from '../../graphql/frontend/queries/MeSessionAttendeesQuery';
+import useCurrentUser from '../../hooks/useCurrentUser';
 import AppLayout from '../../layouts/AppLayout';
 import SessionButton from './components/SessionButton';
 
@@ -53,6 +56,14 @@ const CourseDetailPage: React.FC = function () {
     };
   }, [id, reverse]);
 
+  const { data: guestData } = useQuery<
+    GuestCourseSessionsQuery.Data,
+    GuestCourseSessionsQuery.Variables
+  >(GuestCourseSessionsQuery.Query, {
+    variables,
+    skip: id == null,
+  });
+
   const { data, loading, error, fetchMore } = useQuery<
     CourseSlugSessionsQuery.Data,
     CourseSlugSessionsQuery.Variables
@@ -66,7 +77,25 @@ const CourseDetailPage: React.FC = function () {
     SessionAttend.Variables
   >(SessionAttend.Mutation);
 
+  const meCourseInfo = useQuery<
+    MeSessionAttendeesQuery.Data,
+    MeSessionAttendeesQuery.Variables
+  >(MeSessionAttendeesQuery.Query);
+  const attendingSessions = meCourseInfo.data?.me?.sessionAttendees.edges ?? [];
+
+  const { me } = useCurrentUser();
+
+  const attendingSessionsIdArr: string[] = [];
+
+  for (const session of attendingSessions) {
+    if (session.node.indicatedAttendance == 'attend') {
+      attendingSessionsIdArr.push(session.node.sessionId);
+    }
+  }
+
   const course = data?.course ?? null;
+
+  const guestCourse = guestData?.course ?? null;
 
   const handleLoadMoreClick: React.MouseEventHandler = () => {
     const endCursor = data?.course?.sessions?.pageInfo?.endCursor;
@@ -143,6 +172,276 @@ const CourseDetailPage: React.FC = function () {
 
     router.push('/404');
   }, [data, error, id, loading, router]);
+
+  if (!me) {
+    return (
+      <div className="mx-5 my-12 flex flex-col justify-between sm:mx-14 xl:mx-auto xl:w-11/12 xxl:w-4/5">
+        <div className="relative mx-auto mb-9 h-[30vh] w-full">
+          <Image
+            src={guestCourse?.coverImage ?? '/default-cover-image.jpg'}
+            alt="cover picture"
+            fill
+            className="rounded-3xl"
+          />
+        </div>
+        <SEO title={guestCourse?.name ?? 'Course'} />
+        {guestCourse != null && (
+          <div className="flex flex-col justify-between gap-9 xl:flex-row xl:gap-14">
+            <div className="basis-2/3">
+              <h6 className="mb-6">
+                {guestCourse.firstSessionStartDate != null &&
+                guestCourse.lastSessionEndDate != null ? (
+                  <>
+                    From{' '}
+                    {DateTime.fromISO(
+                      guestCourse.firstSessionStartDate ?? ''
+                    ).toLocaleString(DateTime.DATE_MED)}{' '}
+                    -{' '}
+                    {DateTime.fromISO(
+                      guestCourse.lastSessionEndDate ?? ''
+                    ).toLocaleString(DateTime.DATE_MED)}
+                  </>
+                ) : (
+                  <>No sessions</>
+                )}
+              </h6>
+              <h2 className="mb-6">{guestCourse.name}</h2>
+              <div className="subtitle1 mb-5">{guestCourse.subtitle}</div>
+              <div>
+                <div className="flex gap-4">
+                  <Tab
+                    onClick={() => setLinkSelected('Apply')}
+                    selectedID={linkSelected}
+                    tabID="Apply"
+                    text="APPLY"
+                    href="#"
+                    underline={true}
+                  />
+                  <Tab
+                    onClick={() => setLinkSelected('Description')}
+                    selectedID={linkSelected}
+                    tabID="Description"
+                    text="DESCRIPTION"
+                    href="#"
+                    underline={true}
+                  />
+                  <Tab
+                    onClick={() => setLinkSelected('Instructions')}
+                    selectedID={linkSelected}
+                    tabID="Instructions"
+                    text="INSTRUCTIONS"
+                    href="#"
+                    underline={true}
+                  />
+                </div>
+                <div className="border-full mb-5 block w-full rounded-lg border bg-white shadow-lg">
+                  {linkSelected === 'Apply' && (
+                    <>
+                      <div className="snap-x overflow-x-auto scroll-smooth">
+                        <table className="sm: w-full md:w-full lg:w-full">
+                          <thead>
+                            <tr>
+                              <th className="whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
+                                <div className="subtitle2 flex items-center gap-1.5">
+                                  <span>Date</span>
+                                  <span>
+                                    <ArrowsUpDownIcon
+                                      className={classNames(
+                                        'hover:text-secondary h-5 w-5 hover:cursor-pointer',
+                                        {
+                                          'text-gray-400': !reverse,
+                                          'text-gray-800': reverse,
+                                        }
+                                      )}
+                                      onClick={() => {
+                                        setReverse((prevState) => !prevState);
+                                      }}
+                                    />
+                                  </span>
+                                </div>
+                              </th>
+                              <th className="whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
+                                <div className="subtitle2 flex items-center gap-1.5">
+                                  <span>Start Time</span>
+                                  <span>
+                                    <ArrowsUpDownIcon
+                                      className={classNames(
+                                        'hover:text-secondary h-5 w-5 hover:cursor-pointer',
+                                        {
+                                          'text-gray-400': !reverse,
+                                          'text-gray-800': reverse,
+                                        }
+                                      )}
+                                      onClick={() => {
+                                        setReverse((prevState) => !prevState);
+                                      }}
+                                    />
+                                  </span>
+                                </div>
+                              </th>
+                              <th className="whitespace-nowrap border-b  border-slate-300 py-4 pl-4 text-left">
+                                <div className="subtitle2 flex items-center gap-1.5">
+                                  <span>End Time</span>
+                                  <span>
+                                    <ArrowsUpDownIcon
+                                      className={classNames(
+                                        'hover:text-secondary h-5 w-5 hover:cursor-pointer',
+                                        {
+                                          'text-gray-400': !reverse,
+                                          'text-gray-800': reverse,
+                                        }
+                                      )}
+                                      onClick={() => {
+                                        setReverse((prevState) => !prevState);
+                                      }}
+                                    />
+                                  </span>
+                                </div>
+                              </th>
+                              <th className="whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
+                                <div className="subtitle2 flex items-center gap-1.5">
+                                  <span>Available Slots</span>
+                                  <span>
+                                    <ArrowsUpDownIcon
+                                      className={classNames(
+                                        'hover:text-secondary h-5 w-5 hover:cursor-pointer',
+                                        {
+                                          'text-gray-400': !reverse,
+                                          'text-gray-800': reverse,
+                                        }
+                                      )}
+                                      onClick={() => {
+                                        setReverse((prevState) => !prevState);
+                                      }}
+                                    />
+                                  </span>
+                                </div>
+                              </th>
+                              <th className="border-b border-slate-300 py-4 px-4 text-left" />
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {guestCourse.sessions.edges.map((edge) => (
+                              <tr key={edge.cursor}>
+                                <td className="body2 whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
+                                  {DateTime.fromISO(
+                                    edge.node.startDate
+                                  ).toLocaleString(DateTime.DATE_MED)}
+                                </td>
+                                <td className="body2 whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
+                                  {DateTime.fromISO(
+                                    edge.node.startTime
+                                  ).toLocaleString(DateTime.TIME_SIMPLE)}
+                                </td>
+                                <td className="body2 whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
+                                  {DateTime.fromISO(
+                                    edge.node.endTime
+                                  ).toLocaleString(DateTime.TIME_SIMPLE)}
+                                </td>
+                                <td className="body2 whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
+                                  {edge.node.volunteerSlotAvailableCount ??
+                                    'Unlimited'}
+                                </td>
+                                <td className="whitespace-nowrap border-b border-slate-300 py-4 px-4 text-center">
+                                  {attendingSessionsIdArr.includes(
+                                    edge.node.id
+                                  ) ? (
+                                    <SessionButton
+                                      size="sm"
+                                      isApplyBtn={true}
+                                      variant="secondary"
+                                      href="/login"
+                                    />
+                                  ) : (
+                                    <Button
+                                      size="sm"
+                                      isApplyBtn={true}
+                                      label="Apply"
+                                      href="/login"
+                                    />
+                                  )}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="flex items-center justify-end gap-6 px-3">
+                        {guestCourse.sessions.pageInfo.hasNextPage && (
+                          <button onClick={handleLoadMoreClick}>
+                            Load more
+                          </button>
+                        )}
+                        <div>
+                          {Math.min(guestCourse.sessions.totalCount, 1)} -{' '}
+                          {guestCourse.sessions.edges.length} of{' '}
+                          {guestCourse.sessions.totalCount}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                {linkSelected === 'Description' && (
+                  <RichTextEditor
+                    className="px-4"
+                    value={guestCourse.description}
+                    toolbarDisabled
+                    readonly
+                  />
+                )}
+                {linkSelected === 'Instructions' && (
+                  <RichTextEditor
+                    className="mb-4 px-4"
+                    value={
+                      guestCourse.descriptionPrivate ||
+                      'There are no instructions available.'
+                    }
+                    toolbarDisabled
+                    readonly
+                  />
+                )}
+              </div>
+            </div>
+            <div className="basis-1/3">
+              <div className="border-full mb-5 block w-full rounded-lg border bg-white p-10 shadow-lg">
+                <div className="subtitle1 mb-2.5">LOCATION</div>
+                <div className="mb-2.5">INSERT MAP HERE</div>
+                <div className="body1 mb-8">
+                  {guestCourse.defaultLocation?.address}
+                </div>
+                <div className="subtitle1 mb-2.5">TRAINER(S) DETAILS</div>
+                <div className="body1">
+                  <p className="items-center">
+                    <div className="grid grid-cols-[100px_1fr]">
+                      <div className="flex">
+                        <Image
+                          className="h-10 w-10 rounded-full"
+                          src="/favicon.ico"
+                          alt="Rounded avatar"
+                          width={100}
+                          height={100}
+                        />
+                        <div className="ml-4 text-left">
+                          {guestCourse.courseManagers.edges.map((edge) => (
+                            <div key={edge.cursor}>
+                              <span>
+                                {edge.node.user.firstName}{' '}
+                                {edge.node.user.lastName}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <AppLayout>

@@ -1,6 +1,5 @@
 import { QueryResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
-import requireAuthenticated from '../util/requireAuthenticated';
 
 export const courseResolver: QueryResolvers['course'] = async (
   root,
@@ -8,8 +7,6 @@ export const courseResolver: QueryResolvers['course'] = async (
   context,
   info
 ) => {
-  await requireAuthenticated(context);
-
   const { id } = args;
 
   const course = await prisma.courseWithSessionInfo.findFirst({
