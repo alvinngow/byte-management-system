@@ -617,8 +617,11 @@ const CourseDetailPage: React.FC = function () {
                                   ).toLocaleString(DateTime.TIME_SIMPLE)}
                                 </td>
                                 <td className="body2 whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
-                                  {edge.node.volunteerSlotAvailableCount ??
-                                    'Unlimited'}
+                                  {edge.node.volunteerSlotAvailableCount
+                                    ? edge.node.volunteerSlotAvailableCount +
+                                      '/' +
+                                      edge.node.volunteerSlotCount!
+                                    : 'Unlimited'}
                                 </td>
                                 <td className="whitespace-nowrap border-b border-slate-300 py-4 px-4 text-center">
                                   {edge.node.selfAttendee
