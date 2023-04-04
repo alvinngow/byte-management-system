@@ -1,3 +1,4 @@
+import { UserRole } from '../../../../../gen/graphql/operations';
 import { SessionResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 
@@ -10,6 +11,15 @@ export const Session_volunteerSlotAvailableCountResolver: SessionResolvers['volu
     const sessionAttendeeCount = await prisma.sessionAttendee.count({
       where: {
         sessionId: root.id,
+        AND: {
+          user: {
+            NOT: {
+              role: {
+                in: [UserRole.CommitteeMember, UserRole.SystemAdministrator],
+              },
+            },
+          },
+        },
       },
     });
 
