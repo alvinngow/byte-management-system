@@ -50,8 +50,10 @@ import { SessionAttendee_sessionResolver } from './SessionAttendee/session';
 import { SessionAttendee_userResolver } from './SessionAttendee/user';
 import User_avatarResolver from './User/avatar';
 import { emailResolver } from './User/email';
+import { overviewResolver } from './User/overview';
 import { roleResolver } from './User/role';
 import { schoolResolver } from './User/school';
+import { sessionAttendeesResolver } from './User/sessionAttendees';
 
 const resolvers: Resolvers = {
   Query: {
@@ -97,6 +99,8 @@ const resolvers: Resolvers = {
     email: emailResolver,
     school: schoolResolver,
     role: roleResolver,
+    overview: overviewResolver,
+    sessionAttendees: sessionAttendeesResolver,
   },
   LocationCluster: {
     locations: LocationCluster_locationsResolver,

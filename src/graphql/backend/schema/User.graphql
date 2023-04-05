@@ -9,6 +9,22 @@ type User {
   role: UserRole
   verified_at:DateTime
   approved_at:DateTime
+
+  sessionAttendees(first: Int = 10, after: String, sortKey: SessionAttendeeSortKey, filter: SessionAttendeeFiltering, reverse: Boolean): SessionAttendeeConnection!
+  overview: [UserOverview!]!
+}
+
+type UserOverview {
+  type: UserOverviewType!
+  value: Float!
+  change: Float
+}
+
+enum UserOverviewType {
+  SESSIONS_UPCOMING
+  SESSIONS_ATTENDED
+  HOURS_ACCUMULATED
+  SESSIONS_CANCELLED
 }
 
 enum UserSortKey{

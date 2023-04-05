@@ -7,14 +7,28 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import {
+  Attendance,
+  SessionAttendeeDateFiltering,
+  SessionAttendeeSortKey,
+} from '../../../../../gen/graphql/resolvers';
 import { UserRole } from '../../../../../gen/graphql/resolvers';
 import BackButton from '../../../../components/BackButton';
 import Button from '../../../../components/Button';
 import DotsMoreOptions from '../../../../components/DotsMoreOptions';
 import Input from '../../../../components/Input';
+import TabHistory from '../../../../components/MySessions/components/TabHistory';
+import TabUpcoming from '../../../../components/MySessions/components/TabUpcoming';
+import { mySessionsReducer } from '../../../../components/MySessions/reducers/mySessionsReducer';
+import Select from '../../../../components/Select';
+import Spinner from '../../../../components/Spinner';
+import Tab from '../../../../components/Tab';
+import UserSessionsOverview from '../../../../components/UserSessionsOverview';
 import * as AccountRoleUpdate from '../../../../graphql/frontend/mutations/AccountRoleUpdateMutation';
 import * as AccountTerminate from '../../../../graphql/frontend/mutations/AccountTerminateMutation';
 import * as UserQuery from '../../../../graphql/frontend/queries/UserQuery';
+import * as UserSessions from '../../../../graphql/frontend/queries/UserSessionAttendeesQuery';
+import useDebounce from '../../../../hooks/useDebounce';
 import UserPageLayout from '../../../../layouts/UserPageLayout';
 import styles from '../../../../styles/component_styles/Input.module.css';
 
@@ -37,6 +51,60 @@ const userTypeMap = {
 
 const SingleUserPage: NextPage = function () {
   const router = useRouter();
+  const { userId } = router.query;
+
+  const [reducerState, reducerDispatch] = React.useReducer(mySessionsReducer, {
+    tab: 'upcoming_sessions',
+    searchTerm: '',
+    reverse: false,
+    filterActualAttendance: undefined,
+  });
+
+  const searchTermDebounced = useDebounce(reducerState.searchTerm);
+
+  const variables = React.useMemo<UserSessions.Variables>(() => {
+    switch (reducerState.tab) {
+      case 'upcoming_sessions': {
+        return {
+          id: userId as string,
+          filter: {
+            actualAttendance: reducerState.filterActualAttendance,
+            date: SessionAttendeeDateFiltering.Upcoming,
+            searchText: searchTermDebounced || undefined,
+            indicatedAttendance: Attendance.Attend,
+          },
+          sortKey: SessionAttendeeSortKey.SessionStart,
+          reverse: reducerState.reverse,
+        };
+      }
+      case 'session_history': {
+        return {
+          id: userId as string,
+          filter: {
+            actualAttendance: reducerState.filterActualAttendance,
+            date: SessionAttendeeDateFiltering.Past,
+            searchText: searchTermDebounced || undefined,
+          },
+          sortKey: SessionAttendeeSortKey.SessionStart,
+          reverse: reducerState.reverse,
+        };
+      }
+    }
+  }, [
+    reducerState.filterActualAttendance,
+    reducerState.reverse,
+    reducerState.tab,
+    searchTermDebounced,
+    userId,
+  ]);
+
+  const { data, loading, fetchMore, refetch } = useQuery<
+    UserSessions.Data,
+    UserSessions.Variables
+  >(UserSessions.Query, {
+    variables,
+    fetchPolicy: 'cache-and-network',
+  });
 
   const [accountRoleUpdate] = useMutation<
     AccountRoleUpdate.Data,
@@ -86,15 +154,13 @@ const SingleUserPage: NextPage = function () {
     [accountTerminate]
   );
 
-  const { userId } = router.query;
-
   const randomBgClass = React.useMemo(() => {
     return BACKGROUND_COLORS[
       Math.floor(Math.random() * BACKGROUND_COLORS.length)
     ];
   }, []);
 
-  const { data } = useQuery<UserQuery.Data, UserQuery.Variables>(
+  const { data: userData } = useQuery<UserQuery.Data, UserQuery.Variables>(
     UserQuery.Query,
     {
       variables: {
@@ -103,7 +169,40 @@ const SingleUserPage: NextPage = function () {
     }
   );
 
-  const avatarUrl = data?.user.avatar;
+  const avatarUrl = userData?.user.avatar;
+
+  const endCursor = data?.user.sessionAttendees.pageInfo.endCursor;
+
+  const handleLoadMoreClick = React.useCallback<React.MouseEventHandler>(() => {
+    fetchMore({
+      variables: {
+        ...variables,
+        after: endCursor,
+      },
+    });
+  }, [endCursor, fetchMore, variables]);
+
+  const handleSearchInputChange = React.useCallback<
+    React.ChangeEventHandler<HTMLInputElement>
+  >((e) => {
+    reducerDispatch({
+      type: 'set_search_term',
+      searchTerm: e.target.value,
+    });
+  }, []);
+
+  const handleAttendanceStatusChange = React.useCallback((value: string) => {
+    reducerDispatch({
+      type: 'set_attendance',
+      attendance: value != null ? (value as Attendance) : undefined,
+    });
+  }, []);
+
+  const toggleReverse = React.useCallback(() => {
+    reducerDispatch({
+      type: 'flip_reverse',
+    });
+  }, []);
 
   return (
     <UserPageLayout>
@@ -129,21 +228,21 @@ const SingleUserPage: NextPage = function () {
                 />
               ) : (
                 <span className="avatarLetter grow self-center text-center text-white">
-                  {data?.user.firstName[0]}
-                  {data?.user.lastName[0]}
+                  {userData?.user.firstName[0]}
+                  {userData?.user.lastName[0]}
                 </span>
               )}
             </span>
             <div className="mx-auto">
-              {data?.user.firstName} {data?.user.lastName}
+              {userData?.user.firstName} {userData?.user.lastName}
             </div>
-            <div className="mx-auto">{data?.user.school?.name}</div>
+            <div className="mx-auto">{userData?.user.school?.name}</div>
             <div className="mx-auto">
               <Button
                 size="sm"
                 className="my-4"
                 variant="secondary"
-                href={`mailto:${data?.user.email}`}
+                href={`mailto:${userData?.user.email}`}
               >
                 Email
               </Button>
@@ -152,13 +251,13 @@ const SingleUserPage: NextPage = function () {
           <div className="flex flex-col gap-6">
             <Input
               type="email"
-              placeholder={data?.user.email}
+              placeholder={userData?.user.email}
               label="Email"
               readOnly
             ></Input>
             <Input
               type="number"
-              placeholder={data?.user.mobileNo}
+              placeholder={userData?.user.mobileNo}
               label="Mobile Number"
               autoComplete="tel-local"
               prefixElement={
@@ -173,7 +272,7 @@ const SingleUserPage: NextPage = function () {
               <div
                 className={`${styles['input']} text-secondary flex w-full  justify-between`}
               >
-                {userTypeMap[data?.user.role!]}
+                {userTypeMap[userData?.user.role!]}
                 <span>
                   <DotsMoreOptions
                     className="h-6 w-6"
@@ -181,10 +280,10 @@ const SingleUserPage: NextPage = function () {
                     onOptionClick={(value: string) => {
                       switch (value) {
                         case 'delete':
-                          terminateAccount(data?.user.id!);
+                          terminateAccount(userData?.user.id!);
                           break;
                         default:
-                          updateRole(data?.user.id!, value as UserRole);
+                          updateRole(userData?.user.id!, value as UserRole);
                           break;
                       }
                     }}
@@ -214,7 +313,14 @@ const SingleUserPage: NextPage = function () {
           </div>
         </div>
         <div className="h-screen w-px bg-gray-300"></div>
-        <div className="basis-4/5">bye</div>
+        <div className="basis-4/5">
+          <div className="my-12 mx-7">
+            <h6>Overview</h6>
+            <div className="sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
+              <UserSessionsOverview userId={userId as string} />
+            </div>
+          </div>
+        </div>
       </div>
     </UserPageLayout>
   );
