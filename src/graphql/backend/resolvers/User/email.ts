@@ -9,6 +9,7 @@ export const emailResolver: UserResolvers['email'] = async (
 ) => {
   await requireCurrentUserRole(
     context,
+    UserRole.User,
     UserRole.CommitteeMember,
     UserRole.SystemAdministrator
   );
