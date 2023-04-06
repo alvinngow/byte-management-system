@@ -40,7 +40,6 @@ const ManagersPicker: React.FC<Props> = function (props) {
     UsersQuery.Variables
   >(UsersQuery.Query, {
     variables,
-    skip: debouncedSearchTerm.length === 0,
   });
 
   /**
@@ -108,6 +107,12 @@ const ManagersPicker: React.FC<Props> = function (props) {
     setFocusedIndex(edgesLength > 0 ? 0 : -1);
   }, [data]);
 
+  const userEdges = React.useMemo(() => {
+    const edges = data?.users?.edges ?? [];
+
+    return edges.filter((edge) => !managerUserIds.has(edge.node.id));
+  }, [data, managerUserIds]);
+
   return (
     <div className="relative flex flex-col">
       <div className="flex items-center">
@@ -133,7 +138,7 @@ const ManagersPicker: React.FC<Props> = function (props) {
         <div className="relative">
           <div className="absolute top-0 left-0 right-0 z-50 flex w-full flex-col gap-y-0.5 overflow-hidden rounded-b-lg bg-gray-300 shadow-lg">
             <ManagerResults
-              userEdges={data?.users?.edges ?? []}
+              userEdges={userEdges}
               focusedIndex={focusedIndex}
               loading={loading}
               onManagerAdded={onManagerAdded}

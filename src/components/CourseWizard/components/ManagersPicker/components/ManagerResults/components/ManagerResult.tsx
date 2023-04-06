@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import { User } from '../../../../../../../../gen/graphql/resolvers';
+import Avatar from '../../../../../../Avatar';
 
 interface Props {
   manager: User;
@@ -16,14 +17,14 @@ const ManagerResult: React.FC<Props> = function (props) {
   return (
     <div
       className={classNames(
-        'inline-flex w-full cursor-pointer items-center bg-white px-2 py-2 hover:bg-brand-hover',
+        'inline-flex cursor-pointer items-center bg-white px-2 py-2 hover:bg-brand-hover',
         {
           'bg-brand-hover': focused,
         }
       )}
       onClick={() => onManagerAdded(manager.id)}
     >
-      <span className="mr-2.5 h-10 w-10 rounded-full bg-gray-400"></span>
+      <Avatar className="mr-2 h-6 w-6 py-1 px-1 text-xs" user={manager} />
       <span className="body1">
         {manager.firstName} {manager.lastName}
       </span>

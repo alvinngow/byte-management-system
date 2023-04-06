@@ -3,6 +3,7 @@ import { UserCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 
 import * as UserFragment from '../../../../../graphql/frontend/fragments/UserFragment';
+import Avatar from '../../../../Avatar';
 import Chip from '../../../../Chip';
 
 interface Props {
@@ -24,19 +25,14 @@ const ManagerChip: React.FC<Props> = function (props) {
   );
 
   return (
-    <Chip
-      scheme="disabled"
-      className="w-full cursor-pointer"
-      Icon={UserCircleIcon}
-      iconSize={5}
-      override
-    >
+    <div className="flex w-full cursor-pointer items-center rounded-2xl bg-gray-100 py-1.5 px-3 text-gray-500">
       {user != null ? (
         <>
+          <Avatar className="mr-2 h-6 w-6 shrink-0 text-xs" user={user} />
           <span className="pl-1 align-top">
             {user.firstName} {user.lastName}
           </span>
-          <span className="float-right pt-[2px] pl-1">
+          <span className="ml-auto rounded-full p-1 hover:bg-gray-300">
             <XMarkIcon
               onClick={(e) => {
                 e.stopPropagation();
@@ -49,7 +45,7 @@ const ManagerChip: React.FC<Props> = function (props) {
       ) : (
         <span>Unknown user</span>
       )}
-    </Chip>
+    </div>
   );
 };
 

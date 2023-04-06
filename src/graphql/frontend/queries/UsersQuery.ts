@@ -25,7 +25,7 @@ export const Query = gql`
     $reverse: Boolean
   ) {
     users(
-      first: 10
+      first: 30
       after: $after
       filter: $filter
       sortKey: $sortKey
