@@ -76,7 +76,13 @@ const CoursePage: React.FC = function () {
 
   useEffect(() => {
     refetch();
-  }, [debouncedSearchTerm, sortKeyForCourse, sortDirection, refetch]);
+  }, [
+    debouncedSearchTerm,
+    sortKeyForCourse,
+    sortDirection,
+    filterForCourse,
+    refetch,
+  ]);
 
   const courses = data?.courses.edges;
 
