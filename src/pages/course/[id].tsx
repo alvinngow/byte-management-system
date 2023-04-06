@@ -64,13 +64,17 @@ const CourseDetailPage: React.FC = function () {
     skip: id == null,
   });
 
-  const { data, loading, error, fetchMore } = useQuery<
+  const { data, loading, error, fetchMore, refetch } = useQuery<
     CourseSlugSessionsQuery.Data,
     CourseSlugSessionsQuery.Variables
   >(CourseSlugSessionsQuery.Query, {
     variables,
     skip: id == null,
   });
+
+  React.useEffect(() => {
+    refetch();
+  }, [refetch, variables]);
 
   const [updateSession] = useMutation<
     SessionAttend.Data,
@@ -541,58 +545,16 @@ const CourseDetailPage: React.FC = function () {
                               <th className="whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
                                 <div className="subtitle2 flex items-center gap-1.5">
                                   <span>Start Time</span>
-                                  <span>
-                                    <ArrowsUpDownIcon
-                                      className={classNames(
-                                        'hover:text-secondary h-5 w-5 hover:cursor-pointer',
-                                        {
-                                          'text-gray-400': !reverse,
-                                          'text-gray-800': reverse,
-                                        }
-                                      )}
-                                      onClick={() => {
-                                        setReverse((prevState) => !prevState);
-                                      }}
-                                    />
-                                  </span>
                                 </div>
                               </th>
                               <th className="whitespace-nowrap border-b  border-slate-300 py-4 pl-4 text-left">
                                 <div className="subtitle2 flex items-center gap-1.5">
                                   <span>End Time</span>
-                                  <span>
-                                    <ArrowsUpDownIcon
-                                      className={classNames(
-                                        'hover:text-secondary h-5 w-5 hover:cursor-pointer',
-                                        {
-                                          'text-gray-400': !reverse,
-                                          'text-gray-800': reverse,
-                                        }
-                                      )}
-                                      onClick={() => {
-                                        setReverse((prevState) => !prevState);
-                                      }}
-                                    />
-                                  </span>
                                 </div>
                               </th>
                               <th className="whitespace-nowrap border-b border-slate-300 py-4 pl-4 text-left">
                                 <div className="subtitle2 flex items-center gap-1.5">
                                   <span>Available Slots</span>
-                                  <span>
-                                    <ArrowsUpDownIcon
-                                      className={classNames(
-                                        'hover:text-secondary h-5 w-5 hover:cursor-pointer',
-                                        {
-                                          'text-gray-400': !reverse,
-                                          'text-gray-800': reverse,
-                                        }
-                                      )}
-                                      onClick={() => {
-                                        setReverse((prevState) => !prevState);
-                                      }}
-                                    />
-                                  </span>
                                 </div>
                               </th>
                               <th className="border-b border-slate-300 py-4 px-4 text-left" />
