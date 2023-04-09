@@ -19,6 +19,7 @@ import { accountLogoutResolver } from './mutations/accountLogout';
 import { accountRoleUpdateResolver } from './mutations/accountRoleUpdate';
 import { accountSignupResolver } from './mutations/accountSignup';
 import { accountTerminateResolver } from './mutations/accountTerminate';
+import { accountVerifyUpdateResolver } from './mutations/accountVerifyUpdate';
 import { courseAddResolver } from './mutations/courseAdd';
 import { courseDeleteResolver } from './mutations/courseDelete';
 import { courseEditResolver } from './mutations/courseEdit';
@@ -32,6 +33,7 @@ import { userEditResolver } from './mutations/userEdit';
 import { courseResolver } from './queries/course';
 import { courseBySlugResolver } from './queries/courseBySlug';
 import { coursesResolver } from './queries/courses';
+import { emailVerificationResolver } from './queries/emailVerification';
 import { locationClustersResolver } from './queries/locationClusters';
 import { locationsResolver } from './queries/locations';
 import { meResolver } from './queries/me';
@@ -67,6 +69,7 @@ const resolvers: Resolvers = {
     session: sessionResolver,
     courseBySlug: courseBySlugResolver,
     user: userResolver,
+    emailVerification: emailVerificationResolver,
   },
   Mutation: {
     accountLogin: accountLoginResolver,
@@ -76,6 +79,7 @@ const resolvers: Resolvers = {
     accountTerminate: accountTerminateResolver,
     accountAvatarUpdate: accountAvatarUpdateResolver,
     accountApprovalUpdate: accountApprovalUpdateResolver,
+    accountVerifyUpdate: accountVerifyUpdateResolver,
     fileUpload: fileUploadResolver,
     courseAdd: courseAddResolver,
     courseEdit: courseEditResolver,

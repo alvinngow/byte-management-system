@@ -4,10 +4,11 @@ interface Options {
   from: string;
   to: string;
   firstName: string;
+  verificationId: string;
 }
 
 export function welcome(opts: Options): Mail.Options {
-  const { from, to, firstName } = opts;
+  const { from, to, firstName, verificationId } = opts;
 
   return {
     from,
@@ -17,7 +18,7 @@ export function welcome(opts: Options): Mail.Options {
 <br>
 Welcome to the Byte Integrated Management System.
 <br>
-Click <a href="">here</a> to verify your email.
+Click <a href="${process.env.ROOT_URL}/login?verificationCode=${verificationId}">here</a> to verify your email.
 <br>
 <br>
 Team BYTE`,

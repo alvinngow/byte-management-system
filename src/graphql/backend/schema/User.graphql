@@ -102,3 +102,13 @@ type AccountApprovalUpdatePayload{
     clientMutationId: String
     user: User
 }
+
+input AccountVerifyUpdateInput{
+  clientMutationId: String
+  emailVerificationId: ID!
+}
+
+type AccountVerifyUpdatePayload{
+  clientMutationId: String
+  ok: Boolean!
+}

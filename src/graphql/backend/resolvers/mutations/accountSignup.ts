@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { GraphQLError } from 'graphql';
+import { DateTime } from 'luxon';
 
 import { MutationResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
@@ -53,18 +54,19 @@ export const accountSignupResolver: MutationResolvers['accountSignup'] = async (
 
     throw e;
   }
-
-  await context.setupSession(user);
-
-  /**
-   * TODO: Generate email verification link
-   */
+  const emailVerification = await prisma.emailVerification.create({
+    data: {
+      email,
+      expiresAt: DateTime.now().plus(5).toISO(),
+    },
+  });
 
   sendEmail(
     welcome({
       from: process.env.EMAIL_FROM!,
       to: `${user.firstName} ${user.lastName} <${user.email}>`,
       firstName: user.firstName,
+      verificationId: emailVerification.id,
     })
   );
 

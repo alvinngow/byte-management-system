@@ -1,0 +1,6 @@
+type EmailVerification{
+  id:String
+  expiresAt:DateTime
+  used:Boolean
+  email:String
+}

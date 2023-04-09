@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -9,7 +10,9 @@ import Button from '../components/Button';
 import ByteLogoIcon from '../components/icons/ByteLogoIcon';
 import Input from '../components/Input';
 import CustomLink from '../components/Link';
+import Modal from '../components/Modal';
 import * as LoginMutation from '../graphql/frontend/mutations/LoginMutation';
+import useLoginEmailVerification from '../hooks/useLoginEmailVerification';
 import PlainLayout from '../layouts/PlainLayout';
 
 interface Inputs {
@@ -26,6 +29,9 @@ const LoginPage: NextPage = function (props) {
   } = useForm<Inputs>();
 
   const router = useRouter();
+
+  const { isVerifiedModalOpen, closeVerifiedModal } =
+    useLoginEmailVerification();
 
   const [login] = useMutation<
     LoginMutation.Data & { accountLogin: CurrentUser },
@@ -60,6 +66,32 @@ const LoginPage: NextPage = function (props) {
   return (
     <PlainLayout>
       <div className="flex h-screen flex-col items-center justify-center">
+        {isVerifiedModalOpen && (
+          <Modal
+            onClose={closeVerifiedModal}
+            modalTitle="Account has been verified!"
+          >
+            <div className="p-4 text-center">
+              <p className="text-secondary-text">
+                In order to volunteer in our courses, please wait for our
+                Administrator to
+              </p>
+              <p className="text-secondary-text">
+                approve your onboarding process in order to start volunteering
+                with us!
+              </p>
+              <p className="text-secondary-text">
+                It will take about 1-3 business days.
+              </p>
+              <p className="text-secondary-text">
+                You&apos;ll receive an email once the approval has been made.
+              </p>
+              <Button onClick={closeVerifiedModal} className="mt-4">
+                OK!
+              </Button>
+            </div>
+          </Modal>
+        )}
         <form
           className="flex flex-col xsm:w-full xsm:w-4/5 md:w-3/4 md:px-0 xl:w-1/2"
           onSubmit={handleSubmit(onSubmit)}

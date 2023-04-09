@@ -1,12 +1,14 @@
 import { useMutation } from '@apollo/client';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 
 import Button from '../components/Button';
 import Input from '../components/Input';
 import CustomLink from '../components/Link';
+import Modal from '../components/Modal';
 import * as SignupMutation from '../graphql/frontend/mutations/SignupMutation';
 import PlainLayout from '../layouts/PlainLayout';
 
@@ -23,6 +25,7 @@ const SignupPage: NextPage = function (props) {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
     setError,
   } = useForm<Inputs>();
@@ -32,6 +35,8 @@ const SignupPage: NextPage = function (props) {
   const [signup] = useMutation<SignupMutation.Data, SignupMutation.Variables>(
     SignupMutation.Mutation
   );
+  const [verifyEmailModalState, setVerifyEmailModalState] =
+    React.useState(false);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
@@ -44,7 +49,7 @@ const SignupPage: NextPage = function (props) {
         },
       });
 
-      await router.push('/discover-courses');
+      setVerifyEmailModalState(true);
     } catch (e) {
       setError('password', {
         type: 'server',
@@ -56,6 +61,30 @@ const SignupPage: NextPage = function (props) {
   return (
     <PlainLayout>
       <div className="flex h-screen w-full flex-col items-center justify-center">
+        {verifyEmailModalState && (
+          <Modal
+            onClose={async () => await router.push('/login')}
+            modalTitle="Verify your account"
+          >
+            <div className="p-4 text-center">
+              <p className="text-secondary-text">
+                Email verification has been sent to {getValues('email')}
+              </p>
+              <p className="text-secondary-text">
+                Upon verification, please wait for an Administrator to
+              </p>
+              <p className="text-secondary-text">
+                approve your onboarding in order to start volunteering with us!
+              </p>
+              <Button
+                onClick={async () => await router.push('/login')}
+                className="mt-4"
+              >
+                OK!
+              </Button>
+            </div>
+          </Modal>
+        )}
         <form
           className="flex flex-col xsm:w-4/5 md:w-3/4 md:px-0 xl:w-1/2"
           onSubmit={handleSubmit(onSubmit)}

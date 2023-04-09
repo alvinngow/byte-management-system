@@ -400,7 +400,7 @@ const UsersPage: NextPage = function (props) {
                             }
                           }}
                           options={
-                            edge.node.verified_at
+                            edge.node.verified_at && !edge.node.approved_at
                               ? dotsOptionsWithApprove
                               : dotsOptions
                           }

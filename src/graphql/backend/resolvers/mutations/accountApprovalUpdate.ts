@@ -3,6 +3,8 @@ import {
   UserRole,
 } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
+import sendEmail from '../../../../email/sendEmail';
+import { approved } from '../../../../email/templates/approved';
 import requireCurrentUserRole from '../util/requireCurrentUserRole';
 
 export const accountApprovalUpdateResolver: MutationResolvers['accountApprovalUpdate'] =
@@ -19,6 +21,14 @@ export const accountApprovalUpdateResolver: MutationResolvers['accountApprovalUp
         approved_at: new Date(),
       },
     });
+
+    sendEmail(
+      approved({
+        from: process.env.EMAIL_FROM!,
+        to: `${user.firstName} ${user.lastName} <${user.email}>`,
+        firstName: user.firstName,
+      })
+    );
 
     return {
       clientMutationId,

@@ -26,6 +26,7 @@ module.exports = {
         error: 'var(--error)',
         'lime-500': '#84CC16',
         'lime-50': '#F7FEE7',
+        'secondary-text': '#64748B',
       },
     },
   },

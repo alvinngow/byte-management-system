@@ -9,4 +9,5 @@ type Query {
   courseBySlug(slug: String!): Course
   user(id: ID!): User
   session(id: ID!): Session
+  emailVerification(id:ID!):EmailVerification
 }
