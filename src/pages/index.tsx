@@ -48,27 +48,24 @@ const LandingPage: NextPage = function () {
         {/* nav */}
         <nav className="rounded border-gray-200 px-2 py-2.5 sm:px-4">
           <div className="container mx-auto flex flex-wrap items-center justify-between">
-            <a href="https://flowbite.com/" className="flex items-center">
+            <a href="https://www.byte.sg/" className="flex items-center">
               <ByteLogo className="mr-3 h-6 sm:h-9" alt="Byte Logo" />
             </a>
             <div className="flex gap-2 md:order-2">
               <Button
-                className="flex gap-2"
                 size="lg"
-                label="Back to Byte.sg"
                 variant="secondary"
-                href="https://www.byte.sg/"
-              >
-                <ArrowLeftIcon width="24" />
-              </Button>
-              <Button size="lg" label="Sign in" href="/login"></Button>
+                label="Sign in"
+                href="/login"
+              ></Button>
+              <Button size="lg" label="Get Started" href="/signup"></Button>
             </div>
           </div>
         </nav>
         <div className="mx-auto block w-3/4 md:grid md:grid-cols-2">
           <div className="my-auto">
             <h1 className="my-14 w-1/2">
-              Byte&apos;s Volunteering Management System
+              Byte&apos;s Integrated Management System
             </h1>
             <div className="flex gap-2 md:order-2">
               <Button size="lg" label="Get Started" href="/signup"></Button>
@@ -101,9 +98,9 @@ const LandingPage: NextPage = function () {
       {/* section */}
       <div className="mx-auto my-28 w-3/4">
         <h2 className="mb-16 text-center">
-          <span className="font-bold">Discover Causes</span> (Courses) Near You
+          <span className="font-bold">Discover Courses Near You</span>
         </h2>
-        <div className="block gap-6 md:grid md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {courses?.map((course) => (
             <div key={course.node.id}>
               <NavLink href={`/course/${course.node.slug}`}>
@@ -133,28 +130,32 @@ const LandingPage: NextPage = function () {
       </div>
       {/* section */}
       <div className="mx-auto mb-28 w-3/4">
-        <h2 className="mb-16 text-center xsm:mb-10">Enjoy Our Features</h2>
+        <h2 className="mb-5 text-center">Enjoy Our Features</h2>
+        <p className="mb-16 text-center xsm:mb-10">
+          By signing up as our Volunteer, you&apos;ll be able to view, apply and
+          track courses.
+        </p>
         <div className="block gap-4  lg:grid lg:grid-cols-8">
           <div className="col-span-2 my-auto block grid xsm:gap-5 xsm:text-center lg:grid-rows-3 lg:gap-14 lg:text-left">
             <div>
-              <h6 className="text-brand-main">Manage Volunteers</h6>
+              <h6 className="text-brand-main">View Courses</h6>
               <p className="subtitle1 text-slate-500">
-                Committee Members can manage volunteers by overseeing their
-                contributions in specific programs.
+                Volunteers can view all courses with available sessions to
+                volunteer in.
               </p>
             </div>
             <div>
-              <h6 className="text-brand-main">Manage Courses</h6>
+              <h6 className="text-brand-main">Volunteer in a Course</h6>
               <p className="subtitle1 text-slate-500">
-                Committee Members can create and manage courses for volunteers
-                to engage in.
+                Volunteers may apply for courses near them with session time
+                slots available.
               </p>
             </div>
             <div>
-              <h6 className="text-brand-main">Calculate Hours</h6>
+              <h6 className="text-brand-main">View Upcoming Courses</h6>
               <p className="subtitle1 text-slate-500">
-                Volunteers can see their accumulated hours in their profile
-                dashboard.
+                Volunteers can view upcoming courses which they have applied
+                for.
               </p>
             </div>
           </div>
@@ -166,19 +167,19 @@ const LandingPage: NextPage = function () {
               alt="mobile and computer screens"
             />
           </div>
-          <div className="col-span-2 my-auto block grid gap-14 pl-3 xsm:gap-5 xsm:text-center md:grid-rows-3 lg:text-left">
-            <div>
-              <h6 className="text-brand-main">View Courses by Location</h6>
-              <p className="subtitle1 text-slate-500 ">
-                Volunteers can view courses near them by filtering courses based
-                on location.
-              </p>
-            </div>
+          <div className="col-span-2 my-auto block grid pl-3 xsm:gap-5 xsm:text-center md:grid-rows-3 lg:gap-14 lg:text-left">
             <div>
               <h6 className="text-brand-main">Attendance Taking</h6>
               <p className="subtitle1 text-slate-500">
-                Committee Members can take attendance of volunteers in the
-                course management system.
+                Volunteers will have their attendance marked each time they have
+                attended a session.
+              </p>
+            </div>
+            <div>
+              <h6 className="text-brand-main">Calculate Hours</h6>
+              <p className="subtitle1 text-slate-500">
+                Volunteers can keep track of their accumulated hours in their
+                profile dashboard.
               </p>
             </div>
           </div>
@@ -199,7 +200,7 @@ const LandingPage: NextPage = function () {
         <div className="mx-auto block w-3/4 overflow-hidden md:grid md:grid-cols-2">
           <div className="xsm:my-10 xsm:text-center lg:my-28 lg:text-left">
             <h2 className="mb-7 font-bold">Join our Community now!</h2>
-            <Button size="lg" label="Get Started"></Button>
+            <Button size="lg" label="Get Started" href="/signup"></Button>
           </div>
           <div className="md:relative md:max-h-fit">
             <Image
