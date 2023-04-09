@@ -36,7 +36,7 @@ const first = 10;
 
 const CourseDetailPage: React.FC = function () {
   const router = useRouter();
-  const { id } = router.query;
+  const { id: slug } = router.query;
 
   const [reverse, setReverse] = React.useState(false);
 
@@ -46,7 +46,7 @@ const CourseDetailPage: React.FC = function () {
 
   const variables = React.useMemo<CourseSlugSessionsQuery.Variables>(() => {
     return {
-      slug: id as string,
+      slug: slug as string,
       reverse,
       sortKey: SessionSortKey.Start,
       first,
@@ -54,14 +54,14 @@ const CourseDetailPage: React.FC = function () {
         date: SessionDateFiltering.Upcoming,
       },
     };
-  }, [id, reverse]);
+  }, [slug, reverse]);
 
   const { data: guestData } = useQuery<
     GuestCourseSessionsQuery.Data,
     GuestCourseSessionsQuery.Variables
   >(GuestCourseSessionsQuery.Query, {
     variables,
-    skip: id == null,
+    skip: slug == null,
   });
 
   const { data, loading, error, fetchMore, refetch } = useQuery<
@@ -69,12 +69,16 @@ const CourseDetailPage: React.FC = function () {
     CourseSlugSessionsQuery.Variables
   >(CourseSlugSessionsQuery.Query, {
     variables,
-    skip: id == null,
+    skip: slug == null,
   });
 
   React.useEffect(() => {
+    if (slug == null) {
+      return;
+    }
+
     refetch();
-  }, [refetch, variables]);
+  }, [slug, refetch, variables]);
 
   const [updateSession] = useMutation<
     SessionAttend.Data,
@@ -166,7 +170,7 @@ const CourseDetailPage: React.FC = function () {
   );
 
   React.useEffect(() => {
-    if (id == null || loading) {
+    if (slug == null || loading) {
       return;
     }
 
@@ -175,7 +179,7 @@ const CourseDetailPage: React.FC = function () {
     }
 
     router.push('/404');
-  }, [data, error, id, loading, router]);
+  }, [data, error, slug, loading, router]);
 
   if (!me) {
     return (
