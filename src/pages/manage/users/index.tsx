@@ -409,7 +409,7 @@ const UsersPage: NextPage = function (props) {
 
             {data?.users?.pageInfo?.hasNextPage && (
               <div className="px-3 py-3 text-center">
-                <button className="inline-flex">
+                <button className="inline-flex" onClick={handleLoadMoreClick}>
                   <IconButton
                     HeroIcon={() => (
                       <ChevronDoubleDownIcon className="h-5 w-5 text-brand-main" />

@@ -23,6 +23,9 @@ export const usersResolver: QueryResolvers['users'] = async (
     UserRole.SystemAdministrator
   );
 
+  const currentUserId = context.getCurrentUserId()!;
+  const currentUserRole = await context.getCurrentUserRole();
+
   const { first, after, filter, sortKey, reverse } = args;
 
   let orderBy: UserOrderByWithRelationInput | undefined = undefined;
@@ -80,6 +83,22 @@ export const usersResolver: QueryResolvers['users'] = async (
                   mode: 'insensitive',
                 },
               },
+            },
+          ]
+        : undefined,
+    AND:
+      currentUserRole !== UserRole.SystemAdministrator
+        ? [
+            {
+              OR: [
+                {
+                  role: UserRole.User,
+                },
+                {
+                  role: UserRole.CommitteeMember,
+                  id: currentUserId,
+                },
+              ],
             },
           ]
         : undefined,
