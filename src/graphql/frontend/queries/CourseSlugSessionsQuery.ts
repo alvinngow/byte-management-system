@@ -20,7 +20,7 @@ export interface Variables {
 }
 
 export const Query = gql`
-  query CourseSessionsQuery(
+  query CourseSlugSessionsQuery(
     $slug: String!
     $first: Int = 10
     $after: String
