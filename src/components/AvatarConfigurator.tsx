@@ -119,7 +119,7 @@ const AvatarConfigurator: React.FC<Prop> = function (prop) {
 
   return (
     <>
-      <button className="elative flex items-center gap-2.5 rounded-xl p-1">
+      <button className="relative flex items-center gap-2.5 rounded-xl p-1">
         <input
           type="file"
           multiple={false}
@@ -128,15 +128,12 @@ const AvatarConfigurator: React.FC<Prop> = function (prop) {
           ref={inputElement}
         />
         <span
-          className={classNames(
-            'flex h-10 w-10 items-center justify-center rounded-full',
-            randomBgClass
-          )}
+          className="flex h-10 w-10"
           onClick={() => inputElement.current?.click()}
         >
           {avatarUrl ? (
             <Image
-              className="grow self-center object-cover"
+              className="h-full grow self-center rounded-full object-contain"
               src={avatarUrl}
               alt="profile placeholder"
               width={24}
@@ -144,14 +141,19 @@ const AvatarConfigurator: React.FC<Prop> = function (prop) {
             />
           ) : uploadedAvatar ? (
             <Image
-              className="grow self-center object-cover"
+              className="h-full grow self-center rounded-full object-contain"
               src={uploadedAvatar}
               alt="profile placeholder"
               width={24}
               height={24}
             />
           ) : (
-            <span className="avatarLetter grow self-center text-center text-white">
+            <span
+              className={classNames(
+                'avatarLetter inline-flex h-full grow items-center justify-center rounded-full text-center text-white',
+                randomBgClass
+              )}
+            >
               {firstName?.[0]}
               {lastName?.[0]}
             </span>

@@ -262,7 +262,7 @@ const UsersPage: NextPage = function (props) {
                       <IconButton
                         HeroIcon={() => (
                           <ArrowsUpDownIcon
-                            className="ml-1 mb-1"
+                            className="ml-1"
                             onClick={() => {
                               setSortKey(UserSortKey.FirstName);
                               setSortDirection((prevState) => !prevState);
@@ -278,7 +278,7 @@ const UsersPage: NextPage = function (props) {
                       <IconButton
                         HeroIcon={() => (
                           <ArrowsUpDownIcon
-                            className="ml-1 mb-1"
+                            className="ml-1"
                             onClick={() => {
                               setSortKey(UserSortKey.ContactNumber);
                               setSortDirection((prevState) => !prevState);
@@ -294,7 +294,7 @@ const UsersPage: NextPage = function (props) {
                       <IconButton
                         HeroIcon={() => (
                           <ArrowsUpDownIcon
-                            className="ml-1 mb-1"
+                            className="ml-1"
                             onClick={() => {
                               setSortKey(UserSortKey.School);
                               setSortDirection((prevState) => !prevState);
@@ -310,7 +310,7 @@ const UsersPage: NextPage = function (props) {
                       <IconButton
                         HeroIcon={() => (
                           <ArrowsUpDownIcon
-                            className="ml-1 mb-1"
+                            className="ml-1"
                             onClick={() => {
                               setSortKey(UserSortKey.UserType);
                               setSortDirection((prevState) => !prevState);

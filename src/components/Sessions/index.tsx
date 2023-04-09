@@ -83,7 +83,7 @@ const Sessions: React.FC<Props> = function (props) {
         )}
       </div>
       <div className="w-36 xsm:w-full md:w-auto">
-        <div className="relative md:w-1/2">
+        <div className="relative lg:w-1/2">
           <Select
             className="w-full"
             items={[
@@ -116,14 +116,16 @@ const Sessions: React.FC<Props> = function (props) {
             <table className="my-5 w-full shadow-sm">
               <thead>
                 <tr>
-                  <th className="py-4 pl-4 text-left">Date</th>
-                  <th className="py-4 pl-4 text-left xsm:whitespace-nowrap md:whitespace-normal">
+                  <th className="whitespace-nowrap py-4 pl-4 text-left">
+                    Date
+                  </th>
+                  <th className="whitespace-nowrap py-4 pl-4 text-left">
                     Start Time
                   </th>
-                  <th className="py-4 pl-4 text-left xsm:whitespace-nowrap md:whitespace-normal">
+                  <th className="whitespace-nowrap py-4 pl-4 text-left">
                     End Time
                   </th>
-                  <th className="py-4 pl-4 text-left xsm:whitespace-nowrap md:whitespace-normal">
+                  <th className="whitespace-nowrap py-4 pl-4 text-left">
                     Volunteer Slots
                   </th>
                   <th className="py-4 pl-4 text-left"></th>

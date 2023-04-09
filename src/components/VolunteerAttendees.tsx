@@ -87,7 +87,7 @@ const ClassPage: React.FC = function () {
           <table className="w-full table-fixed border border-gray-100 text-left text-gray-500">
             <thead className="text-sm text-gray-700">
               {/* need to add the up-down arrow icon */}
-              <th className="columns-1 px-6 py-3">
+              <th className="columns-1 whitespace-nowrap px-6 py-3">
                 Name{' '}
                 <button>
                   <span className="inline-flex">
@@ -95,7 +95,7 @@ const ClassPage: React.FC = function () {
                   </span>
                 </button>
               </th>
-              <th className="columns-1 px-6 py-3">
+              <th className="columns-1 whitespace-nowrap px-6 py-3">
                 Email{' '}
                 <button>
                   <span className="inline-flex">
@@ -103,7 +103,7 @@ const ClassPage: React.FC = function () {
                   </span>
                 </button>
               </th>
-              <th className="columns-1 px-6 py-3">
+              <th className="columns-1 whitespace-nowrap px-6 py-3">
                 Mobile Number{' '}
                 <button>
                   <span className="inline-flex">
@@ -111,9 +111,11 @@ const ClassPage: React.FC = function () {
                   </span>
                 </button>
               </th>
-              <th className="columns-1 px-6 py-3">Mark Attendance</th>
+              <th className="columns-1 whitespace-nowrap px-6 py-3">
+                Mark Attendance
+              </th>
               {me?.role === UserRole.SystemAdministrator && (
-                <th className="px-6 py-3">Management</th>
+                <th className="whitespace-nowrap px-6 py-3">Management</th>
               )}
             </thead>
             <tbody>

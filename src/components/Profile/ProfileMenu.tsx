@@ -28,7 +28,7 @@ const ProfileMenu: React.FC<Props> = function (props) {
     <div
       ref={elementRef}
       className={classNames(
-        'z-50 flex w-full flex-col items-start gap-y-px overflow-hidden rounded-b-lg bg-white p-2.5 shadow-lg',
+        'z-50 flex w-full flex-col items-start gap-y-px overflow-hidden overflow-x-scroll rounded-b-lg bg-white p-2.5 shadow-lg',
         {
           'bg-brand-hover': focused,
         },

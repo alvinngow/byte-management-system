@@ -60,7 +60,7 @@ const Settings: React.FC = function () {
   };
 
   return (
-    <div className="w-3/4 pt-3">
+    <div className="pt-6 xl:basis-3/4 xl:pt-3">
       <p className="mb-2 font-semibold">Avatar</p>
       <AvatarConfigurator submitType={submitType} />
       <div className="flex">
@@ -105,9 +105,7 @@ const Settings: React.FC = function () {
         onChange={(e) => SetUserInfoWrapper(e)}
       ></Input>
       {error && (
-        <p className="pt-3 text-error">
-          An error has occured please check fields
-        </p>
+        <p className="pt-3 text-error">Please ensure the fields are correct</p>
       )}
       {data && <p className="pt-3 text-success">Successfully Edited</p>}
       <div className="mb-3">

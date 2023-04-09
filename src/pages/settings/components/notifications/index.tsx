@@ -46,7 +46,7 @@ const RegionSelect: React.FC = function () {
 
 const Notifications: React.FC = function () {
   return (
-    <div className="w-3/4 pt-3">
+    <div className="pt-6 xl:basis-3/4 xl:pt-3">
       <p className="mb-2 font-semibold">Notifications</p>
       <p className="mb-2 mt-6 font-semibold">General</p>
       <p className="mb-4 mt-3 text-gray-400">Manage your email notifications</p>
