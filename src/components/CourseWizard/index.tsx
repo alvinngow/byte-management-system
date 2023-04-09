@@ -20,7 +20,7 @@ import CourseWizardMachine, {
 
 interface Props {
   courseId?: string;
-  onSuccess?: () => void;
+  onSuccess?: (courseId: string) => void;
 }
 
 const CourseWizard: React.FC<Props> = function (props) {
@@ -238,7 +238,7 @@ const CourseWizard: React.FC<Props> = function (props) {
     ) => Promise<CourseWizardServiceMap['success']['data']>
   >(
     async (context) => {
-      onSuccess?.();
+      onSuccess?.(context.courseId!);
     },
     [onSuccess]
   );

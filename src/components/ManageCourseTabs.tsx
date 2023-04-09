@@ -1,3 +1,4 @@
+import { useApolloClient } from '@apollo/client';
 import {
   BarsArrowDownIcon,
   BarsArrowUpIcon,
@@ -7,10 +8,10 @@ import {
 import { useRouter } from 'next/router';
 import React from 'react';
 
+import * as CourseSlug from '../graphql/frontend/queries/CourseSlugQuery';
 import BackButton from './BackButton';
 import Button from './Button';
 import CourseWizard from './CourseWizard';
-import TabButton from './CourseWizard/components/TabButton';
 import IconButton from './IconButton';
 import Modal from './Modal';
 import Sessions from './Sessions';
@@ -38,9 +39,29 @@ const ManageCourseTabs: React.FC<ManageCourseTabsProps> = function (props) {
     }
   };
 
-  const handleWizardSuccess = React.useCallback(() => {
-    router.push('/manage/course');
-  }, [router]);
+  const apolloClient = useApolloClient();
+
+  const handleWizardSuccess = React.useCallback(
+    async (courseId: string) => {
+      const { data } = await apolloClient.query<
+        CourseSlug.Data,
+        CourseSlug.Variables
+      >({
+        query: CourseSlug.Query,
+        variables: {
+          id: courseId,
+        },
+      });
+
+      if (data == null) {
+        await router.push('/manage/course');
+        return;
+      }
+
+      await router.push(`/course/${data.course.slug}`);
+    },
+    [apolloClient, router]
+  );
 
   return (
     <>
