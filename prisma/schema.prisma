@@ -28,10 +28,13 @@ model User {
   courseManagers               CourseManager[]
   sessionAttendees             SessionAttendee[]
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  verified_at DateTime?
-  approved_at DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  verified_at         DateTime?
+  approved_at         DateTime?
+  notifyNewCourse     Boolean   @default(true)
+  notifyNearNewCourse Boolean   @default(true)
+  nearRegion          String?
 }
 
 model School {

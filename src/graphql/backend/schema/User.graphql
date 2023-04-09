@@ -44,7 +44,9 @@ type CurrentUser {
   createdAt: DateTime!
   school: School
   role: UserRole!
-
+  notifyNewCourse:Boolean
+  notifyNearNewCourse:Boolean
+  nearRegion:String
 
   sessionAttendees(first: Int = 10, after: String, sortKey: SessionAttendeeSortKey, filter: SessionAttendeeFiltering, reverse: Boolean): SessionAttendeeConnection!
   overview: [CurrentUserOverview!]!
@@ -111,4 +113,15 @@ input AccountVerifyUpdateInput{
 type AccountVerifyUpdatePayload{
   clientMutationId: String
   ok: Boolean!
+}
+input AccountNotificationUpdateInput{
+  clientMutationId: String
+  notifyNewCourse:Boolean
+  notifyNearNewCourse:Boolean
+  nearRegion:String
+}
+
+type AccountNotificationUpdatePayload{
+  clientMutationId: String
+  user:User!
 }

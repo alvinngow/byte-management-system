@@ -21,6 +21,9 @@ export const Query = gql`
       }
       role
       createdAt
+      notifyNewCourse
+      notifyNearNewCourse
+      nearRegion
     }
   }
 `;

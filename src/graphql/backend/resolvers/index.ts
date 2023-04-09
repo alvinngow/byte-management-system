@@ -16,6 +16,7 @@ import { accountApprovalUpdateResolver } from './mutations/accountApprovalUpdate
 import accountAvatarUpdateResolver from './mutations/accountAvatarUpdate';
 import { accountLoginResolver } from './mutations/accountLogin';
 import { accountLogoutResolver } from './mutations/accountLogout';
+import { accountNotificationUpdateResolver } from './mutations/accountNotificationUpdate';
 import { accountRoleUpdateResolver } from './mutations/accountRoleUpdate';
 import { accountSignupResolver } from './mutations/accountSignup';
 import { accountTerminateResolver } from './mutations/accountTerminate';
@@ -80,6 +81,7 @@ const resolvers: Resolvers = {
     accountAvatarUpdate: accountAvatarUpdateResolver,
     accountApprovalUpdate: accountApprovalUpdateResolver,
     accountVerifyUpdate: accountVerifyUpdateResolver,
+    accountNotificationUpdate: accountNotificationUpdateResolver,
     fileUpload: fileUploadResolver,
     courseAdd: courseAddResolver,
     courseEdit: courseEditResolver,
