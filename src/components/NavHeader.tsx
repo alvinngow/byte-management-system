@@ -112,7 +112,7 @@ const NavHeader: React.FC<Props> = function (props) {
       <div className="border border-white border-b-gray-300">
         <header
           className={classNames(
-            'absolute sticky top-0 z-20 flex bg-white py-4 xsm:items-end xsm:px-3 md:px-6',
+            'absolute sticky top-0 z-20 flex bg-white py-2 xsm:items-end xsm:px-3 md:px-6',
             {
               'justify-between xxl:m-auto xxl:w-4/5 xxl:px-0':
                 meData?.me?.role === UserRole.User,
@@ -136,9 +136,12 @@ const NavHeader: React.FC<Props> = function (props) {
                   <Tab
                     key={'tab' + i}
                     selectedID={linkSelected}
+                    textClass="pl-2"
+                    Icon={link.icon}
                     tabID={link.label}
                     text={link.label}
                     href={link.href}
+                    nofill
                   ></Tab>
                 ))}
               </div>
