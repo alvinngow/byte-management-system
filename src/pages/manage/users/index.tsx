@@ -265,6 +265,7 @@ const UsersPage: NextPage = function (props) {
                             className="ml-1 mb-1"
                             onClick={() => {
                               setSortKey(UserSortKey.FirstName);
+                              setSortDirection((prevState) => !prevState);
                             }}
                           ></ArrowsUpDownIcon>
                         )}
@@ -280,6 +281,7 @@ const UsersPage: NextPage = function (props) {
                             className="ml-1 mb-1"
                             onClick={() => {
                               setSortKey(UserSortKey.ContactNumber);
+                              setSortDirection((prevState) => !prevState);
                             }}
                           ></ArrowsUpDownIcon>
                         )}
@@ -295,6 +297,7 @@ const UsersPage: NextPage = function (props) {
                             className="ml-1 mb-1"
                             onClick={() => {
                               setSortKey(UserSortKey.School);
+                              setSortDirection((prevState) => !prevState);
                             }}
                           ></ArrowsUpDownIcon>
                         )}
@@ -310,22 +313,14 @@ const UsersPage: NextPage = function (props) {
                             className="ml-1 mb-1"
                             onClick={() => {
                               setSortKey(UserSortKey.UserType);
+                              setSortDirection((prevState) => !prevState);
                             }}
                           ></ArrowsUpDownIcon>
                         )}
                       />
                     </div>
                   </th>
-                  <th className="columns-1 px-4 py-3">
-                    <div className="flex justify-center whitespace-nowrap">
-                      Account Status
-                      <IconButton
-                        HeroIcon={() => (
-                          <ArrowsUpDownIcon className="ml-1 mb-1"></ArrowsUpDownIcon>
-                        )}
-                      />
-                    </div>
-                  </th>
+                  <th className="columns-1 px-4 py-3">Account Status</th>
                   {me?.role === UserRole.SystemAdministrator && (
                     <th className="px-6 py-3">Management</th>
                   )}
