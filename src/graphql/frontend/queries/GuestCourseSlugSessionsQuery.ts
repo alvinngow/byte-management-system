@@ -42,6 +42,8 @@ export const Query = gql`
         id
         name
         address
+        lat
+        lng
       }
 
       courseManagers {

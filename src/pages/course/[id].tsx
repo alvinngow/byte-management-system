@@ -409,7 +409,13 @@ const CourseDetailPage: React.FC = function () {
             <div className="basis-1/3">
               <div className="border-full mb-5 block w-full rounded-lg border bg-white p-10 shadow-lg">
                 <div className="subtitle1 mb-2.5">LOCATION</div>
-                <div className="mb-2.5">INSERT MAP HERE</div>
+                <div className="mb-2.5 h-56 w-full">
+                  <Map
+                    lat={guestCourse!.defaultLocation!.lat}
+                    lng={guestCourse!.defaultLocation!.lng}
+                    name={guestCourse!.defaultLocation!.name}
+                  />
+                </div>
                 <div className="body1 mb-8">
                   {guestCourse.defaultLocation?.address}
                 </div>
