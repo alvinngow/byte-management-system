@@ -9,7 +9,7 @@ concurrency:
 jobs:
   test:
     timeout-minutes: 15
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     env:
       DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/bims-database?schema=public"
       SECRET_COOKIE_PASSWORD: "qLVhCjXDmd05ejEZVgFKYv8MkzwFcrrC"

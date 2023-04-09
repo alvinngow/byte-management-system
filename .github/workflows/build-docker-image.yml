@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   build-and-push:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -20,4 +20,3 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       - name: Push image
         run: docker push ghcr.io/kr-pokectr/bims:latest
-
