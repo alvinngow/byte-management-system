@@ -1,7 +1,13 @@
 import classNames from 'classnames';
 import React, { ComponentType } from 'react';
 
-type Scheme = 'danger' | 'success' | 'warning' | 'info' | 'disabled';
+type Scheme =
+  | 'danger'
+  | 'success'
+  | 'warning'
+  | 'info'
+  | 'disabled'
+  | 'approved';
 
 // @tw
 const SchemeClassMap: Record<Scheme, string> = {
@@ -10,6 +16,7 @@ const SchemeClassMap: Record<Scheme, string> = {
   warning: 'bg-amber-100 text-amber-600',
   info: 'bg-blue-100 text-blue-600',
   disabled: 'bg-gray-100 text-gray-500',
+  approved: 'bg-purple-100 text-purple-600',
 };
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {

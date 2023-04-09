@@ -368,7 +368,7 @@ const UsersPage: NextPage = function (props) {
                     </td>
                     <td className="px-6 py-4 text-red-500">
                       {edge.node.approved_at ? (
-                        <Chip scheme="success" number={'Approved'} />
+                        <Chip scheme="approved" number={'Approved'} />
                       ) : edge.node.verified_at ? (
                         <Chip scheme="success" number={'Verified'} />
                       ) : (
