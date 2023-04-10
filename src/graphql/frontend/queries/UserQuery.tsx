@@ -22,6 +22,8 @@ export const Query = gql`
       school {
         name
       }
+      verified_at
+      approved_at
     }
   }
 `;

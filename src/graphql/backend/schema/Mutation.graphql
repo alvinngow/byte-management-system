@@ -14,7 +14,7 @@ type Mutation {
   courseDelete(input: CourseDeleteInput!): CourseDeletePayload!
   sessionAdd(input: SessionAddInput!): SessionAddPayload!
   userEdit(input: UserEditInput!): UserEditPayload!
-
+  
   # used by a committee member to report on an attendee's actual attendance
   sessionAttendReport(input: SessionAttendReportInput!): SessionAttendReportPayload!
   sessionEdit(input: SessionEditInput!): SessionEditPayload!

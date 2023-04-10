@@ -17,9 +17,9 @@ import BackButton from '../../../../components/BackButton';
 import Button from '../../../../components/Button';
 import DotsMoreOptions from '../../../../components/DotsMoreOptions';
 import Input from '../../../../components/Input';
-import TabHistory from '../../../../components/MySessions/components/TabHistory';
-import TabUpcoming from '../../../../components/MySessions/components/TabUpcoming';
-import { mySessionsReducer } from '../../../../components/MySessions/reducers/mySessionsReducer';
+import TabHistory from '../../../../components/ManageUsers/components/TabHistory';
+import TabUpcoming from '../../../../components/ManageUsers/components/TabUpcoming';
+import { userSessionsReducer } from '../../../../components/ManageUsers/reducers/userSessionsReducer';
 import Select from '../../../../components/Select';
 import Spinner from '../../../../components/Spinner';
 import Tab from '../../../../components/Tab';
@@ -53,12 +53,15 @@ const SingleUserPage: NextPage = function () {
   const router = useRouter();
   const { userId } = router.query;
 
-  const [reducerState, reducerDispatch] = React.useReducer(mySessionsReducer, {
-    tab: 'upcoming_sessions',
-    searchTerm: '',
-    reverse: false,
-    filterActualAttendance: undefined,
-  });
+  const [reducerState, reducerDispatch] = React.useReducer(
+    userSessionsReducer,
+    {
+      tab: 'upcoming_sessions',
+      searchTerm: '',
+      reverse: false,
+      filterActualAttendance: undefined,
+    }
+  );
 
   const searchTermDebounced = useDebounce(reducerState.searchTerm);
 
@@ -105,6 +108,10 @@ const SingleUserPage: NextPage = function () {
     variables,
     fetchPolicy: 'cache-and-network',
   });
+
+  React.useEffect(() => {
+    refetch();
+  }, [refetch, variables]);
 
   const [accountRoleUpdate] = useMutation<
     AccountRoleUpdate.Data,
@@ -191,12 +198,15 @@ const SingleUserPage: NextPage = function () {
     });
   }, []);
 
-  const handleAttendanceStatusChange = React.useCallback((value: string) => {
-    reducerDispatch({
-      type: 'set_attendance',
-      attendance: value != null ? (value as Attendance) : undefined,
-    });
-  }, []);
+  const handleAttendanceStatusChange = React.useCallback(
+    (value: Attendance | undefined) => {
+      reducerDispatch({
+        type: 'set_attendance',
+        attendance: value,
+      });
+    },
+    []
+  );
 
   const toggleReverse = React.useCallback(() => {
     reducerDispatch({
@@ -310,6 +320,18 @@ const SingleUserPage: NextPage = function () {
                 </span>
               </div>
             </div>
+            <Input
+              type="text"
+              placeholder={
+                userData?.user.approved_at
+                  ? 'Approved'
+                  : userData?.user.verified_at
+                  ? 'Verified'
+                  : 'Pending'
+              }
+              label="Account Status"
+              readOnly
+            ></Input>
           </div>
         </div>
         <div className="h-screen w-px bg-gray-300"></div>
@@ -318,6 +340,111 @@ const SingleUserPage: NextPage = function () {
             <h6>Overview</h6>
             <div className="sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
               <UserSessionsOverview userId={userId as string} />
+            </div>
+
+            <h6 className="mb-5">Courses</h6>
+            <div className="subtitle2 text-secondary flex text-center font-medium">
+              <Tab
+                selectedID={reducerState.tab}
+                tabID="upcoming_sessions"
+                onClick={() => {
+                  reducerDispatch({
+                    type: 'set_tab',
+                    tab: 'upcoming_sessions',
+                  });
+                }}
+                underline={true}
+                text="UPCOMING SESSIONS"
+                href="#"
+              />
+
+              <Tab
+                selectedID={reducerState.tab}
+                tabID="session_history"
+                onClick={() => {
+                  reducerDispatch({
+                    type: 'set_tab',
+                    tab: 'session_history',
+                  });
+                }}
+                underline={true}
+                text="SESSION HISTORY"
+                href="#"
+              />
+            </div>
+            <div className="border-grey-400 mb-12 rounded-lg px-5 pb-12 shadow-lg">
+              <div className="mb-5 mt-3 flex w-full flex-col gap-4 md:flex-row lg:flex-row">
+                <div className="sm:w-full">
+                  <Input
+                    className="grow"
+                    label="Search"
+                    placeholder="Course, Location..."
+                    value={reducerState.searchTerm}
+                    onChange={handleSearchInputChange}
+                  />
+                </div>
+                {reducerState.tab === 'session_history' && (
+                  <>
+                    <div className="sm:w-full md:w-1/4 lg:w-1/4">
+                      <div className="relative flex grow">
+                        <Select
+                          className="grow"
+                          placeholder="All"
+                          items={[
+                            {
+                              label: 'All',
+                              value: undefined,
+                            },
+                            {
+                              label: 'Attending',
+                              value: Attendance.Attend,
+                            },
+                            {
+                              label: 'Not Attending',
+                              value: Attendance.Absent,
+                            },
+                          ]}
+                          label="Attendance Status"
+                          value={
+                            reducerState.filterActualAttendance as
+                              | Attendance
+                              | undefined
+                          }
+                          onChange={handleAttendanceStatusChange}
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+              <div className="snap-x overflow-x-auto scroll-smooth">
+                {loading ? (
+                  <Spinner />
+                ) : (
+                  <>
+                    {reducerState.tab === 'upcoming_sessions' &&
+                      data != null && (
+                        <TabUpcoming
+                          sessionAttendeeConnection={data.user.sessionAttendees}
+                          reverse={reducerState.reverse}
+                          handleReverseToggle={toggleReverse}
+                        />
+                      )}
+
+                    {reducerState.tab === 'session_history' && data != null && (
+                      <TabHistory
+                        sessionAttendeeConnection={data.user.sessionAttendees}
+                        reverse={reducerState.reverse}
+                        handleReverseToggle={toggleReverse}
+                      />
+                    )}
+                  </>
+                )}
+
+                {data?.user.sessionAttendees.pageInfo.hasNextPage && (
+                  <button onClick={handleLoadMoreClick}>Load more</button>
+                )}
+              </div>
             </div>
           </div>
         </div>
