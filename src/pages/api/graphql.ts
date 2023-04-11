@@ -21,7 +21,10 @@ const server = new ApolloServer({
     ...appResolvers,
   },
   plugins: isProduction
-    ? [ApolloServerPluginLandingPageDisabled()]
+    ? [
+        ApolloServerPluginLandingPageDisabled(),
+        ApolloServerPluginErrorLogging(),
+      ]
     : [
         ApolloServerPluginLandingPageGraphiQL(),
         ApolloServerPluginErrorLogging(),
