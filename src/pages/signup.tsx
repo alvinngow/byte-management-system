@@ -9,6 +9,7 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import CustomLink from '../components/Link';
 import Modal from '../components/Modal';
+import SEO from '../components/SEO';
 import * as SignupMutation from '../graphql/frontend/mutations/SignupMutation';
 import PlainLayout from '../layouts/PlainLayout';
 
@@ -60,6 +61,7 @@ const SignupPage: NextPage = function (props) {
 
   return (
     <PlainLayout>
+      <SEO title="Signup" />
       <div className="flex h-screen w-full flex-col items-center justify-center">
         {verifyEmailModalState && (
           <Modal

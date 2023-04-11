@@ -11,6 +11,7 @@ import ByteLogoIcon from '../components/icons/ByteLogoIcon';
 import Input from '../components/Input';
 import CustomLink from '../components/Link';
 import Modal from '../components/Modal';
+import SEO from '../components/SEO';
 import * as LoginMutation from '../graphql/frontend/mutations/LoginMutation';
 import useLoginEmailVerification from '../hooks/useLoginEmailVerification';
 import PlainLayout from '../layouts/PlainLayout';
@@ -65,6 +66,7 @@ const LoginPage: NextPage = function (props) {
 
   return (
     <PlainLayout>
+      <SEO title="Login" />
       <div className="flex h-screen flex-col items-center justify-center">
         {isVerifiedModalOpen && (
           <Modal

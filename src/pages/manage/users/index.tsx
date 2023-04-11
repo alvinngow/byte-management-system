@@ -20,6 +20,7 @@ import DotsMoreOptions from '../../../components/DotsMoreOptions';
 import IconButton from '../../../components/IconButton';
 import Input from '../../../components/Input';
 import Select from '../../../components/Select';
+import SEO from '../../../components/SEO';
 import * as AccountApprovalUpdate from '../../../graphql/frontend/mutations/AccountApprovalUpdateMutation';
 import * as AccountRoleUpdate from '../../../graphql/frontend/mutations/AccountRoleUpdateMutation';
 import * as AccountTerminate from '../../../graphql/frontend/mutations/AccountTerminateMutation';
@@ -211,6 +212,7 @@ const UsersPage: NextPage = function (props) {
 
   return (
     <AppLayout>
+      <SEO title="Manage Users" />
       {/* start of body DIV*/}
       <div className="mb-12">
         <h3 className="my-6">Users</h3>

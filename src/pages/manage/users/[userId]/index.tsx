@@ -21,6 +21,7 @@ import TabHistory from '../../../../components/ManageUsers/components/TabHistory
 import TabUpcoming from '../../../../components/ManageUsers/components/TabUpcoming';
 import { userSessionsReducer } from '../../../../components/ManageUsers/reducers/userSessionsReducer';
 import Select from '../../../../components/Select';
+import SEO from '../../../../components/SEO';
 import Spinner from '../../../../components/Spinner';
 import Tab from '../../../../components/Tab';
 import UserSessionsOverview from '../../../../components/UserSessionsOverview';
@@ -216,6 +217,7 @@ const SingleUserPage: NextPage = function () {
 
   return (
     <UserPageLayout>
+      <SEO title="Manage User" />
       <div className="flex">
         <div className="flex basis-1/5 flex-col gap-12 px-5 py-9">
           <h6 className="text-gray-600">
