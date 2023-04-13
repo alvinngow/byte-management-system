@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { ArrowsUpDownIcon } from '@heroicons/react/24/outline';
+import { ArrowsUpDownIcon, PencilIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import produce from 'immer';
 import { DateTime } from 'luxon';
@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import { UserRole } from '../../../gen/graphql/operations';
 import {
   Attendance,
   SessionDateFiltering,
@@ -16,6 +17,8 @@ import {
 } from '../../../gen/graphql/resolvers';
 import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';
+import IconButton from '../../components/IconButton';
+import NavLink from '../../components/NavLink';
 import RichTextEditor from '../../components/RichTextEditor';
 import SEO from '../../components/SEO';
 import Spinner from '../../components/Spinner';
@@ -497,7 +500,14 @@ const CourseDetailPage: React.FC = function () {
                   <>No sessions</>
                 )}
               </h6>
-              <h2 className="mb-6">{course.name}</h2>
+              <h2 className="mb-6 inline-flex items-center">
+                <span className="mr-2">{course.name}</span>
+                {me?.role !== UserRole.User && (
+                  <NavLink href={`/manage/course/${course.id}`}>
+                    <IconButton HeroIcon={() => <PencilIcon title="Edit" />} />
+                  </NavLink>
+                )}
+              </h2>
               <div className="subtitle1 mb-5">{course.subtitle}</div>
               <div>
                 <div className="flex gap-4">
