@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - production
 
 concurrency:
   group: build-docker-image
@@ -15,8 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build Docker image
-        run: docker build --tag ghcr.io/kr-pokectr/bims:latest --label "runnumber=${GITHUB_RUN_ID}" .
+        run: docker build --tag ghcr.io/kr-pokectr/bims:${{ github.ref_name }} --label "runnumber=${GITHUB_RUN_ID}" .
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       - name: Push image
-        run: docker push ghcr.io/kr-pokectr/bims:latest
+        run: docker push ghcr.io/kr-pokectr/bims:${{ github.ref_name }}
