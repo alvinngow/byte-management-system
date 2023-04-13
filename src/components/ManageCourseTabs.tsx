@@ -8,7 +8,6 @@ import {
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import * as CourseSlug from '../graphql/frontend/queries/CourseSlugQuery';
 import BackButton from './BackButton';
 import Button from './Button';
 import CourseWizard from './CourseWizard';
@@ -25,11 +24,23 @@ interface ManageCourseTabsProps {
 
 const ManageCourseTabs: React.FC<ManageCourseTabsProps> = function (props) {
   const { courseId, editMode = false } = props;
-  const [activeTab, setActiveTab] = React.useState<Tab>('course_information');
-  const [modalState, setModalState] = React.useState(false);
-  const [navTab, setNavTab] = React.useState(true);
 
   const router = useRouter();
+
+  const [activeTab, setActiveTab] = React.useState<Tab>(() => {
+    const queryTab = router.query.tab;
+
+    switch (queryTab) {
+      case 'course_information':
+      case 'sessions': {
+        return queryTab;
+      }
+    }
+
+    return 'course_information';
+  });
+  const [modalState, setModalState] = React.useState(false);
+  const [navTab, setNavTab] = React.useState(true);
 
   const handleClick = () => {
     if (navTab) {
@@ -39,28 +50,11 @@ const ManageCourseTabs: React.FC<ManageCourseTabsProps> = function (props) {
     }
   };
 
-  const apolloClient = useApolloClient();
-
   const handleWizardSuccess = React.useCallback(
     async (courseId: string) => {
-      const { data } = await apolloClient.query<
-        CourseSlug.Data,
-        CourseSlug.Variables
-      >({
-        query: CourseSlug.Query,
-        variables: {
-          id: courseId,
-        },
-      });
-
-      if (data == null) {
-        await router.push('/manage/course');
-        return;
-      }
-
-      await router.push(`/course/${data.course.slug}`);
+      await router.push(`/manage/course/${courseId}?tab=sessions`);
     },
-    [apolloClient, router]
+    [router]
   );
 
   return (
