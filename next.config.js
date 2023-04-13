@@ -1,4 +1,10 @@
-const endpointURL = new URL(process.env.AWS_S3_ENDPOINT);
+let endpointURL;
+
+try {
+  endpointURL = new URL(process.env.AWS_S3_ENDPOINT);
+} catch {
+  endpointURL = new URL('http://localhost:9000');
+}
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
