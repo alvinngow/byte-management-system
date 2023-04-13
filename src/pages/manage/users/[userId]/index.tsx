@@ -398,11 +398,11 @@ const SingleUserPage: NextPage = function () {
                               value: undefined,
                             },
                             {
-                              label: 'Attending',
+                              label: 'Attended',
                               value: Attendance.Attend,
                             },
                             {
-                              label: 'Not Attending',
+                              label: 'Absent',
                               value: Attendance.Absent,
                             },
                           ]}

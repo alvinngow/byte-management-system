@@ -95,12 +95,15 @@ const MySessionsPage: React.FC = function () {
     });
   }, []);
 
-  const handleAttendanceStatusChange = React.useCallback((value: string) => {
-    reducerDispatch({
-      type: 'set_attendance',
-      attendance: value != null ? (value as Attendance) : undefined,
-    });
-  }, []);
+  const handleAttendanceStatusChange = React.useCallback(
+    (value: Attendance | undefined) => {
+      reducerDispatch({
+        type: 'set_attendance',
+        attendance: value,
+      });
+    },
+    []
+  );
 
   const toggleReverse = React.useCallback(() => {
     reducerDispatch({
@@ -168,19 +171,23 @@ const MySessionsPage: React.FC = function () {
                       items={[
                         {
                           label: 'All',
-                          value: '',
+                          value: undefined,
                         },
                         {
-                          label: 'Attending',
+                          label: 'Attended',
                           value: Attendance.Attend,
                         },
                         {
-                          label: 'Not Attending',
+                          label: 'Absent',
                           value: Attendance.Absent,
                         },
                       ]}
                       label="Attendance Status"
-                      value={reducerState.filterActualAttendance as string}
+                      value={
+                        reducerState.filterActualAttendance as
+                          | Attendance
+                          | undefined
+                      }
                       onChange={handleAttendanceStatusChange}
                     />
                   </div>
