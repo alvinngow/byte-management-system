@@ -1,3 +1,5 @@
+const endpointURL = new URL(process.env.AWS_S3_ENDPOINT);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -13,9 +15,9 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '9000',
+        protocol: endpointURL.protocol.slice(0, -1),
+        hostname: endpointURL.hostname,
+        port: endpointURL.port,
         pathname: `/${process.env.AWS_S3_BUCKET}/**`,
       },
     ],
