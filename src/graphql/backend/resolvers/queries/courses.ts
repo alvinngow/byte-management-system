@@ -60,6 +60,11 @@ export const coursesResolver: QueryResolvers['courses'] = async (
         },
       };
     }
+    case CourseSortKey.CreatedAt: {
+      orderBy = {
+        createdAt: reverse ? 'desc' : 'asc',
+      };
+    }
   }
 
   let where: CourseWithSessionInfoWhereInput | undefined = undefined;

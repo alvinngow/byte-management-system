@@ -52,9 +52,10 @@ const CoursePage: React.FC = function () {
     | CourseSortKey.StartDate
     | CourseSortKey.EndDate
     | CourseSortKey.Region
-  >();
+    | CourseSortKey.CreatedAt
+  >(CourseSortKey.CreatedAt);
 
-  const [sortDirection, setSortDirection] = React.useState(false);
+  const [sortDirection, setSortDirection] = React.useState(true);
 
   const [filterForCourse, setFilterForCourse] = React.useState<
     CourseDateFiltering.Upcoming | CourseDateFiltering.Past

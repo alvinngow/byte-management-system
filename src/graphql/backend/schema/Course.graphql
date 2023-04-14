@@ -11,6 +11,7 @@ type Course {
     defaultEndTime: Time!
     coverImage: String!
     defaultLocation: Location
+    createdAt: DateTime
 
     courseManagers(first: Int = 10, after: String): CourseManagerConnection!
     sessions(first: Int = 10, after: String, sortKey: SessionSortKey, filter: SessionFiltering, reverse: Boolean): SessionConnection!
@@ -36,6 +37,7 @@ enum CourseSortKey {
     START_DATE
     END_DATE
     REGION
+    CREATED_AT
 }
 
 enum CourseDateFiltering {
