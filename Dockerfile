@@ -1,9 +1,8 @@
 # Adapted from https://github.com/vercel/next.js/blob/d74f34021bfbd0757ebc0dc2f685c98e5ba1bd34/examples/with-docker/Dockerfile
 
-ARG NEXT_BUILD_OUTPUT
-
 # Install dependencies only when needed
 FROM node:16-alpine AS deps
+ARG NEXT_BUILD_OUTPUT
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
@@ -20,6 +19,7 @@ RUN \
 
 # Rebuild the source code only when needed
 FROM node:16-alpine AS builder
+ARG NEXT_BUILD_OUTPUT
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -36,6 +36,7 @@ RUN yarn build
 
 # Production image, copy all the files and run next
 FROM node:16-alpine AS runner
+ARG NEXT_BUILD_OUTPUT
 WORKDIR /app
 
 ENV NODE_ENV production
