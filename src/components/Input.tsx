@@ -11,6 +11,7 @@ interface PropType extends React.InputHTMLAttributes<HTMLInputElement> {
   message?: ReactElement;
   value?: string;
   prefixElement?: ReactElement;
+  isRequiredField?: Boolean;
 }
 
 const Input: React.ForwardRefRenderFunction<HTMLInputElement, PropType> =
@@ -26,6 +27,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, PropType> =
       color,
       value = '',
       prefixElement,
+      isRequiredField,
       ...otherProps
     } = props;
     const [inputState, setInputState] = useState(value);
@@ -55,7 +57,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, PropType> =
         } ${className} relative`}
       >
         <label className={`${styles['input-label']}`} htmlFor={id}>
-          {label}
+          {label} {isRequiredField && <span className="text-error">*</span>}
         </label>
         <div className={`${styles['input-box']} relative flex w-full`}>
           {prefixElement && (

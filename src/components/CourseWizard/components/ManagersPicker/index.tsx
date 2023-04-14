@@ -12,6 +12,7 @@ interface Props {
   managerUserIds: Set<string>;
   onManagerAdded: (userId: string) => void;
   onManagerRemoved: (userId: string) => void;
+  isRequiredField?: Boolean;
 }
 
 /**
@@ -19,7 +20,8 @@ interface Props {
  */
 
 const ManagersPicker: React.FC<Props> = function (props) {
-  const { managerUserIds, onManagerAdded, onManagerRemoved } = props;
+  const { managerUserIds, onManagerAdded, onManagerRemoved, isRequiredField } =
+    props;
 
   const [searchTerm, setSearchTerm] = React.useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
@@ -122,6 +124,7 @@ const ManagersPicker: React.FC<Props> = function (props) {
           label="Trainer"
           placeholder="Trainer's Name"
           value={searchTerm}
+          isRequiredField={isRequiredField}
           onChange={handleInputChange}
           onFocus={handleInputFocus}
           onKeyDown={handleInputKeyDown}

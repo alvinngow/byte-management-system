@@ -27,6 +27,7 @@ interface Props
   value: any;
   placeholder?: string;
   onChange: (value: any) => void;
+  isRequiredField?: Boolean;
 }
 
 const Select: React.FC<Props> = function (props) {
@@ -37,6 +38,7 @@ const Select: React.FC<Props> = function (props) {
     className,
     placeholder = 'No Filter Selected',
     onChange,
+    isRequiredField,
     ...otherProps
   } = props;
 
@@ -112,7 +114,7 @@ const Select: React.FC<Props> = function (props) {
           <label
             className={`${styles['input-label']} self-start text-xs text-gray-400`}
           >
-            {label}
+            {label} {isRequiredField && <span className="text-error">*</span>}
           </label>
           <div
             className={`${styles['input']} flex items-center justify-between`}

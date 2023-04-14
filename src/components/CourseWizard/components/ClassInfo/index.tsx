@@ -227,12 +227,14 @@ const ClassInfo: React.FC<Props> = function (props) {
             value={state.context.courseData.name}
             onChange={handleTitleChange}
             label="Title"
+            isRequiredField={true}
             placeholder="Live Coding Masterclass: Beginners To Advanced"
             maxLength={COURSE_TITLE_MAX_LENGTH}
           />
           <Input
             value={state.context.courseData.subtitle ?? undefined}
             label="Subtitle"
+            isRequiredField={true}
             onChange={handleSubtitleChange}
             placeholder="Short description about the course"
             maxLength={COURSE_SUBTITLE_MAX_LENGTH}
@@ -253,6 +255,7 @@ const ClassInfo: React.FC<Props> = function (props) {
             locationText={state.context.locationText}
             onLocationTextChange={handleLocationTextChange}
             onLocationPicked={handleLocationPicked}
+            isRequiredField={true}
           />
           <div className="grid gap-4 md:grid-cols-2 md:items-center">
             {/* insert unit number from GraphQL here */}
@@ -266,6 +269,7 @@ const ClassInfo: React.FC<Props> = function (props) {
             <LocationClusterPicker
               locationClusterId={state.context.locationClusterId}
               onLocationClusterPicked={handleLocationClusterPicked}
+              isRequiredField={true}
             />
           </div>
 
@@ -273,6 +277,7 @@ const ClassInfo: React.FC<Props> = function (props) {
             managerUserIds={state.context.managerUserIds}
             onManagerAdded={handleManagerAdded}
             onManagerRemoved={handleManagerRemoved}
+            isRequiredField={true}
           />
           <div className="grid gap-4 md:grid-cols-2 md:items-center">
             <Input

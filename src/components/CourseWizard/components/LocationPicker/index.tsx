@@ -14,10 +14,16 @@ interface Props {
   locationText: string;
   onLocationTextChange: React.ChangeEventHandler<HTMLInputElement>;
   onLocationPicked: (data: LocationData) => void;
+  isRequiredField?: Boolean;
 }
 
 const LocationPicker: React.FC<Props> = function (props) {
-  const { locationText, onLocationTextChange, onLocationPicked } = props;
+  const {
+    locationText,
+    onLocationTextChange,
+    onLocationPicked,
+    isRequiredField,
+  } = props;
 
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -116,6 +122,7 @@ const LocationPicker: React.FC<Props> = function (props) {
           className="grow"
           value={locationText}
           label="Address"
+          isRequiredField={isRequiredField}
           placeholder="Where the course will be held"
           onChange={onLocationTextChange}
           onFocus={handleInputFocus}

@@ -7,10 +7,11 @@ import Select, { SelectItem } from '../../../Select';
 interface Props {
   locationClusterId: string | null;
   onLocationClusterPicked: (clusterId: string | null) => void;
+  isRequiredField?: Boolean;
 }
 
 const LocationClusterPicker: React.FC<Props> = function (props) {
-  const { locationClusterId, onLocationClusterPicked } = props;
+  const { locationClusterId, onLocationClusterPicked, isRequiredField } = props;
 
   const { data } = useQuery<LocationClusters.Data, LocationClusters.Variables>(
     LocationClusters.Query
@@ -37,6 +38,7 @@ const LocationClusterPicker: React.FC<Props> = function (props) {
         placeholder="None"
         items={items}
         label="Region"
+        isRequiredField={isRequiredField}
         value={locationClusterId}
         onChange={onLocationClusterPicked}
       />
