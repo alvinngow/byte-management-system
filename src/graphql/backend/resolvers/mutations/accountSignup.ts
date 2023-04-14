@@ -57,7 +57,7 @@ export const accountSignupResolver: MutationResolvers['accountSignup'] = async (
   const emailVerification = await prisma.emailVerification.create({
     data: {
       email,
-      expiresAt: DateTime.now().plus(5).toISO(),
+      expiresAt: DateTime.now().plus({ days: 7 }).toISO(),
     },
   });
 
