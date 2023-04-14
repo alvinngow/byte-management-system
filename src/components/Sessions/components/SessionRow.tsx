@@ -88,6 +88,16 @@ const SessionRow: React.FC<Props> = function (props) {
     });
   };
 
+  const isSessionPassed = React.useMemo(() => {
+    const start = DateTime.fromISO(`${session.startDate}T${session.startTime}`);
+    const end = DateTime.fromISO(`${session.endDate}T${session.endTime}`);
+
+    return (
+      start.diffNow('second').as('second') < 0 &&
+      end.diffNow('second').as('second') < 0
+    );
+  }, [session.endDate, session.endTime, session.startDate, session.startTime]);
+
   return (
     <tr className="border border-x-0 border-y-gray-100">
       <td className="py-4 px-4 text-left xsm:whitespace-nowrap md:whitespace-normal">
@@ -160,15 +170,17 @@ const SessionRow: React.FC<Props> = function (props) {
                             </div>
                           </td>
                           <td>
-                            <AttendanceButton
-                              className="h-[34px] justify-center gap-2"
-                              userAttendanceState={
-                                edge.node.actualAttendance ?? null
-                              }
-                              updateAttendance={(e) =>
-                                handleAttendanceChange(e, edge.node.user.id)
-                              }
-                            />
+                            {isSessionPassed && (
+                              <AttendanceButton
+                                className="h-[34px] justify-center gap-2"
+                                userAttendanceState={
+                                  edge.node.actualAttendance ?? null
+                                }
+                                updateAttendance={(e) =>
+                                  handleAttendanceChange(e, edge.node.user.id)
+                                }
+                              />
+                            )}
                           </td>
                         </tr>
                       ))}
