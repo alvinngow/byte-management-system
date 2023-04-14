@@ -187,12 +187,13 @@ const CourseDetailPage: React.FC = function () {
   if (!me) {
     return (
       <div className="mx-5 my-12 flex flex-col justify-between sm:mx-14 xl:mx-auto xl:w-11/12 xxl:w-4/5">
+        <BackButton text={'Back to Home'} href="/" />
         <div className="relative mx-auto mb-9 h-[30vh] w-full">
           <Image
             src={guestCourse?.coverImage ?? '/default-cover-image.jpg'}
             alt="cover picture"
             fill
-            className="rounded-3xl"
+            className="mt-3 rounded-3xl"
           />
         </div>
         <SEO title={guestCourse?.name ?? 'Course'} />
