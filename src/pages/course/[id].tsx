@@ -717,7 +717,7 @@ const CourseDetailPage: React.FC = function () {
             <div className="basis-1/3">
               <div className="border-full mb-5 block w-full rounded-lg border bg-white p-10 shadow-lg">
                 <div className="subtitle1 mb-2.5">LOCATION</div>
-                <div className="mb-2.5 h-56 w-56">
+                <div className="mb-2.5 h-56 w-full">
                   <Map
                     lat={course!.defaultLocation!.lat}
                     lng={course!.defaultLocation!.lng}
