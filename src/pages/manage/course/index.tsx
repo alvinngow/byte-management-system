@@ -263,7 +263,12 @@ const CoursePage: React.FC = function () {
               {courses?.map((course) => (
                 <tr key={course.node.id}>
                   <td className="whitespace-nowrap border-b border-slate-300 py-4 pl-6 text-left">
-                    {course.node.name}
+                    <NavLink
+                      href={`/manage/course/${course.node.id}`}
+                      className="text-brand-main underline"
+                    >
+                      {course.node.name}
+                    </NavLink>
                   </td>
                   <td className="whitespace-nowrap border-b border-slate-300 py-4 pl-6 text-left">
                     {course.node.defaultLocation?.name}

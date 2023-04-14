@@ -168,11 +168,11 @@ const UsersPage: NextPage = function (props) {
 
   const dotsOptions = [
     {
-      label: 'Make as Comm Member',
+      label: 'Make as Committee Member',
       value: UserRole.CommitteeMember,
     },
     {
-      label: 'Make as System Admin',
+      label: 'Make as System Administrator',
       value: UserRole.SystemAdministrator,
     },
     {
@@ -192,11 +192,11 @@ const UsersPage: NextPage = function (props) {
       value: 'approve',
     },
     {
-      label: 'Make as Comm Member',
+      label: 'Make as Committee Member',
       value: UserRole.CommitteeMember,
     },
     {
-      label: 'Make as System Admin',
+      label: 'Make as System Administrator',
       value: UserRole.SystemAdministrator,
     },
     {

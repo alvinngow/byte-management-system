@@ -301,11 +301,11 @@ const SingleUserPage: NextPage = function () {
                     }}
                     options={[
                       {
-                        label: 'Make as Comm Member',
+                        label: 'Make as Committee Member',
                         value: UserRole.CommitteeMember,
                       },
                       {
-                        label: 'Make as System Admin',
+                        label: 'Make as System Administrator',
                         value: UserRole.SystemAdministrator,
                       },
                       {
