@@ -1,10 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client';
-import React, {
-  ChangeEvent,
-  ChangeEventHandler,
-  useRef,
-  useState,
-} from 'react';
+import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import Select from '../../../../components/Select';
@@ -18,7 +13,6 @@ const Notifications: React.FC = function () {
     notificationUpdate.Data,
     notificationUpdate.Variables
   >(notificationUpdate.Mutation);
-  const regionRef = useRef();
 
   const items = [
     {
@@ -42,9 +36,32 @@ const Notifications: React.FC = function () {
       value: 'central',
     },
   ];
-  type SwitchType = 'notifyNewCourse' | 'notifyNearNewCourse' | 'nearRegion';
 
-  async function handleSwitchChange(value: String | Boolean, type: SwitchType) {
+  const upcomingSessionOptions = [
+    {
+      label: '1 week before',
+      value: 7,
+    },
+    {
+      label: '3 days before',
+      value: 3,
+    },
+    {
+      label: '1 days before',
+      value: 1,
+    },
+  ];
+  type SwitchType =
+    | 'notifyNewCourse'
+    | 'notifyNearNewCourse'
+    | 'nearRegion'
+    | 'notifyUpcomingSessions'
+    | 'upcomingSessionTimeBefore';
+
+  async function handleSwitchChange(
+    value: String | Boolean | undefined,
+    type: SwitchType
+  ) {
     await accountUpdate({
       variables: {
         input: {
@@ -66,6 +83,35 @@ const Notifications: React.FC = function () {
       <div className="flex">
         <Switch
           className="inline align-top"
+          checked={meData?.me?.notifyUpcomingSessions ?? true}
+          onChange={(e) =>
+            handleSwitchChange(e.target.checked, 'notifyUpcomingSessions')
+          }
+        />
+        <div className="pl-2">
+          <p className="font-semibold">Upcoming Sessions</p>
+          <p className="mb-2 mt-2 text-gray-400">
+            Get notified in advance when there is an upcoming session
+          </p>
+          {meData?.me?.notifyUpcomingSessions && (
+            <div className="relative">
+              <Select
+                items={upcomingSessionOptions}
+                value={meData?.me?.upcomingSessionTimeBefore}
+                label="Notify me"
+                className="mt-4 w-full"
+                onChange={(e) =>
+                  handleSwitchChange(e, 'upcomingSessionTimeBefore')
+                }
+                placeholder="None"
+              />
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="mt-4 flex">
+        <Switch
+          className="inline align-top"
           checked={meData?.me?.notifyNewCourse ?? true}
           onChange={(e) =>
             handleSwitchChange(e.target.checked, 'notifyNewCourse')
@@ -83,25 +129,33 @@ const Notifications: React.FC = function () {
         <Switch
           className="inline align-top"
           checked={meData?.me?.notifyNearNewCourse ?? true}
-          onChange={(e) =>
-            handleSwitchChange(e.target.checked, 'notifyNearNewCourse')
-          }
+          onChange={(e) => {
+            handleSwitchChange(e.target.checked, 'notifyNearNewCourse');
+            if (e.target.checked) {
+              handleSwitchChange('north', 'nearRegion');
+            } else {
+              handleSwitchChange(undefined, 'nearRegion');
+            }
+          }}
         />
+
         <div className="pl-2">
           <p className="font-semibold">Courses Near Me</p>
           <p className="mb-2 mt-2 text-gray-400">
             Get weekly updates of courses near your region.
           </p>
-          <div className="relative">
-            <Select
-              items={items}
-              value={meData?.me?.nearRegion}
-              label="Region"
-              className="mt-4 w-full"
-              onChange={(e) => handleSwitchChange(e, 'nearRegion')}
-              placeholder="None"
-            />
-          </div>
+          {meData?.me?.notifyNearNewCourse && (
+            <div className="relative">
+              <Select
+                items={items}
+                value={meData?.me?.nearRegion}
+                label="Region"
+                className="mt-4 w-full"
+                onChange={(e) => handleSwitchChange(e, 'nearRegion')}
+                placeholder="None"
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

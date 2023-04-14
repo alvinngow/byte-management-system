@@ -24,6 +24,8 @@ export const Query = gql`
       notifyNewCourse
       notifyNearNewCourse
       nearRegion
+      notifyUpcomingSessions
+      upcomingSessionTimeBefore
     }
   }
 `;

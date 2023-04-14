@@ -17,7 +17,7 @@ import styles from '../../styles/component_styles/Input.module.css';
 
 export interface SelectItem {
   label: string;
-  value?: string;
+  value?: string | number;
 }
 
 interface Props

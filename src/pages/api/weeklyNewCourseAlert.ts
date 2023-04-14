@@ -21,14 +21,14 @@ const handler: NextApiHandler = async (req, res) => {
 
   const notifyUsers = await prisma.user.findMany({
     where: {
-      notifyNewCourse: true,
+      notifyNearNewCourse: true,
     },
   });
 
   const newCourses = await prisma.courseWithSessionInfo.findMany({
     where: {
       createdAt: {
-        gt: DateTime.now().minus({ hour: 24 }).toJSDate(),
+        gt: DateTime.now().minus({ week: 1 }).toJSDate(),
         lte: new Date(),
       },
       AND: {

@@ -1,10 +1,9 @@
 import { DateTime } from 'luxon';
 import { NextApiHandler } from 'next';
 
-import { UserRole } from '../../../gen/graphql/resolvers';
 import { prisma } from '../../db';
 import sendEmail from '../../email/sendEmail';
-import { newCourseAlert } from '../../email/templates/newCourseAlert';
+import { upcomingSession } from '../../email/templates/upcomingSession';
 const { PRIVATE_API_TOKEN } = process.env;
 
 if (PRIVATE_API_TOKEN == null) {
@@ -21,41 +20,48 @@ const handler: NextApiHandler = async (req, res) => {
 
   const notifyUsers = await prisma.user.findMany({
     where: {
-      notifyNewCourse: true,
+      notifyUpcomingSessions: true,
     },
   });
 
-  const newCourses = await prisma.courseWithSessionInfo.findMany({
-    where: {
-      createdAt: {
-        gt: DateTime.now().minus({ hour: 24 }).toJSDate(),
-        lte: new Date(),
-      },
-      AND: {
-        firstSessionStartDate: {
-          not: null,
+  for (const user of notifyUsers) {
+    const withinRange = await prisma.sessionAttendee.findMany({
+      where: {
+        userId: user.id,
+        session: {
+          startDate: {
+            lte: DateTime.now()
+              .plus({ day: user.upcomingSessionTimeBefore })
+              .toJSDate(),
+            gt: new Date(),
+          },
         },
       },
-    },
-    include: {
-      defaultLocation: {
-        select: {
-          address: true,
+      include: {
+        session: {
+          select: {
+            name: true,
+            startDate: true,
+            endDate: true,
+            course: {
+              select: {
+                name: true,
+              },
+            },
+          },
         },
       },
-    },
-  });
+    });
 
-  notifyUsers.forEach((user) => {
     sendEmail(
-      newCourseAlert({
+      upcomingSession({
         firstName: user.firstName,
         to: user.email,
         from: process.env.EMAIL_FROM!,
-        newCourses,
+        withinRange,
       })
     );
-  });
+  }
 
   res.status(200).end();
 };

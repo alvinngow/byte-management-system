@@ -25,6 +25,8 @@ export const Mutation = gql`
         notifyNewCourse
         notifyNearNewCourse
         nearRegion
+        notifyUpcomingSessions
+        upcomingSessionTimeBefore
       }
     }
   }

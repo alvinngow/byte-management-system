@@ -12,6 +12,11 @@ type User {
 
   sessionAttendees(first: Int = 10, after: String, sortKey: SessionAttendeeSortKey, filter: SessionAttendeeFiltering, reverse: Boolean): SessionAttendeeConnection!
   overview: [UserOverview!]!
+  notifyNewCourse:Boolean
+  notifyNearNewCourse:Boolean
+  nearRegion:String
+  notifyUpcomingSessions: Boolean
+  upcomingSessionTimeBefore: Int
 }
 
 type UserOverview {
@@ -47,6 +52,8 @@ type CurrentUser {
   notifyNewCourse:Boolean
   notifyNearNewCourse:Boolean
   nearRegion:String
+  notifyUpcomingSessions: Boolean
+  upcomingSessionTimeBefore: Int
 
   sessionAttendees(first: Int = 10, after: String, sortKey: SessionAttendeeSortKey, filter: SessionAttendeeFiltering, reverse: Boolean): SessionAttendeeConnection!
   overview: [CurrentUserOverview!]!
@@ -119,6 +126,8 @@ input AccountNotificationUpdateInput{
   notifyNewCourse:Boolean
   notifyNearNewCourse:Boolean
   nearRegion:String
+  notifyUpcomingSessions: Boolean
+  upcomingSessionTimeBefore: Int
 }
 
 type AccountNotificationUpdatePayload{

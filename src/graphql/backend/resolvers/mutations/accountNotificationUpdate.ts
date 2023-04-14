@@ -12,6 +12,8 @@ export const accountNotificationUpdateResolver: MutationResolvers['accountNotifi
       notifyNewCourse,
       notifyNearNewCourse,
       nearRegion,
+      notifyUpcomingSessions,
+      upcomingSessionTimeBefore,
     } = args.input;
 
     const currentUserId = await context.getCurrentUserId();
@@ -24,6 +26,8 @@ export const accountNotificationUpdateResolver: MutationResolvers['accountNotifi
         notifyNewCourse: notifyNewCourse ?? undefined,
         notifyNearNewCourse: notifyNearNewCourse ?? undefined,
         nearRegion,
+        notifyUpcomingSessions: notifyUpcomingSessions ?? undefined,
+        upcomingSessionTimeBefore: upcomingSessionTimeBefore ?? undefined,
       },
     });
 
