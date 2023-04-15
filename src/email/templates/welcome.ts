@@ -1,5 +1,7 @@
 import Mail from 'nodemailer/lib/mailer';
 
+import { ROOT_URL } from '../../constants/rootUrl';
+
 interface Options {
   from: string;
   to: string;
@@ -18,7 +20,7 @@ export function welcome(opts: Options): Mail.Options {
 <br>
 Welcome to the Byte Integrated Management System.
 <br>
-Click <a href="${process.env.ROOT_URL}/login?verificationCode=${verificationId}">here</a> to verify your email.
+Click <a href="${ROOT_URL}/login?verificationCode=${verificationId}">here</a> to verify your email.
 <br>
 <br>
 Team BYTE`,
