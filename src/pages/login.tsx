@@ -1,4 +1,5 @@
 import { useMutation } from '@apollo/client';
+import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -15,7 +16,6 @@ import SEO from '../components/SEO';
 import * as LoginMutation from '../graphql/frontend/mutations/LoginMutation';
 import useLoginEmailVerification from '../hooks/useLoginEmailVerification';
 import PlainLayout from '../layouts/PlainLayout';
-
 interface Inputs {
   email: string;
   password: string;
@@ -59,7 +59,7 @@ const LoginPage: NextPage = function (props) {
     } catch (e) {
       setError('password', {
         type: 'server',
-        message: 'Invalid credentials',
+        message: 'Account credentials invalid or not approved',
       });
     }
   };
@@ -133,8 +133,9 @@ const LoginPage: NextPage = function (props) {
               showMessage={errors.password ? true : false}
               message={
                 errors.password ? (
-                  <span className="text-red-400">
-                    {errors.password.message}
+                  <span className="flex text-red-400">
+                    <ExclamationCircleIcon className="h-6 w-6" />
+                    <p className="ml-2">{errors.password.message}</p>
                   </span>
                 ) : (
                   <></>

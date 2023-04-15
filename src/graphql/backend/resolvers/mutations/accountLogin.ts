@@ -15,6 +15,11 @@ export const accountLoginResolver: MutationResolvers['accountLogin'] = async (
   const user = await prisma.user.findFirst({
     where: {
       email,
+      AND: {
+        approved_at: {
+          not: null,
+        },
+      },
     },
   });
 
