@@ -184,7 +184,7 @@ const NavHeader: React.FC<Props> = function (props) {
                   ></Avatar>
                 )}
               </span>
-              <p className="xsm:flex xsm:hidden md:block">
+              <p className="capitalize xsm:flex xsm:hidden md:block">
                 {firstName} {lastName}
               </p>
               <div className="xsm:flex xsm:hidden md:block">

@@ -54,6 +54,8 @@ const SingleUserPage: NextPage = function () {
   const router = useRouter();
   const { userId } = router.query;
 
+  const [hideParticulars, setHideParticulars] = React.useState(true);
+
   const [reducerState, reducerDispatch] = React.useReducer(
     userSessionsReducer,
     {
@@ -218,38 +220,42 @@ const SingleUserPage: NextPage = function () {
   return (
     <UserPageLayout>
       <SEO title="Manage User" />
-      <div className="flex">
-        <div className="flex basis-1/5 flex-col gap-12 px-5 py-9">
-          <h6 className="text-gray-600">
-            <BackButton href="/manage/users" text="Back to Users" />
-          </h6>
-          <div className="mx-auto flex flex-col gap-2.5">
-            <span
-              className={classNames(
-                'mx-auto flex h-16 w-16 items-center justify-center rounded-full',
-                randomBgClass
-              )}
-            >
-              {avatarUrl ? (
-                <Image
-                  className="grow object-cover"
-                  src={avatarUrl}
-                  alt="profile placeholder"
-                  width={24}
-                  height={24}
-                />
-              ) : (
-                <span className="avatarLetter grow self-center text-center text-white">
-                  {userData?.user.firstName[0]}
-                  {userData?.user.lastName[0]}
-                </span>
-              )}
-            </span>
-            <div className="mx-auto">
-              {userData?.user.firstName} {userData?.user.lastName}
+      <div className="flex flex-col overflow-x-hidden xl:flex-row">
+        <div className="flex flex-col gap-12 px-5 py-9 sm:text-left">
+          <BackButton href="/manage/users" text="Back to Users" />
+          <div className=" mx-3 flex flex-col  gap-2.5 lg:flex-row lg:justify-between xl:mx-auto xl:flex-col xl:justify-start">
+            <div className="flex w-72 flex-row gap-2.5 xl:flex-col">
+              <span
+                className={classNames(
+                  'flex h-16 w-16 items-center justify-center rounded-full xl:mx-auto',
+                  randomBgClass
+                )}
+              >
+                {avatarUrl ? (
+                  <Image
+                    className="grow object-cover"
+                    src={avatarUrl}
+                    alt="profile placeholder"
+                    width={24}
+                    height={24}
+                  />
+                ) : (
+                  <p className="avatarLetter grow self-center text-center text-white">
+                    {userData?.user.firstName[0]}
+                    {userData?.user.lastName[0]}
+                  </p>
+                )}
+              </span>
+              <div className="flex flex-col gap-2.5">
+                <h4 className="capitalize xl:mx-auto">
+                  {userData?.user.firstName} {userData?.user.lastName}
+                </h4>
+                <div className="body1 text-secondary xl:mx-auto">
+                  {userData?.user.school?.name}
+                </div>
+              </div>
             </div>
-            <div className="mx-auto">{userData?.user.school?.name}</div>
-            <div className="mx-auto">
+            <div className="xl:mx-auto">
               <Button
                 size="sm"
                 className="my-4"
@@ -258,195 +264,209 @@ const SingleUserPage: NextPage = function () {
               >
                 Email
               </Button>
+              <Button
+                size="sm"
+                className={classNames('ml-2.5 inline xl:hidden', {
+                  '!bg-brand-main !text-white': !hideParticulars,
+                })}
+                variant="active"
+                onClick={() => setHideParticulars((prevState) => !prevState)}
+              >
+                View Details
+              </Button>
             </div>
           </div>
-          <div className="flex flex-col gap-6">
-            <Input
-              type="email"
-              placeholder={userData?.user.email}
-              label="Email"
-              readOnly
-            ></Input>
-            <Input
-              type="number"
-              placeholder={userData?.user.mobileNo}
-              label="Mobile Number"
-              autoComplete="tel-local"
-              prefixElement={
-                <span className="mb-5 h-full w-12 py-0 pr-2 leading-tight focus:outline-none">
-                  +65
-                </span>
-              }
-              readOnly
-            ></Input>
-            <div>
-              <span className={`${styles['input-label']}`}>User Type</span>
-              <div
-                className={`${styles['input']} text-secondary flex w-full  justify-between`}
-              >
-                {userTypeMap[userData?.user.role!]}
-                <span>
-                  <DotsMoreOptions
-                    className="h-6 w-6"
-                    aria-hidden="true"
-                    onOptionClick={(value: string) => {
-                      switch (value) {
-                        case 'delete':
-                          terminateAccount(userData?.user.id!);
-                          break;
-                        default:
-                          updateRole(userData?.user.id!, value as UserRole);
-                          break;
-                      }
-                    }}
-                    options={[
-                      {
-                        label: 'Make as Committee Member',
-                        value: UserRole.CommitteeMember,
-                      },
-                      {
-                        label: 'Make as System Administrator',
-                        value: UserRole.SystemAdministrator,
-                      },
-                      {
-                        label: 'Make as Volunteer',
-                        value: UserRole.User,
-                      },
-                      {
-                        label: 'Delete User',
-                        value: 'delete',
-                        optionStyle: 'text-center text-red-500',
-                      },
-                    ]}
-                  />
-                </span>
+          <div
+            className={classNames('xl:block', {
+              hidden: hideParticulars,
+            })}
+          >
+            <div className="flex flex-col gap-4">
+              <Input
+                type="email"
+                placeholder={userData?.user.email}
+                label="Email"
+                readOnly
+              ></Input>
+              <Input
+                type="number"
+                placeholder={userData?.user.mobileNo}
+                label="Mobile Number"
+                autoComplete="tel-local"
+                prefixElement={
+                  <span className="mb-5 h-full w-12 py-0 pr-2 leading-tight focus:outline-none">
+                    +65
+                  </span>
+                }
+                readOnly
+              ></Input>
+              <div>
+                <span className={`${styles['input-label']}`}>User Type</span>
+                <div
+                  className={`${styles['input']} text-secondary flex w-full justify-between`}
+                >
+                  {userTypeMap[userData?.user.role!]}
+                  <span>
+                    <DotsMoreOptions
+                      className="h-6 w-6"
+                      aria-hidden="true"
+                      onOptionClick={(value: string) => {
+                        switch (value) {
+                          case 'delete':
+                            terminateAccount(userData?.user.id!);
+                            break;
+                          default:
+                            updateRole(userData?.user.id!, value as UserRole);
+                            break;
+                        }
+                      }}
+                      options={[
+                        {
+                          label: 'Make as Committee Member',
+                          value: UserRole.CommitteeMember,
+                        },
+                        {
+                          label: 'Make as System Administrator',
+                          value: UserRole.SystemAdministrator,
+                        },
+                        {
+                          label: 'Make as Volunteer',
+                          value: UserRole.User,
+                        },
+                        {
+                          label: 'Delete User',
+                          value: 'delete',
+                          optionStyle: 'text-red-500',
+                        },
+                      ]}
+                    />
+                  </span>
+                </div>
               </div>
+              <Input
+                type="text"
+                placeholder={
+                  userData?.user.approved_at
+                    ? 'Approved'
+                    : userData?.user.verified_at
+                    ? 'Verified'
+                    : 'Pending'
+                }
+                label="Account Status"
+                readOnly
+              ></Input>
             </div>
-            <Input
-              type="text"
-              placeholder={
-                userData?.user.approved_at
-                  ? 'Approved'
-                  : userData?.user.verified_at
-                  ? 'Verified'
-                  : 'Pending'
-              }
-              label="Account Status"
-              readOnly
-            ></Input>
           </div>
         </div>
-        <div className="h-screen w-px bg-gray-300"></div>
-        <div className="basis-4/5">
-          <div className="my-12 mx-7">
-            <h6>Overview</h6>
-            <div className="sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
-              <UserSessionsOverview userId={userId as string} />
-            </div>
+        <div className="hidden h-screen w-px bg-gray-300 xl:block"></div>
+        <div className="block h-0.5 w-full bg-gray-300 xl:hidden"></div>
+        <div className="flex flex-col overflow-x-hidden py-12 px-7">
+          <h6>Overview</h6>
+          <div className="sm:grid-cols-2 md:grid-cols-4">
+            <UserSessionsOverview userId={userId as string} />
+          </div>
 
-            <h6 className="mb-5">Courses</h6>
-            <div className="subtitle2 text-secondary flex text-center font-medium">
-              <Tab
-                selectedID={reducerState.tab}
-                tabID="upcoming_sessions"
-                onClick={() => {
-                  reducerDispatch({
-                    type: 'set_tab',
-                    tab: 'upcoming_sessions',
-                  });
-                }}
-                underline={true}
-                text="UPCOMING SESSIONS"
-                href="#"
-              />
+          <h6 className="mb-5">Courses</h6>
+          <div className="subtitle2 text-secondary flex text-center font-medium">
+            <Tab
+              selectedID={reducerState.tab}
+              tabID="upcoming_sessions"
+              onClick={() => {
+                reducerDispatch({
+                  type: 'set_tab',
+                  tab: 'upcoming_sessions',
+                });
+              }}
+              underline={true}
+              text="UPCOMING SESSIONS"
+              href="#"
+            />
 
-              <Tab
-                selectedID={reducerState.tab}
-                tabID="session_history"
-                onClick={() => {
-                  reducerDispatch({
-                    type: 'set_tab',
-                    tab: 'session_history',
-                  });
-                }}
-                underline={true}
-                text="SESSION HISTORY"
-                href="#"
-              />
-            </div>
-            <div className="border-grey-400 mb-12 rounded-lg px-5 pb-12 shadow-lg">
-              <div className="mb-5 mt-3 flex w-full flex-col gap-4 md:flex-row lg:flex-row">
-                <div className="sm:w-full">
-                  <Input
-                    className="grow"
-                    label="Search"
-                    placeholder="Course, Location..."
-                    value={reducerState.searchTerm}
-                    onChange={handleSearchInputChange}
-                  />
-                </div>
-                {reducerState.tab === 'session_history' && (
-                  <>
-                    <div className="sm:w-full md:w-1/4 lg:w-1/4">
-                      <div className="relative flex grow">
-                        <Select
-                          className="grow"
-                          placeholder="All"
-                          items={[
-                            {
-                              label: 'All',
-                              value: undefined,
-                            },
-                            {
-                              label: 'Attended',
-                              value: Attendance.Attend,
-                            },
-                            {
-                              label: 'Absent',
-                              value: Attendance.Absent,
-                            },
-                          ]}
-                          label="Attendance Status"
-                          value={
-                            reducerState.filterActualAttendance as
-                              | Attendance
-                              | undefined
-                          }
-                          onChange={handleAttendanceStatusChange}
-                        />
-                      </div>
-                    </div>
-                  </>
-                )}
+            <Tab
+              selectedID={reducerState.tab}
+              tabID="session_history"
+              onClick={() => {
+                reducerDispatch({
+                  type: 'set_tab',
+                  tab: 'session_history',
+                });
+              }}
+              underline={true}
+              text="SESSION HISTORY"
+              href="#"
+            />
+          </div>
+          <div className="border-grey-400 mb-12 rounded-xl px-5 pb-12 shadow-xl">
+            <div className="mb-5 mt-3 flex w-full flex-col gap-4 md:flex-row xl:flex-row">
+              <div className="sm:w-full">
+                <Input
+                  className="grow"
+                  label="Search"
+                  placeholder="Course, Location..."
+                  value={reducerState.searchTerm}
+                  onChange={handleSearchInputChange}
+                />
               </div>
-              <div className="snap-x overflow-x-auto scroll-smooth">
-                {loading ? (
-                  <Spinner />
-                ) : (
-                  <>
-                    {reducerState.tab === 'upcoming_sessions' &&
-                      data != null && (
-                        <TabUpcoming
-                          sessionAttendeeConnection={data.user.sessionAttendees}
-                          reverse={reducerState.reverse}
-                          handleReverseToggle={toggleReverse}
-                        />
-                      )}
-
-                    {reducerState.tab === 'session_history' && data != null && (
-                      <TabHistory
-                        sessionAttendeeConnection={data.user.sessionAttendees}
-                        reverse={reducerState.reverse}
-                        handleReverseToggle={toggleReverse}
+              {reducerState.tab === 'session_history' && (
+                <>
+                  <div className="sm:w-full md:w-1/4 xl:w-1/4">
+                    <div className="relative flex grow">
+                      <Select
+                        className="grow"
+                        placeholder="All"
+                        items={[
+                          {
+                            label: 'All',
+                            value: undefined,
+                          },
+                          {
+                            label: 'Attended',
+                            value: Attendance.Attend,
+                          },
+                          {
+                            label: 'Absent',
+                            value: Attendance.Absent,
+                          },
+                        ]}
+                        label="Attendance Status"
+                        value={
+                          reducerState.filterActualAttendance as
+                            | Attendance
+                            | undefined
+                        }
+                        onChange={handleAttendanceStatusChange}
                       />
-                    )}
-                  </>
-                )}
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="snap-x overflow-x-auto scroll-smooth">
+              {loading ? (
+                <Spinner />
+              ) : (
+                <>
+                  {reducerState.tab === 'upcoming_sessions' && data != null && (
+                    <TabUpcoming
+                      sessionAttendeeConnection={data.user.sessionAttendees}
+                      reverse={reducerState.reverse}
+                      handleReverseToggle={toggleReverse}
+                    />
+                  )}
 
-                {data?.user.sessionAttendees.pageInfo.hasNextPage && (
-                  <button onClick={handleLoadMoreClick}>Load more</button>
-                )}
-              </div>
+                  {reducerState.tab === 'session_history' && data != null && (
+                    <TabHistory
+                      sessionAttendeeConnection={data.user.sessionAttendees}
+                      reverse={reducerState.reverse}
+                      handleReverseToggle={toggleReverse}
+                    />
+                  )}
+                </>
+              )}
+
+              {data?.user.sessionAttendees.pageInfo.hasNextPage && (
+                <button onClick={handleLoadMoreClick}>Load more</button>
+              )}
             </div>
           </div>
         </div>

@@ -13,6 +13,7 @@ interface PropType extends React.HTMLAttributes<HTMLButtonElement> {
     | 'success'
     | 'warning'
     | 'error'
+    | 'active'
     | 'disabled';
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;

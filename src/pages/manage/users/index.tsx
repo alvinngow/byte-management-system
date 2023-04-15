@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import {
+  ArrowRightIcon,
   ArrowsUpDownIcon,
   ChevronDoubleDownIcon,
 } from '@heroicons/react/24/outline';
@@ -258,7 +259,6 @@ const UsersPage: NextPage = function (props) {
             <table className="w-full text-left">
               <thead className="border-b border-slate-300 py-4 pl-4 text-left">
                 <tr>
-                  {/* need to add the up-down arrow icon */}
                   <th className="px-4 py-3 xsm:columns-2 md:columns-3">
                     <div className="flex justify-center whitespace-nowrap">
                       <p>User Name</p>
@@ -335,10 +335,7 @@ const UsersPage: NextPage = function (props) {
                     key={edge.node.id}
                     className="border-b bg-white text-center"
                   >
-                    <td
-                      className="items-center px-4 py-4"
-                      onClick={() => handleRowClick(edge)}
-                    >
+                    <td className="items-center px-4 py-4">
                       {/* avatar is not appearing */}
                       <div className="grid grid-cols-[100px_1fr]">
                         <div className="flex ">
@@ -349,8 +346,9 @@ const UsersPage: NextPage = function (props) {
                             ></Avatar>
                           )}
                           <div className="ml-4 text-left">
-                            {edge.node.firstName} {edge.node.lastName}
-                            <br />
+                            <p className="capitalize">
+                              {edge.node.firstName} {edge.node.lastName}
+                            </p>
                             <span className="text-gray-500">
                               {edge.node.email}
                             </span>
@@ -376,31 +374,42 @@ const UsersPage: NextPage = function (props) {
                         <Chip scheme="disabled" number={'Pending'} />
                       )}
                     </td>
-                    <td className="flex justify-center px-6 py-4 text-black">
-                      {/* dropdown code starts here */}
+                    <td>
+                      <IconButton
+                        className="mr-4"
+                        HeroIcon={() => (
+                          <ArrowRightIcon
+                            onClick={() => handleRowClick(edge)}
+                          />
+                        )}
+                      />
                       {me?.role === UserRole.SystemAdministrator && (
-                        <DotsMoreOptions
-                          className="h-6 w-6"
-                          aria-hidden="true"
-                          onOptionClick={(value: string) => {
-                            switch (value) {
-                              case 'delete':
-                                terminateAccount(edge.node.id);
-                                break;
-                              case 'approve':
-                                approveAccount(edge.node.id);
-                                break;
-                              default:
-                                updateRole(edge.node.id, value as UserRole);
-                                break;
-                            }
-                          }}
-                          options={
-                            edge.node.verified_at && !edge.node.approved_at
-                              ? dotsOptionsWithApprove
-                              : dotsOptions
-                          }
-                        />
+                        <IconButton
+                          HeroIcon={() => (
+                            <DotsMoreOptions
+                              className="h-6 w-6"
+                              aria-hidden="true"
+                              onOptionClick={(value: string) => {
+                                switch (value) {
+                                  case 'delete':
+                                    terminateAccount(edge.node.id);
+                                    break;
+                                  case 'approve':
+                                    approveAccount(edge.node.id);
+                                    break;
+                                  default:
+                                    updateRole(edge.node.id, value as UserRole);
+                                    break;
+                                }
+                              }}
+                              options={
+                                edge.node.verified_at && !edge.node.approved_at
+                                  ? dotsOptionsWithApprove
+                                  : dotsOptions
+                              }
+                            />
+                          )}
+                        ></IconButton>
                       )}
                     </td>
                   </tr>

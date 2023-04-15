@@ -35,7 +35,7 @@ const ProfileMenu: React.FC<Props> = function (props) {
         className
       )}
     >
-      <div className="subtitle1">{`${data?.me?.firstName} ${data?.me?.lastName}`}</div>
+      <div className="subtitle1 capitalize">{`${data?.me?.firstName} ${data?.me?.lastName}`}</div>
       <div className="body1 text-secondary mb-3">{`${data?.me?.email}`}</div>
       <NavLink className="w-full items-start" href="/settings">
         <div

@@ -42,7 +42,7 @@ const UserSessionsOverview: React.FC<Props> = function (props) {
   });
 
   return (
-    <div className="my-5 grid xsm:grid-cols-2 md:grid-cols-4 md:divide-x md:divide-gray-300">
+    <div className="my-5 grid xsm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-gray-300">
       {loading && <Spinner />}
       {data?.user?.overview?.map((overview) => (
         <ClassOverviewCard
