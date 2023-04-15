@@ -52,15 +52,16 @@ const handler: NextApiHandler = async (req, res) => {
         },
       },
     });
-
-    sendEmail(
-      upcomingSession({
-        firstName: user.firstName,
-        to: user.email,
-        from: process.env.EMAIL_FROM!,
-        withinRange,
-      })
-    );
+    if (withinRange.length > 0) {
+      sendEmail(
+        upcomingSession({
+          firstName: user.firstName,
+          to: user.email,
+          from: process.env.EMAIL_FROM!,
+          withinRange,
+        })
+      );
+    }
   }
 
   res.status(200).end();
