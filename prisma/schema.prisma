@@ -36,7 +36,7 @@ model User {
   notifyNearNewCourse       Boolean   @default(true)
   notifyUpcomingSessions    Boolean   @default(true)
   upcomingSessionTimeBefore Int       @default(3)
-  nearRegion                String?
+  nearRegion                String?   @default("north")
 }
 
 model School {
