@@ -70,6 +70,8 @@ export default async function bimsSeed() {
         mobileNo: user.mobileNo,
         avatar: user.avatar || null,
         role: user.role,
+        verified_at: new Date(),
+        approved_at: new Date(),
       },
       create: {
         id: user.id,
@@ -81,6 +83,8 @@ export default async function bimsSeed() {
         mobileNo: user.mobileNo,
         avatar: user.avatar || null,
         role: user.role,
+        verified_at: new Date(),
+        approved_at: new Date(),
       },
     });
 
