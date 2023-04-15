@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 import { ironSessionOptions } from './session/iron-session';
 
-const ROUTES_UNAUTHENTICATED = ['/login', '/signup'];
+const ROUTES_UNAUTHENTICATED = ['/login', '/signup', '/course'];
 
 const ROUTES_AUTHENTICATED = [
   '/discover-courses',
@@ -12,6 +12,7 @@ const ROUTES_AUTHENTICATED = [
   '/my-sessions',
   '/manage/users',
   '/manage/course',
+  '/settings',
 ];
 
 function getRouteType(
