@@ -15,6 +15,7 @@ import {
   SessionDateFiltering,
   SessionSortKey,
 } from '../../../gen/graphql/resolvers';
+import Avatar from '../../components/Avatar';
 import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';
 import IconButton from '../../components/IconButton';
@@ -432,20 +433,24 @@ const CourseDetailPage: React.FC = function () {
                   <p className="items-center">
                     <div className="grid grid-cols-[100px_1fr]">
                       <div className="flex">
-                        <Image
-                          className="h-10 w-10 rounded-full"
-                          src="/favicon.ico"
-                          alt="Rounded avatar"
-                          width={100}
-                          height={100}
-                        />
-                        <div className="ml-4 text-left">
+                        <div className="text-left">
                           {guestCourse.courseManagers.edges.map((edge) => (
-                            <div key={edge.cursor}>
-                              <span>
-                                {edge.node.user.firstName}{' '}
-                                {edge.node.user.lastName}
-                              </span>
+                            <div
+                              className="flex items-center justify-center"
+                              key={edge.cursor}
+                            >
+                              {edge.node && (
+                                <Avatar
+                                  className="h-10 w-10 shrink-0"
+                                  user={edge.node.user}
+                                ></Avatar>
+                              )}
+                              <div className="ml-4">
+                                <span>
+                                  {edge.node.user.firstName}{' '}
+                                  {edge.node.user.lastName}
+                                </span>
+                              </div>
                             </div>
                           ))}
                         </div>
@@ -733,24 +738,27 @@ const CourseDetailPage: React.FC = function () {
                   <p className="items-center">
                     <div className="grid grid-cols-[100px_1fr]">
                       <div className="flex">
-                        <Image
-                          className="h-10 w-10 rounded-full"
-                          src="/favicon.ico"
-                          alt="Rounded avatar"
-                          width={100}
-                          height={100}
-                        />
-                        <div className="ml-4 text-left">
+                        <div className="text-left">
                           {course.courseManagers.edges.map((edge) => (
-                            <div key={edge.cursor}>
-                              <span>
-                                {edge.node.user.firstName}{' '}
-                                {edge.node.user.lastName}
-                              </span>
-                              <br />
-                              <span className="" key={edge.cursor}>
-                                {edge.node.user.email}
-                              </span>
+                            <div
+                              className="flex items-center justify-center"
+                              key={edge.cursor}
+                            >
+                              {edge.node && (
+                                <Avatar
+                                  className="h-10 w-10 shrink-0"
+                                  user={edge.node.user}
+                                ></Avatar>
+                              )}
+                              <div className="ml-4">
+                                <p>
+                                  {edge.node.user.firstName}{' '}
+                                  {edge.node.user.lastName}
+                                </p>
+                                <p className="" key={edge.cursor}>
+                                  {edge.node.user.email}
+                                </p>
+                              </div>
                             </div>
                           ))}
                         </div>

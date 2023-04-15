@@ -17,6 +17,7 @@ import React, { ComponentType, useMemo, useState } from 'react';
 
 import { UserRole } from '../../gen/graphql/operations';
 import * as Me from '../graphql/frontend/queries/MeQuery';
+import Avatar from './Avatar';
 import IconButton from './IconButton';
 import ByteLogo from './icons/ByteLogo';
 import NavLink from './NavLink';
@@ -176,19 +177,11 @@ const NavHeader: React.FC<Props> = function (props) {
                   randomBgClass
                 )}
               >
-                {avatarUrl ? (
-                  <Image
-                    className="grow object-cover"
-                    src={avatarUrl}
-                    alt="profile placeholder"
-                    width={24}
-                    height={24}
-                  />
-                ) : (
-                  <span className="avatarLetter grow self-center text-center text-white">
-                    {firstName?.[0]}
-                    {lastName?.[0]}
-                  </span>
+                {meData && (
+                  <Avatar
+                    className="h-10 w-10 shrink-0"
+                    user={meData?.me!}
+                  ></Avatar>
                 )}
               </span>
               <p className="xsm:flex xsm:hidden md:block">

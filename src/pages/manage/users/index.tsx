@@ -15,6 +15,7 @@ import {
   UserSortKey,
 } from '../../../../gen/graphql/operations';
 import { UserFiltering, UserRole } from '../../../../gen/graphql/resolvers';
+import Avatar from '../../../components/Avatar';
 import Chip from '../../../components/Chip';
 import DotsMoreOptions from '../../../components/DotsMoreOptions';
 import IconButton from '../../../components/IconButton';
@@ -341,14 +342,12 @@ const UsersPage: NextPage = function (props) {
                       {/* avatar is not appearing */}
                       <div className="grid grid-cols-[100px_1fr]">
                         <div className="flex ">
-                          <Image
-                            className="h-10 w-10 rounded-full"
-                            src="/favicon.ico"
-                            alt="Rounded avatar"
-                            width={100}
-                            height={100}
-                          />
-                          {edge.node.avatar}
+                          {edge.node && (
+                            <Avatar
+                              className="h-10 w-10 shrink-0"
+                              user={edge.node}
+                            ></Avatar>
+                          )}
                           <div className="ml-4 text-left">
                             {edge.node.firstName} {edge.node.lastName}
                             <br />

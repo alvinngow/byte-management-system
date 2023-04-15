@@ -19,6 +19,7 @@ import * as SessionAttendReport from '../../../graphql/frontend/mutations/Sessio
 import * as SessionOverview from '../../../graphql/frontend/queries/MeSessionOverviewQuery';
 import * as SessionAttendee from '../../../graphql/frontend/queries/SessionAttendeesQuery';
 import AttendanceButton from '../../AttendanceButton';
+import Avatar from '../../Avatar';
 import Button from '../../Button';
 import Chip from '../../Chip';
 import IconButton from '../../IconButton';
@@ -152,13 +153,12 @@ const SessionRow: React.FC<Props> = function (props) {
                           <td>
                             <div className="my-2 grid grid-cols-[30%_70%]">
                               <div className="mr-0.5 p-2">
-                                <Image
-                                  className="h-8 w-8 rounded-full"
-                                  src="/favicon.ico"
-                                  alt="Rounded avatar"
-                                  width={100}
-                                  height={100}
-                                />
+                                {edge && (
+                                  <Avatar
+                                    user={edge.node.user}
+                                    className="h-10 w-10 shrink-0"
+                                  />
+                                )}
                               </div>
                               <div>
                                 <p>
