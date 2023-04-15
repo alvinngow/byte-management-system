@@ -1,24 +1,10 @@
 import { DateTime } from 'luxon';
-import { NextApiHandler } from 'next';
 
-import { UserRole } from '../../../gen/graphql/resolvers';
-import { prisma } from '../../db';
-import sendEmail from '../../email/sendEmail';
-import { newCourseAlert } from '../../email/templates/newCourseAlert';
-const { PRIVATE_API_TOKEN } = process.env;
+import { prisma } from '../db';
+import sendEmail from '../email/sendEmail';
+import { newCourseAlert } from '../email/templates/newCourseAlert';
 
-if (PRIVATE_API_TOKEN == null) {
-  throw new Error('Private API token not set');
-}
-
-const handler: NextApiHandler = async (req, res) => {
-  const token = req.headers.authorization?.replace(/^Bearer /i, '');
-
-  if (token !== PRIVATE_API_TOKEN) {
-    res.status(403).end();
-    return;
-  }
-
+export async function jobWeeklyNewCourseAlert() {
   const notifyUsers = await prisma.user.findMany({
     where: {
       notifyNearNewCourse: true,
@@ -56,8 +42,4 @@ const handler: NextApiHandler = async (req, res) => {
       })
     );
   });
-
-  res.status(200).end();
-};
-
-export default handler;
+}

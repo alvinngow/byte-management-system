@@ -1,28 +1,13 @@
 import { DateTime } from 'luxon';
-import { NextApiHandler } from 'next';
 
-import { UserRole } from '../../../gen/graphql/resolvers';
-import { prisma } from '../../db';
-import sendEmail from '../../email/sendEmail';
+import { UserRole } from '../../gen/graphql/resolvers';
+import { prisma } from '../db';
+import sendEmail from '../email/sendEmail';
 import {
   periodicReport,
   PeriodicReportStatistic,
-} from '../../email/templates/periodicReport';
-
-const { PRIVATE_API_TOKEN } = process.env;
-
-if (PRIVATE_API_TOKEN == null) {
-  throw new Error('Private API token not set');
-}
-
-const handler: NextApiHandler = async (req, res) => {
-  const token = req.headers.authorization?.replace(/^Bearer /i, '');
-
-  if (token !== PRIVATE_API_TOKEN) {
-    res.status(403).end();
-    return;
-  }
-
+} from '../email/templates/periodicReport';
+export async function jobPeriodicReport() {
   const recipients = await prisma.user.findMany({
     select: {
       email: true,
@@ -33,8 +18,6 @@ const handler: NextApiHandler = async (req, res) => {
       },
     },
   });
-
-  res.status(200).end();
 
   const dateOneMonthPrior = DateTime.now()
     .minus({
@@ -77,6 +60,4 @@ const handler: NextApiHandler = async (req, res) => {
       statistics,
     })
   );
-};
-
-export default handler;
+}

@@ -1,23 +1,10 @@
 import { DateTime } from 'luxon';
-import { NextApiHandler } from 'next';
 
-import { prisma } from '../../db';
-import sendEmail from '../../email/sendEmail';
-import { upcomingSession } from '../../email/templates/upcomingSession';
-const { PRIVATE_API_TOKEN } = process.env;
+import { prisma } from '../db';
+import sendEmail from '../email/sendEmail';
+import { upcomingSession } from '../email/templates/upcomingSession';
 
-if (PRIVATE_API_TOKEN == null) {
-  throw new Error('Private API token not set');
-}
-
-const handler: NextApiHandler = async (req, res) => {
-  const token = req.headers.authorization?.replace(/^Bearer /i, '');
-
-  if (token !== PRIVATE_API_TOKEN) {
-    res.status(403).end();
-    return;
-  }
-
+export async function jobUpcomingSessions() {
   const notifyUsers = await prisma.user.findMany({
     where: {
       notifyUpcomingSessions: true,
@@ -63,8 +50,4 @@ const handler: NextApiHandler = async (req, res) => {
       );
     }
   }
-
-  res.status(200).end();
-};
-
-export default handler;
+}
