@@ -1,9 +1,13 @@
+import { DateTime } from 'luxon';
 import { NextApiHandler } from 'next';
 
 import { UserRole } from '../../../gen/graphql/resolvers';
 import { prisma } from '../../db';
 import sendEmail from '../../email/sendEmail';
-import { periodicReport } from '../../email/templates/periodicReport';
+import {
+  periodicReport,
+  PeriodicReportStatistic,
+} from '../../email/templates/periodicReport';
 
 const { PRIVATE_API_TOKEN } = process.env;
 
@@ -32,14 +36,45 @@ const handler: NextApiHandler = async (req, res) => {
 
   res.status(200).end();
 
-  /**
-   * TODO: Stats
-   */
+  const dateOneMonthPrior = DateTime.now()
+    .minus({
+      month: 1,
+    })
+    .toJSDate();
+
+  const statistics: PeriodicReportStatistic[] = [
+    {
+      name: 'Volunteers joined',
+      data: await prisma.user.count({
+        where: {
+          createdAt: {
+            gt: dateOneMonthPrior,
+            lte: new Date(),
+          },
+          verified_at: {
+            not: null,
+          },
+        },
+      }),
+    },
+    {
+      name: 'Sessions held',
+      data: await prisma.session.count({
+        where: {
+          startDate: {
+            gt: dateOneMonthPrior,
+            lte: new Date(),
+          },
+        },
+      }),
+    },
+  ];
 
   await sendEmail(
     periodicReport({
       from: process.env.EMAIL_FROM!,
       bcc: recipients.map((recipient) => recipient.email),
+      statistics,
     })
   );
 };
