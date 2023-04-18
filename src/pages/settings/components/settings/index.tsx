@@ -6,7 +6,7 @@ import AvatarConfigurator from '../../../../components/AvatarConfigurator';
 import Button from '../../../../components/Button';
 import Input from '../../../../components/Input';
 import * as UserEdit from '../../../../graphql/frontend/mutations/UserEditMutation';
-import * as Me from '../../../../graphql/frontend/queries/MeQuery';
+import { MeQueryDocument } from '../../../../graphql/frontend/queries/MeQuery.generated';
 
 interface User {
   id?: string;
@@ -18,12 +18,12 @@ interface User {
 }
 
 const Settings: React.FC = function () {
-  const { data: meData } = useQuery<Me.Data>(Me.Query);
+  const { data: meData } = useQuery(MeQueryDocument);
 
   const [userEdit, { data, error }] = useMutation<
     UserEdit.Data,
     UserEdit.Variables
-  >(UserEdit.Mutation, { refetchQueries: [{ query: Me.Query }] });
+  >(UserEdit.Mutation, { refetchQueries: [{ query: MeQueryDocument }] });
 
   const [errorState, setErrorState] = useState<string>();
   const [submitType, setSubmitType] = useState<string>();

@@ -1,6 +1,6 @@
+import { SessionResolvers } from '@bims/graphql/resolvers';
 import { GraphQLError } from 'graphql/index';
 
-import { SessionResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 import requireAuthenticated from '../util/requireAuthenticated';
 

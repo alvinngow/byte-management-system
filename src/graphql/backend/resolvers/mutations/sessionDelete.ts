@@ -1,4 +1,5 @@
-import { MutationResolvers } from '../../../../../gen/graphql/resolvers';
+import { MutationResolvers } from '@bims/graphql/resolvers';
+
 import { prisma } from '../../../../db';
 
 export const sessionDeleteResolver: MutationResolvers['sessionDelete'] = async (

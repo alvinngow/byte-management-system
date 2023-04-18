@@ -1,4 +1,5 @@
-import { MutationResolvers } from '../../../../../gen/graphql/resolvers';
+import { MutationResolvers } from '@bims/graphql/resolvers';
+
 import { prisma } from '../../../../db';
 import requireAuthenticated from '../util/requireAuthenticated';
 

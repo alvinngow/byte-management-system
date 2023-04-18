@@ -1,12 +1,8 @@
 import {
   DateResolver,
   DateTimeResolver,
-  DateTimeTypeDefinition,
-  DateTypeDefinition,
   EmailAddressResolver,
-  EmailAddressTypeDefinition,
   TimeResolver,
-  TimeTypeDefinition,
 } from 'graphql-scalars';
 
 export const scalarResolvers = {
@@ -15,10 +11,3 @@ export const scalarResolvers = {
   EmailAddress: EmailAddressResolver,
   Time: TimeResolver,
 };
-
-export const scalarTypeDefs = [
-  DateTypeDefinition,
-  DateTimeTypeDefinition,
-  EmailAddressTypeDefinition,
-  TimeTypeDefinition,
-];

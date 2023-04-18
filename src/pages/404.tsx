@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
+import { UserRole } from '@bims/graphql/schema';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import { UserRole } from '../../gen/graphql/resolvers';
 import ErrorImage from '../components/404Error';
 import Button from '../components/Button';
 import SEO from '../components/SEO';

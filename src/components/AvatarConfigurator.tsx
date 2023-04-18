@@ -4,11 +4,10 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import React, { useEffect, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { nullEvent } from 'xstate/lib/actionTypes';
 
 import * as AccountAvatarUpdate from '../graphql/frontend/mutations/AccountAvatarUpdateMutation';
 import * as FileUpload from '../graphql/frontend/mutations/FileUploadMutation';
-import * as Me from '../graphql/frontend/queries/MeQuery';
+import { MeQueryDocument } from '../graphql/frontend/queries/MeQuery.generated';
 import Button from './Button';
 
 const BACKGROUND_COLORS = [
@@ -28,7 +27,7 @@ interface Prop {
 
 const AvatarConfigurator: React.FC<Prop> = function (prop) {
   const { submitType } = prop;
-  const { data: meData } = useQuery<Me.Data>(Me.Query);
+  const { data: meData } = useQuery(MeQueryDocument);
 
   const [accountAvatarUpdate] = useMutation<
     AccountAvatarUpdate.Data,

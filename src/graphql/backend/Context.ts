@@ -1,7 +1,7 @@
+import { UserRole } from '@bims/graphql/schema';
 import { User } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { UserRole } from '../../../gen/graphql/resolvers';
 import { prisma } from '../../db';
 
 /**

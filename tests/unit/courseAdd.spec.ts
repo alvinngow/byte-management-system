@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
+import { CourseAddInput, CourseAddPayload } from '@bims/graphql/schema';
 import { DateTime } from 'luxon';
 import { v4 as uuidv4 } from 'uuid';
 
-import { CourseAddInput, CourseAddPayload } from '../../gen/graphql/resolvers';
 import { buildMockContext } from '../util/buildMockContext';
 import setupApolloServer from '../util/setupApolloServer';
 

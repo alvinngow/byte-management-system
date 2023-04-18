@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
-
-import { MutationAccountLogoutArgs } from '../../../../gen/graphql/operations';
+import { MutationAccountLogoutArgs } from '@bims/graphql/schema';
 
 export type Data = boolean;
 export type Variables = MutationAccountLogoutArgs;

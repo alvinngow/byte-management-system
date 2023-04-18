@@ -1,9 +1,5 @@
 import { gql } from '@apollo/client';
-
-import {
-  UserEditInput,
-  UserEditPayload,
-} from '../../../../gen/graphql/resolvers';
+import { UserEditInput, UserEditPayload } from '@bims/graphql/schema';
 
 export interface Data {
   data: UserEditPayload;

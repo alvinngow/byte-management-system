@@ -1,6 +1,6 @@
+import { UserEdge } from '@bims/graphql/schema';
 import React from 'react';
 
-import { UserEdge } from '../../../../../../../gen/graphql/resolvers';
 import Spinner from '../../../../../Spinner';
 import ManagerResult from './components/ManagerResult';
 

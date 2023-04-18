@@ -1,11 +1,10 @@
 import { gql } from '@apollo/client';
-
 import {
   SessionAttendeeConnection,
   SessionAttendeeFiltering,
   SessionAttendeeSortKey,
   User,
-} from '../../../../gen/graphql/resolvers';
+} from '@bims/graphql/schema';
 
 export interface Data {
   user: User;

@@ -1,6 +1,6 @@
+import { CourseResolvers } from '@bims/graphql/resolvers';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 
-import { CourseResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 
 export const Course_courseManagersResolver: CourseResolvers['courseManagers'] =

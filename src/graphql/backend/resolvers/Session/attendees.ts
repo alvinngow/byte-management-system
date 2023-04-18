@@ -1,18 +1,19 @@
-import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
-import { DateTime } from 'luxon';
-
 import {
   SessionAttendeeDateFiltering,
   SessionAttendeeSortKey,
-  SessionResolvers,
   UserRole,
-} from '../../../../../gen/graphql/resolvers';
+} from '@bims/graphql/schema';
+import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
+import { DateTime } from 'luxon';
+
 import { prisma } from '../../../../db';
 import { Prisma } from '.prisma/client';
 
 import SessionAttendeeWhereInput = Prisma.SessionAttendeeWhereInput;
 import SessionAttendeeOrderByWithRelationInput = Prisma.SessionAttendeeOrderByWithRelationInput;
 import Enumerable = Prisma.Enumerable;
+import { SessionResolvers } from '@bims/graphql/resolvers';
+
 import requireCurrentUserRole from '../util/requireCurrentUserRole';
 
 export const Session_attendeesResolver: SessionResolvers['attendees'] = async (

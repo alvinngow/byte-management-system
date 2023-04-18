@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
+import { UserRole } from '@bims/graphql/schema';
 import React from 'react';
 
-import { UserRole } from '../../../../../gen/graphql/resolvers';
 import * as UsersQuery from '../../../../graphql/frontend/queries/UsersQuery';
 import useDebounce from '../../../../hooks/useDebounce';
 import Input from '../../../Input';

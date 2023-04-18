@@ -1,9 +1,9 @@
+import { SessionAttendeeConnection } from '@bims/graphql/schema';
 import { ArrowsUpDownIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 import React from 'react';
 
-import { SessionAttendeeConnection } from '../../../../gen/graphql/resolvers';
 import ActualAttendancePill from '../../ActualAttendancePill';
 import IconButton from '../../IconButton';
 import NavLink from '../../NavLink';

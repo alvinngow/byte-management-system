@@ -1,4 +1,6 @@
-import { QueryResolvers, UserRole } from '../../../../../gen/graphql/resolvers';
+import { QueryResolvers } from '@bims/graphql/resolvers';
+import { UserRole } from '@bims/graphql/schema';
+
 import { prisma } from '../../../../db';
 import requireCurrentUserRole from '../util/requireCurrentUserRole';
 

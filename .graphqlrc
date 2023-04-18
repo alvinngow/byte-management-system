@@ -1,1 +1,4 @@
-schema: "gen/graphql/schema.graphql"
+schema: "src/graphql/backend/**/*.graphql"
+extensions:
+  languageService:
+    cacheSchemaFileForLookup: false

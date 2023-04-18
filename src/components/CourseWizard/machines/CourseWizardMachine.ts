@@ -1,5 +1,3 @@
-import { assign, createMachine, ServiceMap } from 'xstate';
-
 import {
   Course,
   CourseAddPayload,
@@ -8,7 +6,9 @@ import {
   FileUploadPayload,
   Location,
   User,
-} from '../../../../gen/graphql/resolvers';
+} from '@bims/graphql/schema';
+import { assign, createMachine, ServiceMap } from 'xstate';
+
 import isMachineContextSubmittable from '../helpers/isMachineContextSubmittable';
 
 export type CourseData = Pick<

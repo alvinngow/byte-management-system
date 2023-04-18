@@ -1,3 +1,4 @@
+import { UserRole } from '@bims/graphql/schema';
 import {
   AcademicCapIcon,
   CalendarDaysIcon,
@@ -8,7 +9,6 @@ import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { ComponentType, useMemo, useState } from 'react';
 
-import { UserRole } from '../../gen/graphql/operations';
 import useCurrentUser from '../hooks/useCurrentUser';
 import ByteLogo from './icons/ByteLogo';
 import NavLink from './NavLink';

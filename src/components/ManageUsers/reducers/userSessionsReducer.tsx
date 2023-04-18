@@ -1,6 +1,5 @@
+import { Attendance } from '@bims/graphql/schema';
 import React from 'react';
-
-import { Attendance } from '../../../../gen/graphql/resolvers';
 
 export type UserSessionsReducerTab = 'upcoming_sessions' | 'session_history';
 

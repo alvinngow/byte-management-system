@@ -1,8 +1,8 @@
+import { Attendance } from '@bims/graphql/schema';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import React from 'react';
 
-import { Attendance } from '../../gen/graphql/resolvers';
 import IconButton from './IconButton';
 import ToolTip from './ToolTip';
 

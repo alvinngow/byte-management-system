@@ -5,10 +5,10 @@ import { v4 as uuidv4 } from 'uuid';
 import Select from '../../../../components/Select';
 import Switch from '../../../../components/Switch';
 import * as notificationUpdate from '../../../../graphql/frontend/mutations/AccountNotificationUpdateMutation';
-import * as Me from '../../../../graphql/frontend/queries/MeQuery';
+import { MeQueryDocument } from '../../../../graphql/frontend/queries/MeQuery.generated';
 
 const Notifications: React.FC = function () {
-  const { data: meData, refetch } = useQuery<Me.Data>(Me.Query);
+  const { data: meData, refetch } = useQuery(MeQueryDocument);
   const [accountUpdate] = useMutation<
     notificationUpdate.Data,
     notificationUpdate.Variables

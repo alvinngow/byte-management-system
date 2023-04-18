@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import React, { PropsWithChildren } from 'react';
 
-import * as MeQuery from '../../graphql/frontend/queries/MeQuery';
+import { MeQueryQuery } from '../../graphql/frontend/queries/MeQuery.generated';
 import NavLink from '../NavLink';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  data?: MeQuery.Data;
+  data?: MeQueryQuery;
   focused: boolean;
 }
 

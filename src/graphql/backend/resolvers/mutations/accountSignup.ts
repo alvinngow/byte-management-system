@@ -1,9 +1,9 @@
+import { MutationResolvers } from '@bims/graphql/resolvers';
 import { Prisma } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { GraphQLError } from 'graphql';
 import { DateTime } from 'luxon';
 
-import { MutationResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 import sendEmail from '../../../../email/sendEmail';
 import { welcome } from '../../../../email/templates/welcome';

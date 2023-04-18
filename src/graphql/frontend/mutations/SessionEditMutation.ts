@@ -1,9 +1,5 @@
 import { gql } from '@apollo/client';
-
-import {
-  SessionEditInput,
-  SessionEditPayload,
-} from '../../../../gen/graphql/resolvers';
+import { SessionEditInput, SessionEditPayload } from '@bims/graphql/schema';
 
 export interface Data {
   sessionEdit: SessionEditPayload;

@@ -1,4 +1,10 @@
 import { useMutation, useQuery } from '@apollo/client';
+import { UserRole } from '@bims/graphql/schema';
+import {
+  Attendance,
+  SessionDateFiltering,
+  SessionSortKey,
+} from '@bims/graphql/schema';
 import { ArrowsUpDownIcon, PencilIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import produce from 'immer';
@@ -9,12 +15,6 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { UserRole } from '../../../gen/graphql/operations';
-import {
-  Attendance,
-  SessionDateFiltering,
-  SessionSortKey,
-} from '../../../gen/graphql/resolvers';
 import Avatar from '../../components/Avatar';
 import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';

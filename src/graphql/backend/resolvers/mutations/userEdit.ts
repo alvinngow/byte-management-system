@@ -1,6 +1,6 @@
+import { MutationResolvers } from '@bims/graphql/resolvers';
 import { GraphQLError } from 'graphql';
 
-import { MutationResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 
 export const userEditResolver: MutationResolvers['userEdit'] = async (

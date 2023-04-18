@@ -1,6 +1,6 @@
+import { UserRole } from '@bims/graphql/schema';
 import { GraphQLError } from 'graphql';
 
-import { UserRole } from '../../../../../gen/graphql/resolvers';
 import { Context } from '../../Context';
 
 /**

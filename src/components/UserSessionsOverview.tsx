@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
+import { UserOverviewType } from '@bims/graphql/schema';
 import React from 'react';
 
-import { UserOverviewType } from '../../gen/graphql/resolvers';
 import * as UserQuery from '../graphql/frontend/queries/UserQuery';
 import * as UserSessionOverview from '../graphql/frontend/queries/UserSessionsOverviewQuery';
 import ClassOverviewCard from './ClassOverviewCard';

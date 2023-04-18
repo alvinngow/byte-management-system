@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
-
-import { EmailVerification } from '../../../../gen/graphql/resolvers';
+import { EmailVerification } from '@bims/graphql/schema';
 
 export interface Data {
   emailVerification: EmailVerification;

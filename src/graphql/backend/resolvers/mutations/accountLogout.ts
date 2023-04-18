@@ -1,4 +1,4 @@
-import { MutationResolvers } from '../../../../../gen/graphql/resolvers';
+import { MutationResolvers } from '@bims/graphql/resolvers';
 
 export const accountLogoutResolver: MutationResolvers['accountLogout'] = async (
   root,

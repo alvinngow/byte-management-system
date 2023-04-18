@@ -1,7 +1,6 @@
-import {
-  MutationResolvers,
-  UserRole,
-} from '../../../../../gen/graphql/resolvers';
+import { MutationResolvers } from '@bims/graphql/resolvers';
+import { UserRole } from '@bims/graphql/schema';
+
 import { prisma } from '../../../../db';
 import sendEmail from '../../../../email/sendEmail';
 import { approved } from '../../../../email/templates/approved';

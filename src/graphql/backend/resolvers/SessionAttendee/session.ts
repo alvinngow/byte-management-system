@@ -1,6 +1,6 @@
+import { SessionAttendeeResolvers } from '@bims/graphql/resolvers';
 import { GraphQLError } from 'graphql';
 
-import { SessionAttendeeResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 
 export const SessionAttendee_sessionResolver: SessionAttendeeResolvers['session'] =

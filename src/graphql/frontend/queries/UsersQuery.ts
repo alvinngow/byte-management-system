@@ -1,10 +1,6 @@
 import { gql } from '@apollo/client';
-
-import { UserSortKey } from '../../../../gen/graphql/operations';
-import {
-  UserConnection,
-  UserFiltering,
-} from '../../../../gen/graphql/resolvers';
+import { UserSortKey } from '@bims/graphql/schema';
+import { UserConnection, UserFiltering } from '@bims/graphql/schema';
 
 export interface Data {
   users: UserConnection;

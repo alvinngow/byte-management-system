@@ -1,13 +1,13 @@
 import { gql } from '@apollo/client';
-import bcrypt from 'bcrypt';
-import { DateTime } from 'luxon';
-import { v4 as uuidv4 } from 'uuid';
-
 import {
   Attendance,
   SessionAttendReportInput,
   SessionAttendReportPayload,
-} from '../../gen/graphql/resolvers';
+} from '@bims/graphql/schema';
+import bcrypt from 'bcrypt';
+import { DateTime } from 'luxon';
+import { v4 as uuidv4 } from 'uuid';
+
 import { prisma } from '../../src/db';
 import { buildMockContext } from '../util/buildMockContext';
 import setupApolloServer from '../util/setupApolloServer';

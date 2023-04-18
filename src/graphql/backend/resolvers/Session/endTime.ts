@@ -1,7 +1,7 @@
+import { SessionResolvers } from '@bims/graphql/resolvers';
 import { GraphQLError } from 'graphql/index';
 import { DateTime } from 'luxon';
 
-import { SessionResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 
 export const Session_endTimeResolver: SessionResolvers['startTime'] = async (

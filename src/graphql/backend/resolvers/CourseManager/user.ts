@@ -1,6 +1,6 @@
+import { CourseManagerResolvers } from '@bims/graphql/resolvers';
 import { GraphQLError } from 'graphql';
 
-import { CourseManagerResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 
 export const CourseManager_userResolver: CourseManagerResolvers['user'] =

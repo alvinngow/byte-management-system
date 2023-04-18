@@ -8,14 +8,11 @@ const appSchemas = fs.readFileSync(
 );
 
 import appResolvers from '../../src/graphql/backend/resolvers';
-import {
-  scalarResolvers,
-  scalarTypeDefs,
-} from '../../src/graphql/backend/scalars';
+import { scalarResolvers } from '../../src/graphql/backend/scalars';
 
 export default function setupApolloServer() {
   const testServer = new ApolloServer({
-    typeDefs: [...scalarTypeDefs, appSchemas],
+    typeDefs: [appSchemas],
     resolvers: {
       ...scalarResolvers,
       ...appResolvers,

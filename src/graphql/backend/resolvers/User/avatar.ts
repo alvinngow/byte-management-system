@@ -1,4 +1,5 @@
-import { UserResolvers } from '../../../../../gen/graphql/resolvers';
+import { UserResolvers } from '@bims/graphql/resolvers';
+
 import getAssetPublicUrl from '../../../../util/getAssetPublicUrl';
 
 const User_avatarResolver: UserResolvers['avatar'] = async (

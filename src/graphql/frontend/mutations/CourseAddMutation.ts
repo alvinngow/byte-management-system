@@ -1,9 +1,5 @@
 import { gql } from '@apollo/client';
-
-import {
-  CourseAddInput,
-  CourseAddPayload,
-} from '../../../../gen/graphql/resolvers';
+import { CourseAddInput, CourseAddPayload } from '@bims/graphql/schema';
 
 export interface Data {
   courseAdd: CourseAddPayload;

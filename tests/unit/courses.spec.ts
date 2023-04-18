@@ -1,12 +1,12 @@
 import { gql } from '@apollo/client';
-import { DateTime } from 'luxon';
-
 import {
   CourseConnection,
   CourseDateFiltering,
   CourseFiltering,
   CourseSortKey,
-} from '../../gen/graphql/resolvers';
+} from '@bims/graphql/schema';
+import { DateTime } from 'luxon';
+
 import { buildMockContext } from '../util/buildMockContext';
 import setupApolloServer from '../util/setupApolloServer';
 

@@ -1,4 +1,5 @@
-import { LocationResolvers } from '../../../../../gen/graphql/resolvers';
+import { LocationResolvers } from '@bims/graphql/resolvers';
+
 import { prisma } from '../../../../db';
 
 export const Location_clusterResolver: LocationResolvers['cluster'] = async (

@@ -1,4 +1,5 @@
-import { CourseResolvers } from '../../../../../gen/graphql/resolvers';
+import { CourseResolvers } from '@bims/graphql/resolvers';
+
 import getAssetPublicUrl from '../../../../util/getAssetPublicUrl';
 
 export const Course_coverImageResolver: CourseResolvers['coverImage'] = async (

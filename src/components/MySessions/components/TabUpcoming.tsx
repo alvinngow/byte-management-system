@@ -1,14 +1,11 @@
 import { useMutation } from '@apollo/client';
+import { Attendance, SessionAttendeeConnection } from '@bims/graphql/schema';
 import { ArrowsUpDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import {
-  Attendance,
-  SessionAttendeeConnection,
-} from '../../../../gen/graphql/resolvers';
 import * as SessionAttend from '../../../graphql/frontend/mutations/SessionAttendMutation';
 import * as MeSessions from '../../../graphql/frontend/queries/MeSessionAttendeesQuery';
 import * as MeSessionOverview from '../../../graphql/frontend/queries/MeSessionOverviewQuery';

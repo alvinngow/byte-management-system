@@ -1,5 +1,10 @@
 import { useMutation, useQuery } from '@apollo/client';
 import {
+  Course,
+  CourseDateFiltering,
+  CourseSortKey,
+} from '@bims/graphql/schema';
+import {
   ArrowsUpDownIcon,
   ChevronDoubleDownIcon,
   PencilIcon,
@@ -12,11 +17,6 @@ import Image from 'next/image';
 import React, { useEffect, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import {
-  Course,
-  CourseDateFiltering,
-  CourseSortKey,
-} from '../../../../gen/graphql/resolvers';
 import Button from '../../../components/Button';
 import IconButton from '../../../components/IconButton';
 import Input from '../../../components/Input';

@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { UserRole } from '@bims/graphql/schema';
 import {
   AcademicCapIcon,
   Bars3Icon,
@@ -11,12 +12,10 @@ import {
   UserGroupIcon,
 } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { ComponentType, useMemo, useState } from 'react';
 
-import { UserRole } from '../../gen/graphql/operations';
-import * as Me from '../graphql/frontend/queries/MeQuery';
+import { MeQueryDocument } from '../graphql/frontend/queries/MeQuery.generated';
 import Avatar from './Avatar';
 import IconButton from './IconButton';
 import ByteLogo from './icons/ByteLogo';
@@ -61,7 +60,7 @@ const NavLinks: Links[] = [
 interface Props extends React.PropsWithChildren {}
 
 const NavHeader: React.FC<Props> = function (props) {
-  const { data: meData } = useQuery<Me.Data>(Me.Query);
+  const { data: meData } = useQuery(MeQueryDocument);
   const router = useRouter();
 
   const routeName = useMemo(() => {
@@ -180,6 +179,7 @@ const NavHeader: React.FC<Props> = function (props) {
                 {meData && (
                   <Avatar
                     className="h-10 w-10 shrink-0"
+                    //@ts-ignore
                     user={meData?.me!}
                   ></Avatar>
                 )}

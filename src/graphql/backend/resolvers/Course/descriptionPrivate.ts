@@ -1,4 +1,4 @@
-import { CourseResolvers } from '../../../../../gen/graphql/resolvers';
+import { CourseResolvers } from '@bims/graphql/resolvers';
 
 export const Course_descriptionPrivateResolver: CourseResolvers['descriptionPrivate'] =
   async (root, args, context, info) => {

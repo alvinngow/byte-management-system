@@ -1,10 +1,5 @@
 import { gql } from '@apollo/client';
-
-import {
-  Course,
-  SessionFiltering,
-  SessionSortKey,
-} from '../../../../gen/graphql/resolvers';
+import { Course, SessionFiltering, SessionSortKey } from '@bims/graphql/schema';
 
 export interface Data {
   course: Course;

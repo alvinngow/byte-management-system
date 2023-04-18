@@ -1,6 +1,6 @@
+import { LocationClusterResolvers } from '@bims/graphql/resolvers';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 
-import { LocationClusterResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 import requireAuthenticated from '../util/requireAuthenticated';
 

@@ -1,9 +1,8 @@
 import { gql } from '@apollo/client';
-
 import {
   AccountVerifyUpdateInput,
   AccountVerifyUpdatePayload,
-} from '../../../../gen/graphql/operations';
+} from '@bims/graphql/schema';
 
 export interface Data {
   accountApprovalUpdate: AccountVerifyUpdatePayload;

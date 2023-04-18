@@ -1,6 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
-
-import { CurrentUser } from '../../gen/graphql/resolvers';
+import { CurrentUser } from '@bims/graphql/schema';
 
 export interface Data {
   me: CurrentUser | null;

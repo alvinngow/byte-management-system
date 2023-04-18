@@ -1,4 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
+import { Attendance } from '@bims/graphql/schema';
+import { Session, SessionAttendeeSortKey } from '@bims/graphql/schema';
 import {
   ClipboardDocumentCheckIcon,
   PencilIcon,
@@ -10,11 +12,6 @@ import Image from 'next/image';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Attendance } from '../../../../gen/graphql/operations';
-import {
-  Session,
-  SessionAttendeeSortKey,
-} from '../../../../gen/graphql/resolvers';
 import * as SessionAttendReport from '../../../graphql/frontend/mutations/SessionAttendReportMutation';
 import * as SessionOverview from '../../../graphql/frontend/queries/MeSessionOverviewQuery';
 import * as SessionAttendee from '../../../graphql/frontend/queries/SessionAttendeesQuery';

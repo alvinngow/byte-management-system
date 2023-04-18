@@ -1,9 +1,7 @@
+import { MutationResolvers } from '@bims/graphql/resolvers';
+import { UserRole } from '@bims/graphql/schema';
 import { GraphQLError } from 'graphql/index';
 
-import {
-  MutationResolvers,
-  UserRole,
-} from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 import sendEmail from '../../../../email/sendEmail';
 import { newVerifiedUser } from '../../../../email/templates/newVerifiedUser';

@@ -1,9 +1,5 @@
 import { gql } from '@apollo/client';
-
-import {
-  AccountAvatarUpdateInput,
-  CurrentUser,
-} from '../../../../gen/graphql/resolvers';
+import { AccountAvatarUpdateInput, CurrentUser } from '@bims/graphql/schema';
 
 export type Data = CurrentUser;
 

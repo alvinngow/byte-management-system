@@ -1,5 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
+import {
+  Attendance,
+  SessionAttendeeDateFiltering,
+  SessionAttendeeSortKey,
+} from '@bims/graphql/schema';
+import { UserRole } from '@bims/graphql/schema';
 import classNames from 'classnames';
 import { NextPage } from 'next';
 import Image from 'next/image';
@@ -7,12 +13,6 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import {
-  Attendance,
-  SessionAttendeeDateFiltering,
-  SessionAttendeeSortKey,
-} from '../../../../../gen/graphql/resolvers';
-import { UserRole } from '../../../../../gen/graphql/resolvers';
 import BackButton from '../../../../components/BackButton';
 import Button from '../../../../components/Button';
 import DotsMoreOptions from '../../../../components/DotsMoreOptions';

@@ -1,7 +1,7 @@
+import { MutationResolvers } from '@bims/graphql/resolvers';
 import bcrypt from 'bcrypt';
 import { GraphQLError } from 'graphql';
 
-import { MutationResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 
 export const accountLoginResolver: MutationResolvers['accountLogin'] = async (

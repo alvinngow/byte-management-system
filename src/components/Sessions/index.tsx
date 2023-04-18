@@ -1,8 +1,11 @@
 import { useQuery } from '@apollo/client';
+import {
+  Session,
+  SessionDateFiltering,
+  SessionSortKey,
+} from '@bims/graphql/schema';
 import React, { useEffect } from 'react';
 
-import { SessionDateFiltering } from '../../../gen/graphql/operations';
-import { Session, SessionSortKey } from '../../../gen/graphql/resolvers';
 import * as CourseSessions from '../../graphql/frontend/queries/CourseSessionsQuery';
 import Button from '../Button';
 import Select from '../Select';

@@ -1,6 +1,6 @@
+import { SessionResolvers } from '@bims/graphql/resolvers';
 import { GraphQLError } from 'graphql';
 
-import { SessionResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 
 export const Session_locationResolver: SessionResolvers['location'] = async (

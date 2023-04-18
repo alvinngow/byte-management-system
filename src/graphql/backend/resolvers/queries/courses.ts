@@ -1,16 +1,13 @@
+import { CourseDateFiltering, CourseSortKey } from '@bims/graphql/schema';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 
-import {
-  CourseDateFiltering,
-  CourseSortKey,
-  QueryResolvers,
-} from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 import { Prisma } from '.prisma/client';
 import CourseWhereInput = Prisma.CourseWhereInput;
 import { DateTime } from 'luxon';
 import CourseWithSessionInfoOrderByWithRelationInput = Prisma.CourseWithSessionInfoOrderByWithRelationInput;
 import CourseWithSessionInfoWhereInput = Prisma.CourseWithSessionInfoWhereInput;
+import { QueryResolvers } from '@bims/graphql/resolvers';
 
 export const coursesResolver: QueryResolvers['courses'] = async (
   root,

@@ -1,9 +1,8 @@
 import { gql } from '@apollo/client';
-
 import {
   AccountTerminateInput,
   AccountTerminatePayload,
-} from '../../../../gen/graphql/operations';
+} from '@bims/graphql/schema';
 
 export interface Data {
   accountTerminate: AccountTerminatePayload;

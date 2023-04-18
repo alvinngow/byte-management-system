@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
-
-import { User } from '../../../../gen/graphql/resolvers';
+import { User } from '@bims/graphql/schema';
 
 export interface Data {
   user: User;

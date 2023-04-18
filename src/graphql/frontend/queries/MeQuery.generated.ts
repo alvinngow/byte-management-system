@@ -1,0 +1,11 @@
+/* eslint-disable */
+import * as Schema from '../../../../gen/graphql/schema';
+
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type MeQueryQueryVariables = Schema.Exact<{ [key: string]: never; }>;
+
+
+export type MeQueryQuery = { __typename?: 'Query', me?: { __typename?: 'CurrentUser', id: string, email: string, avatar?: string | null, firstName: string, lastName: string, mobileNo: string, role: Schema.UserRole, createdAt: string, notifyNewCourse?: boolean | null, notifyNearNewCourse?: boolean | null, nearRegion?: string | null, notifyUpcomingSessions?: boolean | null, upcomingSessionTimeBefore?: number | null, school?: { __typename?: 'School', id: string, name: string } | null } | null };
+
+
+export const MeQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MeQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"avatar"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"mobileNo"}},{"kind":"Field","name":{"kind":"Name","value":"school"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"notifyNewCourse"}},{"kind":"Field","name":{"kind":"Name","value":"notifyNearNewCourse"}},{"kind":"Field","name":{"kind":"Name","value":"nearRegion"}},{"kind":"Field","name":{"kind":"Name","value":"notifyUpcomingSessions"}},{"kind":"Field","name":{"kind":"Name","value":"upcomingSessionTimeBefore"}}]}}]}}]} as unknown as DocumentNode<MeQueryQuery, MeQueryQueryVariables>;

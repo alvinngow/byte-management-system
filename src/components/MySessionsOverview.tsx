@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
+import { CurrentUserOverviewType } from '@bims/graphql/schema';
 import React from 'react';
 
-import { CurrentUserOverviewType } from '../../gen/graphql/resolvers';
 import * as MeSessionOverview from '../graphql/frontend/queries/MeSessionOverviewQuery';
 import ClassOverviewCard from './ClassOverviewCard';
 import CrossPresentationChartLineIcon from './icons/CrossPresentationChartLineIcon';

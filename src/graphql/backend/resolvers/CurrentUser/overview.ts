@@ -1,11 +1,11 @@
-import { DateTime, Duration } from 'luxon';
-
+import { CurrentUserResolvers } from '@bims/graphql/resolvers';
 import {
   Attendance,
   CurrentUserOverview,
   CurrentUserOverviewType,
-  CurrentUserResolvers,
-} from '../../../../../gen/graphql/resolvers';
+} from '@bims/graphql/schema';
+import { DateTime, Duration } from 'luxon';
+
 import { prisma } from '../../../../db';
 
 async function computeSessionsUpcoming(

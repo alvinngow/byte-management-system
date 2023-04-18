@@ -1,15 +1,12 @@
+import { UserRole, UserSortKey } from '@bims/graphql/schema';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 
-import {
-  QueryResolvers,
-  UserRole,
-  UserSortKey,
-} from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 import requireCurrentUserRole from '../util/requireCurrentUserRole';
 import { Prisma } from '.prisma/client';
 import UserWhereInput = Prisma.UserWhereInput;
 import UserOrderByWithRelationInput = Prisma.UserOrderByWithRelationInput;
+import { QueryResolvers } from '@bims/graphql/resolvers';
 
 export const usersResolver: QueryResolvers['users'] = async (
   root,

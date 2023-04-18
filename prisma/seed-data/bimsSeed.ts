@@ -1,9 +1,9 @@
+import { Attendance } from '@bims/graphql/schema';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { DateTime } from 'luxon';
 import slugify from 'slugify';
 
-import { Attendance } from '../../gen/graphql/operations';
 import {
   readCourseManagers,
   readCourses,

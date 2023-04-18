@@ -1,4 +1,5 @@
 import { useMutation } from '@apollo/client';
+import { CurrentUser, UserRole } from '@bims/graphql/schema';
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -6,7 +7,6 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 
-import { CurrentUser, UserRole } from '../../gen/graphql/operations';
 import Button from '../components/Button';
 import ByteLogoIcon from '../components/icons/ByteLogoIcon';
 import Input from '../components/Input';

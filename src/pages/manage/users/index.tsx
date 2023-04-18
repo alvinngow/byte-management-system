@@ -1,4 +1,10 @@
 import { useMutation, useQuery } from '@apollo/client';
+import { UserFiltering, UserRole } from '@bims/graphql/schema';
+import {
+  AccountApprovalUpdateInput,
+  UserEdge,
+  UserSortKey,
+} from '@bims/graphql/schema';
 import {
   ArrowRightIcon,
   ArrowsUpDownIcon,
@@ -10,12 +16,6 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import {
-  AccountApprovalUpdateInput,
-  UserEdge,
-  UserSortKey,
-} from '../../../../gen/graphql/operations';
-import { UserFiltering, UserRole } from '../../../../gen/graphql/resolvers';
 import Avatar from '../../../components/Avatar';
 import Chip from '../../../components/Chip';
 import DotsMoreOptions from '../../../components/DotsMoreOptions';

@@ -1,10 +1,9 @@
 import { gql } from '@apollo/client';
-
 import {
   SessionAttendInput,
   SessionAttendReportInput,
   SessionAttendReportPayload,
-} from '../../../../gen/graphql/resolvers';
+} from '@bims/graphql/schema';
 
 export interface Data {
   sessionAttendReport: SessionAttendReportPayload;

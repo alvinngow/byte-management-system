@@ -1,12 +1,12 @@
 import { gql } from '@apollo/client';
-import { v4 as uuidv4 } from 'uuid';
-
 import {
   AccountTerminateInput,
   AccountTerminatePayload,
   CurrentUser,
   SignupInput,
-} from '../../gen/graphql/resolvers';
+} from '@bims/graphql/schema';
+import { v4 as uuidv4 } from 'uuid';
+
 import { buildMockContext } from '../util/buildMockContext';
 import setupApolloServer from '../util/setupApolloServer';
 

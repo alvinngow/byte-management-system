@@ -1,11 +1,10 @@
 import { gql } from '@apollo/client';
-
 import {
   CourseConnection,
   CourseFiltering,
   CourseSortKey,
   LocationClusterConnection,
-} from '../../../../gen/graphql/resolvers';
+} from '@bims/graphql/schema';
 
 export interface Data {
   courses: CourseConnection;

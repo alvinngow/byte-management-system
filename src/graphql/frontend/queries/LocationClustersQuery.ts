@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
-
-import { LocationClusterConnection } from '../../../../gen/graphql/resolvers';
+import { LocationClusterConnection } from '@bims/graphql/schema';
 
 export interface Data {
   locationClusters: LocationClusterConnection;

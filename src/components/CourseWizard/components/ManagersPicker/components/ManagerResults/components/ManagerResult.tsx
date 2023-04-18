@@ -1,8 +1,8 @@
+import { User } from '@bims/graphql/schema';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import classNames from 'classnames';
 import React from 'react';
 
-import { User } from '../../../../../../../../gen/graphql/resolvers';
 import Avatar from '../../../../../../Avatar';
 
 interface Props {

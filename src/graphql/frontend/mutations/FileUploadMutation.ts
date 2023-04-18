@@ -1,9 +1,5 @@
 import { gql } from '@apollo/client';
-
-import {
-  FileUploadInput,
-  FileUploadPayload,
-} from '../../../../gen/graphql/resolvers';
+import { FileUploadInput, FileUploadPayload } from '@bims/graphql/schema';
 
 export interface Data {
   fileUpload: FileUploadPayload;

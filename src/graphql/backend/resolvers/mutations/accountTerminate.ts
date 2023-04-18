@@ -1,10 +1,7 @@
-import { Prisma } from '@prisma/client';
+import { MutationResolvers } from '@bims/graphql/resolvers';
+import { UserRole } from '@bims/graphql/schema';
 import { GraphQLError } from 'graphql/index';
 
-import {
-  MutationResolvers,
-  UserRole,
-} from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 import requireCurrentUserRole from '../util/requireCurrentUserRole';
 

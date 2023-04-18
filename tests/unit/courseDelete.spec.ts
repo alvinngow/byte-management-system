@@ -1,11 +1,8 @@
 import { gql } from '@apollo/client';
+import { CourseDeleteInput, CourseDeletePayload } from '@bims/graphql/schema';
 import { DateTime } from 'luxon';
 import { v4 as uuidv4 } from 'uuid';
 
-import {
-  CourseDeleteInput,
-  CourseDeletePayload,
-} from '../../gen/graphql/resolvers';
 import { prisma } from '../../src/db';
 import { buildMockContext } from '../util/buildMockContext';
 import setupApolloServer from '../util/setupApolloServer';

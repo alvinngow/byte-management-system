@@ -1,9 +1,8 @@
 import { gql } from '@apollo/client';
-
 import {
   AccountRoleUpdateInput,
   AccountRoleUpdatePayload,
-} from '../../../../gen/graphql/resolvers';
+} from '@bims/graphql/schema';
 
 export interface Data {
   accountRoleUpdate: AccountRoleUpdatePayload;

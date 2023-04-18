@@ -1,7 +1,5 @@
-import {
-  CurrentUserResolvers,
-  UserRole,
-} from '../../../../../gen/graphql/resolvers';
+import { CurrentUserResolvers } from '@bims/graphql/resolvers';
+import { UserRole } from '@bims/graphql/schema';
 
 export const CurrentUser_roleResolver: CurrentUserResolvers['role'] = async (
   root,

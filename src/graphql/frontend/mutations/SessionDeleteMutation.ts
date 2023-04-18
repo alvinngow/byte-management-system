@@ -1,9 +1,5 @@
 import { gql } from '@apollo/client';
-
-import {
-  SessionDeleteInput,
-  SessionDeletePayload,
-} from '../../../../gen/graphql/resolvers';
+import { SessionDeleteInput, SessionDeletePayload } from '@bims/graphql/schema';
 
 export interface Data {
   sessionDelete: SessionDeletePayload;

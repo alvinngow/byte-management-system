@@ -1,11 +1,10 @@
 import { gql } from '@apollo/client';
-
 import {
   CourseAddInput,
   CourseAddPayload,
   CourseEditInput,
   CourseEditPayload,
-} from '../../../../gen/graphql/resolvers';
+} from '@bims/graphql/schema';
 
 export interface Data {
   courseEdit: CourseEditPayload;

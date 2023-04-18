@@ -1,4 +1,5 @@
-import { UserResolvers } from '../../../../../gen/graphql/resolvers';
+import { UserResolvers } from '@bims/graphql/resolvers';
+
 import { prisma } from '../../../../db';
 
 export const schoolResolver: UserResolvers['school'] = async (

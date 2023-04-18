@@ -1,4 +1,5 @@
-import { CourseResolvers } from '../../../../../gen/graphql/resolvers';
+import { CourseResolvers } from '@bims/graphql/resolvers';
+
 import { prisma } from '../../../../db';
 
 export const Course_defaultLocationResolver: CourseResolvers['defaultLocation'] =

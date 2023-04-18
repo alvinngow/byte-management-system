@@ -1,7 +1,7 @@
+import { MutationResolvers } from '@bims/graphql/resolvers';
 import { GraphQLError } from 'graphql/index';
 import { DateTime } from 'luxon';
 
-import { MutationResolvers } from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 
 export const sessionAddResolver: MutationResolvers['sessionAdd'] = async (

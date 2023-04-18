@@ -1,12 +1,12 @@
 import { useQuery } from '@apollo/client';
-import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
-
 import {
   Attendance,
   SessionAttendeeDateFiltering,
   SessionAttendeeSortKey,
-} from '../../../gen/graphql/resolvers';
+} from '@bims/graphql/schema';
+import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 import Input from '../../components/Input';
 import TabHistory from '../../components/MySessions/components/TabHistory';
 import TabUpcoming from '../../components/MySessions/components/TabUpcoming';

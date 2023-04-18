@@ -1,6 +1,6 @@
+import { UserRole } from '@bims/graphql/schema';
 import { DateTime } from 'luxon';
 
-import { UserRole } from '../../gen/graphql/resolvers';
 import { prisma } from '../db';
 import sendEmail from '../email/sendEmail';
 import {

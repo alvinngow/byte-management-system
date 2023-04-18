@@ -1,4 +1,5 @@
-import { QueryResolvers } from '../../../../../gen/graphql/resolvers';
+import { QueryResolvers } from '@bims/graphql/resolvers';
+
 import { prisma } from '../../../../db';
 import requireAuthenticated from '../util/requireAuthenticated';
 export const sessionResolver: QueryResolvers['session'] = async (

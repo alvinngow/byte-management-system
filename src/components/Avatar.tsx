@@ -1,8 +1,7 @@
+import { CurrentUser, User } from '@bims/graphql/schema';
 import classNames from 'classnames';
 import Image from 'next/image';
 import React from 'react';
-
-import { CurrentUser, User } from '../../gen/graphql/resolvers';
 
 /**
  * Adapted from https://stackoverflow.com/a/21682946

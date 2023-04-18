@@ -1,5 +1,6 @@
-import { UserRole } from '../../../../../gen/graphql/operations';
-import { SessionResolvers } from '../../../../../gen/graphql/resolvers';
+import { SessionResolvers } from '@bims/graphql/resolvers';
+import { UserRole } from '@bims/graphql/schema';
+
 import { prisma } from '../../../../db';
 
 export const Session_volunteerSlotAvailableCountResolver: SessionResolvers['volunteerSlotAvailableCount'] =

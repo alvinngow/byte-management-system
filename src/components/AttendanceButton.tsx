@@ -1,8 +1,8 @@
+import { Attendance } from '@bims/graphql/schema';
+import { Maybe } from '@bims/graphql/schema';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import React, { HTMLAttributes, useEffect, useState } from 'react';
 
-import { Attendance } from '../../gen/graphql/operations';
-import { Maybe } from '../../gen/graphql/resolvers';
 import styles from '../styles/component_styles/AttendanceButton.module.css';
 
 interface PropType extends HTMLAttributes<HTMLElement> {

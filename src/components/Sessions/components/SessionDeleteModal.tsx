@@ -1,9 +1,9 @@
 import { useMutation } from '@apollo/client';
+import { Session } from '@bims/graphql/schema';
 import { DateTime } from 'luxon';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Session } from '../../../../gen/graphql/resolvers';
 import * as SessionDelete from '../../../graphql/frontend/mutations/SessionDeleteMutation';
 import Button from '../../Button';
 import Modal from '../../Modal';

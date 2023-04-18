@@ -1,11 +1,8 @@
+import { CourseResolvers } from '@bims/graphql/resolvers';
+import { SessionDateFiltering, SessionSortKey } from '@bims/graphql/schema';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { DateTime } from 'luxon';
 
-import {
-  CourseResolvers,
-  SessionDateFiltering,
-  SessionSortKey,
-} from '../../../../../gen/graphql/resolvers';
 import { prisma } from '../../../../db';
 import { Prisma } from '.prisma/client';
 import SessionOrderByWithAggregationInput = Prisma.SessionOrderByWithAggregationInput;

@@ -1,10 +1,10 @@
 import { useMutation } from '@apollo/client';
+import { Session } from '@bims/graphql/schema';
 import produce from 'immer';
 import { DateTime } from 'luxon';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Session } from '../../../../gen/graphql/resolvers';
 import { SESSION_MODAL_DEFAULT_VOLUNTEER_SLOT_COUNT } from '../../../constants/sessionModal';
 import * as SessionEdit from '../../../graphql/frontend/mutations/SessionEditMutation';
 import inputStyles from '../../../styles/component_styles/Input.module.css';

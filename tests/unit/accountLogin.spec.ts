@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
+import { CurrentUser, LoginInput } from '@bims/graphql/schema';
 import { v4 as uuidv4 } from 'uuid';
 
-import { CurrentUser, LoginInput } from '../../gen/graphql/resolvers';
 import { buildMockContext } from '../util/buildMockContext';
 import setupApolloServer from '../util/setupApolloServer';
 

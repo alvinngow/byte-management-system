@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client';
+import { UserRole } from '@bims/graphql/schema';
 import {
   ArrowsUpDownIcon,
   CheckIcon,
@@ -10,7 +11,6 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { UserRole } from '../../gen/graphql/resolvers';
 import * as AccountRoleUpdate from '../graphql/frontend/mutations/AccountRoleUpdateMutation';
 import * as UsersQuery from '../graphql/frontend/queries/UsersQuery';
 import useCurrentUser from '../hooks/useCurrentUser';

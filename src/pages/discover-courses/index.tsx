@@ -1,15 +1,12 @@
 import { useQuery } from '@apollo/client';
+import { CourseDateFiltering, CourseFiltering } from '@bims/graphql/schema';
+import { LocationClusterEdge } from '@bims/graphql/schema';
 import { CalendarIcon, MapIcon, MapPinIcon } from '@heroicons/react/24/outline';
 import { DateTime } from 'luxon';
 import { NextPage } from 'next';
 import Image from 'next/image';
 import React from 'react';
 
-import {
-  CourseDateFiltering,
-  CourseFiltering,
-} from '../../../gen/graphql/operations';
-import { LocationClusterEdge } from '../../../gen/graphql/resolvers';
 import Card from '../../components/Card';
 import IconButton from '../../components/IconButton';
 import Input from '../../components/Input';

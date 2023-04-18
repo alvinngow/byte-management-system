@@ -1,9 +1,5 @@
 import { gql } from '@apollo/client';
-
-import {
-  CurrentUser,
-  MutationAccountLoginArgs,
-} from '../../../../gen/graphql/operations';
+import { CurrentUser, MutationAccountLoginArgs } from '@bims/graphql/schema';
 
 export type Data = CurrentUser;
 export type Variables = MutationAccountLoginArgs;

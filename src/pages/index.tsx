@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { CourseDateFiltering } from '@bims/graphql/schema';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { DateTime } from 'luxon';
 import { NextPage } from 'next';
@@ -7,7 +8,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-import { CourseDateFiltering } from '../../gen/graphql/operations';
 import Button from '../../src/components/Button';
 import Card from '../components/Card';
 import ByteLogo from '../components/icons/ByteLogo';

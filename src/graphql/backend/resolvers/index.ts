@@ -1,4 +1,5 @@
-import { Resolvers } from '../../../../gen/graphql/resolvers';
+import { Resolvers } from '@bims/graphql/resolvers';
+
 import { Course_courseManagersResolver } from './Course/courseManager';
 import { Course_coverImageResolver } from './Course/coverImage';
 import { Course_defaultEndTimeResolver } from './Course/defaultEndTime';
